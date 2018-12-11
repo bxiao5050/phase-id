@@ -1,0 +1,134 @@
+.win-login .logo {
+  width: 2.9*2.67 + rem;
+  height: .9*2.67 + rem;
+  background: url(../../assets/icon-logo.png) center no-repeat;
+  background-size: 100% 100%;
+}
+
+.win-login {
+  .wrapper {
+    width: 5.8*2.67+rem;
+    margin: 0 auto;
+  }
+  h2 {
+    margin: -.3*2.67 + rem auto 0;
+  }
+}
+
+.win-login .btn-guest,
+.win-login .btn-fb {
+  width: 100%;
+  height: .9*2.67 + rem;
+  font-size: .32*2.67 + rem;
+  text-decoration: none;
+  color: white;
+  line-height: .9*2.67 + rem;
+  display: block;
+  margin: .4*2.67 + rem auto 0;
+  border-radius: .1*2.67 + rem;
+}
+
+.win-login .btn-guest {
+  text-align: center;
+  background: #fe842a;
+  background: gradient(linear, 0 0, 0 bottom, from(#fe994d), to(#fe842a));
+}
+
+.win-login .btn-fb {
+  background: #4664be;
+  background: gradient(linear, 0 0, 0 bottom, from(#4664be), to(#3852a4));
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.win-login .btn-fb span {
+  display: block;
+  float: left;
+}
+
+.win-login .icon-fb {
+  width: .4*2.67 + rem;
+  height: .4*2.67 + rem;
+  // margin: .25*2.67 + rem .06*2.67 + rem 0 1*2.67 + rem;
+  margin-right: .5rem;
+  background: url(../../assets/entry_fb.png) center no-repeat;
+  background-size: contain;
+}
+
+.win-login .line {
+  width: 95%;
+  height: 1px;
+  margin: .5*2.67 + rem auto 0;
+  position: relative;
+}
+
+.win-login .line-right,
+.win-login .line-left {
+  width: 35%;
+  height: 1px;
+  position: relative;
+  background: white;
+}
+
+.win-login .line-left {
+  float: left;
+}
+
+.win-login .line-right {
+  float: right;
+}
+
+.win-login .box {
+  width: 95%;
+  height: 1.09*2.67 + rem;
+  margin: 0 auto;
+  position: relative;
+  padding: .42*2.67 + rem 0 .30*2.67 + rem 0;
+  display: flex;
+  justify-content: center;
+}
+
+.win-login .line-bot {
+  width: 1px;
+  height: 1*2.67 + rem;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  border-right: solid 1px white;
+}
+
+.win-login .box a {
+  width: 2*2.67 + rem;
+  height: 1*2.67 + rem;
+  font-size: .28*2.67 + rem;
+  margin: 0 .5*2.67 + rem;
+  color: #fff;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.win-login .box a span {
+  display: block;
+  width: 100%;
+}
+
+.icon-login {
+  width: .66*2.67 + rem;
+  height: .66*2.67 + rem;
+  background: url(../../assets/entry_login.png) center no-repeat;
+  background-size: contain;
+}
+
+.icon-register {
+  width: .66*2.67 + rem;
+  height: .66*2.67 + rem;
+  background: url(../../assets/entry_register.png) center no-repeat;
+  background-size: contain;
+}
+
+.box a span.name {
+  text-align: center;
+  margin-top: .10*2.67 + rem;
+}

@@ -1,0 +1,32 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "target": "es5",
+    "baseUrl": ".",
+    "jsx": "react",
+    "lib": [
+      "es2015",
+      "es2017",
+      "dom"
+    ],
+    // "pretty": true,
+    // "watch": true,
+    "paths": {
+      "Src/*": [
+        "./src/*"
+      ],
+      "DOM/*": [
+        "./src/DOM/*"
+      ],
+      "Base/*": [
+        "./src/Base/*"
+      ]
+    }
+  },
+  "include": [
+    "./src/**/*.tsx",
+    "./src/**/*.ts"
+  ],
+}
