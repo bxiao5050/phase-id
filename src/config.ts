@@ -22,6 +22,18 @@ var config2 = { // 仙灵记
   markGAID: 'UA-121906563-4',
   language: 'TW'
 }
+var config3 = { // 仙灵记
+  appKey: "6a5e960397cc47918ce7655cb14ddc57",
+  FbAppID: '207109776827136',
+  messenger: 'https://business.facebook.com/ipocketgames.xlj/?business_id=272212516313332&ref=bookmarks',
+  fanpage: 'https://business.facebook.com/ipocketgames.xlj/?business_id=272212516313332&ref=bookmarks',
+  FbPageId: '350841588735718',
+  server: 'https://sdk-sg.pocketgamesol.com/pocketgames/client',
+  test: 'https://sdk-test.changic.net.cn/pocketgames/client',
+  markFBID: '',
+  markGAID: '',
+  language: 'TW'
+}
 var config4 = { // 仙灵记
   appKey: "6a5e960397cc47918ce7655cb14ddc57",
   FbAppID: '406727743486761',// 
@@ -34,17 +46,27 @@ var config4 = { // 仙灵记
   markGAID: 'UA-121906563-4',
   language: 'TW'
 }
-var config3 = { // 仙灵记
+var config5 = { // xiang shu koudai
   appKey: "6a5e960397cc47918ce7655cb14ddc57",
-  FbAppID: '207109776827136',
+  FbAppID: '406727743486761',// 
   messenger: 'https://business.facebook.com/ipocketgames.xlj/?business_id=272212516313332&ref=bookmarks',
   fanpage: 'https://business.facebook.com/ipocketgames.xlj/?business_id=272212516313332&ref=bookmarks',
   FbPageId: '350841588735718',
-  server: 'https://sdk-sg.pocketgamesol.com/pocketgames/client',
-  test: 'https://sdk-test.changic.net.cn/pocketgames/client',
-  markFBID: '',
-  markGAID: '',
-  language: 'TW'
+  server: {
+    test: 'https://sdk-test.changic.net.cn/pocketgames/client',
+    formal: 'https://sdk-sg.pocketgamesol.com/pocketgames/client',
+  },
+  markFBID: '248456995960454',
+  markGAID: 'UA-121906563-4',
+  language: 'TW',
+  gamePage: {
+    test: '',
+    formal: ''
+  },
+  loginPage: {
+    test: '',
+    formal: ''
+  },
 }
 
 export default {
