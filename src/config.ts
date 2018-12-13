@@ -46,18 +46,18 @@ var config4 = { // 仙灵记
   markGAID: 'UA-121906563-4',
   language: 'TW'
 }
-var config5 = { // xiang shu koudai
-  appKey: "6a5e960397cc47918ce7655cb14ddc57",
-  FbAppID: '406727743486761',// 
-  messenger: 'https://business.facebook.com/ipocketgames.xlj/?business_id=272212516313332&ref=bookmarks',
-  fanpage: 'https://business.facebook.com/ipocketgames.xlj/?business_id=272212516313332&ref=bookmarks',
-  FbPageId: '350841588735718',
+var config5 = { // xiang su koudai
+  appKey: "bebb9e42c3984939ae9dd3410d13666f",
+  FbAppID: '406727743486761',// w
+  messenger: 'https://business.facebook.com/ipocketgames.xlj/?business_id=272212516313332&ref=bookmarks',//w
+  fanpage: 'https://business.facebook.com/ipocketgames.xlj/?business_id=272212516313332&ref=bookmarks',//w
+  FbPageId: '350841588735718',//w
   server: {
-    test: 'https://sdk-test.changic.net.cn/pocketgames/client',
-    formal: 'https://sdk-sg.pocketgamesol.com/pocketgames/client',
+    test: 'http://sdk-test.changic.net.cn:8191/pocketgames/client',
+    formal: 'http://desdk-cdn.pkmonquest.com:8091/pocketgames/client',
   },
-  markFBID: '248456995960454',
-  markGAID: 'UA-121906563-4',
+  markFBID: '248456995960454',//w
+  markGAID: 'UA-121906563-4',//w
   language: 'TW',
   gamePage: {
     test: '',
@@ -77,5 +77,8 @@ export default {
     default: config2,
     18: config3,
     32001: config4,
+  },
+  10133: {
+    30001:config5
   }
 }
