@@ -67,7 +67,7 @@ export default class Payment extends React.Component<PaymentProps, {}, any> {
       )
     } else {
       if (payments.showMethod === 0) { // 直接下单
-        SDK.Ordering(payments)
+        RG.jssdk.Ordering(payments)
           .then((orderRes: OrderRes) => {
             this.orderCompleted(orderRes, payments)
           })
@@ -95,7 +95,7 @@ export default class Payment extends React.Component<PaymentProps, {}, any> {
               }}
             >
             </a>
-            <h2>{SDK.config.i18n.PayCenter}</h2>
+            <h2>{RG.jssdk.config.i18n.PayCenter}</h2>
             <a
               onClick={this.props.App.hidePayment}
               className="close">

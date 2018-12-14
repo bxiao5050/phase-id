@@ -25,7 +25,7 @@ export default class Type5 extends React.Component<paymentProps, {}, any>  {
   }
 
   pay = () => {
-    SDK.Ordering(this.props.Payment.state.paymentDatas[this.index]).then((OrderRes: OrderRes) => {
+    RG.jssdk.Ordering(this.props.Payment.state.paymentDatas[this.index]).then((OrderRes: OrderRes) => {
       if (OrderRes.code === 200) {
         this.props.Payment.state.paymentDatas[0] = OrderRes.data.returnInfo
         this.props.Payment.props.history.push(

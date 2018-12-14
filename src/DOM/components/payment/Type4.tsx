@@ -24,7 +24,7 @@ export default class Type4 extends React.Component<paymentProps, {}, any>  {
           this.props.Payment.state.paymentDatas[this.index].nodes.map((node, i) => (
             <li key={i} data-id={i}
               onClick={() => {
-                SDK.Ordering(node).then((OrderRes: OrderRes) => {
+                RG.jssdk.Ordering(node).then((OrderRes: OrderRes) => {
                   if (OrderRes.code === 200) {
                     this.props.Payment.state.paymentDatas[0] = OrderRes.data.returnInfo
                     this.props.Payment.props.history.push(createLocation('/type0'))

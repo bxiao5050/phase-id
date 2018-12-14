@@ -33,45 +33,45 @@ class Main extends React.Component<accountProps, any, any> {
         <div className="info-head"></div>
         <div className="info-msg">
           <p className="info-name">
-            {SDK.config.i18n.txt_account_name} {RG.CurUserInfo().userName}
+            {RG.jssdk.config.i18n.txt_account_name} {RG.CurUserInfo().userName}
           </p>
           <p className="info-id">
             <span>
-              {SDK.type === 2 ? `${SDK.config.i18n.txt_device_num} ${this.state.deviceNo}` : `UID: ${RG.CurUserInfo().userId}`}
+              {RG.jssdk.type === 2 ? `${RG.jssdk.config.i18n.txt_device_num} ${this.state.deviceNo}` : `UID: ${RG.CurUserInfo().userId}`}
             </span>
             {/* <span className="copy">Copy</span> */}
           </p>
           <a className="pay-his" onClick={() => {
-            SDK.GetPaymentHistory().then((data: any) => {
+            RG.jssdk.GetPaymentHistory().then((data: any) => {
               if (data.data.length) {
                 props.history.push(createLocation('/payment-history', {
                   data
                 }))
               } else {
-                App.instance.showNotice(SDK.config.i18n.p2refresh_end_no_records)
+                App.instance.showNotice(RG.jssdk.config.i18n.p2refresh_end_no_records)
               }
             })
-          }}>{SDK.config.i18n.txt_check_charge}</a>
+          }}>{RG.jssdk.config.i18n.txt_check_charge}</a>
         </div>
       </div>
       <div className="others">
         <Link className="item-other" to="/change-password">
           <img src={require("DOM/assets/ui_setting.png")} />
-          <p>{SDK.config.i18n.dom010}</p>
+          <p>{RG.jssdk.config.i18n.dom010}</p>
           <img src={require("DOM/assets/ui_right_arrow.png")} className="right" />
         </Link>
         <a className="item-other setting" onClick={() => {
           // RG.Install && RG.Install('仙靈計', 'http://xianlingji.bilivfun.com/xlj')
         }}>
           <img src={require("DOM/assets/ui_email.png")} />
-          <p>{SDK.config.i18n.txt_safe_set}</p>
+          <p>{RG.jssdk.config.i18n.txt_safe_set}</p>
           <img src={require("DOM/assets/ui_right_arrow.png")} className="right" />
         </a>
         <a className="item-other" onClick={() => {
           window.rgChangeAccount && window.rgChangeAccount()
         }}>
           <img src={require("DOM/assets/ui_switch_account.png")} />
-          <p>{SDK.config.i18n.dom011}</p>
+          <p>{RG.jssdk.config.i18n.dom011}</p>
           <img src={require("DOM/assets/ui_right_arrow.png")} className="right" />
         </a>
       </div>
@@ -108,23 +108,23 @@ class VisitorUpgrade extends React.Component<accountProps, {}, {}>  {
           var pass1 = this.refs.pass1.value
           var pass2 = this.refs.pass2.value
           if (pass1 !== pass2) {
-            this.props.App.showNotice(SDK.config.i18n.errMsg001)
+            this.props.App.showNotice(RG.jssdk.config.i18n.errMsg001)
           } else {
             var password = md5(pass1);
-            SDK.VisitorUpgrade(account, password).then((res) => {
+            RG.jssdk.VisitorUpgrade(account, password).then((res) => {
               if (res.code === 200) {
                 var user = RG.CurUserInfo()
 
                 user.password = password
                 user.userName = account
                 user.userType = 1
-                SDK.SetUser(user)
+                RG.jssdk.SetUser(user)
 
-                this.props.App.showNotice(SDK.config.i18n.msg001)
+                this.props.App.showNotice(RG.jssdk.config.i18n.msg001)
                 App.instance.showHover(false)
                 App.instance.hideAccount()
               } else if (res.code === 107) {
-                this.props.App.showNotice(SDK.config.i18n.code102)
+                this.props.App.showNotice(RG.jssdk.config.i18n.code102)
               } else {
                 this.props.App.showNotice(res.error_msg)
               }
@@ -132,7 +132,7 @@ class VisitorUpgrade extends React.Component<accountProps, {}, {}>  {
           }
         }}
       >
-        {SDK.config.i18n.float_button_bind_account}
+        {RG.jssdk.config.i18n.float_button_bind_account}
       </button>
     </div>
   }
@@ -168,23 +168,23 @@ class Changepass extends React.Component<accountProps, {}, {}>  {
           var pass1 = this.refs.pass1.value
           var pass2 = this.refs.pass2.value
           if (pass1 !== pass2) {
-            this.props.App.showNotice(SDK.config.i18n.errMsg001)
+            this.props.App.showNotice(RG.jssdk.config.i18n.errMsg001)
           }
           else if (!old || !pass1) {
-            this.props.App.showNotice(SDK.config.i18n.dom002)
+            this.props.App.showNotice(RG.jssdk.config.i18n.dom002)
           }
           else {
             var oldpass = md5(old);
             var password = md5(pass1);
-            SDK.ChangePassword(oldpass, password).then((res) => {
+            RG.jssdk.ChangePassword(oldpass, password).then((res) => {
               if (res.code === 200) {
                 var user = RG.CurUserInfo()
                 user.password = password
-                SDK.SetUser(user)
-                this.props.App.showNotice(SDK.config.i18n.msg001)
+                RG.jssdk.SetUser(user)
+                this.props.App.showNotice(RG.jssdk.config.i18n.msg001)
                 App.instance.hideAccount()
               } else if (res.code === 107) {
-                this.props.App.showNotice(SDK.config.i18n.code102)
+                this.props.App.showNotice(RG.jssdk.config.i18n.code102)
               } else {
                 this.props.App.showNotice(res.error_msg)
               }
@@ -192,7 +192,7 @@ class Changepass extends React.Component<accountProps, {}, {}>  {
           }
         }}
       >
-        {SDK.config.i18n.txt_change_psw}
+        {RG.jssdk.config.i18n.txt_change_psw}
       </button>
     </div>
   }
@@ -216,20 +216,20 @@ class PaymentHistory extends React.Component<accountProps, {}, {}> {
           this.state.list.map((node, index) => (
             <div className="order" key={index}>
               <div className="order-line">
-                <p className="order-blue">{SDK.config.i18n.txt_charge_num_tips}</p>
+                <p className="order-blue">{RG.jssdk.config.i18n.txt_charge_num_tips}</p>
                 <p>{node.amount + ' ' + node.currency}</p>
               </div>
               <div className="order-line">
-                <p className="order-blue">{SDK.config.i18n.txt_charge_way_tips}</p>
-                <p>{SDK.type === 1 ? SDK.config.i18n.txt_other_way : SDK.config.i18n.txt_official}</p>
+                <p className="order-blue">{RG.jssdk.config.i18n.txt_charge_way_tips}</p>
+                <p>{RG.jssdk.type === 1 ? RG.jssdk.config.i18n.txt_other_way : RG.jssdk.config.i18n.txt_official}</p>
               </div>
               <div className="order-line">
-                <p className="order-blue">{SDK.config.i18n.txt_order_num_tips}</p>
+                <p className="order-blue">{RG.jssdk.config.i18n.txt_order_num_tips}</p>
                 <p>{node.transactionId}</p>
               </div>
               <div className="order-line order-result">
-                <p className="order-red">{SDK.config.i18n.txt_charge_status_tips}</p>
-                <p>{node.status == 200 ? SDK.config.i18n.msg001 : SDK.config.i18n.net_error_203}</p>
+                <p className="order-red">{RG.jssdk.config.i18n.txt_charge_status_tips}</p>
+                <p>{node.status == 200 ? RG.jssdk.config.i18n.msg001 : RG.jssdk.config.i18n.net_error_203}</p>
                 <p className="order-time">{node.clientDate}</p>
               </div>
               <div className={node.status == 200 ? "order-status" : "order-status red"}></div>
@@ -251,7 +251,7 @@ const Header = (props: accountProps) => {
       onClick={props.history.goBack}
       className="back">
     </a>
-    <h2>{SDK.config.i18n.float_button_user_center}</h2>
+    <h2>{RG.jssdk.config.i18n.float_button_user_center}</h2>
     <a
       onClick={props.App.hideAccount}
       className="close">

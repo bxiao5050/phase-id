@@ -35,12 +35,12 @@ export default class Main extends React.Component<{
         isFacebook: true
       }
     }
-    await SDK.Login(loginParam)
+    await RG.jssdk.Login(loginParam)
     this.props.Login.loginComplete()
   }
 
   state = {
-    users: SDK.GetUsers()
+    users: RG.jssdk.GetUsers()
   }
 
   render() {
@@ -53,13 +53,13 @@ export default class Main extends React.Component<{
             return <Choose ref="choose" Login={this.props.Login} App={this.props.App} />
           } else {
             return <a className="btn-guest" onClick={this.toLogin.bind(this, true)}>
-              &gt;&gt;&gt; {SDK.config.i18n.dom008} &lt;&lt;&lt;
+              &gt;&gt;&gt; {RG.jssdk.config.i18n.dom008} &lt;&lt;&lt;
             </a>
           }
         }} />
 
         <a className="btn-fb" onClick={() => {
-          if (SDK['fbSdkIsLoaded']) {
+          if (RG.jssdk.fb_sdk_loaded) {
             App.instance.showNotice('facebook 登錄跳轉中')
             // this.toLogin.bind(this, false)
             this.toLogin.apply(this, [false])
@@ -68,7 +68,7 @@ export default class Main extends React.Component<{
           }
         }}>
           <span className="icon-fb " />
-          <span>&nbsp;{SDK.config.i18n.dom005} Facebook</span>
+          <span>&nbsp;{RG.jssdk.config.i18n.dom005} Facebook</span>
         </a>
       </div>
       <div className="line">
@@ -83,7 +83,7 @@ export default class Main extends React.Component<{
         }}
         >
           <span className="icon-login" />
-          <span className="name">{SDK.config.i18n.dom005}</span>
+          <span className="name">{RG.jssdk.config.i18n.dom005}</span>
         </a>
         <div className="line-bot" />
         <a className="btn-register" onClick={() => {
@@ -92,7 +92,7 @@ export default class Main extends React.Component<{
           )
         }}>
           <span className="icon icon-register" />
-          <span className="name">{SDK.config.i18n.dom004}</span>
+          <span className="name">{RG.jssdk.config.i18n.dom004}</span>
         </a>
       </div>
     </div>

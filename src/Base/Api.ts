@@ -27,7 +27,7 @@ export default class Api {
       {
         sign: Utils.signed({
           userId: BindZoneParam.userId,
-          appId: SDK.config.appId,
+          appId: RG.jssdk.config.appId,
           gameZoneId: BindZoneParam.gameZoneId,
           source: deviceMsg.source
         })
@@ -40,13 +40,13 @@ export default class Api {
 
   public BindVisitor(account: string, password: string) {
     var data = {
-      appId: SDK.config.appId,
+      appId: RG.jssdk.config.appId,
       userId: RG.CurUserInfo().userId,
       userName: account,
       password: password,
       email: '',
       sign: Utils.signed({
-        appId: SDK.config.appId,
+        appId: RG.jssdk.config.appId,
         userId: RG.CurUserInfo().userId,
         userName: account,
         password: password
@@ -54,10 +54,10 @@ export default class Api {
     }
     return Http.instance.post({ route: this.route.bindVisitor, data }).then(data => {
       if (data.code === 200) {
-        var userInfo = SDK.GetUser()
+        var userInfo = RG.jssdk.GetUser()
 
         userInfo.userName = account
-        SDK.SetUser(userInfo)
+        RG.jssdk.SetUser(userInfo)
 
       }
       return data

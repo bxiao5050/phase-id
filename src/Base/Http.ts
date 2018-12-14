@@ -1,4 +1,4 @@
-import Base from "Src/Base";
+import Base from "Src/Main";
 
 export default class Http {
   static _ins: Http
@@ -9,7 +9,7 @@ export default class Http {
     Http._ins = this
   }
 
-  private serverAddress = IS_TEST ? SDK.config.server.test : SDK.config.server.formal
+  private serverAddress = IS_TEST ? RG.jssdk.config.server.test : RG.jssdk.config.server.formal
 
   private request(param: requestParam): Promise<ServerRes> {
     // var mode: RequestMode

@@ -55,7 +55,7 @@ export default class Account {
 
   changePass(oldpass, newpass) {
     var data = {
-      appId: SDK.config.appId,
+      appId: RG.jssdk.config.appId,
       userId: this.userInfo.userId,
       password: oldpass,
       newPassword: newpass,
@@ -63,7 +63,7 @@ export default class Account {
     }
 
     data.sign = Utils.signed({
-      appId: SDK.config.appId,
+      appId: RG.jssdk.config.appId,
       userId: this.userInfo.userId,
       password: oldpass,
       newPassword: newpass

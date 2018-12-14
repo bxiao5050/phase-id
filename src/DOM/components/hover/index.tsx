@@ -163,7 +163,7 @@ export default class Hover extends React.Component<{
               this.props.instance.showAccount()
             }}
           >
-            {SDK.config.i18n.float_button_bind_account}
+            {RG.jssdk.config.i18n.float_button_bind_account}
           </a>
         </div> : <div className="item">
             <a className="icon account"
@@ -171,17 +171,17 @@ export default class Hover extends React.Component<{
                 this.props.instance.showAccount()
               }}
             >
-              {SDK.config.i18n.float_button_user_center}
+              {RG.jssdk.config.i18n.float_button_user_center}
             </a>
           </div>}
         <div className="item">
           <a className="icon contact"
             onClick={() => {
               RG.Mark('sdk_contact_us')
-              window.open(SDK.config.messenger)
+              window.open(RG.jssdk.config.messenger)
             }}
           >
-            {SDK.config.i18n.float_button_service}
+            {RG.jssdk.config.i18n.float_button_service}
           </a>
         </div>
       </div>

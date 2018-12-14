@@ -8,31 +8,23 @@ export default class Polyfill {
     Polyfill._ins = this
   }
 
-  polyfills = [
-    'Promise', 'Set', 'Map', 'Object.assign'
-  ]
-
+  polyfills = ['Promise', 'Set', 'Map', 'Object.assign']
   polyfillUrl = 'https://polyfill.io/v2/polyfill.min.js'
-
   features = [];
-
   init() {
-
     this.polyfills.forEach(feature => {
       if (!(feature in window)) {
         this.features.push(feature)
       }
     })
-
     if (this.features.length) {
       var s = document.createElement('script');
-      s.src = `${this.polyfillUrl}?features=${this.features.join(',')}&flags=gated,always&rum=0&callback=SDK.polyfilled`;
+      s.src = `${this.polyfillUrl}?features=${this.features.join(',')}&flags=gated,always&rum=0&callback=RgPolyfilled`;
       s.async = true;
       document.head.appendChild(s);
     } else {
-      SDK.polyfilled()
+      window.RgPolyfilled()
     }
-
   }
 
 }

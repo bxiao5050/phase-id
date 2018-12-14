@@ -40,14 +40,14 @@ export default class Type3 extends React.Component<paymentProps, {}, any>  {
           </div>
           <div className="right"
             onClick={() => {
-              SDK.Ordering(source).then((OrderRes: OrderRes) => {
+              RG.jssdk.Ordering(source).then((OrderRes: OrderRes) => {
                 if (OrderRes.code !== 200) {
                   console.error(OrderRes.error_msg)
                 }
               })
             }}
           >
-            {SDK.config.i18n.Purchase}
+            {RG.jssdk.config.i18n.Purchase}
           </div>
         </div>
       </ul>

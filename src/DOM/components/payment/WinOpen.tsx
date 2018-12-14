@@ -12,7 +12,7 @@ export default class WinOpen extends React.Component<any, any, any>  {
           })
         }}></div>
         <div className="upper">
-          {SDK.config.i18n.winopen}
+          {RG.jssdk.config.i18n.winopen}
         </div>
         <div className="udder">
           <div className="btn-jump" onClick={() => {
@@ -21,7 +21,7 @@ export default class WinOpen extends React.Component<any, any, any>  {
               winOpen: false
             })
           }}>
-            {SDK.config.i18n.jump}
+            {RG.jssdk.config.i18n.jump}
           </div>
         </div>
       </div>

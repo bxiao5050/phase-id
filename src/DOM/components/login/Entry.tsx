@@ -35,7 +35,7 @@ export default class Entry extends React.Component<EntryProp, {}, any>  {
             }
             var password: string = password
             try {
-              await SDK.Login({
+              await RG.jssdk.Login({
                 userName,
                 password
               })
@@ -44,16 +44,16 @@ export default class Entry extends React.Component<EntryProp, {}, any>  {
               this.props.App.showNotice(err)
             }
           }}
-        >{SDK.config.i18n.dom005}</a>
+        >{RG.jssdk.config.i18n.dom005}</a>
         <div className="box-link">
           <a onClick={() => {
             this.props.Login.props.history.goBack()
-          }} className="link-change">&lt;&lt; {SDK.config.i18n.dom003}</a>
+          }} className="link-change">&lt;&lt; {RG.jssdk.config.i18n.dom003}</a>
           <a onClick={() => {
             this.props.Login.props.history.push(
               createLocation('/register')
             )
-          }} className="link-register">{SDK.config.i18n.dom004} &gt;&gt;</a>
+          }} className="link-register">{RG.jssdk.config.i18n.dom004} &gt;&gt;</a>
         </div>
       </div>
 

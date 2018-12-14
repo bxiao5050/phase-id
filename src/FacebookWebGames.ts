@@ -1,5 +1,6 @@
 import Mark from 'Base/Mark'
 import App from 'DOM/index'
+import { DOT } from './Base/Constant';
 
 /**
  * facebook web games javascript SDK
@@ -20,7 +21,7 @@ export default class FacebookWebGames {
 
   async Login() { // 调启登录
     console.log('调启登录')
-    var loginRes = await SDK.Login({
+    var loginRes = await RG.jssdk.Login({
       isFacebook: true
     })
     console.log(loginRes)
@@ -50,11 +51,11 @@ export default class FacebookWebGames {
       "BindZone",
       "Share",
       "Mark",
+      "Pay"
     ]
     exposeApis.forEach(api => {
-      window.RG[api] = SDK[api]
+      window.RG[api] = RG.jssdk[api]
     })
-    window.RG["Pay"] = this.Pay
   }
 
   /**
@@ -63,12 +64,12 @@ export default class FacebookWebGames {
    */
   async Pay(payParams: RG.PayParams): Promise<ServerRes> {
     // if ('product_id' in payParams) {
-    var paymentConfig = await SDK.PaymentConfig(payParams)
+    var paymentConfig = await RG.jssdk.PaymentConfig(payParams)
     if (paymentConfig.code === 200) {
       var orderingData = paymentConfig.payments.find(payment => {
         return payment.name === "Facebook"
       })
-      var orderRes = await SDK.Ordering(orderingData)
+      var orderRes = await RG.jssdk.Ordering(orderingData)
       if (orderRes.code === 200) {
         var serverRes = await FacebookWebGames.instance.purchaseAsync(orderingData, orderRes)
         return serverRes
@@ -97,8 +98,8 @@ export default class FacebookWebGames {
         // { access_token: access_token },  
         ({ success }) => {
           if (success) { // facebook 消单成功
-            RG.Mark('sdk_purchased_done')
-            App.instance.showNotice(SDK.config.i18n.net_error_30200)
+            RG.Mark(DOT.SDK_PURCHASED_DONE)
+            App.instance.showNotice(RG.jssdk.config.i18n.net_error_30200)
             resolve({
               code: 200,
               error_msg: ''
@@ -146,7 +147,7 @@ export default class FacebookWebGames {
           console.log('存在未消单订单 需要进行消单', payload)
           payload.data.forEach(data => {
             var { orderingData, orderRes } = JSON.parse(data.developer_payload)
-            SDK.FinishOrder({
+            RG.jssdk.FinishOrder({
               transactionId: orderRes.data.transactionId,
               channel: orderingData.channel,
               receipt: data.payment_id + '',
@@ -179,7 +180,7 @@ export default class FacebookWebGames {
         })
       }, async (purchase) => {
         if (purchase && !purchase.error_code) {
-          var serverRes = await SDK.FinishOrder({
+          var serverRes = await RG.jssdk.FinishOrder({
             transactionId: orderRes.data.transactionId,
             channel: orderingData.channel,
             receipt: purchase.payment_id + '',

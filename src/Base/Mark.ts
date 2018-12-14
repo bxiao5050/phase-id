@@ -9,7 +9,7 @@ export default class Mark {
   }
 
   init() {
-    if (SDK.config.markFBID) {
+    if (RG.jssdk.config.markFBID) {
       (function (f, b, e, v, n, t, s) {
         if (f.fbq) return; n = f.fbq = function () {
           n.callMethod ?
@@ -21,24 +21,24 @@ export default class Mark {
         s.parentNode.insertBefore(t, s);
 
         var noscript = document.createElement('noscript')
-        noscript.innerHTML = `<img height="1" width="1" style="display:none" src = "https://www.facebook.com/tr?id=${SDK.config.markFBID}&ev=PageView&noscript=1" />`;
+        noscript.innerHTML = `<img height="1" width="1" style="display:none" src = "https://www.facebook.com/tr?id=${RG.jssdk.config.markFBID}&ev=PageView&noscript=1" />`;
         document.body.appendChild(noscript);
       })(window, document, 'script',
         'https://connect.facebook.net/en_US/fbevents.js');
-      window.fbq('init', SDK.config.markFBID);
+      window.fbq('init', RG.jssdk.config.markFBID);
       window.fbq('track', 'PageView');
     }
 
-    if (SDK.config.markGAID) {
+    if (RG.jssdk.config.markGAID) {
       (function (f, b, e, v, n, t, s) {
         t = b.createElement(e); t.async = !0;
         t.src = v; t.async = true; s = b.getElementsByTagName(e)[0];
         s.parentNode.insertBefore(t, s);
       })(window, document, 'script',
-        `https://www.googletagmanager.com/gtag/js?id=${SDK.config.markGAID}`);
+        `https://www.googletagmanager.com/gtag/js?id=${RG.jssdk.config.markGAID}`);
       window.dataLayer = window.dataLayer || [];
       this.gtag('js', new Date());
-      this.gtag('config', SDK.config.markGAID);
+      this.gtag('config', RG.jssdk.config.markGAID);
     }
   }
 
@@ -47,12 +47,12 @@ export default class Mark {
   }
 
   Mark(markName: string) {
-    if (SDK.config.markFBID) {
+    if (RG.jssdk.config.markFBID) {
       window.fbq('track', markName)
     }
-    if (SDK.config.markGAID) {
+    if (RG.jssdk.config.markGAID) {
       this.gtag('event', markName)
     }
-    if (SDK.config.markFBID || SDK.config.markGAID) console.info(`"${markName}" has marked - web`)
+    if (RG.jssdk.config.markFBID || RG.jssdk.config.markGAID) console.info(`"${markName}" has marked - web`)
   }
 }

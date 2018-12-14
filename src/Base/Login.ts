@@ -35,7 +35,7 @@ export default class Login {
         console.log('login response', res)
         switch (res.code) {
           case 200:
-            SDK.SetUser(Object.assign(res.data, {
+            RG.jssdk.SetUser(Object.assign(res.data, {
               password: data.password,
               token: res.token
             }))
@@ -46,9 +46,9 @@ export default class Login {
             break;
           default:
             if (res.code == 102) {
-              reject(SDK.config.i18n.code102);
+              reject(RG.jssdk.config.i18n.code102);
             } else if (res.code == 101) {
-              reject(SDK.config.i18n.code101)
+              reject(RG.jssdk.config.i18n.code101)
             } else {
               reject(res.error_msg)
             }
@@ -71,7 +71,7 @@ export default class Login {
       var deviceMsg: DeviceMsg = await JsToNative.getDeviceMsgAsync() as any
       // 获取签名信息
       var sign = Utils.signed({
-        appId: SDK.config.appId,
+        appId: RG.jssdk.config.appId,
         userName: loginParam.userName,
         password: loginParam.password,
         source: deviceMsg.source
@@ -124,14 +124,14 @@ export default class Login {
         isFacebook: true,
         userName: null,
         password: '',
-        appId: SDK.config.appId,
+        appId: RG.jssdk.config.appId,
         accountType: 2,
         thirdPartyId: '',
         email: '',
         telephone: '',
         userChannel: 0,
       }
-      if (SDK.type === 4) {
+      if (RG.jssdk.type === 4) {
         this.reqRegister(params, {
           response: {
             userID: FBInstant.player.getID() || 'test'
@@ -147,8 +147,8 @@ export default class Login {
               this.reqRegister(params, { response, resolve, reject })
             })
           } else {
-            if (SDK.type === 2) {
-              location.href = `https://www.facebook.com/${FBVersion}/dialog/oauth?client_id=${SDK.config.FbAppID}&redirect_uri=${encodeURIComponent(location.href)}&t=${Date.now()}`
+            if (RG.jssdk.type === 2) {
+              location.href = `https://www.facebook.com/${FBVersion}/dialog/oauth?client_id=${RG.jssdk.config.FbAppID}&redirect_uri=${encodeURIComponent(location.href)}&t=${Date.now()}`
             } else {
               FB.login(response => {
                 if (response.status === "connected") {

@@ -1,5 +1,3 @@
-import Base from "Src/Base";
-
 Date.prototype.format = function (fmt) { // author: meizz
   var o = {
     "M+": this.getMonth() + 1, //月份
@@ -98,7 +96,7 @@ export default class Utils {
     // console.log('initDeviceMsg')
     var info = {
       source: 0,
-      advChannel: SDK.config.advChannel,
+      advChannel: RG.jssdk.config.advChannel,
       network: 0,
       model: '0',
       operatorOs: '0',
@@ -106,9 +104,9 @@ export default class Utils {
       device: '0',
       version: '0',
       sdkVersion: '0',
-      appId: SDK.config.appId
+      appId: RG.jssdk.config.appId
     }
-    if (SDK.type === 2) { // 原生应用
+    if (RG.jssdk.type === 2) { // 原生应用
       var deviceMsg = await JsToNative.getDeviceMsgAsync()
       // console.log('it is native deviceMsg and msg is ', deviceMsg)
       info.device = deviceMsg.device
@@ -135,7 +133,7 @@ export default class Utils {
   }
 
   public static async refetchDeviceMsg() {
-    if (SDK.type === 2) { // 原生应用
+    if (RG.jssdk.type === 2) { // 原生应用
       var deviceMsg = await JsToNative.getDeviceMsgAsync()
       this._deviceMsg.network = deviceMsg.network
     }
@@ -156,7 +154,7 @@ export default class Utils {
     var paramskeys = Object.keys(params)
     var data = paramskeys.map(key => {
       return params[key]
-    }).join('') + (SDK.config.appKey)
+    }).join('') + (RG.jssdk.config.appKey)
     return md5(data);
   }
 

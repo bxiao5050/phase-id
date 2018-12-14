@@ -17,3 +17,19 @@ export var RouteFinishOrder = '/official/order/finish/v4.0'
 
 
 export var RouteBindVisitor = '/user/bindVisitor'
+
+export enum ERROR {
+  E_001 = 'appId or advChannel is not defined'
+}
+
+export enum GET {
+  USER = 'user',
+  APP_ID = 'appId',
+  ADV_CHANNEL = 'advChannel',
+  DEBUGGER = 'debugger'
+}
+
+export enum DOT {
+  SDK_LOADED = 'sdk_loaded',
+  SDK_PURCHASED_DONE = 'sdk_purchased_done'
+}

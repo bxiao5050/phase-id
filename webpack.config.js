@@ -61,7 +61,7 @@ var definePlugin = {
 var webpackConfig = {
 
 	entry: {
-		SDK: path.join(__dirname, 'src', 'Base.ts'),
+		SDK: path.join(__dirname, 'src', 'Main.ts'),
 	},
 
 	resolve: {

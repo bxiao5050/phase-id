@@ -19,7 +19,7 @@ export default class Choose extends React.Component<ChooseProps, {}, any>  {
   }
 
   state = {
-    users: SDK.GetUsers(),
+    users: RG.jssdk.GetUsers(),
     userName: '',
     password: '',
     showList: false,
@@ -50,10 +50,10 @@ export default class Choose extends React.Component<ChooseProps, {}, any>  {
         break;
     }
     try {
-      await SDK.Login(loginParam)
+      await RG.jssdk.Login(loginParam)
       this.props.Login.loginComplete()
     } catch (err) {
-      if (err === SDK.config.i18n.code102) {
+      if (err === RG.jssdk.config.i18n.code102) {
         this.deleteUser(account.userId)
       }
       this.props.App.showNotice(err)
@@ -72,12 +72,12 @@ export default class Choose extends React.Component<ChooseProps, {}, any>  {
   }
 
   deleteUser = (userId) => {
-    var userInfo = SDK.GetUser()
+    var userInfo = RG.jssdk.GetUser()
 
-    userInfo && userId === userInfo.userId && SDK.SetUser(null, userId);
+    userInfo && userId === userInfo.userId && RG.jssdk.SetUser(null, userId);
     delete this.state.users[userId]
 
-    SDK.SetUsers(this.state.users)
+    RG.jssdk.SetUsers(this.state.users)
     var usersKeys = Object.keys(this.state.users)
     if (!usersKeys.length && this.props.Login.props.history.location.pathname === '/main') {
       this.props.Login.props.history.replace('/main')
@@ -149,7 +149,7 @@ export default class Choose extends React.Component<ChooseProps, {}, any>  {
         <div className="icon"></div>
         <input
           type="text"
-          placeholder={SDK.config.i18n.dom001}
+          placeholder={RG.jssdk.config.i18n.dom001}
           id="username"
           value={this.state.userName}
           onChange={(e) => this.onChange(e)}
@@ -187,7 +187,7 @@ export default class Choose extends React.Component<ChooseProps, {}, any>  {
       </div>
       <Route exact path={'/entry'} render={() => <div className="line-input password">
         <div className="icon"></div>
-        <input type="password" placeholder={SDK.config.i18n.dom002}
+        <input type="password" placeholder={RG.jssdk.config.i18n.dom002}
           value={this.state.password}
           onChange={(e) => this.onChange(e)}
           id="password"

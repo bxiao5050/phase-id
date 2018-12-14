@@ -1,5 +1,46 @@
-/// <reference path="./node_modules/@types/react/index.d.ts" />
-/// <reference path="./node_modules/@types/history/index.d.ts" />
+// <reference path="./node_modules/@types/react/index.d.ts" />
+// <reference path="./node_modules/@types/history/index.d.ts" />
+// <reference path="./node_modules/@types/facebook-instant-games/index.d.ts" />
+
+/** jssdk 版本 */
+declare const VERSION: JSSDK.Version
+declare const VConsole: any
+declare namespace JSSDK {
+  /** 1: web端 2：原生应用 3：facebook页游平台 4：facebook instant games */
+  type Type = 1 | 2 | 3 | 4
+  /** jssdk 版本 */
+  type Version = string
+  type CurUserInfo = {
+    userId: number
+    userName: string
+    token: string
+  }
+  /** jssdk 配置项 */
+  interface RG {
+    CurUserInfo: CurUserInfo
+  }
+  interface Config {
+    appId: number
+    appKey: string
+    advChannel: number
+    scopeId?: string
+    FbAppID: string
+    messenger: string
+    fanpage: string
+    FbPageId: string
+    server: {
+      test: string
+      formal: string
+    }
+    test: string
+    markFBID: string
+    markGAID: string
+    language: string
+    i18n: any
+    type: Type
+  }
+}
+
 
 interface RG {
   /**
@@ -7,6 +48,7 @@ interface RG {
      */
   version: string
 
+  jssdk: Base
 
   /** 获取支付数据 */
   Pay(paymentConfig: PaymentConfig): void
@@ -42,13 +84,13 @@ declare interface Window {
   FBInstant: any
   getLoginStatus: Promise<any>
   rgAsyncInit: Function
-  SDK: Base
   fbq: Function
   _fbq: Function
   dataLayer: any[]
   JsToNative: JsToNative
   NativeToJs: NativeToJs
   rgChangeAccount: Function
+  RgPolyfilled: Function
 }
 
 declare var IS_TEST: boolean
@@ -199,26 +241,7 @@ declare interface Date {
 
 /** Store类的前缀字符串 */
 declare var PREFIX: string
-declare interface CONFIG {
-  appId: number
-  appKey: string
-  advChannel: number
-  scopeId?: string
-  FbAppID: string
-  messenger: string
-  fanpage: string
-  FbPageId: string
-  server: {
-    test: string
-    formal: string
-  }
-  test: string
-  markFBID: string
-  markGAID: string
-  language: string
-  i18n: any
-}
-declare var CONFIG: CONFIG
+
 
 declare var md5: Function
 
@@ -229,8 +252,7 @@ declare var React: any
 declare var ReactDom: any
 declare var Router: any
 declare var RG: RG
-declare var SDK: Base
-declare var VERSION: string
+
 declare var SERVER: string
 
 
@@ -272,7 +294,10 @@ interface Base0 {
       * 版本号
       */
   version: string
-  openPage: Window
+
+  config: JSSDK.Config
+
+  fb_sdk_loaded: boolean
 
   polyfilled()
 
@@ -284,9 +309,9 @@ interface Base0 {
    */
   type: number
 
-  config: CONFIG
+  Login(params?: LoginParam): Promise<LoginRes>
 
-  Login(params: LoginParam): Promise<LoginRes>
+  initDebugger()
 
   /** 跳转到messenger页面 */
   Messenger()
@@ -339,6 +364,9 @@ interface Base0 {
 }
 
 type Base = Base0
+
+
+
 
 declare namespace FBInstant {
 
@@ -563,7 +591,7 @@ interface CreateOrderParams {
 }
 
 
-interface StoreMap extends CONFIG {
+interface StoreMap extends JSSDK.Config {
   FbLoginStatus?: Promise<fb.AuthResponse>
   FbLogin?: Promise<fb.AuthResponse>
   FB?: Promise<any>

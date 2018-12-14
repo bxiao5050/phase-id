@@ -38,7 +38,7 @@ export default class TypeList extends React.Component<paymentProps, {}, any>  {
                 <div className="btn-item"
                   onClick={() => {
                     console.log('typeList', product, source)
-                    SDK.Ordering(Object.assign(source, {
+                    RG.jssdk.Ordering(Object.assign(source, {
                       channel: source.channel,
                       code: source.code,
                       isOfficial: source.isOfficial,
@@ -54,7 +54,7 @@ export default class TypeList extends React.Component<paymentProps, {}, any>  {
                     })
                   }}
                 >
-                  {SDK.config.i18n.Purchase}
+                  {RG.jssdk.config.i18n.Purchase}
                 </div>
               </div>
             </li>

@@ -2,6 +2,7 @@ import Http from 'Src/Base/Http';
 import Utils from 'Base/Utils';
 import * as CryptoJS from 'crypto-js'
 import App from 'DOM/index'
+import { DOT } from './Base/Constant';
 export default class NativeGames {
 
   NativeGames = true
@@ -15,7 +16,7 @@ export default class NativeGames {
     /**
      * 下单方法重写
      */
-    SDK.Ordering = (function (Ordering) {
+    RG.jssdk.Ordering = (function (Ordering) {
       return function (OrderingData: PaymentChannel) {
         return Ordering(OrderingData).then(orderRes => {
           console.log('jpwork.jpwork', OrderingData.showMethod, orderRes)
@@ -36,7 +37,7 @@ export default class NativeGames {
           return orderRes
         })
       }
-    })(SDK.Ordering);
+    })(RG.jssdk.Ordering);
     NativeGames.instance.init()
   }
 
@@ -54,9 +55,9 @@ export default class NativeGames {
 
       if (window.rgAsyncInit) {
         window.rgAsyncInit()
-        
+
         if (RG.CurUserInfo().userId == 192711623) {
-          SDK['initDebugger']()
+          RG.jssdk.initDebugger()
         }
 
       } else {
@@ -64,23 +65,23 @@ export default class NativeGames {
           window.rgAsyncInit()
 
           if (RG.CurUserInfo().userId == 192711623) {
-            SDK['initDebugger']()
+            RG.jssdk.initDebugger()
           }
-          
+
         }
       }
     } else {
       if (Utils.getParameterByName('code')) {
-        SDK.Login({ isFacebook: true }).then(() => {
+        RG.jssdk.Login({ isFacebook: true }).then(() => {
           LoginModule.loginComplete()
         })
       } else {
-        var userInfo = SDK.GetUser()
+        var userInfo = RG.jssdk.GetUser()
         var autoLogin = false
         if (userInfo) {
           autoLogin = true
         } else {
-          var usersInfo = SDK.GetUsers()
+          var usersInfo = RG.jssdk.GetUsers()
           var usersIdArr = Object.keys(usersInfo)
           if (usersIdArr.length) {
             var id = usersIdArr[0]
@@ -89,7 +90,7 @@ export default class NativeGames {
           }
         }
         if (autoLogin) {
-          SDK.Login(userInfo).then(() => {
+          RG.jssdk.Login(userInfo).then(() => {
             LoginModule.loginComplete()
           })
         }
@@ -107,14 +108,12 @@ export default class NativeGames {
       "CurUserInfo",
       "BindZone",
       "Share",
-      // "Mark",
+      "Mark",
+      "Pay"
     ]
     exposeApis.forEach(api => {
-      window.RG[api] = SDK[api]
+      window.RG[api] = RG.jssdk[api]
     })
-
-    window.RG["Mark"] = NativeGames.instance.Mark
-    window.RG["Pay"] = NativeGames.instance.Pay
   }
 
   key = CryptoJS.enc.Utf8.parse("flowerwordchangi");
@@ -163,8 +162,8 @@ export default class NativeGames {
           setTimeout(function () {
             var data = JSON.parse(window.JsToNative.getDeviceMsg())
             data = Object.assign(data, {
-              advChannel: SDK.config.advChannel,
-              appId: SDK.config.appId
+              advChannel: RG.jssdk.config.advChannel,
+              appId: RG.jssdk.config.appId
             })
             NativeGames.instance.deviceMsgResolve(data)
             NativeGames.instance.deviceMsgPromise = null
@@ -194,8 +193,8 @@ export default class NativeGames {
   gotDeviceMsg(deviceMsg: string) {
     var data = JSON.parse(deviceMsg)
     data = Object.assign(data, {
-      advChannel: SDK.config.advChannel,
-      appId: SDK.config.appId
+      advChannel: RG.jssdk.config.advChannel,
+      appId: RG.jssdk.config.appId
     })
     NativeGames.instance.deviceMsgResolve(data)
     NativeGames.instance.deviceMsgPromise = null
@@ -208,22 +207,22 @@ export default class NativeGames {
       var deviceMsg = await window.JsToNative.getDeviceMsgAsync()
       var { source, network, model, operatorOs, deviceNo, device, version } = deviceMsg
       var initSDKParam: initSDKParams = {
-        appId: SDK.config.appId,
+        appId: RG.jssdk.config.appId,
         source: source,
-        advChannel: SDK.config.advChannel,
+        advChannel: RG.jssdk.config.advChannel,
         network: network,
         model: model,
         operatorOs: operatorOs,
         deviceNo: deviceNo,
         device: device,
         version: version,
-        sdkVersion: SDK.version,
+        sdkVersion: RG.jssdk.version,
         clientTime: new Date().format("yyyy-MM-dd hh:mm:ss"),
         firstInstall: 0,
         sign: Utils.signed({
-          appId: SDK.config.appId,
+          appId: RG.jssdk.config.appId,
           source: source,
-          advChannel: SDK.config.advChannel,
+          advChannel: RG.jssdk.config.advChannel,
         })
       }
 
@@ -296,7 +295,7 @@ export default class NativeGames {
   }
 
   goBack() {
-    if (confirm(SDK.config.i18n.tuichu)) {
+    if (confirm(RG.jssdk.config.i18n.tuichu)) {
       JsToNative.exitApp()
     }
   }
@@ -305,8 +304,8 @@ export default class NativeGames {
     console.log('jpworkResult', params)
     var result = JSON.parse(params)
     if (result.code === 200) {
-      RG.Mark('sdk_purchased_done', {
-        userId: SDK.CurUserInfo().userId,
+      RG.Mark(DOT.SDK_PURCHASED_DONE, {
+        userId: RG.jssdk.CurUserInfo().userId,
         money: result.money,
         currency: result.currency,
       })
@@ -317,7 +316,7 @@ export default class NativeGames {
   consumeOrder(params: string) {
     var paramParse: any = JSON.parse(params)
     console.log('native to js consumeOrder', paramParse)
-    SDK.FinishOrder({
+    RG.jssdk.FinishOrder({
       transactionId: paramParse.transactionId,
       channel: paramParse.channel,
       receipt: paramParse.receipt,
@@ -337,7 +336,7 @@ export default class NativeGames {
           error_msg: data.error_msg,
           exInfo: paramParse.exInfo
         }
-        App.instance.showNotice(SDK.config.i18n.UnknownErr)
+        App.instance.showNotice(RG.jssdk.config.i18n.UnknownErr)
         App.instance.hidePayment()
       }
       console.log('JsToNative.consumeOrder2: code (' + data.code + ')', consumeParams)
@@ -347,7 +346,7 @@ export default class NativeGames {
 
   Pay(paymentConfig: PaymentConfig) {
     NativeGames.instance.nativeInit()
-    return SDK.PaymentConfig(paymentConfig).then(paymentConfigRes => {
+    return RG.jssdk.PaymentConfig(paymentConfig).then(paymentConfigRes => {
       App.instance.showPayment(paymentConfigRes)
     })
   }
@@ -356,19 +355,13 @@ export default class NativeGames {
     var markParmas: any = {
       eventName: markName
     }
-
-    if (markName === 'sdk_purchased_done') {
+    if (markName === DOT.SDK_PURCHASED_DONE) {
       markParmas = Object.assign(extraParam, markParmas)
     }
-
-    console.log('mark params', markParmas)
-
+    console.info('mark params', markParmas)
     window.JsToNative.gameEvent(JSON.stringify(markParmas))
-
-    console.log(`"${markName}" has marked - native`)
+    console.info(`"${markName}" has marked - native`)
   }
-
-
 
 
 }

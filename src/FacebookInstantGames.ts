@@ -1,5 +1,6 @@
 import Mark from 'Base/Mark'
 import App from 'DOM/index'
+import { DOT } from './Base/Constant';
 
 export default class FacebookInstantGames {
 
@@ -28,11 +29,11 @@ export default class FacebookInstantGames {
       "BindZone",
       "Share",
       "Mark",
+      "Pay"
     ]
     exposeApis.forEach(api => {
-      window.RG[api] = SDK[api]
+      window.RG[api] = RG.jssdk[api]
     })
-    window.RG["Pay"] = this.Pay
   }
 
 
@@ -41,12 +42,12 @@ export default class FacebookInstantGames {
   * @param paymentConfig 
   */
   async Pay(payParams: RG.PayParams): Promise<ServerRes> {
-    var paymentConfig = await SDK.PaymentConfig(payParams)
+    var paymentConfig = await RG.jssdk.PaymentConfig(payParams)
     if (paymentConfig.code === 200) {
       var orderingData = paymentConfig.payments.find(payment => {
         return payment.name === "Facebook"
       })
-      var orderRes = await SDK.Ordering(orderingData)
+      var orderRes = await RG.jssdk.Ordering(orderingData)
       if (orderRes.code === 200) {
         var serverRes = await FacebookInstantGames.instance.purchaseAsync(orderingData, orderRes)
         return serverRes
@@ -70,8 +71,8 @@ export default class FacebookInstantGames {
   consumePurchaseAsync(purchaseToken: string): Promise<ServerRes> {
     return new Promise((resolve, reject) => {
       FBInstant.payments.consumePurchaseAsync(purchaseToken).then(function () {
-        RG.Mark('sdk_purchased_done')
-        App.instance.showNotice(SDK.config.i18n.net_error_30200)
+        RG.Mark(DOT.SDK_PURCHASED_DONE)
+        App.instance.showNotice(RG.jssdk.config.i18n.net_error_30200)
         resolve({
           code: 200,
           error_msg: ''
@@ -95,7 +96,7 @@ export default class FacebookInstantGames {
           console.log('存在未消单订单 需要进行消单', purchases)
           purchases.forEach(purchase => {
             var { orderingData, orderRes } = JSON.parse(purchase.developerPayload)
-            SDK.FinishOrder({
+            RG.jssdk.FinishOrder({
               transactionId: orderRes.data.transactionId,
               channel: orderingData.channel,
               receipt: purchase.paymentID + '',
@@ -127,7 +128,7 @@ export default class FacebookInstantGames {
       }
       console.log("​FacebookInstantGames -> fbinstantPurchaseAsyncOption", fbinstantPurchaseAsyncOption)
       FBInstant.payments.purchaseAsync(fbinstantPurchaseAsyncOption).then(async function (purchase) {
-        var serverRes = await SDK.FinishOrder({
+        var serverRes = await RG.jssdk.FinishOrder({
           transactionId: orderRes.data.transactionId,
           channel: orderingData.channel,
           receipt: purchase.paymentID + '',
@@ -190,7 +191,7 @@ export default class FacebookInstantGames {
     })
     Promise.all([promise1, this.promise2]).then(() => {
       console.log('调启登录')
-      SDK.Login({
+      RG.jssdk.Login({
         isFacebook: true
       }).then((loginRes) => {
         console.log('登录完成')

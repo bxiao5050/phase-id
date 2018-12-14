@@ -30,13 +30,13 @@ export default class Register extends React.Component<RegisterProp, {}, any>  {
       return
     }
     if (password1 != password2) {
-      this.props.App.showNotice(SDK.config.i18n.errMsg001);
+      this.props.App.showNotice(RG.jssdk.config.i18n.errMsg001);
     } else if (password1.length < 6 || password1.length > 20) {
-      this.props.App.showNotice(SDK.config.i18n.errMsg002);
+      this.props.App.showNotice(RG.jssdk.config.i18n.errMsg002);
     } else {
       var password = password1
       try {
-        await SDK.Login({
+        await RG.jssdk.Login({
           isReg: true,
           password,
           userName,
@@ -165,7 +165,7 @@ export default class Register extends React.Component<RegisterProp, {}, any>  {
           onFocus={() => this.focusInput("userName")}
         >
           <div className="icon"></div>
-          <input type="text" placeholder={SDK.config.i18n.dom001}
+          <input type="text" placeholder={RG.jssdk.config.i18n.dom001}
             value={this.state.userName}
             onChange={(e) => this.onChange(e)}
             id="userName" />
@@ -179,7 +179,7 @@ export default class Register extends React.Component<RegisterProp, {}, any>  {
         <div className="line-input password one" >
           <div className="icon"></div>
           <input
-            placeholder={SDK.config.i18n.dom002 + '(6-20)'}
+            placeholder={RG.jssdk.config.i18n.dom002 + '(6-20)'}
             type={this.state.showPass ? "text" : "password"}
 
             value={this.state.password1} id="password1"
@@ -196,7 +196,7 @@ export default class Register extends React.Component<RegisterProp, {}, any>  {
         <div className="line-input password" >
           <div className="icon"></div>
           <input
-            placeholder={SDK.config.i18n.dom002}
+            placeholder={RG.jssdk.config.i18n.dom002}
             type={this.state.showPass ? "text" : "password"}
             value={this.state.password2}
             onChange={(e) => this.onChange(e)} id="password2"
@@ -219,11 +219,11 @@ export default class Register extends React.Component<RegisterProp, {}, any>  {
             + (this.state.showPass ? "active" : '')
           }
         ></div>
-        <p>{SDK.config.i18n.dom009}</p>
+        <p>{RG.jssdk.config.i18n.dom009}</p>
       </div>
       <a className="btn-register"
         onClick={this.register}
-      >{SDK.config.i18n.dom004}</a>
+      >{RG.jssdk.config.i18n.dom004}</a>
     </div>
   }
 

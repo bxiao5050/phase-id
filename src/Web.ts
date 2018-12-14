@@ -1,19 +1,19 @@
 import Mark from 'Base/Mark'
 import Utils from 'Base/Utils';
 import App from 'DOM/index'
-export default class RoyalGames {
-  RoyalGames = true
-  static _ins: RoyalGames
-  static get instance(): RoyalGames {
-    return this._ins || new RoyalGames;
-  }
-  constructor() {
-    RoyalGames._ins = this;
+import Base from 'Src/Base'
+
+export default class Web extends Base {
+
+  constructor(config) {
+    super()
+    RG.jssdk = this as any
+    RG.jssdk.config = config
     this.ExposeApis()
     Mark.instance.init()
   }
 
-  Login() {
+  init() {
     let user = Utils.getParameterByName('user')
     if (user) {
       var { userType, accountType } = RG.CurUserInfo()
@@ -28,12 +28,12 @@ export default class RoyalGames {
         }
       }
     } else {
-      var userInfo = SDK.GetUser()
+      var userInfo = RG.jssdk.GetUser()
       var autoLogin = false
       if (userInfo) {
         autoLogin = true
       } else {
-        var usersInfo = SDK.GetUsers()
+        var usersInfo = RG.jssdk.GetUsers()
         var usersIdArr = Object.keys(usersInfo)
         if (usersIdArr.length) {
           var id = usersIdArr[0]
@@ -43,7 +43,7 @@ export default class RoyalGames {
       }
       var LoginModule = App.instance.showLogin()
       if (autoLogin) {
-        SDK.Login(userInfo).then(() => {
+        super.Login(userInfo).then(() => {
           LoginModule.loginComplete()
         })
       }
@@ -51,7 +51,6 @@ export default class RoyalGames {
   }
 
   ExposeApis() {
-    window.RG = {} as any
     var exposeApis = [
       "server",
       "version",
@@ -63,20 +62,20 @@ export default class RoyalGames {
       "Mark",
     ]
     exposeApis.forEach(api => {
-      window.RG[api] = SDK[api]
+      window.RG[api] = RG.jssdk[api]
     })
     window.RG["Pay"] = this.Pay
     window.RG["Install"] = this.Install
   }
 
   Pay(paymentConfig: PaymentConfig) {
-    return SDK.PaymentConfig(paymentConfig).then(paymentConfigRes => {
+    return RG.jssdk.PaymentConfig(paymentConfig).then(paymentConfigRes => {
       App.instance.showPayment(paymentConfigRes)
     })
   }
 
   Install(fileName, link) {
-    var appId = SDK.config.appId
+    var appId = RG.jssdk.config.appId
     var params = encodeURIComponent(JSON.stringify({
       fileName,
       link,
@@ -86,4 +85,3 @@ export default class RoyalGames {
   }
 
 }
-

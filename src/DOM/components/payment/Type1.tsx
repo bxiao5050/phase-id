@@ -53,7 +53,7 @@ export default class Type1 extends React.Component<paymentProps, {}, any> {
 			pin: this.refs.pin.value,
 		})
 
-		SDK.Ordering(source)
+		RG.jssdk.Ordering(source)
 			.then((orderRes: OrderRes) => {
 				App.instance.showNotice(orderRes.error_msg)
 

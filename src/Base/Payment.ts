@@ -25,9 +25,9 @@ export default class Payment {
     var deviceMsg = await JsToNative.getDeviceMsgAsync()
 
     var data: PaymentConfigParams = {
-      appId: SDK.config.appId,
-      advChannel: SDK.config.advChannel,
-      userId: SDK.CurUserInfo().userId,
+      appId: RG.jssdk.config.appId,
+      advChannel: RG.jssdk.config.advChannel,
+      userId: RG.jssdk.CurUserInfo().userId,
       roleId: PaymentConfig.roleId,
       source: deviceMsg.source,
       version: deviceMsg.version,
@@ -60,12 +60,12 @@ export default class Payment {
 
   public getPaymentHistory(): Promise<any> {
     var data = {
-      appId: SDK.config.appId,
-      userId: SDK.CurUserInfo().userId,
+      appId: RG.jssdk.config.appId,
+      userId: RG.jssdk.CurUserInfo().userId,
       lastTime: 1525771365401,
       sign: Utils.signed({
-        appId: SDK.config.appId,
-        userId: SDK.CurUserInfo().userId
+        appId: RG.jssdk.config.appId,
+        userId: RG.jssdk.CurUserInfo().userId
       })
     }
 
@@ -95,9 +95,9 @@ export default class Payment {
       itemType: createOrderParams.itemType,
       isOfficial: createOrderParams.isOfficial,
       exInfo: createOrderParams.exInfo ? createOrderParams.exInfo : "0",
-      appId: SDK.config.appId,
-      advChannel: SDK.config.advChannel,
-      userId: SDK.CurUserInfo().userId,
+      appId: RG.jssdk.config.appId,
+      advChannel: RG.jssdk.config.advChannel,
+      userId: RG.jssdk.CurUserInfo().userId,
       gameOrderId: paymentConfig.gameOrderId + '',
       gameZoneId: paymentConfig.gameZoneId + '',
       roleId: paymentConfig.roleId + '',
@@ -110,7 +110,7 @@ export default class Payment {
       model: deviceMsg.model,
       operatorOs: deviceMsg.operatorOs,
       version: deviceMsg.version,
-      sdkVersion: SDK.version,
+      sdkVersion: RG.jssdk.version,
       clientTime: new Date().format("yyyy-MM-dd hh:mm:ss"),
       sign: null
     }
@@ -150,8 +150,8 @@ export default class Payment {
       receipt: finishOrderParams.receipt,
       signature: finishOrderParams.signature,
 
-      advChannel: SDK.config.advChannel,
-      sdkVersion: SDK.version,
+      advChannel: RG.jssdk.config.advChannel,
+      sdkVersion: RG.jssdk.version,
       clientTime: new Date().format("yyyy-MM-dd hh:mm:ss"),
 
       version: version,
@@ -166,7 +166,7 @@ export default class Payment {
         receipt: finishOrderParams.receipt,
         signature: finishOrderParams.signature,
         channel: finishOrderParams.channel,
-        advChannel: SDK.config.advChannel
+        advChannel: RG.jssdk.config.advChannel
       })
     }
     return Http.instance.post({ route: this.route.finish, data: finishOrderPostData }).then((serverRes: ServerRes) => {
