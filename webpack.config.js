@@ -13,7 +13,7 @@ var {
 var action = argv.action
 var sdkVersion = 'v2.1.025'
 var SERVER
-var isTest = false
+var IS_TEST = true
 var output = {
 	path: path.join(__dirname, 'build'),
 	filename: action === 'build-fb' ? 'sdk/sdk.js' : 'sdk.js?[hash:6]',
@@ -27,7 +27,7 @@ var devServer = {
 }
 switch (action) {
 	case 'build-fb':
-		isTest = false
+		IS_TEST = false
 		SERVER = 'https://sdk-sg.pocketgamesol.com'
 		output.publicPath = ''
 		break;
@@ -37,7 +37,7 @@ switch (action) {
 		break;
 	case 'build-sg':
 		SERVER = 'https://sdk-sg.pocketgamesol.com'
-		isTest = true
+		IS_TEST = true
 		output.publicPath = SERVER + '/jssdk/FBInstant/'
 		break;
 	case 'test-vn':
@@ -46,7 +46,7 @@ switch (action) {
 		break;
 	case 'build-vn':
 		SERVER = 'https://sdk-vn.pocketgamesol.com'
-		isTest = false
+		IS_TEST = false
 		output.publicPath = SERVER + '/jssdk/v2.1/'
 		break;
 }
@@ -56,7 +56,7 @@ var definePlugin = {
 	VERSION: JSON.stringify(sdkVersion),
 	SERVER: JSON.stringify(SERVER),
 	ACTION: JSON.stringify(action),
-	isTest: isTest
+	IS_TEST: IS_TEST
 }
 var webpackConfig = {
 
@@ -74,58 +74,52 @@ var webpackConfig = {
 			Src: path.join(__dirname, 'src'),
 		}
 	},
-
 	output: output,
-
 	module: {
 		rules: [{
-				test: /\.js$/,
-				exclude: /node_modules/,
-				use: [{
-					loader: 'babel-loader',
-				}, ]
-			},
-			{
-				test: /\.css$/,
-				use: [
-					'style-loader',
-					'css-loader'
-				]
-			},
-			{
-				test: /\.scss$/,
-				use: [
-					'style-loader',
-					'css-loader',
-					{
-						loader: 'postcss-loader',
-						options: {
-							ident: 'postcss',
-							plugins: () => [
-								require('autoprefixer')(),
-							]
-						}
-					},
-					'sass-loader'
-				]
-			},
-			{
-				test: /\.(ts|tsx)$/,
-				use: [
-					'ts-loader'
-				]
-			},
-			{
-				test: /\.(gif|jpg|png|woff|svg|eot|ttf)\??.*$/,
-				use: [{
-					loader: 'file-loader',
-					options: {
-						name: '[name]-[hash:4].[ext]',
-						outputPath: action === 'build-fb' ? './sdk/img' : './img'
-					}
-				}]
+			test: /\.js$/,
+			exclude: /node_modules/,
+			use: {
+				loader: 'babel-loader',
+				options: {
+					presets: ['@babel/preset-env']
+				}
 			}
-		]
+		}, {
+			test: /\.css$/,
+			use: [
+				'style-loader',
+				'css-loader'
+			]
+		}, {
+			test: /\.scss$/,
+			use: [
+				'style-loader',
+				'css-loader',
+				{
+					loader: 'postcss-loader',
+					options: {
+						ident: 'postcss',
+						plugins: () => [
+							require('autoprefixer')(),
+						]
+					}
+				},
+				'sass-loader'
+			]
+		}, {
+			test: /\.(ts|tsx)$/,
+			use: ['ts-loader']
+		}, {
+			test: /\.(gif|jpg|png|woff|svg|eot|ttf)\??.*$/,
+			use: [{
+				loader: 'file-loader',
+				options: {
+					name: '[name]-[hash:4].[ext]',
+					outputPath: action === 'build-fb' ? './sdk/img' : './img'
+				}
+			}]
+		}]
 	},
 
 	plugins: [
@@ -136,8 +130,7 @@ var webpackConfig = {
 			template: "./index.html"
 		}),
 		new webpack.ProvidePlugin({
-			md5: 'md5',
-			$: 'jquery'
+			md5: 'md5'
 		}),
 		new webpack.DefinePlugin(definePlugin),
 	],

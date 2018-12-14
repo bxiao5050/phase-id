@@ -1,5 +1,5 @@
 import Mark from 'Base/Mark'
-import App from 'Src/DOM';
+import App from 'DOM/index'
 
 /**
  * facebook web games javascript SDK

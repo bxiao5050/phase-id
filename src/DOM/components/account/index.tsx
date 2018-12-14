@@ -2,9 +2,8 @@ import './index.scss'
 import * as React from 'react'
 import { Switch, Route, Link } from 'react-router-dom'
 import { History, createLocation } from 'history'
-import App from 'Src/DOM'
-import { MemoryRouter, HashRouter, match } from 'react-router-dom'
-import Utils from 'Src/Base/Utils';
+import App from 'DOM/index'
+import { match } from 'react-router-dom'
 
 
 type accountProps = {
@@ -69,10 +68,6 @@ class Main extends React.Component<accountProps, any, any> {
           <img src={require("DOM/assets/ui_right_arrow.png")} className="right" />
         </a>
         <a className="item-other" onClick={() => {
-          // props.App.setState({
-          //   showLogin: true,
-          //   showAccount: false
-          // })
           window.rgChangeAccount && window.rgChangeAccount()
         }}>
           <img src={require("DOM/assets/ui_switch_account.png")} />

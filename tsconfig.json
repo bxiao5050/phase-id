@@ -11,8 +11,6 @@
       "es2017",
       "dom"
     ],
-    // "pretty": true,
-    // "watch": true,
     "paths": {
       "Src/*": [
         "./src/*"
@@ -26,6 +24,7 @@
     }
   },
   "include": [
+    "./index.d.ts",
     "./src/**/*.tsx",
     "./src/**/*.ts"
   ],

@@ -50,25 +50,23 @@ export default class Utils {
   /**
    * @param name 获取url中参数函数
    */
-  static getParameterByNameMap = null
-  static getParameterByName(name) {
-    if (!Utils.getParameterByNameMap) {
-      Utils.getParameterByNameMap = {}
-      var interrogationIndex = location.href.indexOf('?') + 1
-      var str = interrogationIndex === 0 ? '' : location.href.slice(interrogationIndex)
-      if (str) {
-        var arr = str.split(/&|%26/)
-        arr.forEach(item => {
-          var arr = item.split(/=|%3D/)
-          var key = arr[0]
-          var val = arr[1]
-          Utils.getParameterByNameMap[key] = val
-        })
-      }
+  static getParameterByName = (function () {
+    var urlParamMap = {}
+    var interrogationIndex = location.href.indexOf("?") + 1
+    var str = interrogationIndex === 0 ? "" : location.href.slice(interrogationIndex)
+    if (str) {
+      var arr = str.split(/&|%26/)
+      arr.forEach(item => {
+        var arr = item.split(/=|%3D/)
+        var key = arr[0]
+        var val = arr[1]
+        urlParamMap[key] = val
+      })
     }
-    var params: Object = Utils.getParameterByNameMap
-    return params.hasOwnProperty(name) ? params[name] : null
-  }
+    return function (name) {
+      return urlParamMap.hasOwnProperty(name) ? urlParamMap[name] : null
+    }
+  })()
 
 
   /** 设备参数 */

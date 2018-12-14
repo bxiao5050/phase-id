@@ -1,6 +1,6 @@
 import './index.scss'
 import * as React from 'react'
-import App from 'Src/DOM'
+import App from 'DOM/index'
 
 export default class Notice extends React.Component<{
   instance?: App
@@ -31,17 +31,9 @@ export default class Notice extends React.Component<{
 
   render() {
     return <div className={this.state.opacity ? 'box-alert show' : 'box-alert'}>
-      {/* <div className="wrap" onClick={this.cancel}></div> */}
-      {/* <div className="alert"> */}
       <p>{this.props.msg}</p>
-      {/* <div className="btns">
-          <button className="sure" onClick={this.cancel}>Xác nhận</button>
-        </div> */}
-      {/* </div> */}
     </div>
   }
-
-
 
 }
 

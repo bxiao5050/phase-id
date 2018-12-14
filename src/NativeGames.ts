@@ -1,10 +1,7 @@
-
-
-import App from 'Src/DOM'
 import Http from 'Src/Base/Http';
 import Utils from 'Src/Base/Utils';
 import * as CryptoJS from 'crypto-js'
-
+import App from 'DOM/index'
 export default class NativeGames {
 
   NativeGames = true

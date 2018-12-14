@@ -2,14 +2,11 @@
 import './Type1.scss'
 import * as React from 'react'
 import Payment from 'Src/DOM/components/payment'
-import App from 'Src/DOM';
-
-
+import App from 'DOM/index'
 
 type paymentProps = {
 	Payment: Payment
 }
-
 export default class Type1 extends React.Component<paymentProps, {}, any> {
 
 	setInterval = undefined
@@ -17,11 +14,6 @@ export default class Type1 extends React.Component<paymentProps, {}, any> {
 		isQuerying: false,
 		isQueryingTxt: '.'
 	}
-
-	// willUnmount = false
-	// componentWillUnmount() {
-	// 	this.willUnmount = true
-	// }
 
 	setState(state) {
 		if (state.hasOwnProperty('isQuerying')) {

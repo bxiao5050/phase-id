@@ -4,7 +4,7 @@ import './Choose.scss'
 import * as React from 'react'
 import { Route } from 'react-router-dom'
 import Login from 'DOM/components/login'
-import App from 'DOM/App'
+import App from 'DOM/index'
 import Utils from 'Src/Base/Utils';
 
 type ChooseProps = {

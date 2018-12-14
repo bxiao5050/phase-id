@@ -1,11 +1,8 @@
-import App from 'Src/DOM'
 import Mark from 'Base/Mark'
 import Utils from 'Src/Base/Utils';
-
+import App from 'DOM/index'
 export default class RoyalGames {
-
   RoyalGames = true
-
   static _ins: RoyalGames
   static get instance(): RoyalGames {
     return this._ins || new RoyalGames;
@@ -16,20 +13,13 @@ export default class RoyalGames {
     Mark.instance.init()
   }
 
-  Login() { // 调启登录
-    var user = Utils.getParameterByName('user')
-
-    console.log('user', user)
-
+  Login() {
+    let user = Utils.getParameterByName('user')
     if (user) {
-
       var { userType, accountType } = RG.CurUserInfo()
       var isGuest = Utils.getAccountType(userType, accountType) === 'guest' ? true : false;
       App.instance.hideLogin()
       App.instance.showHover(isGuest)
-
-      console.log('window.rgAsyncInit()')
-
       if (window.rgAsyncInit) {
         window.rgAsyncInit()
       } else {
@@ -38,7 +28,6 @@ export default class RoyalGames {
         }
       }
     } else {
-
       var userInfo = SDK.GetUser()
       var autoLogin = false
       if (userInfo) {
@@ -58,13 +47,11 @@ export default class RoyalGames {
           LoginModule.loginComplete()
         })
       }
-
     }
-
   }
 
   ExposeApis() {
-    window.RG = <any>{}
+    window.RG = {} as any
     var exposeApis = [
       "server",
       "version",

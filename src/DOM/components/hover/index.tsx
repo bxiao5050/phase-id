@@ -3,7 +3,7 @@
 import './index.scss'
 import * as React from 'react'
 import { History } from 'history'
-import App from 'Src/DOM'
+import App from 'DOM/index'
 
 var canTouch = false
 var isMoving = false

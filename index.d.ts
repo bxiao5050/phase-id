@@ -51,7 +51,7 @@ declare interface Window {
   rgChangeAccount: Function
 }
 
-declare var isTest: boolean
+declare var IS_TEST: boolean
 declare var FBVersion: string
 declare var ACTION: string
 
@@ -208,7 +208,10 @@ declare interface CONFIG {
   messenger: string
   fanpage: string
   FbPageId: string
-  server: string
+  server: {
+    test: string
+    formal: string
+  }
   test: string
   markFBID: string
   markGAID: string

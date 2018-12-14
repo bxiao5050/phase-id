@@ -9,7 +9,7 @@ export default class Http {
     Http._ins = this
   }
 
-  private serverAddress = isTest ? SDK.config.test : SDK.config.server
+  private serverAddress = IS_TEST ? SDK.config.server.test : SDK.config.server.formal
 
   private request(param: requestParam): Promise<ServerRes> {
     // var mode: RequestMode

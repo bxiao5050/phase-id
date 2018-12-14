@@ -2,9 +2,6 @@ import './index.scss'
 import * as React from 'react'
 import { Switch, Route } from 'react-router-dom'
 import { History, createLocation } from 'history'
-import App from "Src/DOM"
-
-
 import TypeList from "Src/DOM/components/payment/TypeList";
 import Type0 from "Src/DOM/components/payment/Type0";
 import Type1 from "Src/DOM/components/payment/Type1";
@@ -12,7 +9,7 @@ import Type3 from "Src/DOM/components/payment/Type3";
 import Type4 from "Src/DOM/components/payment/Type4";
 import Type5 from "Src/DOM/components/payment/Type5";
 import WinOpen from "Src/DOM/components/payment/WinOpen"
-
+import App from 'DOM/index'
 type PaymentProps = {
   App: App
   history: History

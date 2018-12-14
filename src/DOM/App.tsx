@@ -6,7 +6,7 @@ import Account from "Src/DOM/components/account";
 import Login from "Src/DOM/components/login";
 import Payment from "Src/DOM/components/payment"
 
-class App extends React.Component<{}, any, any> {
+class App extends React.Component {
 
   public refs: {
     notice: Notice
@@ -14,12 +14,12 @@ class App extends React.Component<{}, any, any> {
     loginRoute: any
   }
 
-  constructor(props) {
+  constructor(props: any) {
     super(props)
     App._ins = this
   }
 
-  private static _ins
+  private static _ins: App
   static get instance(): App {
     return this._ins
   }
@@ -29,17 +29,10 @@ class App extends React.Component<{}, any, any> {
   state = {
     showAccount: false,
     accountEntry: ['/main'],
-
-
     hasAccount: false,
     hoverIsGuest: false,
-
-    // showNotice: false,
-    // noticeMsg: '',
     noticeList: [],
-
     showLogin: false,
-
     showPayment: false,
     paymentConfig: null,
   }
@@ -60,32 +53,18 @@ class App extends React.Component<{}, any, any> {
     })
   }
 
-  showHover = (isGuest) => {
+  showHover = (isGuest: boolean) => {
     this.setState({
       hasAccount: true,
       hoverIsGuest: isGuest
     })
   }
 
-  showExit = () => {
-
-  }
-
-  showNotice = (msg) => {
+  showNotice = (msg: string) => {
     App.instance.hasNotice++
     this.state.noticeList.push(msg)
     this.setState(this.state)
-    // this.setState({
-    //   showNotice: true,
-    //   noticeMsg: msg
-    // })
   }
-
-  // hideNotice = () => {
-  //   this.setState({
-  //     showNotice: false
-  //   })
-  // }
 
   showLogin = (): Login => {
     this.setState({
@@ -100,7 +79,7 @@ class App extends React.Component<{}, any, any> {
     })
   }
 
-  showPayment = (paymentConfig) => {
+  showPayment = (paymentConfig: PaymentConfigRes) => {
     this.setState({
       showPayment: true,
       paymentConfig: paymentConfig
@@ -135,7 +114,6 @@ class App extends React.Component<{}, any, any> {
       {this.state.noticeList.map((noticeMsg, index) => {
         return <Notice key={index} instance={this} msg={noticeMsg} />
       })}
-      {/* {this.state.showNotice && <Notice instance={this} msg={this.state.noticeMsg} />} */}
 
       {/* 悬浮球 */}
       {this.state.hasAccount && <Hover ref="hover" instance={this} isGuest={this.state.hoverIsGuest} />}

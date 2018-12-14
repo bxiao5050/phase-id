@@ -5,7 +5,7 @@ import { Route } from 'react-router-dom'
 import { createLocation } from 'history'
 import Login from "Src/DOM/components/login"
 import Choose from "Src/DOM/components/login/Choose"
-import App from 'Src/DOM'
+import App from 'DOM/index'
 
 export default class Main extends React.Component<{
   Login: Login
