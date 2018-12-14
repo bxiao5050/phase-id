@@ -9,7 +9,7 @@ import Payment from "Src/Base/Payment";
 import Login from "Src/Base/Login";
 import Api from "Src/Base/Api";
 import Account from "Src/Base/Account";
-import Utils from "Src/Base/Utils";
+import Utils from "Base/Utils";
 import Mark from "Src/Base/Mark";
 
 export default class Base {

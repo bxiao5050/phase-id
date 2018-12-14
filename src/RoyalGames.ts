@@ -1,5 +1,5 @@
 import Mark from 'Base/Mark'
-import Utils from 'Src/Base/Utils';
+import Utils from 'Base/Utils';
 import App from 'DOM/index'
 export default class RoyalGames {
   RoyalGames = true

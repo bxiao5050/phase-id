@@ -3,10 +3,10 @@ import * as React from 'react'
 import { Switch, Route, MemoryRouter } from 'react-router-dom'
 import { History, createLocation } from 'history'
 import App from 'DOM/index'
-import Main from 'Src/DOM/components/login/Main'
-import Loading from 'Src/DOM/components/login/Loading'
-import Entry from 'Src/DOM/components/login/Entry'
-import Register from 'Src/DOM/components/login/Register'
+import Main from 'DOM/components/login/Main'
+import Loading from 'DOM/components/login/Loading'
+import Entry from 'DOM/components/login/Entry'
+import Register from 'DOM/components/login/Register'
 
 export default class Login extends React.Component {
 

@@ -1,7 +1,7 @@
 
 import './Type5.scss'
 import * as React from 'react'
-import Payment from 'Src/DOM/components/payment'
+import Payment from 'DOM/components/payment'
 import { createLocation } from 'history'
 
 

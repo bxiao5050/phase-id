@@ -1,8 +1,8 @@
 import './Loading.scss'
 import * as React from 'react'
-import Login from 'Src/DOM/components/login'
-import App from 'Src/DOM/App';
-import Utils from 'Src/Base/Utils';
+import Login from 'DOM/components/login'
+import App from 'DOM/App';
+import Utils from 'Base/Utils';
 
 type LoadingProp = {
   Login: Login

@@ -1,6 +1,6 @@
 
 import Http from "Src/Base/Http";
-import Utils from "Src/Base/Utils";
+import Utils from "Base/Utils";
 import Account from "Src/Base/Account";
 import * as Const from "Src/Base/Constant";
 

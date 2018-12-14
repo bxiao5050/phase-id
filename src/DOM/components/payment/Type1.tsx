@@ -1,7 +1,7 @@
 
 import './Type1.scss'
 import * as React from 'react'
-import Payment from 'Src/DOM/components/payment'
+import Payment from 'DOM/components/payment'
 import App from 'DOM/index'
 
 type paymentProps = {

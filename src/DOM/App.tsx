@@ -1,10 +1,10 @@
 import * as React from 'react'
 import { Route, MemoryRouter } from 'react-router-dom'
-import Notice from "Src/DOM/components/notice";
-import Hover from "Src/DOM/components/hover";
-import Account from "Src/DOM/components/account";
-import Login from "Src/DOM/components/login";
-import Payment from "Src/DOM/components/payment"
+import Notice from "DOM/components/notice";
+import Hover from "DOM/components/hover";
+import Account from "DOM/components/account";
+import Login from "DOM/components/login";
+import Payment from "DOM/components/payment"
 
 class App extends React.Component {
 

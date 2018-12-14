@@ -6,21 +6,11 @@
     "target": "es5",
     "baseUrl": ".",
     "jsx": "react",
-    "lib": [
-      "es2015",
-      "es2017",
-      "dom"
-    ],
+    "lib": ["es6", "es7", "dom"],
     "paths": {
-      "Src/*": [
-        "./src/*"
-      ],
-      "DOM/*": [
-        "./src/DOM/*"
-      ],
-      "Base/*": [
-        "./src/Base/*"
-      ]
+      "Src/*": ["./src/*"],
+      "DOM/*": ["./src/DOM/*"],
+      "Base/*": ["./src/Base/*"]
     }
   },
   "include": [
