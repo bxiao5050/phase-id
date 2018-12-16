@@ -16,8 +16,8 @@ var SERVER
 var IS_TEST = true
 var output = {
 	path: path.join(__dirname, 'build'),
-	filename: action === 'build-fb' ? 'sdk/sdk.js' : 'sdk.js?[hash:6]',
-	chunkFilename: action === 'build-fb' ? 'sdk/sdk_[name].js' : '[name].js?[hash:6]',
+	filename: action === 'build-fb' ? 'sdk/sdk.js' : 'v2.3/sdk.js',
+	chunkFilename: action === 'build-fb' ? 'sdk/sdk_[name].js' : 'v2.3/[name].js',
 }
 var devServer = {
 	contentBase: path.join(__dirname, 'build'),
@@ -125,8 +125,8 @@ var webpackConfig = {
 	plugins: [
 		new HtmlWebpackPlugin({
 			filename: "index.html",
-			chunks: ['SDK'],
-			inject: 'head',
+			// chunks: ['SDK'],
+			inject: false,
 			template: "./index.html"
 		}),
 		new webpack.ProvidePlugin({

@@ -60,12 +60,12 @@ var config5 = { // 像素口袋1
   markGAID: 'UA-121906563-4',
   language: 'TW',
   gamePage: {
-    test: '',
-    formal: ''
+    test: 'http://www.baidu.com',
+    formal: 'http://www.baidu.com',
   },
   loginPage: {
-    test: '',
-    formal: ''
+    test: 'http://www.baidu.com',
+    formal: 'http://www.baidu.com',
   },
 }
 

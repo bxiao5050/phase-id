@@ -48,7 +48,7 @@ export default class Utils {
   /**
    * @param name 获取url中参数函数
    */
-  static getParameterByName = (function () {
+  static getUrlParam = (function () {
     var urlParamMap = {}
     var interrogationIndex = location.href.indexOf("?") + 1
     var str = interrogationIndex === 0 ? "" : location.href.slice(interrogationIndex)
@@ -61,8 +61,12 @@ export default class Utils {
         urlParamMap[key] = val
       })
     }
-    return function (name) {
-      return urlParamMap.hasOwnProperty(name) ? urlParamMap[name] : null
+    return function (name?) {
+      if (name) {
+        return urlParamMap.hasOwnProperty(name) ? urlParamMap[name] : null
+      } else {
+        return urlParamMap
+      }
     }
   })()
 

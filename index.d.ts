@@ -38,6 +38,7 @@ declare namespace JSSDK {
     language: string
     i18n: any
     type: Type
+    loginPage: any
   }
 }
 
@@ -55,6 +56,9 @@ interface RG {
 
   /** 跳转到messenger页面 */
   Messenger()
+
+  /** x */
+  ChangeAccount()
 
   /** 跳转到fb应用 */
   Fb()

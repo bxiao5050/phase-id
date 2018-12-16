@@ -43,7 +43,7 @@ export default class NativeGames {
 
   Login() { // 调启登录
     var LoginModule = App.instance.showLogin()
-    var user = Utils.getParameterByName('user')
+    var user = Utils.getUrlParam('user')
 
     var uu = RG.CurUserInfo()
     if (user) {
@@ -71,7 +71,7 @@ export default class NativeGames {
         }
       }
     } else {
-      if (Utils.getParameterByName('code')) {
+      if (Utils.getUrlParam('code')) {
         RG.jssdk.Login({ isFacebook: true }).then(() => {
           LoginModule.loginComplete()
         })

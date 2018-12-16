@@ -8,34 +8,64 @@
 
 <body>
 	<script>
-		// /**
-		//  * GET 参数获取
-		//  * @param name 参数名称
-		//  */
-		// var getParameterByName = (function () {
-		// 	var urlParamMap = {}
-		// 	var interrogationIndex = location.href.indexOf("?") + 1
-		// 	var str = interrogationIndex === 0 ? "" : location.href.slice(interrogationIndex)
-		// 	if (str) {
-		// 		var arr = str.split(/&|%26/)
-		// 		arr.forEach(item => {
-		// 			var arr = item.split(/=|%3D/)
-		// 			var key = arr[0]
-		// 			var val = arr[1]
-		// 			urlParamMap[key] = val
-		// 		})
-		// 	}
-		// 	return function (name) {
-		// 		return urlParamMap.hasOwnProperty(name) ? urlParamMap[name] : null
-		// 	}
-		// })()
+		/**
+		 * GET 参数获取
+		 * @param name 参数名称
+		 */
+		var getUrlParam = (function () {
+			var urlParamMap = {}
+			var interrogationIndex = location.href.indexOf("?") + 1
+			var str = interrogationIndex === 0 ? "" : location.href.slice(interrogationIndex)
+			if (str) {
+				var arr = str.split(/&|%26/)
+				arr.forEach(item => {
+					var arr = item.split(/=|%3D/)
+					var key = arr[0]
+					var val = arr[1]
+					urlParamMap[key] = val
+				})
+			}
+			return function (name) {
+				if (name) {
+					return urlParamMap.hasOwnProperty(name) ? urlParamMap[name] : null
+				} else {
+					return urlParamMap
+				}
+			}
+		})()
 
-		// var appId = getParameterByName('appId') || window.appId
-		// var advChannel = getParameterByName('advChannel') || window.advChannel
+		var isDebugger = getUrlParam('debugger') || window.debugger
+		var sdkVersion = getUrlParam('sdkVersion') || window.sdkVersion
+
+		/** 加载jsssdk */
+		var src = './' + sdkVersion + '/sdk.js';
+		(function (d, s, id) {
+			var js, fjs = d.getElementsByTagName(s)[0];
+			if (d.getElementById(id)) return;
+			js = d.createElement(s);
+			js.id = id;
+			js.src = src
+			fjs.parentNode.insertBefore(js, fjs);
+		}(document, 'script', 'rg-jssdk'));
+
 		window.rgAsyncInit = function () {
-			var user = JSON.stringify(RG.CurUserInfo())
-			
-			console.log(RG)
+			var urlParam = getUrlParam()
+			var urlSearch = ''
+			var $i = 0
+			for (var name in urlParam) {
+				if (name === 'type') {
+					continue
+				} else {
+					urlSearch += (($i ? '&' : '?') + name + '=' + urlParam[name])
+					$i++
+				}
+			}
+			var user = encodeURIComponent(JSON.stringify(
+				RG.CurUserInfo()
+			))
+			urlSearch += '&user=' + user;
+			var href = (isDebugger ? RG.jssdk.config.gamePage.test : RG.jssdk.config.gamePage.formal) + urlSearch
+			console.log(href)
 		}
 	</script>
 </body>

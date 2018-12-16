@@ -3,18 +3,24 @@ import Utils from 'Base/Utils';
 import App from 'DOM/index'
 import Base from 'Src/Base'
 
+
+
 export default class Web extends Base {
+
+  config
 
   constructor(config) {
     super()
-    RG.jssdk = this as any
-    RG.jssdk.config = config
+    let RG = function () { }
+    RG.prototype.jssdk = this
+    this.config = config
+    window.RG = new RG
     this.ExposeApis()
     Mark.instance.init()
   }
 
   init() {
-    let user = Utils.getParameterByName('user')
+    let user = Utils.getUrlParam('user')
     if (user) {
       var { userType, accountType } = RG.CurUserInfo()
       var isGuest = Utils.getAccountType(userType, accountType) === 'guest' ? true : false;
@@ -43,7 +49,7 @@ export default class Web extends Base {
       }
       var LoginModule = App.instance.showLogin()
       if (autoLogin) {
-        super.Login(userInfo).then(() => {
+        RG.jssdk.Login(userInfo).then(() => {
           LoginModule.loginComplete()
         })
       }
@@ -60,12 +66,13 @@ export default class Web extends Base {
       "BindZone",
       "Share",
       "Mark",
+      "Pay",
+      "Install",
+      "ChangeAccount"
     ]
     exposeApis.forEach(api => {
       window.RG[api] = RG.jssdk[api]
     })
-    window.RG["Pay"] = this.Pay
-    window.RG["Install"] = this.Install
   }
 
   Pay(paymentConfig: PaymentConfig) {

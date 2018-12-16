@@ -1,14 +1,7 @@
-import Share from "Base/Share";
-import Payment from "Base/Payment";
-import Login from "Base/Login";
-import Api from "Base/Api";
-import Account from "Base/Account";
 import Utils from "Base/Utils";
-import Mark from "Base/Mark";
 import { DOT, GET, ERROR } from "Base/Constant";
 import { checkJsToNative } from "Src/adapter";
 import Polyfill from "Base/Polyfill"
-import Base from "./Base";
 
 export default class Main {
 
@@ -17,7 +10,6 @@ export default class Main {
   config: JSSDK.Config
 
   constructor() {
-    window.RG = {} as any
     window.RgPolyfilled = this.polyfilled.bind(this)
     checkJsToNative()
     Polyfill.instance.init()
@@ -51,7 +43,7 @@ export default class Main {
     let AndroidVersion = navigator.userAgent.match(/Android \d{1}.\d{1}/)
     let isLge4_4
     if (AndroidVersion) isLge4_4 = Number(AndroidVersion[0].split(' ')[1]) >= 4.4;
-    if (Utils.getParameterByName(GET.DEBUGGER) || window[GET.DEBUGGER]) {
+    if (Utils.getUrlParam(GET.DEBUGGER) || window[GET.DEBUGGER]) {
       if (AndroidVersion) {
         if (isLge4_4) await this.initDebugger();
       } else {
@@ -75,8 +67,8 @@ export default class Main {
   /** 获取游戏配置 */
   async gameConfig() {
     return new Promise((resolve) => {
-      let appId = Utils.getParameterByName(GET.APP_ID) || window[GET.APP_ID]
-      let advChannel = Utils.getParameterByName(GET.ADV_CHANNEL) || window[GET.ADV_CHANNEL]
+      let appId = Utils.getUrlParam(GET.APP_ID) || window[GET.APP_ID]
+      let advChannel = Utils.getUrlParam(GET.ADV_CHANNEL) || window[GET.ADV_CHANNEL]
       if (!appId || !advChannel) {
         console.error(ERROR.E_001)
       } else {
@@ -121,22 +113,22 @@ export default class Main {
       return promise
     }
     else if (this.config.advChannel < 30000) {
-      RG.jssdk.type = 2
+      this.config.type = 2
       return import('Src/NativeGames')
     }
     else if (this.config.advChannel > 31000 && this.config.advChannel < 32000) {
-      RG.jssdk.type = 3
+      this.config.type = 3
       return import('Src/FacebookWebGames')
     }
     else if (this.config.advChannel > 32000 && this.config.advChannel < 33000) {
-      RG.jssdk.type = 4
+      this.config.type = 4
       return import('Src/FacebookInstantGames')
     }
   }
 
   initFbJsSdk() {
     return new Promise((resolve, reject) => {
-      if (RG.jssdk.type === 4) { // instant games
+      if (this.config.type === 4) { // instant games
         this.fb_sdk_loaded = true
         resolve()
         return

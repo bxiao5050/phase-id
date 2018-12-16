@@ -9,24 +9,25 @@ JavaScript 版 SDK 无需下载和安装任何独立文件，您只需在 HTML �
 以下代码片段将提供基础版的 SDK，其中的选项将设置为最常用的默认设置。请直接将此代码片段插入想要加载 SDK 的每个页面的开始 `<body>` 标签之后：
 
 ```
-window.rgAsyncInit = function () { // SDK has logined completely, please code below
-    ````
+window.rgAsyncInit = function () { 
+  // SDK has logined completely, please code below
+  var userInfo = RG.CurUserInfo
 }
 // Load the SDK asynchronously
 (function(d, s, id) {
-    var js, fjs = d.getElementsByTagName(s)[0];
-    if (d.getElementById(id)) return;
-    js = d.createElement(s); js.id = id;
-    js.src = "https://sdk-vn.pocketgamesol.com/jssdk/v2.1/sdk.js";
-    fjs.parentNode.insertBefore(js, fjs);
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "https://sdk-vn.pocketgamesol.com/jssdk/v2.1/sdk.js";
+  fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'royalgame-jssdk'));
 ```
 ```
-德国的sdk主机域名       https://sdk-de.pocketgamesol.com
-新加坡的sdk主机域名     https://sdk-sg.pocketgamesol.com
-越南的sdk主机域名       https://sdk-vn.pocketgamesol.com
+德国的sdk主机域名     https://sdk-de.pocketgamesol.com
+新加坡的sdk主机域名   https://sdk-sg.pocketgamesol.com
+越南的sdk主机域名     https://sdk-vn.pocketgamesol.com
 
-jssdk静态文件地址       ${HOST}/jssdk/v2.1/sdk.js
+jssdk静态文件地址     ${HOST}/jssdk/${GET.sdkVersion || window.sdkVersion}/sdk.js
 ```
 
 ## 登录
@@ -54,7 +55,7 @@ jssdk静态文件地址       ${HOST}/jssdk/v2.1/sdk.js
 
 **使用方法：**
 ```
-    var curUser = RG.CurUserInfo()
+var curUser = RG.CurUserInfo()
 ```
 
 ## 绑定区服 
@@ -76,27 +77,28 @@ jssdk静态文件地址       ${HOST}/jssdk/v2.1/sdk.js
 **返回参数说明：**
 
 ```
-    RG.BindZone(data): Promise<Res>
+RG.BindZone(data): Promise<Res>
 
-    Res: {
-        code: number  // 200 为绑定成功
-        error_msg: string
-    }
+Res: {
+  code: number  // 200 为绑定成功
+  error_msg: string
+}
 ```
 **使用方法：**
 ```
-    var data = {
-        userId: 25086659,
-        gameZoneId: 1,
-        createRole: 0,
-        roleId: 123,
-        level: 1
-    }
-    RG.BindZone(data).then(data=>{
-        if(data.code === 200) { // 绑定完成
-            ...
-        }
-    });
+var data = {
+  userId: 25086659,
+  gameZoneId: 1,
+  createRole: 0,
+  roleId: 123,
+  level: 1
+}
+
+RG.BindZone(data).then(function(data) {
+  if(data.code === 200) { // 绑定完成
+    ...
+  }
+});
 ```
 
 ## 调起支付 
@@ -124,25 +126,19 @@ jssdk静态文件地址       ${HOST}/jssdk/v2.1/sdk.js
 
 ```
 使用方法：
-     var data = {
-        userId: 25086659,
-        gameOrderId: 86353509, // 假设的订单id
-        gameZoneId: 1,
-        roleId: 1001,
-        roleName: "role name",
-        level: 12,
-        gameCoin: 100
-    }
 
-    RG.Pay(data)
+var data = {
+  userId: 25086659,
+  gameOrderId: 86353509, // 假设的订单id
+  gameZoneId: 1,
+  roleId: 1001,
+  roleName: "role name",
+  level: 12,
+  gameCoin: 100
+}
+
+RG.Pay(data)
 ```
-  <!-- if(RG.hasProducts) {
-        data.product_id = "xxxxxxx" // 具体的商品id由平台方提供
-        RG.Pay(data)
-    } else {
-        RG.Pay(data)
-    } -->
-
 
 ## 调起FB分享 
 
@@ -153,20 +149,20 @@ jssdk静态文件地址       ${HOST}/jssdk/v2.1/sdk.js
 * 调起FB分享
 
 ```
-    RG.Share(ShareUrl): Promise<Res>
+RG.Share(ShareUrl): Promise<Res>
 
-    Res: {
-        code: number  // 200 为分享成功
-        error_msg?: string
-    }
+Res: {
+  code: number  // 200 为分享成功
+  error_msg?: string
+}
 ```
 **使用方法：**
 ```
-    RG.Share('https://some-gaming-address-to-share.com').then(data => {
-        if(data.code === 200) { // 分享成功
-            ...
-        }
-    })
+RG.Share('https://some-gaming-address-to-share.com').then(function(data) {
+  if(data.code === 200) { // 分享成功
+    ...
+  }
+})
 ```
 
 ## 打点
@@ -181,7 +177,7 @@ jssdk静态文件地址       ${HOST}/jssdk/v2.1/sdk.js
 使用方法 RG.Mark(markName: string): void
 ```
 
-## FB跳转
+<!-- ## FB跳转
  
 * **RG.Fb**
 
@@ -191,9 +187,9 @@ jssdk静态文件地址       ${HOST}/jssdk/v2.1/sdk.js
 
 ```
 使用方法 RG.Fb()
-```
+``` -->
 
-## Messenger跳转 
+<!-- ## Messenger跳转 
 
 * **RG.Messager**
 
@@ -203,19 +199,46 @@ jssdk静态文件地址       ${HOST}/jssdk/v2.1/sdk.js
 
 ```
 使用方法 RG.Messager()
-```
+``` -->
 
-## Install 跳转 web移动端添加桌面收藏 
+## 引导用户添加桌面收藏
 
 * **RG.Install**
 
 **方法说明：**
 
-* 跳转至 添加桌面收藏的 引导页面 
+* 跳转至添加桌面收藏的引导页面 
 
 ```
-使用方法:
-    RG.Install && RG.Install() // 此方法只能在web端调用
+// 此方法只在web端调用有效
+RG.Install && RG.Install() 
 ```
+
+## 修改账号的事件接口
+
+* **RG.ChangeAccount**
+
+**方法说明：**
+
+* 在用户点击切换账户时调用 此方法应该为一个Promise对象的实例
+
+
+```
+// RG.ChangeAccount instanceof Promise === true
+let changeAccountResolve
+let changeAccountPromise = new Promise(function(resolve) {
+  changeAccountResolve = resolve
+})
+let asyncFn = function() {
+  ... ...
+  changeAccountResolve()
+}
+asyncFn()
+
+RG.ChangeAccount = changeAccountPromise
+```
+
+
+
 
 

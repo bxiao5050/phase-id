@@ -5,15 +5,10 @@ import Api from "Base/Api";
 import Account from "Base/Account";
 import Utils from "Base/Utils";
 import Mark from "Base/Mark";
-import { DOT, GET, ERROR } from "Base/Constant";
-import { checkJsToNative } from "Src/adapter";
-import Polyfill from "Base/Polyfill"
 
 export default class Base {
 
   version = VERSION
-
-  constructor(props?) { }
 
   Mark(markName: string, markParams: any) {
     Mark.instance.Mark(markName)
@@ -55,9 +50,8 @@ export default class Base {
   }
 
   _getParamUserHasParsed = false
-
-  CurUserInfo(): JSSDK.CurUserInfo {
-    var user = Utils.getParameterByName('user')
+  CurUserInfo = (): JSSDK.CurUserInfo => {
+    var user = Utils.getUrlParam('user')
     if (user && !this._getParamUserHasParsed) {
       this._getParamUserHasParsed = true
       user = JSON.parse(decodeURIComponent(user))
@@ -108,6 +102,10 @@ export default class Base {
       exInfo: OrderingData.exInfo,
     })
   }
+
+  ChangeAccount = new Promise(function (resolve) {
+    resolve()
+  })
 
   FinishOrder(finishOrderParams: FinishOrderParams): Promise<ServerRes> {
     return Payment.instance.finishOrder({

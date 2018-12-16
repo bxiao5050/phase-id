@@ -4,6 +4,7 @@ import { Switch, Route, Link } from 'react-router-dom'
 import { History, createLocation } from 'history'
 import App from 'DOM/index'
 import { match } from 'react-router-dom'
+import Utils from 'Src/Base/Utils';
 
 
 type accountProps = {
@@ -24,6 +25,34 @@ class Main extends React.Component<accountProps, any, any> {
       this.state.deviceNo = device.hasOwnProperty('device') ? device.device : device.hasOwnProperty('gaid') ? device.gaid : device.deviceNo;
       this.setState(this.state)
     })
+  }
+
+  locationToLoginPage = () => {
+    var urlParam = Utils.getUrlParam()
+    var urlSearch = ''
+    var $i = 0
+    for (var name in urlParam) {
+      if (name === 'user') {
+        continue
+      } else {
+        urlSearch += (($i ? '&' : '?') + name + '=' + urlParam[name])
+        $i++
+      }
+    }
+    var type = 'change'
+    urlSearch += '&type=' + type;
+    var href = ((Utils.getUrlParam('debugger') || window['debugger']) ? RG.jssdk.config.loginPage.test : RG.jssdk.config.loginPage.formal) + urlSearch
+    location.href = href
+  }
+
+  changeAccount = async () => {
+    let type = Object.prototype.toString.call(window.RG.ChangeAccount)
+    if (type === '[object Promise]') {
+      await window.RG.ChangeAccount
+      this.locationToLoginPage()
+    } else {
+      this.locationToLoginPage()
+    }
   }
 
   render() {
@@ -67,9 +96,7 @@ class Main extends React.Component<accountProps, any, any> {
           <p>{RG.jssdk.config.i18n.txt_safe_set}</p>
           <img src={require("DOM/assets/ui_right_arrow.png")} className="right" />
         </a>
-        <a className="item-other" onClick={() => {
-          window.rgChangeAccount && window.rgChangeAccount()
-        }}>
+        <a className="item-other" onClick={this.changeAccount}>
           <img src={require("DOM/assets/ui_switch_account.png")} />
           <p>{RG.jssdk.config.i18n.dom011}</p>
           <img src={require("DOM/assets/ui_right_arrow.png")} className="right" />
