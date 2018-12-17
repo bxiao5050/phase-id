@@ -1,4 +1,4 @@
-# JavaScript 版 RoyalGame SDK v2.1
+# JavaScript 版 RoyalGame SDK v2.3
 
 提供登录， 绑定区服，支付 等功能
 
@@ -9,19 +9,68 @@ JavaScript 版 SDK 无需下载和安装任何独立文件，您只需在 HTML �
 以下代码片段将提供基础版的 SDK，其中的选项将设置为最常用的默认设置。请直接将此代码片段插入想要加载 SDK 的每个页面的开始 `<body>` 标签之后：
 
 ```
-window.rgAsyncInit = function () { 
-  // SDK has logined completely, please code below
-  var userInfo = RG.CurUserInfo
+/**
+ * GET 参数获取
+ * @param name 参数名称
+ */
+var getUrlParam = (function () {
+  var urlParamMap = {}
+	var interrogationIndex = location.href.indexOf("?") + 1
+	var str = interrogationIndex === 0 ? "" : location.href.slice(interrogationIndex)
+	if (str) {
+		var arr = str.split(/&|%26/)
+		arr.forEach(item => {
+			var arr = item.split(/=|%3D/)
+			var key = arr[0]
+			var val = arr[1]
+			urlParamMap[key] = val
+		})
+	}
+	return function (name) {
+		if (name) {
+			return urlParamMap.hasOwnProperty(name) ? urlParamMap[name] : null
+		} else {
+			return urlParamMap
+		}
+	}
+})()
+
+var isDebugger = getUrlParam('debugger') || window.debugger
+var sdkVersion = getUrlParam('sdkVersion') || window.sdkVersion
+
+/** 加载jsssdk */
+var src = 'https://sdk-vn.pocketgamesol.com/jssdk/' + sdkVersion + '/sdk.js';
+(function (d, s, id) {
+	var js, fjs = d.getElementsByTagName(s)[0];
+	if (d.getElementById(id)) return;
+	js = d.createElement(s);
+	js.id = id;
+	js.src = src
+	fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'rg-jssdk'));
+
+window.rgAsyncInit = function () {
+	var urlParam = getUrlParam()
+	var urlSearch = ''
+	var $i = 0
+	for (var name in urlParam) {
+		if (name === 'type') {
+			continue
+		} else {
+			urlSearch += (($i ? '&' : '?') + name + '=' + urlParam[name])
+			$i++
+		}
+	}
+	var user = encodeURIComponent(JSON.stringify(
+		RG.CurUserInfo()
+	))
+	urlSearch += '&user=' + user;
+	var href = (isDebugger ? TEST_URL : FORMAL_URL) + urlSearch
+
+  location.href = href
 }
-// Load the SDK asynchronously
-(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) return;
-  js = d.createElement(s); js.id = id;
-  js.src = "https://sdk-vn.pocketgamesol.com/jssdk/v2.1/sdk.js";
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'royalgame-jssdk'));
 ```
+
 ```
 德国的sdk主机域名     https://sdk-de.pocketgamesol.com
 新加坡的sdk主机域名   https://sdk-sg.pocketgamesol.com
@@ -29,7 +78,6 @@ window.rgAsyncInit = function () {
 
 jssdk静态文件地址     ${HOST}/jssdk/${GET.sdkVersion || window.sdkVersion}/sdk.js
 ```
-
 ## 登录
 
 在SDK加载完成以后 SDK会自动调起登录弹窗等相关操作，用户可在弹窗中进行登录注册操作，登录/注册完毕后会将数据保存在本地localstorage中, 然后执行全局初始化函数 rgAsyncInit
@@ -176,30 +224,6 @@ RG.Share('https://some-gaming-address-to-share.com').then(function(data) {
 ```
 使用方法 RG.Mark(markName: string): void
 ```
-
-<!-- ## FB跳转
- 
-* **RG.Fb**
-
-**方法说明：**
-
-* 当用户安装有FB app时，调起FB app；否则，跳转粉丝页
-
-```
-使用方法 RG.Fb()
-``` -->
-
-<!-- ## Messenger跳转 
-
-* **RG.Messager**
-
-**方法说明：**
-
-* 当用户安装有messenger app时，调起messenger app；否则，跳转粉丝页
-
-```
-使用方法 RG.Messager()
-``` -->
 
 ## 引导用户添加桌面收藏
 

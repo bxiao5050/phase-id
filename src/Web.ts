@@ -88,7 +88,7 @@ export default class Web extends Base {
       link,
       appId
     }))
-    window.open(`${SERVER.replace('https', 'http')}/page/sdk-add-shortcuts/index.html?params=${params}`)
+    window.open(`${SERVER.replace('https', 'http')}/jssdk/add_shortcut/index.html?params=${params}`)
   }
 
 }
