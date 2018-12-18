@@ -35,6 +35,14 @@ switch (action) {
 		SERVER = 'https://sdk-sg.pocketgamesol.com'
 		output.publicPath = SERVER + '/jssdk/'
 		break;
+	case 'vn':
+		SERVER = 'https://sdk-vn.pocketgamesol.com'
+		output.publicPath = SERVER + '/jssdk/'
+		break;
+	case 'de':
+		SERVER = 'http://desdk-cdn.pkmonquest.com'
+		output.publicPath = SERVER + '/jssdk/'
+		break;
 		// case 'build-fb':
 		// 	SERVER = 'https://sdk-sg.pocketgamesol.com'
 		// 	output.publicPath = ''

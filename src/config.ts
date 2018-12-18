@@ -60,7 +60,7 @@ var config5 = { // 像素口袋1
   markGAID: 'UA-102180151-44',
   language: 'TW',
   gamePage: {
-    test: 'http://www.baidu.com',
+    test: 'http://xytest.xulonggame.com/royalgame.html',
     formal: 'http://www.baidu.com',
   },
   loginPage: {
