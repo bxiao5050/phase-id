@@ -97,7 +97,6 @@ declare interface Window {
   RgPolyfilled: Function
 }
 
-declare var IS_TEST: boolean
 declare var FBVersion: string
 declare var ACTION: string
 

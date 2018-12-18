@@ -222,7 +222,7 @@ RG.Share('https://some-gaming-address-to-share.com').then(function(data) {
 * 通过调用Mark方法，传入对应的打点名即可完成打点
 
 ```
-使用方法 RG.Mark(markName: string): void
+使用方法 RG.Mark(markName: string, param?: object): void
 ```
 
 ## 引导用户添加桌面收藏

@@ -2,53 +2,59 @@ const path = require('path');
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const webpack = require("webpack");
-const Chalk = require('chalk')
 const Yargs = require('yargs')
 const md5 = require('md5')
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
 var {
 	argv
 } = Yargs
+
 var action = argv.action
-var sdkVersion = 'v2.1.025'
+var isDev = action === 'dev'
+var sdkVersion = argv.sdkVersion
 var SERVER
-var IS_TEST = true
-var output = {
-	path: path.join(__dirname, 'build'),
-	filename: action === 'build-fb' ? 'sdk/sdk.js' : 'v2.3/sdk.js',
-	chunkFilename: action === 'build-fb' ? 'sdk/sdk_[name].js' : 'v2.3/[name].js',
-}
 var devServer = {
 	contentBase: path.join(__dirname, 'build'),
 	inline: true,
 	port: 7000,
 	https: true
 }
+if (sdkVersion === true) {
+	console.error('miss sdkVersion')
+	process.exit()
+}
+var filename = isDev ? 'sdk.js' : `${sdkVersion}/sdk.js`
+var chunkFilename = isDev ? '[name].js' : `${sdkVersion}/[name].js`
+var output = {
+	path: path.join(__dirname, 'build'),
+	filename,
+	chunkFilename
+}
 switch (action) {
-	case 'build-fb':
-		IS_TEST = false
+	case 'sg':
 		SERVER = 'https://sdk-sg.pocketgamesol.com'
-		output.publicPath = ''
+		output.publicPath = SERVER + '/jssdk/'
 		break;
-	case 'test-sg':
-		SERVER = 'https://sdk-sg.pocketgamesol.com'
-		output.publicPath = SERVER + '/jssdk/test/'
-		break;
-	case 'build-sg':
-		SERVER = 'https://sdk-sg.pocketgamesol.com'
-		IS_TEST = true
-		output.publicPath = SERVER + '/jssdk/FBInstant/'
-		break;
-	case 'test-vn':
-		SERVER = 'https://sdk-vn.pocketgamesol.com'
-		output.publicPath = SERVER + '/jssdk/v2.1.1/'
-		break;
-	case 'build-vn':
-		SERVER = 'https://sdk-vn.pocketgamesol.com'
-		IS_TEST = false
-		output.publicPath = SERVER + '/jssdk/v2.1/'
-		break;
+		// case 'build-fb':
+		// 	SERVER = 'https://sdk-sg.pocketgamesol.com'
+		// 	output.publicPath = ''
+		// 	break;
+		// case 'test-sg':
+		// 	SERVER = 'https://sdk-sg.pocketgamesol.com'
+		// 	output.publicPath = SERVER + '/jssdk/test/'
+		// 	break;
+		// case 'build-sg':
+		// 	SERVER = 'https://sdk-sg.pocketgamesol.com'
+		// 	output.publicPath = SERVER + '/jssdk/FBInstant/'
+		// 	break;
+		// case 'test-vn':
+		// 	SERVER = 'https://sdk-vn.pocketgamesol.com'
+		// 	output.publicPath = SERVER + '/jssdk/v2.1.1/'
+		// 	break;
+		// case 'build-vn':
+		// 	SERVER = 'https://sdk-vn.pocketgamesol.com'
+		// 	output.publicPath = SERVER + '/jssdk/v2.1/'
+		// 	break;
 }
 var definePlugin = {
 	FBVersion: JSON.stringify('v3.2'),
@@ -56,7 +62,6 @@ var definePlugin = {
 	VERSION: JSON.stringify(sdkVersion),
 	SERVER: JSON.stringify(SERVER),
 	ACTION: JSON.stringify(action),
-	IS_TEST: IS_TEST
 }
 var webpackConfig = {
 
@@ -116,7 +121,7 @@ var webpackConfig = {
 				loader: 'file-loader',
 				options: {
 					name: '[name]-[hash:4].[ext]',
-					outputPath: action === 'build-fb' ? './sdk/img' : './img'
+					outputPath: isDev ? './img' : ('./' + sdkVersion + '/img')
 				}
 			}]
 		}]
@@ -124,10 +129,10 @@ var webpackConfig = {
 
 	plugins: [
 		new HtmlWebpackPlugin({
-			filename: "index.html",
-			// chunks: ['SDK'],
+			filename: isDev ? 'index.html' : (sdkVersion + '/' + 'index.html'),
+			chunks: ['SDK'],
 			inject: false,
-			template: "./index.html"
+			template: 'index.html'
 		}),
 		new webpack.ProvidePlugin({
 			md5: 'md5'

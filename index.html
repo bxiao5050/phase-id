@@ -33,12 +33,11 @@
 				}
 			}
 		})()
-
 		var isDebugger = getUrlParam('debugger') || window.debugger
 		var sdkVersion = getUrlParam('sdkVersion') || window.sdkVersion
 
 		/** 加载jsssdk */
-		var src = './' + sdkVersion + '/sdk.js';
+		var src = isDebugger ? './sdk.js' : ('https://sdk-sg.pocketgamesol.com/jssdk/' + sdkVersion + '/sdk.js');
 		(function (d, s, id) {
 			var js, fjs = d.getElementsByTagName(s)[0];
 			if (d.getElementById(id)) return;

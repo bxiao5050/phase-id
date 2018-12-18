@@ -10,6 +10,8 @@ export default class Base {
 
   version = VERSION
 
+  // getUrlParam = Utils.getUrlParam
+
   Mark(markName: string, markParams: any) {
     Mark.instance.Mark(markName)
   }

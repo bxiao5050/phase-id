@@ -46,12 +46,12 @@ export default class Mark {
     window.dataLayer.push(arguments);
   }
 
-  Mark(markName: string) {
+  Mark(markName: string, param?: object) {
     if (RG.jssdk.config.markFBID) {
       window.fbq('track', markName)
     }
     if (RG.jssdk.config.markGAID) {
-      this.gtag('event', markName)
+      param ? this.gtag('event', markName, param) : this.gtag('event', markName)
     }
     if (RG.jssdk.config.markFBID || RG.jssdk.config.markGAID) console.info(`"${markName}" has marked - web`)
   }

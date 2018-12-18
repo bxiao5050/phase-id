@@ -56,8 +56,8 @@ var config5 = { // 像素口袋1
     test: 'https://sdk-test.changic.net.cn/pocketgames/client',
     formal: 'https://desdk-cdn.pkmonquest.com/pocketgames/client',
   },
-  markFBID: '248456995960454',
-  markGAID: 'UA-121906563-4',
+  markFBID: '2245057485737002',
+  markGAID: 'UA-102180151-44',
   language: 'TW',
   gamePage: {
     test: 'http://www.baidu.com',

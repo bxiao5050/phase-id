@@ -1,4 +1,5 @@
 import Base from "Src/Main";
+import Utils from "./Utils";
 
 export default class Http {
   static _ins: Http
@@ -9,41 +10,9 @@ export default class Http {
     Http._ins = this
   }
 
-  private serverAddress = IS_TEST ? RG.jssdk.config.server.test : RG.jssdk.config.server.formal
+  private serverAddress = (Utils.getUrlParam('debugger') || window['debugger']) ? RG.jssdk.config.server.test : RG.jssdk.config.server.formal
 
   private request(param: requestParam): Promise<ServerRes> {
-    // var mode: RequestMode
-    // var options: RequestInit
-
-    // // mode = "cors"
-
-    // options = {
-    //   method: param.method,
-    //   headers: {
-    //     'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-    //   }
-    // }
-
-    // if (mode) {
-    //   options.mode = mode
-    // }
-
-    // if (param.data) {
-    //   options.body = Object.keys(param.data).map(key => {
-    //     return `${key}=${param.data[key]}`
-    //   }).join('&')
-    // }
-
-    // return new Promise((resolve, reject) => {
-    //   fetch(param.url ? param.url : this.serverAddress + param.route, options).then(response => {
-    //     return response.json()
-    //   }).then(data => {
-    //     resolve(data)
-    //   }).catch(err => {
-    //     reject(err)
-    //   })
-    // })
-
     var data
     if (param.data) {
       data = Object.keys(param.data).map(key => {
