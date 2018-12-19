@@ -32,9 +32,11 @@ declare namespace JSSDK {
       test: string
       formal: string
     }
+    mark_id: {
+      fb: string
+      ga: string
+    }
     test: string
-    markFBID: string
-    markGAID: string
     language: string
     i18n: any
     type: Type

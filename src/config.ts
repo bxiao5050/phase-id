@@ -49,6 +49,15 @@ var config4 = { // 仙灵记
 var config5 = { // 像素口袋1
   appKey: 'bebb9e42c3984939ae9dd3410d13666f',
   FbAppID: '738722513164399',
+  language: 'EN',
+  region: 'DE',
+  mark_id: {
+    ga: 'UA-102180151-44',
+    fb: '2245057485737002',
+  },
+  pic: {
+    loginBg: 'http://pixel.pkmonquest.com/h5-play/images/bg_game_login.png'
+  },
   messenger: 'https://business.facebook.com/ipocketgames.xlj/?business_id=272212516313332&ref=bookmarks',
   fanpage: 'https://business.facebook.com/ipocketgames.xlj/?business_id=272212516313332&ref=bookmarks',
   FbPageId: '350841588735718',
@@ -56,9 +65,7 @@ var config5 = { // 像素口袋1
     test: 'https://sdk-test.changic.net.cn/pocketgames/client',
     formal: 'https://desdk-cdn.pkmonquest.com/pocketgames/client',
   },
-  markFBID: '2245057485737002',
-  markGAID: 'UA-102180151-44',
-  language: 'TW',
+
   gamePage: {
     test: 'http://xytest.xulonggame.com/royalgame.html',
     formal: 'http://www.baidu.com',

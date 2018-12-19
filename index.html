@@ -2,11 +2,22 @@
 <html>
 
 <head>
-	<meta charset="UTF-8">
+	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+	<style>
+		#rg-bg-login {
+			position: absolute;
+			width: 100%;
+			height: 100%;
+			top: 0;
+			left: 0;
+			display: none;
+		}
+	</style>
 </head>
 
 <body>
+	<img id="rg-bg-login" />
 	<script>
 		/**
 		 * GET 参数获取
@@ -35,17 +46,27 @@
 				}
 			}
 		})()
+		var isDev = getUrlParam('dev') || window.dev
 		var isDebugger = getUrlParam('debugger') || window.debugger
 		var sdkVersion = getUrlParam('sdkVersion') || window.sdkVersion
 
 		/** 加载jsssdk */
-		var src = isDebugger ? './sdk.js' : ('https://sdk-sg.pocketgamesol.com/jssdk/' + sdkVersion + '/sdk.js');
+		var src = isDev ? './sdk.js' : ('https://sdk-de.pocketgamesol.com/jssdk/' + sdkVersion + '/sdk.js');
 		(function (d, s, id) {
 			var js, fjs = d.getElementsByTagName(s)[0];
 			if (d.getElementById(id)) return;
 			js = d.createElement(s);
 			js.id = id;
 			js.src = src
+			js.onload = function () {
+				window.RG = {
+					gameConfig: function (config) {
+						let img = document.getElementById('rg-bg-login')
+						img.src = config.pic.loginBg
+						img.style.display = 'block'
+					}
+				}
+			}
 			fjs.parentNode.insertBefore(js, fjs);
 		}(document, 'script', 'rg-jssdk'));
 
@@ -53,8 +74,8 @@
 			var urlParamKeyArr = getUrlParam()
 			var urlSearch = ''
 			var $i = 0
-			for (var key in urlParamKeyArr) {
-				if (key === 'type') {
+			for (var key of urlParamKeyArr) {
+				if (key === 'type' || key === 'dev') {
 					continue
 				} else {
 					urlSearch += (($i ? '&' : '?') + key + '=' + getUrlParam(key))
@@ -66,7 +87,6 @@
 			))
 			urlSearch += '&user=' + user;
 			var href = (isDebugger ? RG.jssdk.config.gamePage.test : RG.jssdk.config.gamePage.formal) + urlSearch
-			console.log(href)
 			location.href = href
 		}
 	</script>

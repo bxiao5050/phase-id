@@ -89,11 +89,11 @@ export default class Main {
             advChannel,
             i18n: translation[config.language]
           })
+          window.RG['gameConfig'] && window.RG['gameConfig'](this.config)
           resolve()
         })
       }
     })
-
   }
 
   /**
