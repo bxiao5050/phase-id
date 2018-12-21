@@ -1,12 +1,12 @@
 .win-loading .logo {
-  width: 2.9*2.67 + rem;
-  height: 0.9*2.67 + rem;
+  width: 11rem;
+  height: 3.3rem;
   background: url(../../assets/icon-logo.png) center no-repeat;
-  background-size: contain;
+  background-size: 100% 100%;
 }
 
 .win-loading h2 {
-  margin: -0.3*2.67 + rem auto 0;
+  margin: -1.9rem auto 0;
 }
 
 .content.win-loading {
