@@ -26,7 +26,8 @@ export enum GET {
   USER = 'user',
   APP_ID = 'appId',
   ADV_CHANNEL = 'advChannel',
-  DEBUGGER = 'debugger'
+  DEBUGGER = 'debugger',
+  DEV = 'dev'
 }
 
 export enum DOT {

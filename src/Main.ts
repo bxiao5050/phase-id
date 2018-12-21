@@ -31,7 +31,7 @@ export default class Main {
   initDebugger() {
     return new Promise(resolve => {
       var js = document.createElement('script')
-      js.src = "https://sdk-sg.pocketgamesol.com/jssdk/vconsole/vconsole.min.js"
+      js.src = "//cdnjs.cloudflare.com/ajax/libs/vConsole/3.2.0/vconsole.min.js"
       js.onload = () => {
         new VConsole
         resolve()
@@ -44,7 +44,7 @@ export default class Main {
     let AndroidVersion = navigator.userAgent.match(/Android \d{1}.\d{1}/)
     let isLge4_4
     if (AndroidVersion) isLge4_4 = Number(AndroidVersion[0].split(' ')[1]) >= 4.4;
-    if (Utils.getUrlParam(GET.DEBUGGER) || window[GET.DEBUGGER]) {
+    if (Utils.getUrlParam(GET.DEV) || window[GET.DEV]) {
       if (AndroidVersion) {
         if (isLge4_4) await this.initDebugger();
       } else {
