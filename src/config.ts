@@ -62,8 +62,8 @@ var config5 = { // 像素口袋1
   fanpage: 'https://business.facebook.com/ipocketgames.xlj/?business_id=272212516313332&ref=bookmarks',
   FbPageId: '350841588735718',
   server: {
-    test: 'https://sdk-test.changic.net.cn/pocketgames/client',
-    formal: 'https://desdk-cdn.pkmonquest.com/pocketgames/client',
+    test: '//sdk-test.changic.net.cn/pocketgames/client',
+    formal: '//desdk-cdn.pkmonquest.com/pocketgames/client',
   },
 
   page: {

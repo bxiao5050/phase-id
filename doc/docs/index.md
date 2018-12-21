@@ -261,7 +261,17 @@ asyncFn()
 
 RG.ChangeAccount = changeAccountPromise
 ```
+## 重定向至登录页面
 
+* **RG.Redirect**
+
+**方法说明：**
+
+* token校验失败后 重定向至登录页面
+
+```
+RG.Redirect() 
+```
 
 
 
