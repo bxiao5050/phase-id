@@ -4,6 +4,7 @@ import './index.scss'
 import * as React from 'react'
 import { History } from 'history'
 import App from 'DOM/index'
+import { DOT } from 'Src/Base/Constant';
 
 var canTouch = false
 var isMoving = false
@@ -177,7 +178,7 @@ export default class Hover extends React.Component<{
         <div className="item">
           <a className="icon contact"
             onClick={() => {
-              RG.Mark('sdk_contact_us')
+              RG.Mark(DOT.SDK_CONTACT_US)
               window.open(RG.jssdk.config.messenger)
             }}
           >

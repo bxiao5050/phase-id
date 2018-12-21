@@ -42,6 +42,10 @@ declare namespace JSSDK {
     type: Type
     page: {
       login: string
+      game: {
+        test: string
+        formal: string
+      }
     }
   }
 }

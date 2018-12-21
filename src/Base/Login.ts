@@ -1,5 +1,6 @@
 import Utils from "Base/Utils";
 import Http from "Src/Base/Http";
+import { DOT } from "./Constant";
 
 export default class Login {
   static _ins: Login
@@ -40,7 +41,7 @@ export default class Login {
               token: res.token
             }))
             if (res.data.firstLogin) {
-              RG.Mark('sdk_register')
+              RG.Mark(DOT.SDK_REGISTER)
             }
             resolve(res)
             break;

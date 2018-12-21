@@ -2,6 +2,7 @@ import Utils from "Base/Utils";
 import { DOT, GET, ERROR } from "Base/Constant";
 import { checkJsToNative } from "Src/adapter";
 import Polyfill from "Base/Polyfill"
+import Mark from "./Base/Mark";
 
 export default class Main {
 
@@ -18,11 +19,11 @@ export default class Main {
   polyfilled() {
     console.log('polyfilled')
     this.init().then(() => {
-      RG.Mark(DOT.SDK_LOADED);
+      location.origin === Mark.instance.gameOrigin && RG.Mark(DOT.SDK_LOADED);
       (RG.jssdk as any).init()
     }).catch(() => {
       this.getSDKInstance().then(() => {
-        RG.Mark(DOT.SDK_LOADED);
+        location.origin === Mark.instance.gameOrigin && RG.Mark(DOT.SDK_LOADED);
         (RG.jssdk as any).init()
       })
     })

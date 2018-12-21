@@ -1,5 +1,9 @@
+import Utils from "./Utils";
 
 export default class Mark {
+
+  gameOrigin
+
   static _ins: Mark
   static get instance(): Mark {
     return this._ins || new Mark;
@@ -39,6 +43,17 @@ export default class Mark {
       window.dataLayer = window.dataLayer || [];
       this.gtag('js', new Date());
       this.gtag('config', RG.jssdk.config.mark_id.ga);
+
+
+      let reg = new RegExp(/[a-zA-Z0-9][-a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-a-zA-Z0-9]{0,62})+/)
+      let loginPage = RG.jssdk.config.page.login
+      let gamePage = Utils.getUrlParam('debugger') || window['debugger'] ? RG.jssdk.config.page.game.test : RG.jssdk.config.page.game.formal
+      this.gameOrigin = gamePage.match(reg)[0]
+      this.gtag('config', 'GA_TRACKING_ID', {
+        'linker': {
+          'domains': [loginPage.match(reg)[0], this.gameOrigin]
+        }
+      })
     }
   }
 
