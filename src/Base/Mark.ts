@@ -42,9 +42,7 @@ export default class Mark {
         `https://www.googletagmanager.com/gtag/js?id=${RG.jssdk.config.mark_id.ga}`);
       window.dataLayer = window.dataLayer || [];
       this.gtag('js', new Date());
-      this.gtag('config', RG.jssdk.config.mark_id.ga);
-
-
+      // this.gtag('config', RG.jssdk.config.mark_id.ga);
       let reg = new RegExp(/[a-zA-Z0-9][-a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-a-zA-Z0-9]{0,62})+/)
       let loginPage = RG.jssdk.config.page.login
       let gamePage = Utils.getUrlParam('debugger') || window['debugger'] ? RG.jssdk.config.page.game.test : RG.jssdk.config.page.game.formal
@@ -52,9 +50,10 @@ export default class Mark {
       let loginHost = loginPage.match(reg)[0]
       console.log('this host', location.host)
       console.log('mark host', [loginHost, this.gameHost])
-      this.gtag('config', 'GA_TRACKING_ID', {
+      this.gtag('config', RG.jssdk.config.mark_id.ga, {
         'linker': {
-          'domains': [loginHost, this.gameHost]
+          'domains': [loginHost, this.gameHost],
+          'accept_incoming': true
         }
       })
     }
