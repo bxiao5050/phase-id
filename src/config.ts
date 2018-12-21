@@ -71,7 +71,8 @@ var config5 = { // 像素口袋1
       test: 'http://xytest.xulonggame.com/royalgame.html',
       formal: 'http://xy.xulonggame.com/xy.html',
     },
-    login: 'https://pixel.pkmonquest.com/h5-play/login.html'
+    login: 'https://pixel.pkmonquest.com/h5-play/login.html',
+    index: 'http://pixel.pkmonquest.com/h5-play/index.html'
   }
 }
 

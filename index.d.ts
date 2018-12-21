@@ -41,6 +41,7 @@ declare namespace JSSDK {
     i18n: any
     type: Type
     page: {
+      index: string
       login: string
       game: {
         test: string
@@ -65,6 +66,7 @@ interface RG {
   /** 跳转到messenger页面 */
   Messenger()
 
+  Redirect()
   /** x */
   ChangeAccount()
 

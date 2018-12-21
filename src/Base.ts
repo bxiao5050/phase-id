@@ -39,6 +39,21 @@ export default class Base {
     return Account.instance.usersInfo
   }
 
+  Redirect() {
+    var urlParam = Utils.getUrlParam()
+    var urlSearch = ''
+    var $i = 0
+    for (var name in urlParam) {
+      if (name === 'user') {
+        continue
+      } else {
+        urlSearch += (($i ? '&' : '?') + name + '=' + urlParam[name])
+        $i++
+      }
+    }
+    location.href = window.RG.jssdk.config.page.index + urlSearch
+  }
+
   SetUser(userInfo: UserInfo, userId?: any) {
     if (userInfo) {
       Account.instance.userInfo = userInfo

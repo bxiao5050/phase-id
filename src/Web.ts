@@ -64,6 +64,7 @@ export default class Web extends Base {
     var exposeApis = [
       "server",
       "version",
+      "Redirect",
       "Messenger",
       "Fb",
       "CurUserInfo",

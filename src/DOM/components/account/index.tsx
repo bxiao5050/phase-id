@@ -27,30 +27,14 @@ class Main extends React.Component<accountProps, any, any> {
     })
   }
 
-  locationToLoginPage = () => {
-    var urlParam = Utils.getUrlParam()
-    var urlSearch = ''
-    var $i = 0
-    for (var name in urlParam) {
-      if (name === 'user') {
-        continue
-      } else {
-        urlSearch += (($i ? '&' : '?') + name + '=' + urlParam[name])
-        $i++
-      }
-    }
-    var type = 'change'
-    urlSearch += '&type=' + type;
-    location.href = RG.jssdk.config.page.login + urlSearch
-  }
 
   changeAccount = async () => {
     let type = Object.prototype.toString.call(window.RG.ChangeAccount)
     if (type === '[object Promise]') {
       await window.RG.ChangeAccount
-      this.locationToLoginPage()
+      window.RG.Redirect()
     } else {
-      this.locationToLoginPage()
+      window.RG.Redirect()
     }
   }
 
