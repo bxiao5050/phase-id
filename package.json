@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "dev": "webpack-dev-server --mode development --action dev",
+    "dev": "webpack-dev-server --mode development --action dev --sdkVersion",
     "build-sg": "webpack --mode production --action sg --sdkVersion",
     "build-vn": "webpack --mode production --action vn --sdkVersion",
     "build-de": "webpack --mode production --action de --sdkVersion"
@@ -23,13 +23,13 @@
     "babel-loader": "^8.0.4",
     "chalk": "^2.4.1",
     "clean-webpack-plugin": "^1.0.0",
-    "crypto-js": "^3.1.9-1"
-    ,
+    "crypto-js": "^3.1.9-1",
     "css-loader": "^2.0.0",
     "file-loader": "^2.0.0",
     "html-webpack-plugin": "^3.2.0",
     "md5": "^2.2.1",
     "node-sass": "^4.11.0",
+    "nodemon": "^1.18.9",
     "postcss-loader": "^3.0.0",
     "react": "^16.3.3",
     "react-dom": "^16.3.3",

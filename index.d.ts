@@ -40,7 +40,9 @@ declare namespace JSSDK {
     language: string
     i18n: any
     type: Type
-    loginPage: any
+    page: {
+      login: string
+    }
   }
 }
 
@@ -55,7 +57,7 @@ interface RG {
 
   /** 获取支付数据 */
   Pay(paymentConfig: PaymentConfig): void
-
+  init()
   /** 跳转到messenger页面 */
   Messenger()
 

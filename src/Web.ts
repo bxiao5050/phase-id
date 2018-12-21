@@ -8,12 +8,16 @@ import Base from 'Src/Base'
 export default class Web extends Base {
 
   config
+  fb_sdk_loaded
 
-  constructor(config) {
+  constructor(config, fb_sdk_loaded) {
     super()
+    this.config = config
+    this.fb_sdk_loaded = fb_sdk_loaded
+
     let RG = function () { }
     RG.prototype.jssdk = this
-    this.config = config
+
     window.RG = new RG
     this.ExposeApis()
     Mark.instance.init()

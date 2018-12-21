@@ -110,7 +110,7 @@ export default class Utils {
       sdkVersion: '0',
       appId: RG.jssdk.config.appId
     }
-    if (RG.jssdk.type === 2) { // 原生应用
+    if (RG.jssdk.config.type === 2) { // 原生应用
       var deviceMsg = await JsToNative.getDeviceMsgAsync()
       // console.log('it is native deviceMsg and msg is ', deviceMsg)
       info.device = deviceMsg.device
@@ -137,7 +137,7 @@ export default class Utils {
   }
 
   public static async refetchDeviceMsg() {
-    if (RG.jssdk.type === 2) { // 原生应用
+    if (RG.jssdk.config.type === 2) { // 原生应用
       var deviceMsg = await JsToNative.getDeviceMsgAsync()
       this._deviceMsg.network = deviceMsg.network
     }

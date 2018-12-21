@@ -46,31 +46,30 @@
 				}
 			}
 		})()
-		var isDev = getUrlParam('dev') || window.dev
-		var isDebugger = getUrlParam('debugger') || window.debugger
-		var sdkVersion = getUrlParam('sdkVersion') || window.sdkVersion
-
-		/** 加载jsssdk */
-		var src = isDev ? './sdk.js' : ('https://sdk-de.pocketgamesol.com/jssdk/' + sdkVersion + '/sdk.js');
+		/** 加载jssdk */
+		var src = './sdk.js?t=' + Date.now();
 		(function (d, s, id) {
-			var js, fjs = d.getElementsByTagName(s)[0];
+			var js
 			if (d.getElementById(id)) return;
 			js = d.createElement(s);
 			js.id = id;
 			js.src = src
 			js.onload = function () {
+				console.log('loaded')
 				window.RG = {
 					gameConfig: function (config) {
+						console.log(config);
 						let img = document.getElementById('rg-bg-login')
 						img.src = config.pic.loginBg
 						img.style.display = 'block'
 					}
 				}
 			}
-			fjs.parentNode.insertBefore(js, fjs);
+			document.body.appendChild(js)
 		}(document, 'script', 'rg-jssdk'));
 
 		window.rgAsyncInit = function () {
+			console.log('window.rgAsyncInit')
 			var urlParamKeyArr = getUrlParam()
 			var urlSearch = ''
 			var $i = 0
@@ -86,7 +85,8 @@
 				RG.CurUserInfo()
 			))
 			urlSearch += '&user=' + user;
-			var href = (isDebugger ? RG.jssdk.config.gamePage.test : RG.jssdk.config.gamePage.formal) + urlSearch
+			var href = ((getUrlParam('debugger') || window.debugger) ? RG.jssdk.config.page.game.test : RG.jssdk.config.page.game
+				.formal) + urlSearch;
 			location.href = href
 		}
 	</script>

@@ -12,11 +12,11 @@ var {
 var action = argv.action
 var isDev = action === 'dev'
 var sdkVersion = argv.sdkVersion
-var SERVER
+var SERVER = ''
 var devServer = {
 	contentBase: path.join(__dirname, 'build'),
 	inline: true,
-	port: 7000,
+	port: 7001,
 	https: true
 }
 if (sdkVersion === true) {
@@ -24,7 +24,7 @@ if (sdkVersion === true) {
 	process.exit()
 }
 var filename = isDev ? 'sdk.js' : `${sdkVersion}/sdk.js`
-var chunkFilename = isDev ? '[name].js' : `${sdkVersion}/[name].js`
+var chunkFilename = isDev ? '[name].js?[hash:8]' : `${sdkVersion}/[name].js`
 var output = {
 	path: path.join(__dirname, 'build'),
 	filename,
@@ -40,29 +40,12 @@ switch (action) {
 		output.publicPath = SERVER + '/jssdk/'
 		break;
 	case 'de':
-		SERVER = 'http://desdk-cdn.pkmonquest.com'
+		SERVER = 'https://desdk-cdn.pkmonquest.com'
 		output.publicPath = SERVER + '/jssdk/'
 		break;
-		// case 'build-fb':
-		// 	SERVER = 'https://sdk-sg.pocketgamesol.com'
-		// 	output.publicPath = ''
-		// 	break;
-		// case 'test-sg':
-		// 	SERVER = 'https://sdk-sg.pocketgamesol.com'
-		// 	output.publicPath = SERVER + '/jssdk/test/'
-		// 	break;
-		// case 'build-sg':
-		// 	SERVER = 'https://sdk-sg.pocketgamesol.com'
-		// 	output.publicPath = SERVER + '/jssdk/FBInstant/'
-		// 	break;
-		// case 'test-vn':
-		// 	SERVER = 'https://sdk-vn.pocketgamesol.com'
-		// 	output.publicPath = SERVER + '/jssdk/v2.1.1/'
-		// 	break;
-		// case 'build-vn':
-		// 	SERVER = 'https://sdk-vn.pocketgamesol.com'
-		// 	output.publicPath = SERVER + '/jssdk/v2.1/'
-		// 	break;
+	case 'dev':
+		output.publicPath = ''
+		break
 }
 var definePlugin = {
 	FBVersion: JSON.stringify('v3.2'),
@@ -129,7 +112,7 @@ var webpackConfig = {
 				loader: 'file-loader',
 				options: {
 					name: '[name]-[hash:4].[ext]',
-					outputPath: isDev ? './img' : ('./' + sdkVersion + '/img')
+					outputPath: sdkVersion + '/img'
 				}
 			}]
 		}]
@@ -137,10 +120,10 @@ var webpackConfig = {
 
 	plugins: [
 		new HtmlWebpackPlugin({
-			filename: isDev ? 'index.html' : (sdkVersion + '/' + 'index.html'),
-			chunks: ['SDK'],
+			filename: isDev ? 'index.html' : sdkVersion + '/' + 'login.html',
+			template: 'index.html',
+			// chunks: ['SDK'],
 			inject: false,
-			template: 'index.html'
 		}),
 		new webpack.ProvidePlugin({
 			md5: 'md5'

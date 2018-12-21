@@ -41,8 +41,7 @@ class Main extends React.Component<accountProps, any, any> {
     }
     var type = 'change'
     urlSearch += '&type=' + type;
-    var href = ((Utils.getUrlParam('debugger') || window['debugger']) ? RG.jssdk.config.loginPage.test : RG.jssdk.config.loginPage.formal) + urlSearch
-    location.href = href
+    location.href = RG.jssdk.config.page.login + urlSearch
   }
 
   changeAccount = async () => {
@@ -66,7 +65,7 @@ class Main extends React.Component<accountProps, any, any> {
           </p>
           <p className="info-id">
             <span>
-              {RG.jssdk.type === 2 ? `${RG.jssdk.config.i18n.txt_device_num} ${this.state.deviceNo}` : `UID: ${RG.CurUserInfo().userId}`}
+              {RG.jssdk.config.type === 2 ? `${RG.jssdk.config.i18n.txt_device_num} ${this.state.deviceNo}` : `UID: ${RG.CurUserInfo().userId}`}
             </span>
             {/* <span className="copy">Copy</span> */}
           </p>
@@ -248,7 +247,7 @@ class PaymentHistory extends React.Component<accountProps, {}, {}> {
               </div>
               <div className="order-line">
                 <p className="order-blue">{RG.jssdk.config.i18n.txt_charge_way_tips}</p>
-                <p>{RG.jssdk.type === 1 ? RG.jssdk.config.i18n.txt_other_way : RG.jssdk.config.i18n.txt_official}</p>
+                <p>{RG.jssdk.config.type === 1 ? RG.jssdk.config.i18n.txt_other_way : RG.jssdk.config.i18n.txt_official}</p>
               </div>
               <div className="order-line">
                 <p className="order-blue">{RG.jssdk.config.i18n.txt_order_num_tips}</p>

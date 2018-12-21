@@ -66,14 +66,13 @@ var config5 = { // 像素口袋1
     formal: 'https://desdk-cdn.pkmonquest.com/pocketgames/client',
   },
 
-  gamePage: {
-    test: 'http://xytest.xulonggame.com/royalgame.html',
-    formal: 'http://www.baidu.com',
-  },
-  loginPage: {
-    test: 'http://www.baidu.com',
-    formal: 'http://www.baidu.com',
-  },
+  page: {
+    game: {
+      test: 'http://xytest.xulonggame.com/royalgame.html',
+      formal: 'http://xy.xulonggame.com/xy.html',
+    },
+    login: 'https://pixel.pkmonquest.com/h5-play/login.html'
+  }
 }
 
 export default {

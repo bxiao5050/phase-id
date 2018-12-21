@@ -117,7 +117,7 @@ export default class Login {
   }
 
   public facebookLogin(): Promise<LoginRes> {
-
+    console.log("facebookLoginfacebookLoginfacebookLogin", RG.jssdk.config.type)
     return new Promise((resolve, reject) => {
       // 登录信息
       var params: LoginParam = {
@@ -131,43 +131,43 @@ export default class Login {
         telephone: '',
         userChannel: 0,
       }
-      if (RG.jssdk.type === 4) {
+      if (RG.jssdk.config.type === 4) {
         this.reqRegister(params, {
           response: {
             userID: FBInstant.player.getID() || 'test'
           }, resolve, reject
         })
       } else {
-        FB.getLoginStatus(response => {
-          if (response.status === "connected") {
-            var userID = response.authResponse.userID
-            FB.api('/me?fields=email', (response) => { // name,birthday,gender
-              response.userID = userID
-              console.log('response', response)
-              this.reqRegister(params, { response, resolve, reject })
-            })
+        let response = FB.getAuthResponse()
+        if (response && response.userID) {
+          var userID = response.userID
+          FB.api('/me?fields=email', (response) => { // name,birthday,gender
+            response.userID = userID
+            console.log('response', response)
+            this.reqRegister(params, { response, resolve, reject })
+          })
+        } else {
+          if (RG.jssdk.config.type === 2) {
+            location.href = `https://www.facebook.com/${FBVersion}/dialog/oauth?client_id=${RG.jssdk.config.FbAppID}&redirect_uri=${encodeURIComponent(location.href)}&t=${Date.now()}`
           } else {
-            if (RG.jssdk.type === 2) {
-              location.href = `https://www.facebook.com/${FBVersion}/dialog/oauth?client_id=${RG.jssdk.config.FbAppID}&redirect_uri=${encodeURIComponent(location.href)}&t=${Date.now()}`
-            } else {
-              FB.login(response => {
-                if (response.status === "connected") {
-                  var userID = response.authResponse.userID
-                  FB.api('/me?fields=email', (response) => { // name,birthday,gender
-                    response.userID = userID
-                    console.log('response', response)
-                    this.reqRegister(params, { response, resolve, reject })
-                  })
-                } else {
-                  console.error(response.status)
-                }
-              }, {
-                  scope: 'email' // ,user_birthday,user_gender
+            console.log("shindousaigo login")
+            FB.login(response => {
+              if (response.status === "connected") {
+                var userID = response.authResponse.userID
+                FB.api('/me?fields=email', (response) => { // name,birthday,gender
+                  response.userID = userID
+                  console.log('response', response)
+                  this.reqRegister(params, { response, resolve, reject })
                 })
-            }
-
+              } else {
+                console.error(response.status)
+              }
+            }, {
+                scope: 'email' // ,user_birthday,user_gender
+              })
           }
-        })
+
+        }
       }
 
 

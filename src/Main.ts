@@ -6,8 +6,8 @@ import Polyfill from "Base/Polyfill"
 export default class Main {
 
   fb_sdk_loaded = false
-
   config: JSSDK.Config
+  sdkInstance
 
   constructor() {
     window.RgPolyfilled = this.polyfilled.bind(this)
@@ -16,6 +16,7 @@ export default class Main {
   }
 
   polyfilled() {
+    console.log('polyfilled')
     this.init().then(() => {
       RG.Mark(DOT.SDK_LOADED);
       (RG.jssdk as any).init()
@@ -77,6 +78,7 @@ export default class Main {
           new Promise(async function (resolve) {
             config = (await import('Src/config')).default[appId]
             config = config[advChannel] || config.default
+            window.RG && window.RG['gameConfig'] && window.RG['gameConfig'](config)
             resolve()
           }),
           new Promise(async (resolve) => {
@@ -89,7 +91,6 @@ export default class Main {
             advChannel,
             i18n: translation[config.language]
           })
-          window.RG['gameConfig'] && window.RG['gameConfig'](this.config)
           resolve()
         })
       }
@@ -107,7 +108,7 @@ export default class Main {
     if (this.config.advChannel > 30000 && this.config.advChannel < 31000) {
       this.config.type = 1
       import('Src/Web').then((module) => {
-        new module.default(this.config)
+        this.sdkInstance = new module.default(this.config, this.fb_sdk_loaded)
         resolve()
       })
       return promise
@@ -144,7 +145,11 @@ export default class Main {
             xfbml: true,
             version: FBVersion
           })
-          this.fb_sdk_loaded = true
+          if (this.sdkInstance) {
+            RG.jssdk.fb_sdk_loaded = true
+          } else {
+            this.fb_sdk_loaded = true
+          }
           resolve()
         } else {
           console.error('RG: Facebook SDK failed to load')

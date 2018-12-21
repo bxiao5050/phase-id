@@ -60,11 +60,11 @@ export default class Main extends React.Component<{
 
         <a className="btn-fb" onClick={() => {
           if (RG.jssdk.fb_sdk_loaded) {
-            App.instance.showNotice('facebook 登錄跳轉中')
+            App.instance.showNotice(RG.jssdk.config.i18n.loading)
             // this.toLogin.bind(this, false)
             this.toLogin.apply(this, [false])
           } else {
-            App.instance.showNotice('facebook sdk 加載異常。')
+            App.instance.showNotice(RG.jssdk.config.i18n.loadException)
           }
         }}>
           <span className="icon-fb " />

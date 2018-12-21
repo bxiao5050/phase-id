@@ -25,6 +25,8 @@ var translation = {
     tuichu: '妳確定要退出遊戲嗎？',
     winopen: '請跳轉前往儲值頁面',
     jump: '跳轉',
+    loadException: '加載異常',
+    loading: '加載中',
     // ——————————————————————————————————————————————————————
     txt_charge_num_tips: '充值金額:',
     txt_charge_way_tips: '充值方式:',
@@ -43,6 +45,7 @@ var translation = {
     float_button_bind_account: '帳號升級',
     txt_change_psw: '修改密碼',
     net_error_30200: '支付完成',
+
   },
   VN: {
     UnknownErr: 'Lỗi không xác định',
@@ -67,6 +70,9 @@ var translation = {
     tuichu: 'Bạn có chắc bạn muốn thoát khỏi trò chơi?',
     winopen: 'Xin vui lòng nhảy đến trang lưu trữ giá trị',
     jump: 'Nhảy',
+
+    loadException: 'Tải ngoại lệ',
+    loading: 'Đang nạp',
     // ——————————————————————————————————————————————————————
     txt_charge_num_tips: 'Số tiền nạp:',
     txt_charge_way_tips: 'Cách nạp:',
@@ -109,6 +115,9 @@ var translation = {
     tuichu: 'Are you sure you want to quit the game?',
     winopen: 'Please jump to the stored value page',
     jump: 'jump',
+
+    loadException: 'Load exception',
+    loading: 'Loading',
     // ——————————————————————————————————————————————————————
     txt_charge_num_tips: 'Amount:',
     txt_charge_way_tips: 'Payment type:',
@@ -121,9 +130,9 @@ var translation = {
     txt_check_charge: 'Payment History',
     txt_account_name: 'Account:',
     txt_device_num: 'Device ID:',
-    float_button_user_center: 'Account center',
+    float_button_user_center: 'Account',
     p2refresh_end_no_records: 'End of transaction info',
-    float_button_service: 'Customer Service',
+    float_button_service: 'Service',
     float_button_bind_account: 'Upgrade account',
     txt_change_psw: 'Change Password',
     net_error_30200: 'Charging Success',
