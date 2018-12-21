@@ -17,7 +17,6 @@ export default class Main {
   }
 
   polyfilled() {
-    console.log('polyfilled')
     this.init().then(() => {
       location.origin === Mark.instance.gameOrigin && RG.Mark(DOT.SDK_LOADED);
       (RG.jssdk as any).init()

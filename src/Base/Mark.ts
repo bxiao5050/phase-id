@@ -50,6 +50,7 @@ export default class Mark {
       let gamePage = Utils.getUrlParam('debugger') || window['debugger'] ? RG.jssdk.config.page.game.test : RG.jssdk.config.page.game.formal
       this.gameOrigin = gamePage.match(reg)[0]
       let loginOrigin = loginPage.match(reg)[0]
+      console.log('this origin', location.origin)
       console.log('mark origin', [loginOrigin, this.gameOrigin])
       this.gtag('config', 'GA_TRACKING_ID', {
         'linker': {
