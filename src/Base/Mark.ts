@@ -2,7 +2,7 @@ import Utils from "./Utils";
 
 export default class Mark {
 
-  gameOrigin
+  gameHost
 
   static _ins: Mark
   static get instance(): Mark {
@@ -48,13 +48,13 @@ export default class Mark {
       let reg = new RegExp(/[a-zA-Z0-9][-a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-a-zA-Z0-9]{0,62})+/)
       let loginPage = RG.jssdk.config.page.login
       let gamePage = Utils.getUrlParam('debugger') || window['debugger'] ? RG.jssdk.config.page.game.test : RG.jssdk.config.page.game.formal
-      this.gameOrigin = gamePage.match(reg)[0]
-      let loginOrigin = loginPage.match(reg)[0]
-      console.log('this origin', location.origin)
-      console.log('mark origin', [loginOrigin, this.gameOrigin])
+      this.gameHost = gamePage.match(reg)[0]
+      let loginHost = loginPage.match(reg)[0]
+      console.log('this host', location.host)
+      console.log('mark host', [loginHost, this.gameHost])
       this.gtag('config', 'GA_TRACKING_ID', {
         'linker': {
-          'domains': [loginOrigin, this.gameOrigin]
+          'domains': [loginHost, this.gameHost]
         }
       })
     }

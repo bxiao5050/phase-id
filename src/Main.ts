@@ -18,11 +18,11 @@ export default class Main {
 
   polyfilled() {
     this.init().then(() => {
-      location.origin === Mark.instance.gameOrigin && RG.Mark(DOT.SDK_LOADED);
+      location.host === Mark.instance.gameHost && RG.Mark(DOT.SDK_LOADED);
       (RG.jssdk as any).init()
     }).catch(() => {
       this.getSDKInstance().then(() => {
-        location.origin === Mark.instance.gameOrigin && RG.Mark(DOT.SDK_LOADED);
+        location.host === Mark.instance.gameHost && RG.Mark(DOT.SDK_LOADED);
         (RG.jssdk as any).init()
       })
     })
