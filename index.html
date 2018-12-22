@@ -47,7 +47,7 @@
 			}
 		})()
 		/** 加载jssdk */
-		var src = './sdk.js?t=' + Date.now();
+		var src = './sdk.js?t=' + getUrlParam('t')
 		(function (d, s, id) {
 			var js
 			if (d.getElementById(id)) return;
@@ -69,12 +69,11 @@
 		}(document, 'script', 'rg-jssdk'));
 
 		window.rgAsyncInit = function () {
-			console.log('window.rgAsyncInit')
 			var urlParamKeyArr = getUrlParam()
 			var urlSearch = ''
 			var $i = 0
 			for (var key of urlParamKeyArr) {
-				if (key === 'type' || key === 'dev') {
+				if (key === 'type') {
 					continue
 				} else {
 					urlSearch += (($i ? '&' : '?') + key + '=' + getUrlParam(key))
@@ -87,6 +86,7 @@
 			urlSearch += '&user=' + user;
 			var href = ((getUrlParam('debugger') || window.debugger) ? RG.jssdk.config.page.game.test : RG.jssdk.config.page.game
 				.formal) + urlSearch;
+			console.log('window.rgAsyncInit', href)
 			location.href = href
 		}
 	</script>

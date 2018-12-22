@@ -48,8 +48,8 @@ export default class Mark {
       let gamePage = Utils.getUrlParam('debugger') || window['debugger'] ? RG.jssdk.config.page.game.test : RG.jssdk.config.page.game.formal
       this.gameHost = gamePage.match(reg)[0]
       let loginHost = loginPage.match(reg)[0]
-      console.log('this host', location.host)
-      console.log('mark host', [loginHost, this.gameHost])
+      console.log('console.log location host', location.host)
+      console.log('console.log gtag host', [loginHost, this.gameHost])
       this.gtag('config', RG.jssdk.config.mark_id.ga, {
         'linker': {
           'domains': [loginHost, this.gameHost],
@@ -63,13 +63,20 @@ export default class Mark {
     window.dataLayer.push(arguments);
   }
 
-  Mark(markName: string, param?: object) {
+  Mark(markName: string, param: any = '') {
+
     if (RG.jssdk.config.mark_id.fb) {
       window.fbq('track', markName)
+      console.info(`"${markName}" has marked - facebook`)
     }
+
     if (RG.jssdk.config.mark_id.ga) {
-      param ? this.gtag('event', markName, param) : this.gtag('event', markName)
+      if (param) {
+        this.gtag('event', markName, param)
+      } else {
+        this.gtag('event', markName)
+      }
+      console.info(`"${markName}" has marked - google`, param)
     }
-    if (RG.jssdk.config.mark_id.fb || RG.jssdk.config.mark_id.ga) console.info(`"${markName}" has marked - web`)
   }
 }
