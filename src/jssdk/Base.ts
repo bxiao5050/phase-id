@@ -86,21 +86,23 @@ export default class Base {
   }
 
   Messenger() {
-    return window.open(RG.jssdk.config.messenger)
+    console.log("Messenger")
+    // return window.open(RG.jssdk.config.messenger)
   }
 
   Fb() {
-    let useragent = navigator.userAgent; // cache the userAgent info
-    let iPhone = (useragent.match(/(iPad|iPhone|iPod)/g));
-    let scheme;
-    if (iPhone)
-      scheme = "fb://page/?id=" + RG.jssdk.config.FbPageId;
-    else
-      scheme = "fb://page/" + RG.jssdk.config.FbPageId;
+    console.log("Fb")
+    // let useragent = navigator.userAgent; // cache the userAgent info
+    // let iPhone = (useragent.match(/(iPad|iPhone|iPod)/g));
+    // let scheme;
+    // if (iPhone)
+    //   scheme = "fb://page/?id=" + RG.jssdk.config.FbPageId;
+    // else
+    //   scheme = "fb://page/" + RG.jssdk.config.FbPageId;
 
-    if (!window.open(scheme)) {
-      location.href = RG.jssdk.config.fanpage;
-    }
+    // if (!window.open(scheme)) {
+    //   location.href = RG.jssdk.config.fanpage;
+    // }
   }
 
   static paymentConfig: PaymentConfig
