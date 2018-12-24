@@ -101,9 +101,9 @@ export default class Web extends Base {
   Install() {
     let link
     if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) {
-      link = `${SERVER}add-shortcut.html?lang=en&system=ios&appId=${RG.jssdk.config.appId}&link=${RG.jssdk.config.page.index}`
+      link = `${SERVER}${Utils.getUrlParam('sdkVersion')}/add-shortcut.html?lang=en&system=ios&appId=${RG.jssdk.config.appId}&link=${RG.jssdk.config.page.index}`
     } else if (/(Android)/i.test(navigator.userAgent)) {
-      link = `${SERVER}add-shortcut.html?lang=en&system=android&appId=${RG.jssdk.config.appId}&link=${RG.jssdk.config.page.index}`
+      link = `${SERVER}${Utils.getUrlParam('sdkVersion')}/add-shortcut.html?lang=en&system=android&appId=${RG.jssdk.config.appId}&link=${RG.jssdk.config.page.index}`
 
     } else {
       window.name = 'install'
