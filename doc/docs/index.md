@@ -15,24 +15,24 @@ JavaScript 版 SDK 无需下载和安装任何独立文件，您只需在 HTML �
  */
 var getUrlParam = (function () {
   var urlParamMap = {}
-	var interrogationIndex = location.href.indexOf("?") + 1
-	var str = interrogationIndex === 0 ? "" : location.href.slice(interrogationIndex)
-	if (str) {
-		var arr = str.split(/&|%26/)
-		arr.forEach(item => {
-			var arr = item.split(/=|%3D/)
-			var key = arr[0]
-			var val = arr[1]
-			urlParamMap[key] = val
-		})
-	}
-	return function (name) {
-		if (name) {
-			return urlParamMap.hasOwnProperty(name) ? urlParamMap[name] : null
-		} else {
-			return urlParamMap
-		}
-	}
+  var interrogationIndex = location.href.indexOf("?") + 1
+  var str = interrogationIndex === 0 ? "" : location.href.slice(interrogationIndex)
+  if (str) {
+    var arr = str.split(/&|%26/)
+    arr.forEach(item => {
+      var arr = item.split(/=|%3D/)
+      var key = arr[0]
+      var val = arr[1]
+      urlParamMap[key] = val
+    })
+  }
+  return function (name) {
+    if (name) {
+      return urlParamMap.hasOwnProperty(name) ? urlParamMap[name] : null
+    } else {
+      return urlParamMap
+    }
+  }
 })()
 
 var isDebugger = getUrlParam('debugger') || window.debugger
@@ -41,31 +41,31 @@ var sdkVersion = getUrlParam('sdkVersion') || window.sdkVersion
 /** 加载jsssdk */
 var src = 'https://sdk-vn.pocketgamesol.com/jssdk/' + sdkVersion + '/sdk.js';
 (function (d, s, id) {
-	var js, fjs = d.getElementsByTagName(s)[0];
-	if (d.getElementById(id)) return;
-	js = d.createElement(s);
-	js.id = id;
-	js.src = src
-	fjs.parentNode.insertBefore(js, fjs);
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s);
+  js.id = id;
+  js.src = src
+  fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'rg-jssdk'));
 
 window.rgAsyncInit = function () {
-	var urlParam = getUrlParam()
-	var urlSearch = ''
-	var $i = 0
-	for (var name in urlParam) {
-		if (name === 'type') {
-			continue
-		} else {
-			urlSearch += (($i ? '&' : '?') + name + '=' + urlParam[name])
-			$i++
-		}
-	}
-	var user = encodeURIComponent(JSON.stringify(
-		RG.CurUserInfo()
-	))
-	urlSearch += '&user=' + user;
-	var href = (isDebugger ? TEST_URL : FORMAL_URL) + urlSearch
+  var urlParam = getUrlParam()
+  var urlSearch = ''
+  var $i = 0
+  for (var name in urlParam) {
+    if (name === 'type') {
+      continue
+    } else {
+      urlSearch += (($i ? '&' : '?') + name + '=' + urlParam[name])
+      $i++
+    }
+  }
+  var user = encodeURIComponent(JSON.stringify(
+    RG.CurUserInfo()
+  ))
+  urlSearch += '&user=' + user;
+  var href = (isDebugger ? TEST_URL : FORMAL_URL) + urlSearch
 
   location.href = href
 }
@@ -244,15 +244,17 @@ RG.Install && RG.Install()
 
 **方法说明：**
 
-* 在用户点击切换账户时调用 此方法应该为一个Promise对象的实例
+* 在用户点击切换账户时调用 此方法应该返回一个Promise对象的实例
 
 
 ```
 // RG.ChangeAccount instanceof Promise === true
 let changeAccountResolve
-let changeAccountPromise = new Promise(function(resolve) {
-  changeAccountResolve = resolve
-})
+let changeAccountPromise = function() {
+  return new Promise(function(resolve) {
+    changeAccountResolve = resolve
+  })
+}
 let asyncFn = function() {
   ... ...
   changeAccountResolve()

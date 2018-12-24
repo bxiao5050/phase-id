@@ -25,13 +25,15 @@ class Main extends React.Component<accountProps, any, any> {
 
 
   changeAccount = async () => {
-    let type = Object.prototype.toString.call(window.RG.ChangeAccount)
-    if (type === '[object Promise]') {
-      await window.RG.ChangeAccount
-      window.RG.Redirect()
-    } else {
-      window.RG.Redirect()
-    }
+    await Promise.race([
+      window.RG.ChangeAccount(),
+      new Promise(function (resolve) {
+        setTimeout(function () {
+          resolve()
+        }, 1000)
+      })
+    ])
+    window.RG.Redirect()
   }
 
   render() {
