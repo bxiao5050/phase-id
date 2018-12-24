@@ -22,12 +22,12 @@ export default class Main {
     try {
       await this.init()
       location.host === Mark.instance.game_host && RG.Mark(DOT.SDK_LOADED);
-      (RG.jssdk as any).init()
+      location.host !== Mark.instance.index_host && (RG.jssdk as any).init()
     } catch (e) {
       console.error('error_log:', e)
       await this.get_sdk_instance()
       location.host === Mark.instance.game_host && RG.Mark(DOT.SDK_LOADED);
-      (RG.jssdk as any).init()
+      location.host !== Mark.instance.index_host && (RG.jssdk as any).init()
     }
   }
 

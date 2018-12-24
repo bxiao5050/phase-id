@@ -25,8 +25,6 @@ declare namespace JSSDK {
     advChannel: number
     scopeId?: string
     fb_app_id: string
-    messenger: string
-    fanpage: string
     FbPageId: string
     server: {
       test: string

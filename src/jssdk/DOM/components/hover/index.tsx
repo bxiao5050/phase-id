@@ -176,7 +176,7 @@ export default class Hover extends React.Component<{
           <a className="icon contact"
             onClick={() => {
               RG.Mark(DOT.SDK_CONTACT_US)
-              window.open(RG.jssdk.config.messenger)
+              RG.Messenger()
             }}
           >
             {RG.jssdk.config.i18n.float_button_service}

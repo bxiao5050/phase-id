@@ -2,6 +2,8 @@ import Utils from "Base/Utils";
 
 export default class Mark {
 
+  index_host: string
+  login_host: string
   game_host: string
 
   static _ins: Mark
@@ -14,6 +16,7 @@ export default class Mark {
   }
 
   private init(config: JSSDK.Config) {
+    console.log('sdfasdfadsfdasfad', window.fbq, window['gtag'], window.parent['gtag'], location.host)
     if (config.mark_id.fb) {
       (function (f, b, e, v, n, t, s) {
         if (f.fbq) return; n = f.fbq = function () {
@@ -54,12 +57,14 @@ export default class Mark {
       let login_page = SERVER
       let game_page = Utils.getUrlParam('debugger') || window['debugger'] ? config.page.game.test : config.page.game.formal
 
+      this.index_host = index_page.match(reg_exp)[0]
+      this.login_host = login_page.match(reg_exp)[0]
       this.game_host = game_page.match(reg_exp)[0]
 
-      let hosts = [index_page.match(reg_exp)[0], login_page.match(reg_exp)[0], this.game_host]
+      let hosts = [this.index_host, this.login_host, this.game_host]
 
       console.log('hosts', hosts)
-      
+
       this.gtag('js', new Date());
       this.gtag('config', config.mark_id.ga, {
         'linker': {
