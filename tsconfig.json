@@ -8,9 +8,9 @@
     "jsx": "react",
     "lib": ["es6", "es7", "dom"],
     "paths": {
-      "Src/*": ["./src/*"],
-      "DOM/*": ["./src/DOM/*"],
-      "Base/*": ["./src/Base/*"]
+      "Src/*": ["./src/jssdk/*"],
+      "DOM/*": ["./src/jssdk/DOM/*"],
+      "Base/*": ["./src/jssdk/Base/*"]
     }
   },
   "include": [
@@ -18,4 +18,7 @@
     "./src/**/*.tsx",
     "./src/**/*.ts"
   ],
+  "exclude": [
+    "./src/**/*.psd",
+  ]
 }

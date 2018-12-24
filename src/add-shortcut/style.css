@@ -1,0 +1,57 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.swiper-container {
+  margin: 0 auto;
+  width: 94%;
+  overflow: hidden;
+  position: relative;
+}
+
+.swiper-container .swiper-wrapper {
+  display: flex;
+  width: 10000px;
+  /* visibility: hidden; */
+}
+
+.swiper-img {
+  width: 100%;
+}
+
+.swiper-pagination {
+  bottom: 3rem !important;
+  width: 100vw !important;
+}
+
+/* .swiper-pagination-bullets-dynamic {} */
+
+/* .swiper-pagination-bullet-active {
+  background: #000 !important;
+  opacity: 1 !important;
+}
+
+.swiper-pagination-bullet {
+  background: #fff;
+  opacity: .5 !important;
+} */
+
+#app {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.state {
+  padding: 1rem 0;
+  width: 94%;
+  margin: 0 auto;
+}
+
+.state p {
+  font-size: Arial;
+  font-size: .9rem;
+  margin: .4rem 0 0 0;
+  line-height: 1.4rem;
+}

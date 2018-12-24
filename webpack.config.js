@@ -9,8 +9,12 @@ var {
 	argv
 } = Yargs
 
-var action = argv.action
-var isDev = action === 'dev'
+const action = argv.action
+const isDev = action === 'dev'
+const reactSrc = isDev ? 'https://cdnjs.cloudflare.com/ajax/libs/react/16.6.3/umd/react.development.js' : 'https://cdnjs.cloudflare.com/ajax/libs/react/16.6.3/umd/react.production.min.js'
+const reactDomSrc = isDev ? 'https://cdnjs.cloudflare.com/ajax/libs/react-dom/16.6.3/umd/react-dom.development.js' : 'https://cdnjs.cloudflare.com/ajax/libs/react-dom/16.6.3/umd/react-dom.production.min.js'
+const reactRouterDomSrc = 'https://cdnjs.cloudflare.com/ajax/libs/react-router-dom/4.3.1/react-router-dom.min.js'
+
 var sdkVersion = argv.sdkVersion
 var SERVER = ''
 var devServer = {
@@ -23,8 +27,8 @@ if (sdkVersion === true) {
 	console.error('miss sdkVersion')
 	process.exit()
 }
-var filename = isDev ? 'sdk.js' : `${sdkVersion}/sdk.js`
-var chunkFilename = isDev ? '[name].js?[hash:8]' : `${sdkVersion}/[name].js`
+var filename = isDev ? '[name].js' : `${sdkVersion}/[name].js`
+var chunkFilename = isDev ? '[name].js' : `${sdkVersion}/[name].js`
 var output = {
 	path: path.join(__dirname, 'build'),
 	filename,
@@ -53,21 +57,24 @@ var definePlugin = {
 	VERSION: JSON.stringify(sdkVersion),
 	SERVER: JSON.stringify(SERVER),
 	ACTION: JSON.stringify(action),
+	reactSrc: JSON.stringify(reactSrc),
+	reactDomSrc: JSON.stringify(reactDomSrc),
+	reactRouterDomSrc: JSON.stringify(reactRouterDomSrc),
 }
 var webpackConfig = {
 
 	entry: {
-		SDK: path.join(__dirname, 'src', 'Main.ts'),
+		sdk: path.join(__dirname, 'src/jssdk/main.ts'),
+		shortcut: path.join(__dirname, 'src/add-shortcut/main.ts'),
+		login: path.join(__dirname, 'src/login/main.ts'),
 	},
 
 	resolve: {
 		extensions: [".ts", ".tsx", ".js"],
 		alias: {
-			Base: path.join(__dirname, 'src/Base'),
-			SDK: path.join(__dirname, 'src/SDK'),
-			FBinstant: path.join(__dirname, 'src/FBinstant'),
-			DOM: path.join(__dirname, 'src/DOM'),
-			Src: path.join(__dirname, 'src'),
+			Base: path.join(__dirname, 'src/jssdk/Base'),
+			DOM: path.join(__dirname, 'src/jssdk/DOM'),
+			Src: path.join(__dirname, 'src/jssdk'),
 		}
 	},
 	output: output,
@@ -120,10 +127,37 @@ var webpackConfig = {
 
 	plugins: [
 		new HtmlWebpackPlugin({
-			filename: isDev ? 'index.html' : sdkVersion + '/' + 'login.html',
-			template: 'index.html',
-			// chunks: ['SDK'],
-			inject: false,
+			filename: isDev ? 'login.html' : sdkVersion + '/' + 'login.html',
+			template: './src/login.html',
+			chunks: ['login'],
+			inject: 'body',
+			minify: isDev ? false : {
+				collapseWhitespace: true,
+				removeComments: true,
+				removeRedundantAttributes: true,
+				removeScriptTypeAttributes: true,
+				removeStyleLinkTypeAttributes: true,
+				useShortDoctype: true
+			}
+		}),
+		new HtmlWebpackPlugin({
+			filename: isDev ? 'add-shortcut.html' : sdkVersion + '/' + 'add-shortcut.html',
+			template: './src/add-shortcut.html',
+			chunks: ['shortcut'],
+			inject: 'body',
+			minify: isDev ? false : {
+				collapseWhitespace: true,
+				removeComments: true,
+				removeRedundantAttributes: true,
+				removeScriptTypeAttributes: true,
+				removeStyleLinkTypeAttributes: true,
+				useShortDoctype: true
+			},
+			templateParameters: {
+				reactSrc,
+				reactDomSrc,
+				reactRouterDomSrc
+			}
 		}),
 		new webpack.ProvidePlugin({
 			md5: 'md5'
@@ -131,13 +165,18 @@ var webpackConfig = {
 		new webpack.DefinePlugin(definePlugin),
 	],
 
-	devServer: devServer
+	devServer: devServer,
+
+	externals: {
+		'react': 'window.React',
+		'react-dom': 'window.ReactDOM',
+		'react-router-dom': 'window.ReactRouterDOM',
+	},
 }
 
 argv.mode === 'production' && webpackConfig.plugins.push(
 	new CleanWebpackPlugin([
-		path.join(__dirname, 'build', '**/*.js'),
-		path.join(__dirname, 'build', '**/*.zip')
+		path.join(__dirname, 'build', '**/*'),
 	])
 )
 

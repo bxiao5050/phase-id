@@ -21,10 +21,10 @@ declare namespace JSSDK {
   }
   interface Config {
     appId: number
-    appKey: string
+    app_key: string
     advChannel: number
     scopeId?: string
-    FbAppID: string
+    fb_app_id: string
     messenger: string
     fanpage: string
     FbPageId: string
@@ -85,7 +85,7 @@ interface RG {
 
   Mark(markName: string, extraParam?: any): void
 
-  Install(fileName: string, link: string): void
+  Install(): void
 }
 
 
@@ -105,11 +105,14 @@ declare interface Window {
   NativeToJs: NativeToJs
   rgChangeAccount: Function
   RgPolyfilled: Function
+  debugger: boolean
 }
 
 declare var FBVersion: string
 declare var ACTION: string
-
+declare var reactSrc: string
+declare var reactDomSrc: string
+declare var reactRouterDomSrc: string
 
 interface NativeToJs {
   // {
@@ -159,7 +162,7 @@ interface initSDKParams {
   clientTime: string
   /** 0=非首次安装 1=首次安装 */
   firstInstall: number
-  /** 参数签名结果 MD5(appId+source+advChannel+appKey) */
+  /** 参数签名结果 MD5(appId+source+advChannel+app_key) */
   sign: string
 }
 
@@ -313,6 +316,8 @@ interface Base0 {
   fb_sdk_loaded: boolean
 
   polyfilled()
+
+  App: any
 
   /**
    * 1: web端
@@ -504,7 +509,7 @@ interface FinishOrderPostData {
   sdkVersion: string
   /** 客户端提交时间 "yyyy-MM-dd hh:mm:ss" */
   clientTime: string
-  /** 参数签名结果 MD5(transactionId + receipt + signature + channel + advChannel + appKey) */
+  /** 参数签名结果 MD5(transactionId + receipt + signature + channel + advChannel + app_key) */
   sign: string
   /** 设备号 */
   deviceNo: string
@@ -543,7 +548,7 @@ interface PaymentConfigParams {
   gameCoin: number
   /** 额外参数 */
   exInfo?: string
-  /** 验证参数MD5(appId+ advChannel+userId+gameCoin+level +source+ network +appKey) */
+  /** 验证参数MD5(appId+ advChannel+userId+gameCoin+level +source+ network +app_key) */
   sign: string
 }
 
@@ -598,7 +603,7 @@ interface CreateOrderParams {
   clientTime: string
   /** 额外的信息，如果是刮刮卡,它的格式是{“serialNo”:””,”pin”:””}JSON字符串 */
   exInfo: string
-  /** 参数签名结果 MD5(appId+advChannel+userId+roleId+gameOrderId+gameZoneId+code+source+channel+amount+currency+productName + exInfo +appKey)
+  /** 参数签名结果 MD5(appId+advChannel+userId+roleId+gameOrderId+gameZoneId+code+source+channel+amount+currency+productName + exInfo +app_key)
   */
   sign: string
 }
