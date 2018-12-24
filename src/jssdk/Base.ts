@@ -17,7 +17,7 @@ export default class Base {
   }
 
   Login(loginParam: LoginParam): Promise<LoginRes> {
-    var promise: Promise<LoginRes>
+    let promise: Promise<LoginRes>
     if (loginParam.isFacebook) { // facebook 登陆
       promise = Login.instance.facebookLogin()
     } else { // 平台登陆
@@ -40,10 +40,10 @@ export default class Base {
   }
 
   Redirect() {
-    var urlParam = Utils.getUrlParam()
-    var urlSearch = ''
-    var $i = 0
-    for (var name in urlParam) {
+    let urlParam = Utils.getUrlParam()
+    let urlSearch = ''
+    let $i = 0
+    for (let name in urlParam) {
       if (name === 'user') {
         continue
       } else {
@@ -51,7 +51,9 @@ export default class Base {
         $i++
       }
     }
-    location.href = window.RG.jssdk.config.page.login + urlSearch
+    let href = window.RG.jssdk.config.page.login + urlSearch
+    console.log('Redirect', href)
+    location.href = href
   }
 
   SetUser(userInfo: UserInfo, userId?: any) {
@@ -68,7 +70,7 @@ export default class Base {
 
   _getParamUserHasParsed = false
   CurUserInfo = (): JSSDK.CurUserInfo => {
-    var user = Utils.getUrlParam('user')
+    let user = Utils.getUrlParam('user')
     if (user && !this._getParamUserHasParsed) {
       this._getParamUserHasParsed = true
       user = JSON.parse(decodeURIComponent(user))
@@ -88,9 +90,9 @@ export default class Base {
   }
 
   Fb() {
-    var useragent = navigator.userAgent; // cache the userAgent info
-    var iPhone = (useragent.match(/(iPad|iPhone|iPod)/g));
-    var scheme;
+    let useragent = navigator.userAgent; // cache the userAgent info
+    let iPhone = (useragent.match(/(iPad|iPhone|iPod)/g));
+    let scheme;
     if (iPhone)
       scheme = "fb://page/?id=" + RG.jssdk.config.FbPageId;
     else
