@@ -27,7 +27,7 @@ export default class Mark {
 
         const noscript = document.createElement('noscript')
         noscript.innerHTML = `<img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=${config.mark_id.fb}&ev=PageView&noscript=1" />`;
-        document.head.appendChild(noscript);
+        document.body.appendChild(noscript);
       })(window, document, 'script',
         'https://connect.facebook.net/en_US/fbevents.js');
       window.fbq('init', config.mark_id.fb);
@@ -48,8 +48,7 @@ export default class Mark {
       })(window, document, 'script',
         `https://www.googletagmanager.com/gtag/js?id=${config.mark_id.ga}`);
       window.dataLayer = window.dataLayer || [];
-      this.gtag('js', new Date());
-      // this.gtag('config', config.mark_id.ga);
+
       let reg_exp = new RegExp(/[a-zA-Z0-9][-a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-a-zA-Z0-9]{0,62})+/)
       let index_page = config.page.index
       let login_page = SERVER
@@ -60,7 +59,8 @@ export default class Mark {
       let hosts = [index_page.match(reg_exp)[0], login_page.match(reg_exp)[0], this.game_host]
 
       console.log('hosts', hosts)
-
+      
+      this.gtag('js', new Date());
       this.gtag('config', config.mark_id.ga, {
         'linker': {
           'domains': hosts,

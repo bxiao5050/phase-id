@@ -21,7 +21,6 @@ export default class Main {
   polyfilled = async () => {
     try {
       await this.init()
-      RG.Mark(DOT.SDK_LOADED);
       location.host === Mark.instance.game_host && RG.Mark(DOT.SDK_LOADED);
       (RG.jssdk as any).init()
     } catch (e) {
