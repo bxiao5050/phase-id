@@ -49,7 +49,7 @@ export default class Base {
         $i++
       }
     }
-    let href = SERVER + Utils.getUrlParam('sdkVersion') + '/login.html' + urlSearch
+    let href = SERVER + '/jssdk/' + Utils.getUrlParam('sdkVersion') + '/login.html' + urlSearch
     console.log('Redirect', href)
     location.href = href
   }
