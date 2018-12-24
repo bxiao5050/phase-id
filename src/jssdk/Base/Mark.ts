@@ -3,7 +3,6 @@ import Utils from "Base/Utils";
 export default class Mark {
 
   game_host: string
-  private config: JSSDK.Config
 
   static _ins: Mark
   static get instance(): Mark {
