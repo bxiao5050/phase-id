@@ -80,26 +80,27 @@ export default class Base {
   }
 
   Share(shareUrl: string) {
+    console.log('Share', shareUrl)
     return Share.instance.share(shareUrl)
   }
 
   Messenger() {
     console.log("Messenger")
-    // return window.open(RG.jssdk.config.messenger)
+    window.open(RG.jssdk.config.page.facebook.messenger)
   }
 
   Fb() {
     console.log("Fb")
-    // let useragent = navigator.userAgent; // cache the userAgent info
+    window.open(RG.jssdk.config.page.facebook.index)
+    // let useragent = navigator.userAgent;
     // let iPhone = (useragent.match(/(iPad|iPhone|iPod)/g));
     // let scheme;
     // if (iPhone)
     //   scheme = "fb://page/?id=" + RG.jssdk.config.FbPageId;
     // else
     //   scheme = "fb://page/" + RG.jssdk.config.FbPageId;
-
     // if (!window.open(scheme)) {
-    //   location.href = RG.jssdk.config.fanpage;
+    //   window.open(RG.jssdk.config.page.facebook.index)
     // }
   }
 

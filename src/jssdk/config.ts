@@ -67,7 +67,11 @@ const kdxs_default = {
       test: 'http://xytest.xulonggame.com/royalgame.html',
       formal: 'http://xy.xulonggame.com/xy.html',
     },
-    index: 'http://pixel.pkmonquest.com/h5-play/index.html'
+    index: 'http://pixel.pkmonquest.com/h5-play/index.html',
+    facebook: {
+      messenger: 'https://www.facebook.com/messages/t/PokemonQuestH5',
+      index: 'https://www.facebook.com/PokemonQuestH5'
+    }
   }
 }
 

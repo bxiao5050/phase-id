@@ -46,6 +46,10 @@ declare namespace JSSDK {
         test: string
         formal: string
       }
+      facebook: {
+        index
+        messenger
+      },
     }
   }
 }
