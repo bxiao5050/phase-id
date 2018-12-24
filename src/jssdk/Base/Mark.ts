@@ -52,7 +52,7 @@ export default class Mark {
       this.gtag('js', new Date());
       // this.gtag('config', config.mark_id.ga);
       let reg_exp = new RegExp(/[a-zA-Z0-9][-a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-a-zA-Z0-9]{0,62})+/)
-      let login_page = config.page.login
+      let login_page = SERVER
       let game_page = Utils.getUrlParam('debugger') || window['debugger'] ? config.page.game.test : config.page.game.formal
       this.game_host = game_page.match(reg_exp)[0]
       let login_host = login_page.match(reg_exp)[0]

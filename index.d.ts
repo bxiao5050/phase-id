@@ -42,7 +42,6 @@ declare namespace JSSDK {
     type: Type
     page: {
       index: string
-      login: string
       game: {
         test: string
         formal: string

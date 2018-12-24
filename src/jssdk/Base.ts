@@ -51,7 +51,7 @@ export default class Base {
         $i++
       }
     }
-    let href = window.RG.jssdk.config.page.login + urlSearch
+    let href = SERVER + Utils.getUrlParam('sdkVersion') + '/login.html' + urlSearch
     console.log('Redirect', href)
     location.href = href
   }

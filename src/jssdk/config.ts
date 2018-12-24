@@ -67,7 +67,6 @@ const kdxs_default = {
       test: 'http://xytest.xulonggame.com/royalgame.html',
       formal: 'http://xy.xulonggame.com/xy.html',
     },
-    login: 'https://pixel.pkmonquest.com/h5-play/login.html',
     index: 'http://pixel.pkmonquest.com/h5-play/index.html'
   }
 }
