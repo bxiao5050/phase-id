@@ -16,7 +16,7 @@ export default class Mark {
   }
 
   private init(config: JSSDK.Config) {
-    console.log('sdfasdfadsfdasfad', window.fbq, window['gtag'], window.parent['gtag'], location.host)
+    console.log('sdfasdfadsfdasfad', window.fbq, window['gtag'], location.host)
     if (config.mark_id.fb) {
       (function (f, b, e, v, n, t, s) {
         if (f.fbq) return; n = f.fbq = function () {
@@ -80,6 +80,7 @@ export default class Mark {
         }
       })(this.Mark, this.google)
     }
+
   }
 
   private gtag: any = function () {
