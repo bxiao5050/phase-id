@@ -48,6 +48,7 @@ switch (action) {
 		output.publicPath = SERVER + '/jssdk/'
 		break;
 	case 'dev':
+		SERVER = 'https://desdk-cdn.pkmonquest.com'
 		output.publicPath = ''
 		break
 }
