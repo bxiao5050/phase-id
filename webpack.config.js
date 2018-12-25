@@ -50,6 +50,9 @@ switch (action) {
 	case 'dev':
 		SERVER = 'https://desdk-cdn.pkmonquest.com'
 		output.publicPath = ''
+	case 'test':
+		SERVER = 'https://desdk-cdn.pkmonquest.com'
+		output.publicPath = ''
 		break
 }
 var definePlugin = {
