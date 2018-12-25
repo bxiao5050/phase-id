@@ -10,9 +10,10 @@ export default class Main {
   fb_sdk_loaded: boolean
   config: JSSDK.Config
   sdkInstance: Web
+  Mark: Mark
 
   constructor() {
-    window.RG = this as any
+    window['rgMain'] = this as any
     window.RgPolyfilled = this.polyfilled
     checkJsToNative()
     Polyfill.instance.init()
@@ -86,7 +87,8 @@ export default class Main {
           advChannel,
           i18n: translation[config.language]
         })
-        new Mark(this.config)
+        this.Mark = new Mark(this.config)
+        console.log('this.Mark', this.Mark)
         resolve()
       })
     }
