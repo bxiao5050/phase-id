@@ -27,7 +27,7 @@ if (sdkVersion === true) {
 	console.error('miss sdkVersion')
 	process.exit()
 }
-var filename = isDev ? '[name].js' : `${sdkVersion}/[name].js`
+var filename = isDev ? '[name].js' : `${sdkVersion}/[name].js?[hash:6]`
 var chunkFilename = isDev ? '[name].js' : `${sdkVersion}/[name].js?[hash:6]`
 var output = {
 	path: path.join(__dirname, 'build'),
