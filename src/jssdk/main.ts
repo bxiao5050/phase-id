@@ -38,6 +38,7 @@ export default class Main {
       js.src = "//cdnjs.cloudflare.com/ajax/libs/vConsole/3.2.0/vconsole.min.js"
       js.onload = () => {
         new VConsole
+        console.log('cookie !@~@~@~@~@!~@^&^&~@^&%%~^&@%~^&@%~^&@^%#~^&%(~%@&~%(@')
         resolve()
       }
       document.head.appendChild(js)
@@ -88,7 +89,6 @@ export default class Main {
           i18n: translation[config.language]
         })
         this.Mark = new Mark(this.config)
-        console.log('this.Mark', this.Mark)
         resolve()
       })
     }

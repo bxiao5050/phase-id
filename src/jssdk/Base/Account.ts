@@ -1,5 +1,6 @@
 import Utils from "Base/Utils";
 import Http from "Src/Base/Http";
+import Cookies from 'js-cookie'
 import * as Const from "Src/Base/Constant"
 
 export default class Account {
@@ -22,8 +23,8 @@ export default class Account {
   private _usersInfo: UsersInfo
 
   protected init() {
-    this._userInfo = JSON.parse(localStorage.getItem(Const.UserInfo))
-    this._usersInfo = JSON.parse(localStorage.getItem(Const.UsersInfo)) || {}
+    this._userInfo = JSON.parse(Cookies.get(Const.UserInfo))
+    this._usersInfo = JSON.parse(Cookies.get(Const.UsersInfo)) || {}
   }
 
   get userInfo() {
@@ -36,21 +37,21 @@ export default class Account {
 
   set userInfo(userInfo) {
     this._userInfo = userInfo
-    localStorage.setItem(Const.UserInfo, JSON.stringify(userInfo))
+    Cookies.set(Const.UserInfo, JSON.stringify(userInfo))
     this._usersInfo[userInfo.userId] = userInfo
-    localStorage.setItem(Const.UsersInfo, JSON.stringify(this._usersInfo))
+    Cookies.set(Const.UsersInfo, JSON.stringify(this._usersInfo))
   }
 
   delCurUser(userId) {
     this._userInfo = null
-    localStorage.setItem(Const.UserInfo, JSON.stringify(null))
+    Cookies.set(Const.UserInfo, JSON.stringify(null))
     this._usersInfo[userId] = null
-    localStorage.setItem(Const.UsersInfo, JSON.stringify(this._usersInfo))
+    Cookies.set(Const.UsersInfo, JSON.stringify(this._usersInfo))
   }
 
   set usersInfo(usersInfo) {
     this._usersInfo = usersInfo
-    localStorage.setItem(Const.UsersInfo, JSON.stringify(usersInfo))
+    Cookies.set(Const.UsersInfo, JSON.stringify(usersInfo))
   }
 
   changePass(oldpass, newpass) {

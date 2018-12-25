@@ -7,7 +7,8 @@
     "dev": "webpack-dev-server --mode development --action dev --sdkVersion",
     "build-sg": "webpack --mode production --action sg --sdkVersion",
     "build-vn": "webpack --mode production --action vn --sdkVersion",
-    "build-de": "webpack --mode production --action de --sdkVersion"
+    "build-de": "webpack --mode production --action de --sdkVersion",
+    "build-test": "webpack --mode development --action de --sdkVersion"
   },
   "devDependencies": {
     "@babel/core": "^7.2.0",
@@ -28,6 +29,7 @@
     "css-loader": "^2.0.0",
     "file-loader": "^2.0.0",
     "html-webpack-plugin": "^3.2.0",
+    "js-cookie": "^2.2.0",
     "md5": "^2.2.1",
     "node-sass": "^4.11.0",
     "nodemon": "^1.18.9",
