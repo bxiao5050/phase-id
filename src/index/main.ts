@@ -40,7 +40,6 @@ window.$rg_index = function (options: {
   advChannel: string
   sdkVersion: string
   login: HTMLIFrameElement
-  game: HTMLIFrameElement
   origin: string
 }) {
   /**
@@ -53,10 +52,8 @@ window.$rg_index = function (options: {
   const SHORTCUT = 'shortcut'
   const T = 't'
   const sdk = document.createElement('script')
-  const handleMessage = function (event: MessageEvent, iframe, hide) {
+  const handleMessage = function (event: MessageEvent, iframe) {
     if (event.data.action === 'get') {
-      // iframe.style.visibility = 'visible'
-      // hide.style.visibility = 'hidden'
       iframe.contentWindow.postMessage({
         user: localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : '',
         users: localStorage.getItem('users') ? JSON.parse(localStorage.getItem('users')) : {},
@@ -76,11 +73,10 @@ window.$rg_index = function (options: {
   const onMessage = function (event: MessageEvent) {
     console.log('index receive msg', event.origin, event.data)
     if (event.origin.indexOf(window.$rg_main.Mark.login_host) > -1) {
-      handleMessage(event, options.login, options.game)
+      handleMessage(event, options.login)
     }
     if (event.origin.indexOf(window.$rg_main.Mark.game_host) > -1) {
-      handleMessage(event, options.login, options.game)
-      // handleMessage(event, options.game, options.login)
+      handleMessage(event, options.login)
     }
   }
 

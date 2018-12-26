@@ -2,10 +2,6 @@ import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import Swiper from './swiper'
 
-const i18n = {
-  en: `Download to desktop:\nStep1: Login game first，open the menu of the browser.\nStep2: Select "Add to Home Screen" button.\nStep3: Enter "Poke" and click Add to complete downloading to desktop.\nStep4: Login game by click icon from your phone desktop and receive the  reward.`
-}
-
 export class App extends React.Component {
 
   constructor(props) {
@@ -37,18 +33,11 @@ export class App extends React.Component {
   })()
 
   state = {
-    images: this.getUrlParam('system') === 'ios' ? ['ios/1.png', 'ios/2.png', 'ios/3.png', 'ios/4.png'] : ['android/1.png', 'android/2.png', 'android/3.png', 'android/4.png']
+    images: this.getUrlParam('system') === 'ios' ? ['ios/1.jpg', 'ios/2.jpg', 'ios/3.jpg', 'ios/4.jpg'] : ['android/1.jpg', 'android/2.jpg', 'android/3.jpg', 'android/4.jpg']
   }
 
   render() {
-    return <div>
-      <div className="state">
-        {(() => {
-          return i18n[this.getUrlParam('lang') || 'en'].split('\n').map(txt => {
-            return <p>{txt}</p>
-          })
-        })()}
-      </div>
+    return <div className="app-container">
       <Swiper images={this.state.images} />
     </div>
   }

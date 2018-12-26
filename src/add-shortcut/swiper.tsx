@@ -23,9 +23,8 @@ export default class Slides extends React.Component<{
 
   addItems = () => {
     const items = this.props.images.map(function (src, index) {
-      src = require('./assets/' + src)
       return <div key={index} >
-        <img className="swiper-img" src={src} />
+        <img className="swiper-img" src={require('./assets/' + src)} />
       </div>
     })
     return items
@@ -41,9 +40,17 @@ export default class Slides extends React.Component<{
   }
 
   render() {
-    return <Swiper {...this.config} ref={node => node ? this.swiper = node.swiper : null}>
-      {this.addItems()}
-    </Swiper >
+    return <div>
+      <Swiper {...this.config} ref={node => node ? this.swiper = node.swiper : null}>
+        {this.addItems()}
+      </Swiper>
+      <div className="clk-next" onClick={() => {
+        this.swiper.slideNext()
+      }}></div>
+      <div className="clk-prev" onClick={() => {
+        this.swiper.slidePrev()
+      }}></div>
+    </div>
   }
 
 }

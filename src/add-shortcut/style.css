@@ -1,6 +1,8 @@
 body {
   margin: 0;
   padding: 0;
+  overflow: hidden;
+  background: #000;
 }
 
 .swiper-container {
@@ -21,7 +23,7 @@ body {
 }
 
 .swiper-pagination {
-  bottom: 3rem !important;
+  bottom: 3.2rem !important;
   width: 100vw !important;
 }
 
@@ -37,21 +39,36 @@ body {
   opacity: .5 !important;
 } */
 
+
 #app {
   width: 100%;
   max-width: 800px;
   margin: 0 auto;
 }
 
-.state {
-  padding: 1rem 0;
-  width: 94%;
-  margin: 0 auto;
+
+.app-container {
+  position: relative;
 }
 
-.state p {
-  font-size: Arial;
-  font-size: .9rem;
-  margin: .4rem 0 0 0;
-  line-height: 1.4rem;
+.clk-next {
+  width: 2.2rem;
+  height: 2.5rem;
+  background: url('./assets/right.png');
+  background-size: 100% 100%;
+  position: absolute;
+  right: .2rem;
+  top: 18rem;
+  z-index: 10;
+}
+
+.clk-prev {
+  width: 2.2rem;
+  height: 2.5rem;
+  background: url('./assets/left.png');
+  background-size: 100% 100%;
+  position: absolute;
+  left: .2rem;
+  top: 18rem;
+  z-index: 10;
 }
