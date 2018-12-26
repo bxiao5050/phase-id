@@ -22,9 +22,11 @@ export default class Loading extends React.Component<LoadingProp, {}, any>  {
     this.setState({
       clock: setTimeout(() => {
         var { userType, accountType } = RG.jssdk.Account.user
-        var isGuest = Utils.getAccountType(userType, accountType) === 'guest' ? true : false;
         Ins.hideLogin()
-        Ins.showHover(isGuest)
+        if (location.host === window.$rg_main.Mark.game_host) {
+          var isGuest = Utils.getAccountType(userType, accountType) === 'guest' ? true : false;
+          Ins.showHover(isGuest)
+        }
         window.rgAsyncInit && window.rgAsyncInit()
       }, 2000)
     })
