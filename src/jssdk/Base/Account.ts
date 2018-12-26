@@ -11,6 +11,9 @@ export default class Account {
   }
   constructor() {
     Account._ins = this
+    this.initPromise = new Promise(resolve => {
+      this.initResolve = resolve
+    })
   }
 
   /** 当前用户 */
@@ -19,9 +22,7 @@ export default class Account {
   private _users: UsersInfo = {}
 
   initResolve
-  initPromise = new Promise(resolve => {
-    this.initResolve = resolve
-  })
+  initPromise
 
   init(data) {
     this._user = data.user
