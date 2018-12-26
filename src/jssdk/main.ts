@@ -10,10 +10,11 @@ export default class Main {
   fb_sdk_loaded: boolean
   config: JSSDK.Config
   sdkInstance: Web
+  get_sdk_instance_promise
   Mark: Mark
 
   constructor() {
-    window['rgMain'] = this as any
+    window.$rg_main = this as any
     window.RgPolyfilled = this.polyfilled
     checkJsToNative()
     Polyfill.instance.init()
@@ -26,7 +27,7 @@ export default class Main {
       location.host !== Mark.instance.index_host && (RG.jssdk as any).init()
     } catch (e) {
       console.error('error_log:', e)
-      await this.get_sdk_instance()
+      await this.get_sdk_instance_promise
       location.host === Mark.instance.game_host && RG.Mark(DOT.SDK_LOADED);
       location.host !== Mark.instance.index_host && (RG.jssdk as any).init()
     }
@@ -38,7 +39,6 @@ export default class Main {
       js.src = "//cdnjs.cloudflare.com/ajax/libs/vConsole/3.2.0/vconsole.min.js"
       js.onload = () => {
         new VConsole
-        console.log('cookie !@~@~@~@~@!~@^&^&~@^&%%~^&@%~^&@%~^&@^%#~^&%(~%@&~%(@')
         resolve()
       }
       document.head.appendChild(js)
@@ -50,8 +50,9 @@ export default class Main {
       try {
         (Utils.getUrlParam(GET.DEV) || window[GET.DEV]) && await this.init_debugger();
         await this.get_game_config
+        this.get_sdk_instance()
         Promise.all([
-          this.get_sdk_instance(),
+          this.get_sdk_instance_promise,
           this.facebook_jssdk_init(),
         ]).then(() => {
           resolve()
@@ -94,22 +95,35 @@ export default class Main {
     }
   })
 
+  onMessage(event: MessageEvent) {
+    if (event.origin === `http://${Mark.instance.index_host}`) {
+      RG.jssdk.Account.init(event.data)
+    }
+  }
+
   /**
    * 获取SDk的类型
    */
   get_sdk_instance() {
-    let resolve, promise
-    promise = new Promise(function (_) {
-      resolve = _
+    let get_sdk_instance_resolve: Function
+    this.get_sdk_instance_promise = new Promise(function (resolve) {
+      get_sdk_instance_resolve = resolve
     })
+    this.get_sdk_instance_promise.then(() => {
+      if (location.host !== Mark.instance.index_host) {
+        window.addEventListener("message", this.onMessage, false);
+        window.parent.postMessage('get', `http://${Mark.instance.index_host}`)
+      }
+    })
+
     if (this.config.advChannel > 30000 && this.config.advChannel < 31000) {
       this.config.type = 1
       import('Src/Web').then((module) => {
         this.sdkInstance = new module.default(this.config, this.fb_sdk_loaded)
-        resolve()
+        get_sdk_instance_resolve()
       })
-      return promise
     }
+
     else if (this.config.advChannel < 30000) {
       this.config.type = 2
       return import('Src/NativeGames')

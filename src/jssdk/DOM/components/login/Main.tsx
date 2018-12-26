@@ -39,7 +39,7 @@ export default class Main extends React.Component<{
   }
 
   state = {
-    users: RG.jssdk.GetUsers()
+    users: RG.jssdk.Account.users
   }
 
   render() {
@@ -60,7 +60,6 @@ export default class Main extends React.Component<{
         <a className="btn-fb" onClick={() => {
           if (RG.jssdk.fb_sdk_loaded) {
             Ins.showNotice(RG.jssdk.config.i18n.loading)
-            // this.toLogin.bind(this, false)
             this.toLogin.apply(this, [false])
           } else {
             Ins.showNotice(RG.jssdk.config.i18n.loadException)

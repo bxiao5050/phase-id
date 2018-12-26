@@ -21,7 +21,7 @@ export default class Loading extends React.Component<LoadingProp, {}, any>  {
   componentDidMount() {
     this.setState({
       clock: setTimeout(() => {
-        var { userType, accountType } = RG.jssdk.GetUser()
+        var { userType, accountType } = RG.jssdk.Account.user
         var isGuest = Utils.getAccountType(userType, accountType) === 'guest' ? true : false;
         Ins.hideLogin()
         Ins.showHover(isGuest)
@@ -39,7 +39,7 @@ export default class Loading extends React.Component<LoadingProp, {}, any>  {
   }
 
   render() {
-    var user: UserInfo = RG.jssdk.GetUser()
+    var user: UserInfo = RG.jssdk.Account.user
     var password: string = user.password
     return <div className="content win-loading">
       <h2 className="logo block">IPOCKET GAMES</h2>

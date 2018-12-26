@@ -126,7 +126,7 @@ class VisitorUpgrade extends React.Component<accountProps, {}, {}>  {
                 user.password = password
                 user.userName = account
                 user.userType = 1
-                RG.jssdk.SetUser(user)
+                RG.jssdk.Account.user = user
 
                 Ins.showNotice(RG.jssdk.config.i18n.msg001)
                 Ins.showHover(false)
@@ -188,7 +188,7 @@ class Changepass extends React.Component<accountProps, {}, {}>  {
               if (res.code === 200) {
                 var user = RG.CurUserInfo()
                 user.password = password
-                RG.jssdk.SetUser(user)
+                RG.jssdk.Account.user = user
                 Ins.showNotice(RG.jssdk.config.i18n.msg001)
                 Ins.hideAccount()
               } else if (res.code === 107) {

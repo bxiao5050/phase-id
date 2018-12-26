@@ -36,10 +36,10 @@ export default class Login {
         console.log('login response', res)
         switch (res.code) {
           case 200:
-            RG.jssdk.SetUser(Object.assign(res.data, {
+            RG.jssdk.Account.user = Object.assign(res.data, {
               password: data.password,
               token: res.token
-            }))
+            })
             if (res.data.firstLogin) {
               RG.Mark(DOT.SDK_REGISTER)
             }

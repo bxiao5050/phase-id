@@ -22,7 +22,6 @@ export default class Mark {
     this.login_host = login_page.match(reg_exp)[0]
     this.game_host = game_page.match(reg_exp)[0]
 
-    // location.host === this.game_host && 
     this.init(config)
   }
 

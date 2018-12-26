@@ -76,12 +76,12 @@ export default class NativeGames {
           LoginModule.loginComplete()
         })
       } else {
-        var userInfo = RG.jssdk.GetUser()
+        var userInfo = RG.jssdk.Account.user
         var autoLogin = false
         if (userInfo) {
           autoLogin = true
         } else {
-          var usersInfo = RG.jssdk.GetUsers()
+          var usersInfo = RG.jssdk.Account.users
           var usersIdArr = Object.keys(usersInfo)
           if (usersIdArr.length) {
             var id = usersIdArr[0]

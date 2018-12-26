@@ -18,7 +18,7 @@ export default class Choose extends React.Component<ChooseProps, {}, any>  {
   }
 
   state = {
-    users: RG.jssdk.GetUsers(),
+    users: RG.jssdk.Account.users,
     userName: '',
     password: '',
     showList: false,
@@ -71,12 +71,8 @@ export default class Choose extends React.Component<ChooseProps, {}, any>  {
   }
 
   deleteUser = (userId) => {
-    var userInfo = RG.jssdk.GetUser()
-
-    userInfo && userId === userInfo.userId && RG.jssdk.SetUser(null, userId);
+    RG.jssdk.Account.delCurUser(userId)
     delete this.state.users[userId]
-
-    RG.jssdk.SetUsers(this.state.users)
     var usersKeys = Object.keys(this.state.users)
     if (!usersKeys.length && this.props.Login.props.history.location.pathname === '/main') {
       this.props.Login.props.history.replace('/main')

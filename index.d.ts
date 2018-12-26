@@ -1,3 +1,5 @@
+// import Main from "Src/jssdk/main";
+
 // <reference path="./node_modules/@types/react/index.d.ts" />
 // <reference path="./node_modules/@types/history/index.d.ts" />
 // <reference path="./node_modules/@types/facebook-instant-games/index.d.ts" />
@@ -107,6 +109,8 @@ declare interface Window {
   rgChangeAccount: Function
   RgPolyfilled: Function
   debugger: boolean
+  $rg_index: Function
+  $rg_main: any
 }
 
 declare var FBVersion: string
@@ -351,17 +355,19 @@ interface Base0 {
   /** 绑定区服 */
   BindZone(bindZoneParam: BindZoneParam): Promise<ServerRes>
 
-  /** 获取当前用户数据 */
-  GetUser(): UserInfo
+  Account: any
 
-  /** 设置当前用户数据 */
-  SetUser(userInfo: UserInfo, userId?: any)
+  // /** 获取当前用户数据 */
+  // GetUser(): UserInfo
 
-  /** 获取用户组数据 */
-  GetUsers(): UsersInfo
+  // /** 设置当前用户数据 */
+  // SetUser(userInfo: UserInfo, userId?: any)
 
-  /** 设置用户组数据 */
-  SetUsers(usersInfo: UsersInfo): void
+  // /** 获取用户组数据 */
+  // GetUsers(): UsersInfo
+
+  // /** 设置用户组数据 */
+  // SetUsers(usersInfo: UsersInfo): void
 
   /** 获取游戏跳转地址 */
   // GetRedirectUrl()

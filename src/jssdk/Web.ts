@@ -35,7 +35,9 @@ export default class Web extends Base {
     await Promise.all([reactDomSrc, reactRouterDomSrc].map((src) => {
       return this.loadScript(src)
     }))
-    window.RG.jssdk.App = (await import('DOM/index')).Ins
+
+    let [{ Ins }] = await Promise.all([import('DOM/index'), RG.jssdk.Account.initPromise])
+    window.RG.jssdk.App = Ins
     let user = Utils.getUrlParam('user')
     if (user) {
       var { userType, accountType } = RG.CurUserInfo()
@@ -50,12 +52,12 @@ export default class Web extends Base {
         }
       }
     } else {
-      var userInfo = RG.jssdk.GetUser()
+      var userInfo = RG.jssdk.Account.user
       var autoLogin = false
       if (userInfo) {
         autoLogin = true
       } else {
-        var usersInfo = RG.jssdk.GetUsers()
+        var usersInfo = RG.jssdk.Account.users
         var usersIdArr = Object.keys(usersInfo)
         if (usersIdArr.length) {
           var id = usersIdArr[0]
@@ -65,9 +67,8 @@ export default class Web extends Base {
       }
       var LoginModule = window.RG.jssdk.App.showLogin()
       if (autoLogin) {
-        RG.jssdk.Login(userInfo).then(() => {
-          LoginModule.loginComplete()
-        })
+        await RG.jssdk.Login(userInfo)
+        LoginModule.loginComplete()
       }
     }
   }

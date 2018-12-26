@@ -1,7 +1,7 @@
 /** localstorage */
-export var UserInfo = PREFIX + '-' + 'userInfo'
-export var UsersInfo = PREFIX + '-' + 'usersInfo'
-export var LoginData = PREFIX + '-' + 'loginData'
+// export var UserInfo = PREFIX + '-' + 'userInfo'
+// export var UsersInfo = PREFIX + '-' + 'usersInfo'
+// export var LoginData = PREFIX + '-' + 'loginData'
 /** 
  * route
  */

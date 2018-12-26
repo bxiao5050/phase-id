@@ -54,11 +54,10 @@ export default class Api {
     }
     return Http.instance.post({ route: this.route.bindVisitor, data }).then(data => {
       if (data.code === 200) {
-        var userInfo = RG.jssdk.GetUser()
+        var userInfo = RG.jssdk.Account.user
 
         userInfo.userName = account
-        RG.jssdk.SetUser(userInfo)
-
+        RG.jssdk.Account.user = userInfo
       }
       return data
     })

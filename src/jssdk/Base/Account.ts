@@ -1,7 +1,8 @@
 import Utils from "Base/Utils";
 import Http from "Src/Base/Http";
-import Cookies from 'js-cookie'
+// import Cookies from 'js-cookie'
 import * as Const from "Src/Base/Constant"
+import Mark from "./Mark";
 
 export default class Account {
   static _ins: Account
@@ -10,54 +11,67 @@ export default class Account {
   }
   constructor() {
     Account._ins = this
-    this.init()
-  }
-
-  private route = {
-    changepass: Const.RouteChangePassword
   }
 
   /** 当前用户 */
-  private _userInfo: UserInfo
+  private _user: UserInfo
   /** 用户组 */
-  private _usersInfo: UsersInfo
+  private _users: UsersInfo = {}
 
-  protected init() {
-    this._userInfo = JSON.parse(Cookies.get(Const.UserInfo))
-    this._usersInfo = JSON.parse(Cookies.get(Const.UsersInfo)) || {}
+  initResolve
+  initPromise = new Promise(resolve => {
+    this.initResolve = resolve
+  })
+
+  init(data) {
+    this._user = data.user
+    this._users = data.users
+    this.initResolve()
   }
 
-  get userInfo() {
-    return this._userInfo
+  get user() {
+    return this._user
   }
 
-  get usersInfo() {
-    return this._usersInfo
+  get users() {
+    return this._users
   }
 
-  set userInfo(userInfo) {
-    this._userInfo = userInfo
-    Cookies.set(Const.UserInfo, JSON.stringify(userInfo))
-    this._usersInfo[userInfo.userId] = userInfo
-    Cookies.set(Const.UsersInfo, JSON.stringify(this._usersInfo))
+  set user(user) {
+    this._user = user
+    this._users[user.userId] = user
+
+    window.parent.postMessage({
+      user: this._user,
+      users: this._users
+    }, 'http://' + Mark.instance.index_host)
+  }
+
+  set users(users) {
+    this._users = users
+
+    window.parent.postMessage({
+      user: this._user,
+      users: this._users
+    }, 'http://' + Mark.instance.index_host)
   }
 
   delCurUser(userId) {
-    this._userInfo = null
-    Cookies.set(Const.UserInfo, JSON.stringify(null))
-    this._usersInfo[userId] = null
-    Cookies.set(Const.UsersInfo, JSON.stringify(this._usersInfo))
+    if (this._users[userId]) {
+      delete this._users[userId]
+      this._user = null
+
+      window.parent.postMessage({
+        user: this._user,
+        users: this._users
+      }, 'http://' + Mark.instance.index_host)
+    }
   }
 
-  set usersInfo(usersInfo) {
-    this._usersInfo = usersInfo
-    Cookies.set(Const.UsersInfo, JSON.stringify(usersInfo))
-  }
-
-  changePass(oldpass, newpass) {
+  changePass(oldpass: string, newpass: string) {
     var data = {
       appId: RG.jssdk.config.appId,
-      userId: this.userInfo.userId,
+      userId: this.user.userId,
       password: oldpass,
       newPassword: newpass,
       sign: null
@@ -65,13 +79,13 @@ export default class Account {
 
     data.sign = Utils.signed({
       appId: RG.jssdk.config.appId,
-      userId: this.userInfo.userId,
+      userId: this.user.userId,
       password: oldpass,
       newPassword: newpass
     });
 
     return Http.instance.post({
-      route: this.route.changepass,
+      route: Const.RouteChangePassword,
       data: data
     })
   }

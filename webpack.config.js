@@ -52,7 +52,7 @@ switch (action) {
 		output.publicPath = ''
 	case 'test':
 		SERVER = 'https://desdk-cdn.pkmonquest.com'
-		output.publicPath = ''
+		output.publicPath = SERVER + '/jssdk/'
 		break
 }
 var definePlugin = {
@@ -71,6 +71,7 @@ var webpackConfig = {
 		sdk: path.join(__dirname, 'src/jssdk/main.ts'),
 		shortcut: path.join(__dirname, 'src/add-shortcut/main.ts'),
 		login: path.join(__dirname, 'src/login/main.ts'),
+		index: path.join(__dirname, 'src/index/main.ts'),
 	},
 
 	resolve: {
@@ -178,7 +179,8 @@ var webpackConfig = {
 	},
 }
 
-argv.mode === 'production' && webpackConfig.plugins.push(
+// argv.mode === 'production' &&
+webpackConfig.plugins.push(
 	new CleanWebpackPlugin([
 		path.join(__dirname, 'build', '**/*'),
 	])

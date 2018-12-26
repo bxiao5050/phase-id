@@ -8,7 +8,7 @@ import Mark from "Base/Mark";
 
 export default class Base {
 
-  version = VERSION
+  Account = Account.instance
 
   Mark(markName: string, markParams: any) {
     Mark.instance.Mark(markName)
@@ -28,15 +28,6 @@ export default class Base {
     return Api.instance.Bind(BindZoneParam)
   }
 
-  GetUser() {
-    let userInfo = Account.instance.userInfo
-    return userInfo
-  }
-
-  GetUsers() {
-    return Account.instance.usersInfo
-  }
-
   Redirect() {
     let urlParam = Utils.getUrlParam()
     let urlSearch = ''
@@ -50,20 +41,7 @@ export default class Base {
       }
     }
     let href = SERVER + '/jssdk/' + Utils.getUrlParam('sdkVersion') + '/login.html' + urlSearch
-    console.log('Redirect', href)
     location.href = href
-  }
-
-  SetUser(userInfo: UserInfo, userId?: any) {
-    if (userInfo) {
-      Account.instance.userInfo = userInfo
-    } else {
-      Account.instance.delCurUser(userId)
-    }
-  }
-
-  SetUsers(usersInfo: UsersInfo) {
-    Account.instance.usersInfo = usersInfo
   }
 
   _getParamUserHasParsed = false
@@ -72,10 +50,12 @@ export default class Base {
     if (user && !this._getParamUserHasParsed) {
       this._getParamUserHasParsed = true
       user = JSON.parse(decodeURIComponent(user))
-      this.SetUser(user)
+      Account.instance.initPromise.then(function () {
+        Account.instance.user = user
+      })
       return user
     } else {
-      return this.GetUser()
+      return RG.jssdk.Account.user
     }
   }
 
