@@ -40,7 +40,8 @@ export default class Web extends Base {
     window.RG.jssdk.App = Ins
     console.log(
       'shindousaigo',
-      RG.jssdk.Account.user
+      RG.jssdk.Account.user,
+      RG.CurUserInfo()
     )
     let user = Utils.getUrlParam('user')
     if (user) {
