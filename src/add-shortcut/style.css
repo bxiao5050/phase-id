@@ -6,8 +6,11 @@ body {
 }
 
 .swiper-container {
-  margin: 0 auto;
-  width: 94%;
+  width: 51.75vh;
+  height: 92vh;
+  max-height: 163.55555vw;
+  max-width: 92vw; 
+
   overflow: hidden;
   position: relative;
 }
@@ -43,7 +46,11 @@ body {
 #app {
   width: 100%;
   max-width: 800px;
-  margin: 0 auto;
+  height: 100%;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 
@@ -57,8 +64,9 @@ body {
   background: url('./assets/right.png');
   background-size: 100% 100%;
   position: absolute;
-  right: .2rem;
-  top: 18rem;
+  right: 1rem;
+  top: 50%;
+  margin-top: -1.25rem;
   z-index: 10;
 }
 
@@ -68,7 +76,8 @@ body {
   background: url('./assets/left.png');
   background-size: 100% 100%;
   position: absolute;
-  left: .2rem;
-  top: 18rem;
+  left: 1rem;
+  top: 50%;
+  margin-top: -1.25rem;
   z-index: 10;
 }
