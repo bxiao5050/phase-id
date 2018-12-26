@@ -44,19 +44,8 @@ export default class Base {
     location.href = href
   }
 
-  _getParamUserHasParsed = false
   CurUserInfo = (): JSSDK.CurUserInfo => {
-    let user = Utils.getUrlParam('user')
-    if (user && !this._getParamUserHasParsed) {
-      this._getParamUserHasParsed = true
-      user = JSON.parse(decodeURIComponent(user))
-      Account.instance.initPromise.then(function () {
-        Account.instance.user = user
-      })
-      return user
-    } else {
-      return RG.jssdk.Account.user
-    }
+    return RG.jssdk.Account.user || Utils.getUrlParam('user')
   }
 
   Share(shareUrl: string) {

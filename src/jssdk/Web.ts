@@ -38,6 +38,9 @@ export default class Web extends Base {
 
     let [{ Ins }] = await Promise.all([import('DOM/index'), RG.jssdk.Account.initPromise])
     window.RG.jssdk.App = Ins
+    console.log(
+      RG.jssdk.Account.user
+    )
     let user = Utils.getUrlParam('user')
     if (user) {
       var { userType, accountType } = RG.CurUserInfo()
