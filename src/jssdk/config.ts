@@ -59,12 +59,12 @@ const kdxs_default = {
     bg_login: '//pixel.pkmonquest.com/h5-play/images/bg_game_login.png'
   },
   server: {
-    test: '//sdk-test.changic.net.cn/pocketgames/client',
+    test: '//desdk-cdn.pkmonquest.com/pocketgames/client', // '//sdk-test.changic.net.cn/pocketgames/client',
     formal: '//desdk-cdn.pkmonquest.com/pocketgames/client',
   },
   page: {
     game: {
-      test: 'http://xytest.xulonggame.com/royalgame.html',
+      test: 'http://xy.xulonggame.com/xy.html',//'http://xytest.xulonggame.com/royalgame.html',
       formal: 'http://xy.xulonggame.com/xy.html',
     },
     index: 'http://pixel.pkmonquest.com/h5-play/index.html',

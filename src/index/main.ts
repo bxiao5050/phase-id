@@ -54,28 +54,33 @@ window.$rg_index = function (options: {
   const T = 't'
   const sdk = document.createElement('script')
   const handleMessage = function (event: MessageEvent, iframe, hide) {
-    if (event.data === 'get') {
-      iframe.style.visibility = 'visible'
-      hide.style.visibility = 'hidden'
-      
+    if (event.data.action === 'get') {
+      // iframe.style.visibility = 'visible'
+      // hide.style.visibility = 'hidden'
       iframe.contentWindow.postMessage({
         user: localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : '',
         users: localStorage.getItem('users') ? JSON.parse(localStorage.getItem('users')) : {},
       }, event.origin);
-    } else {
-      localStorage.setItem('user', JSON.stringify(event.data.user))
-      localStorage.setItem('users', JSON.stringify(event.data.users))
+    }
+    else if (event.data.action === 'set') {
+      localStorage.setItem('user', JSON.stringify(event.data.data.user))
+      localStorage.setItem('users', JSON.stringify(event.data.data.users))
+    }
+    else if (event.data.action === 'mark') {
+      event.data.data.param ? RG.Mark(event.data.data.name, event.data.data.param) : RG.Mark(event.data.data.name)
+    }
+    else if (event.data.action === 'location') {
+      iframe.src = event.data.data
     }
   }
   const onMessage = function (event: MessageEvent) {
-    let iframe
+    console.log('index receive msg', event.origin, event.data)
     if (event.origin.indexOf(window.$rg_main.Mark.login_host) > -1) {
-      iframe = options.login
-      handleMessage(event, iframe, options.game)
+      handleMessage(event, options.login, options.game)
     }
     if (event.origin.indexOf(window.$rg_main.Mark.game_host) > -1) {
-      iframe = options.game
-      handleMessage(event, iframe, options.login)
+      handleMessage(event, options.login, options.game)
+      // handleMessage(event, options.game, options.login)
     }
   }
 
@@ -94,7 +99,7 @@ window.$rg_index = function (options: {
   sdk.async = !0
   document.head.append(sdk)
 
-  const src = `${options.origin}/jssdk/${options.sdkVersion}}/login.html?${(function () {
+  const src = `${options.origin}/jssdk/${options.sdkVersion}/login.html?${(function () {
     return U.keys().map(key => {
       return `${key}=${U.get(key)}`
     }).join('&')

@@ -37,34 +37,32 @@ export default class Account {
     return this._users
   }
 
+  asyncData() {
+    window.parent.postMessage({
+      action: 'set',
+      data: {
+        user: this._user,
+        users: this._users
+      }
+    }, 'http://' + Mark.instance.index_host)
+  }
+
   set user(user) {
     this._user = user
     this._users[user.userId] = user
-
-    window.parent.postMessage({
-      user: this._user,
-      users: this._users
-    }, 'http://' + Mark.instance.index_host)
+    this.asyncData()
   }
 
   set users(users) {
     this._users = users
-
-    window.parent.postMessage({
-      user: this._user,
-      users: this._users
-    }, 'http://' + Mark.instance.index_host)
+    this.asyncData()
   }
 
   delCurUser(userId) {
     if (this._users[userId]) {
       delete this._users[userId]
       this._user = null
-
-      window.parent.postMessage({
-        user: this._user,
-        users: this._users
-      }, 'http://' + Mark.instance.index_host)
+      this.asyncData()
     }
   }
 

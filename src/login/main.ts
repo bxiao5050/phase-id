@@ -38,10 +38,9 @@ const src = `./sdk.js?t=${t}`;
   js.id = id;
   js.src = src
   js.onload = async function () {
-    const main = window['rgMain'] || window['RG']
-    await main['get_game_config']
+    await window.$rg_main.get_game_config
     const img = document.getElementById('rg-bg-login') as HTMLImageElement
-    img.src = main['config'].pic.bg_login
+    img.src = window.$rg_main.config.pic.bg_login
     img.style.display = 'block'
   }
   document.body.appendChild(js)
@@ -65,5 +64,5 @@ window.rgAsyncInit = function () {
   urlSearch += '&user=' + user;
   let href = (isDebugger ? RG.jssdk.config.page.game.test : RG.jssdk.config.page.game
     .formal) + urlSearch;
-  location.href = href
+  window.parent.postMessage({ action: 'location', data: href }, 'http://' + window.$rg_main.Mark.index_host)
 }

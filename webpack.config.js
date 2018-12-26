@@ -51,7 +51,7 @@ switch (action) {
 		SERVER = 'https://desdk-cdn.pkmonquest.com'
 		output.publicPath = ''
 	case 'test':
-		SERVER = 'https://desdk-cdn.pkmonquest.com'
+		SERVER = 'https://sdk-test.changic.net.cn'
 		output.publicPath = SERVER + '/jssdk/'
 		break
 }
