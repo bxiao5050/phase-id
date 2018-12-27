@@ -56,7 +56,7 @@ const kdxs_default = {
     fb: '2245057485737002',
   },
   pic: {
-    bg_login: '//pixel.pkmonquest.com/h5-play/images/bg_game_login.png'
+    bg_login: 'http://cdn-pixel.pkmonquest.com/resource/assets/loading/xuanfuBG_1d8feb01.jpg'
   },
   server: {
     test: '//desdk-cdn.pkmonquest.com/pocketgames/client', // '//sdk-test.changic.net.cn/pocketgames/client',
