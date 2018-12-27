@@ -35,14 +35,8 @@ export default class Web extends Base {
     await Promise.all([reactDomSrc, reactRouterDomSrc].map((src) => {
       return this.loadScript(src)
     }))
-
     let [{ Ins }] = await Promise.all([import('DOM/index'), RG.jssdk.Account.initPromise])
     window.RG.jssdk.App = Ins
-    console.log(
-      'shindousaigo',
-      RG.jssdk.Account.user,
-      RG.CurUserInfo()
-    )
     let user = Utils.getUrlParam('user')
     if (user) {
       var { userType, accountType } = RG.CurUserInfo()

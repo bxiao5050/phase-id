@@ -75,12 +75,11 @@ const kdxs_default = {
   }
 }
 
-let kdxs_01 = kdxs_default
+let kdxs_01 = JSON.parse(JSON.stringify(kdxs_default))
 kdxs_01.mark_id.ga = 'UA-102180151-59'
 
 
-
-export default {
+const config = {
   10116: {
     default: config1,
   },
@@ -94,3 +93,5 @@ export default {
     30002: kdxs_01
   }
 }
+
+export default config
