@@ -30,6 +30,11 @@ export default class Web extends Base {
     })
   }
 
+  rgAsyncInit() {
+    window.rgAsyncInit()
+    window.parent.postMessage({ action: 'rgAsyncInit' }, 'http://' + window.$rg_main.Mark.index_host)
+  }
+
   async init() {
     await this.loadScript(reactSrc)
     await Promise.all([reactDomSrc, reactRouterDomSrc].map((src) => {
@@ -44,10 +49,10 @@ export default class Web extends Base {
       window.RG.jssdk.App.hideLogin()
       window.RG.jssdk.App.showHover(isGuest)
       if (window.rgAsyncInit) {
-        window.rgAsyncInit()
+        this.rgAsyncInit()
       } else {
-        window.onload = function () {
-          window.rgAsyncInit()
+        window.onload = () => {
+          this.rgAsyncInit()
         }
       }
     } else {
