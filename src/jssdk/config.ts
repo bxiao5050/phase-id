@@ -75,6 +75,11 @@ const kdxs_default = {
   }
 }
 
+let kdxs_01 = kdxs_default
+kdxs_01.mark_id.ga = 'UA-102180151-59'
+
+
+
 export default {
   10116: {
     default: config1,
@@ -85,6 +90,7 @@ export default {
     32001: config4,
   },
   10133: {
-    default: kdxs_default
+    default: kdxs_default,
+    30002: kdxs_01
   }
 }

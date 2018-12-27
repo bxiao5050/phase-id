@@ -35,12 +35,12 @@ class UrlParam {
 }
 
 window.$rg_index = function (options: {
-  region: string
   appId: string
   advChannel: string
   sdkVersion: string
   login: HTMLIFrameElement
   origin: string
+  hash: string
 }) {
   /**
    * init
@@ -87,11 +87,11 @@ window.$rg_index = function (options: {
   U.add(SDK_VERSION, window[SDK_VERSION])
   U.add(APP_ID, window[APP_ID])
   U.add(ADV_CHANNEL, window[ADV_CHANNEL])
-  !U.get(T) && U.add(T, String(Date.now()))
+  U.add(T, options.hash)
 
   window.addEventListener("message", onMessage, false);
 
-  sdk.src = `${options.origin}/jssdk/${options.sdkVersion}/sdk.js?t=${U.get(T)}`
+  sdk.src = `${options.origin}/jssdk/${options.sdkVersion}/sdk.js?${U.get(T)}`
   sdk.async = !0
   document.head.append(sdk)
 

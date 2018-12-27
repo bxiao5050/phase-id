@@ -15,7 +15,6 @@ export default class Slides extends React.Component<{
   swiper: swiper
 
   componentDidMount() {
-    console.log(this.swiper)
     setInterval(() => {
       this.swiper.slideNext()
     }, 3000)

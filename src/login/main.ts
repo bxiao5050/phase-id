@@ -30,7 +30,7 @@ const getUrlParam = (function () {
 const t = getUrlParam('t')
 const isDebugger = getUrlParam('debugger') || window.debugger
 /** 加载jssdk */
-const src = `./sdk.js?t=${t}`;
+const src = `./sdk.js?${t}`;
 (function (d, s, id) {
   let js
   if (d.getElementById(id)) return;

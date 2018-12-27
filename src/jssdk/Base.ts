@@ -49,17 +49,14 @@ export default class Base {
   }
 
   Share(shareUrl: string) {
-    console.log('Share', shareUrl)
     return Share.instance.share(shareUrl)
   }
 
   Messenger() {
-    console.log("Messenger")
     window.open(RG.jssdk.config.page.facebook.messenger)
   }
 
   Fb() {
-    console.log("Fb")
     window.open(RG.jssdk.config.page.facebook.index)
     // let useragent = navigator.userAgent;
     // let iPhone = (useragent.match(/(iPad|iPhone|iPod)/g));
