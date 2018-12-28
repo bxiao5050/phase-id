@@ -151,7 +151,6 @@ export default class Login {
           if (RG.jssdk.config.type === 2) {
             location.href = `https://www.facebook.com/${FBVersion}/dialog/oauth?client_id=${RG.jssdk.config.fb_app_id}&redirect_uri=${encodeURIComponent(location.href)}&t=${Date.now()}`
           } else {
-            console.log("shindousaigo login")
             FB.login(response => {
               if (response.status === "connected") {
                 var userID = response.authResponse.userID

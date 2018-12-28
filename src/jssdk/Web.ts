@@ -30,19 +30,18 @@ export default class Web extends Base {
     })
   }
 
+  rgAsyncInit() {
+    window.rgAsyncInit()
+    window.parent.postMessage({ action: 'rgAsyncInit' }, 'http://' + window.$rg_main.Mark.index_host)
+  }
+
   async init() {
     await this.loadScript(reactSrc)
     await Promise.all([reactDomSrc, reactRouterDomSrc].map((src) => {
       return this.loadScript(src)
     }))
-
     let [{ Ins }] = await Promise.all([import('DOM/index'), RG.jssdk.Account.initPromise])
     window.RG.jssdk.App = Ins
-    console.log(
-      'shindousaigo',
-      RG.jssdk.Account.user,
-      RG.CurUserInfo()
-    )
     let user = Utils.getUrlParam('user')
     if (user) {
       var { userType, accountType } = RG.CurUserInfo()
@@ -50,10 +49,10 @@ export default class Web extends Base {
       window.RG.jssdk.App.hideLogin()
       window.RG.jssdk.App.showHover(isGuest)
       if (window.rgAsyncInit) {
-        window.rgAsyncInit()
+        this.rgAsyncInit()
       } else {
-        window.onload = function () {
-          window.rgAsyncInit()
+        window.onload = () => {
+          this.rgAsyncInit()
         }
       }
     } else {

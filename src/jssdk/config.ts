@@ -56,7 +56,7 @@ const kdxs_default = {
     fb: '2245057485737002',
   },
   pic: {
-    bg_login: '//pixel.pkmonquest.com/h5-play/images/bg_game_login.png'
+    bg_login: 'http://cdn-pixel.pkmonquest.com/resource/assets/loading/xuanfuBG_1d8feb01.jpg'
   },
   server: {
     test: '//desdk-cdn.pkmonquest.com/pocketgames/client', // '//sdk-test.changic.net.cn/pocketgames/client',
@@ -75,12 +75,10 @@ const kdxs_default = {
   }
 }
 
-let kdxs_01 = kdxs_default
+let kdxs_01 = JSON.parse(JSON.stringify(kdxs_default))
 kdxs_01.mark_id.ga = 'UA-102180151-59'
 
-
-
-export default {
+const config = {
   10116: {
     default: config1,
   },
@@ -94,3 +92,5 @@ export default {
     30002: kdxs_01
   }
 }
+
+export default config

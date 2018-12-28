@@ -80,6 +80,8 @@ window.$rg_index = function (options: {
     }
   }
 
+  window.addEventListener("message", onMessage, false);
+
   window[APP_ID] = options.appId
   window[ADV_CHANNEL] = options.advChannel
   window[SDK_VERSION] = options.sdkVersion
@@ -88,8 +90,6 @@ window.$rg_index = function (options: {
   U.add(APP_ID, window[APP_ID])
   U.add(ADV_CHANNEL, window[ADV_CHANNEL])
   U.add(T, options.hash)
-
-  window.addEventListener("message", onMessage, false);
 
   sdk.src = `${options.origin}/jssdk/${options.sdkVersion}/sdk.js?${U.get(T)}`
   sdk.async = !0
