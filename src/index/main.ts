@@ -66,9 +66,6 @@ window.$rg_index = function (options: {
     else if (event.data.action === 'mark') {
       event.data.data.param ? RG.Mark(event.data.data.name, event.data.data.param) : RG.Mark(event.data.data.name)
     }
-    else if (event.data.action === 'location') {
-      iframe.src = event.data.data
-    }
   }
   const onMessage = function (event: MessageEvent) {
     console.log('index receive msg', event.origin, event.data)
@@ -95,11 +92,13 @@ window.$rg_index = function (options: {
   sdk.async = !0
   document.head.append(sdk)
 
-  const src = `${options.origin}/jssdk/${options.sdkVersion}/login.html?${(function () {
-    return U.keys().map(key => {
-      return `${key}=${U.get(key)}`
-    }).join('&')
-  })()}`
+  // const src = `${options.origin}/jssdk/${options.sdkVersion}/login.html?${(function () {
+  //   return U.keys().map(key => {
+  //     return `${key}=${U.get(key)}`
+  //   }).join('&')
+  // })()}`
+
+  const src = ``
 
   options.login.src = src
 
