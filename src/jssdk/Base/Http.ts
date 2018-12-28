@@ -11,7 +11,7 @@ export default class Http {
 
   private serverAddress = (Utils.getUrlParam('debugger') || window['debugger']) ? RG.jssdk.config.server.test : RG.jssdk.config.server.formal
 
-  private request(param: requestParam, server: string): Promise<ServerRes> {
+  private request(param: requestParam): Promise<ServerRes> {
 
     let data: any
     if (param.data) {
@@ -20,7 +20,7 @@ export default class Http {
       }).join('&')
     }
     var xhr = new XMLHttpRequest();
-    xhr.open(param.method, server + param.route)
+    xhr.open(param.method, this.serverAddress + param.route)
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     xhr.send(data)
     return new Promise((resolve, reject) => {
@@ -37,17 +37,15 @@ export default class Http {
 
   }
 
-  public post(param: requestParam, server: string = this.serverAddress): Promise<ServerRes> {
+  public post(param: requestParam): Promise<ServerRes> {
     return this.request(
-      Object.assign({ method: 'POST' }, param),
-      server
+      Object.assign({ method: 'POST' }, param)
     )
   }
 
-  public get(param: requestParam = {}, server: string = this.serverAddress) {
+  public get(param: requestParam = {}) {
     return this.request(
-      Object.assign({ method: 'GET' }, param),
-      server
+      Object.assign({ method: 'GET' }, param)
     )
   }
 

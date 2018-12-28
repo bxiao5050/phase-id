@@ -31,7 +31,7 @@ export default class Login {
 
     return new Promise(async (resolve, reject) => {
       var data = await this.loginParamHandler(loginParam)
-      Http.instance.post({ route, data }, RG.jssdk.config.server.formal).then((res: LoginRes) => {
+      Http.instance.post({ route, data }).then((res: LoginRes) => {
         switch (res.code) {
           case 200:
             RG.jssdk.Account.user = Object.assign(res.data, {

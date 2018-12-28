@@ -59,12 +59,12 @@ const kdxs_default = {
     bg_login: 'http://cdn-pixel.pkmonquest.com/resource/assets/loading/xuanfuBG_1d8feb01.jpg'
   },
   server: {
-    test: 'https://sdk-test.changic.net.cn/pocketgames/client', // '//sdk-test.changic.net.cn/pocketgames/client',
+    test: 'https://sdk-test.changic.net.cn/pocketgames/client',
     formal: 'https://desdk-cdn.pkmonquest.com/pocketgames/client',
   },
   page: {
     game: {
-      test: 'http://xy.xulonggame.com/xy.html', // 'http://xytest.xulonggame.com/royalgame.html',
+      test: 'http://xytest.xulonggame.com/royalgame.html',
       formal: 'http://xy.xulonggame.com/xy.html',
     },
     index: 'http://pixel.pkmonquest.com/h5-play/index.html',
