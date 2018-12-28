@@ -31,9 +31,7 @@ export default class Login {
 
     return new Promise(async (resolve, reject) => {
       var data = await this.loginParamHandler(loginParam)
-      console.log('login request', data)
-      Http.instance.post({ route, data }).then((res: LoginRes) => {
-        console.log('login response', res)
+      Http.instance.post({ route, data }, RG.jssdk.config.server.formal).then((res: LoginRes) => {
         switch (res.code) {
           case 200:
             RG.jssdk.Account.user = Object.assign(res.data, {
@@ -63,7 +61,6 @@ export default class Login {
   }
 
   public loginParamHandler(loginParam: LoginParam): Promise<PlatformLoginParam> {
-    console.log('loginParamHandler', loginParam)
     // 密码md5加密
     loginParam.password = loginParam.password.length === 32 ? loginParam.password : md5(loginParam.password)
     // 获取设备信息
@@ -111,14 +108,12 @@ export default class Login {
     if ('birthday' in additional.response) {
       loginParam.birthday = additional.response.birthday
     }
-    console.log('loginParam', loginParam)
     this.platformLogin(loginParam).then(res => {
       additional.resolve(res)
     })
   }
 
   public facebookLogin(): Promise<LoginRes> {
-    console.log("facebookLoginfacebookLoginfacebookLogin", RG.jssdk.config.type)
     return new Promise((resolve, reject) => {
       // 登录信息
       var params: LoginParam = {
@@ -144,7 +139,6 @@ export default class Login {
           var userID = response.userID
           FB.api('/me?fields=email', (response) => { // name,birthday,gender
             response.userID = userID
-            console.log('response', response)
             this.reqRegister(params, { response, resolve, reject })
           })
         } else {
@@ -156,7 +150,6 @@ export default class Login {
                 var userID = response.authResponse.userID
                 FB.api('/me?fields=email', (response) => { // name,birthday,gender
                   response.userID = userID
-                  console.log('response', response)
                   this.reqRegister(params, { response, resolve, reject })
                 })
               } else {

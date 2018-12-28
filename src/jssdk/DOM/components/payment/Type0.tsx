@@ -3,6 +3,7 @@ import './Type0.scss'
 import * as React from 'react'
 import Payment from 'DOM/components/payment'
 import { History } from 'history'
+import Utils from 'Src/Base/Utils';
 
 type paymentProps = {
   Payment: Payment
@@ -30,6 +31,13 @@ export default class Type0 extends React.Component<paymentProps, {}, any>  {
   // state = {
   //   mycardtip: 'none'
   // }
+
+  componentDidMount() {
+    if (Utils.getUrlParam('pay')) {
+      console.log('发货请求中', this.props.Payment.state.paymentDatas[0])
+      RG.jssdk.App.hidePayment()
+    }
+  }
 
   render() {
     var source = this.props.Payment.state.paymentDatas[0]

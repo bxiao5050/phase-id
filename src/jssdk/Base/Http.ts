@@ -11,19 +11,18 @@ export default class Http {
 
   private serverAddress = (Utils.getUrlParam('debugger') || window['debugger']) ? RG.jssdk.config.server.test : RG.jssdk.config.server.formal
 
-  private request(param: requestParam): Promise<ServerRes> {
-    var data
+  private request(param: requestParam, server: string): Promise<ServerRes> {
+
+    let data: any
     if (param.data) {
       data = Object.keys(param.data).map(key => {
         return `${key}=${param.data[key]}`
       }).join('&')
     }
-
-    var xhr = new XMLHttpRequest();//创建ajax对象
-    xhr.open(param.method, this.serverAddress + param.route)
+    var xhr = new XMLHttpRequest();
+    xhr.open(param.method, server + param.route)
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     xhr.send(data)
-
     return new Promise((resolve, reject) => {
       xhr.onreadystatechange = function () {
         if (xhr.readyState === 4) {
@@ -38,15 +37,17 @@ export default class Http {
 
   }
 
-  public post(param: requestParam): Promise<ServerRes> {
+  public post(param: requestParam, server: string = this.serverAddress): Promise<ServerRes> {
     return this.request(
-      Object.assign({ method: 'POST' }, param)
+      Object.assign({ method: 'POST' }, param),
+      server
     )
   }
 
-  public get(param?: requestParam) {
+  public get(param: requestParam = {}, server: string = this.serverAddress) {
     return this.request(
-      Object.assign({ method: 'GET' }, param || {})
+      Object.assign({ method: 'GET' }, param),
+      server
     )
   }
 
