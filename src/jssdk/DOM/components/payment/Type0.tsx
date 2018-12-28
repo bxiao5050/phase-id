@@ -4,6 +4,7 @@ import * as React from 'react'
 import Payment from 'DOM/components/payment'
 import { History } from 'history'
 import Utils from 'Src/Base/Utils';
+import Http from 'Src/Base/Http';
 
 type paymentProps = {
   Payment: Payment
@@ -32,10 +33,13 @@ export default class Type0 extends React.Component<paymentProps, {}, any>  {
   //   mycardtip: 'none'
   // }
 
-  componentDidMount() {
+  async componentDidMount() {
     if (Utils.getUrlParam('pay')) {
       console.log('发货请求中', this.props.Payment.state.paymentDatas[0])
-      RG.jssdk.App.hidePayment()
+      await Http.instance.get({
+        route: '/order/sendGoods?OrderId=V4_10133_KZ1545987423916'
+      })
+      // RG.jssdk.App.hidePayment()
     }
   }
 

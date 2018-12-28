@@ -29,6 +29,7 @@ export default class Http {
           if (xhr.status === 200) {
             resolve(JSON.parse(xhr.responseText))
           } else {
+            // resolve(JSON.parse(xhr.responseText))
             reject("server res err");
           }
         }
