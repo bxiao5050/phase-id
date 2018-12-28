@@ -56,7 +56,7 @@ const kdxs_default = {
     fb: '2245057485737002',
   },
   pic: {
-    bg_login: 'http://cdn-pixel.pkmonquest.com/resource/assets/loading/xuanfuBG_1d8feb01.jpg'
+    bg_login: '//cdn-pixel.pkmonquest.com/resource/assets/loading/xuanfuBG_1d8feb01.jpg'
   },
   server: {
     test: '//desdk-cdn.pkmonquest.com/pocketgames/client', // '//sdk-test.changic.net.cn/pocketgames/client',
@@ -64,13 +64,13 @@ const kdxs_default = {
   },
   page: {
     game: {
-      test: 'http://xy.xulonggame.com/xy.html',//'http://xytest.xulonggame.com/royalgame.html',
-      formal: 'http://xy.xulonggame.com/xy.html',
+      test: '//xy.xulonggame.com/xy.html', // 'http://xytest.xulonggame.com/royalgame.html',
+      formal: '//xy.xulonggame.com/xy.html',
     },
-    index: 'http://pixel.pkmonquest.com/h5-play/index.html',
+    index: '//pixel.pkmonquest.com/h5-play/index.html',
     facebook: {
-      messenger: 'https://www.facebook.com/messages/t/PokemonQuestH5',
-      index: 'https://www.facebook.com/PokemonQuestH5'
+      messenger: '//www.facebook.com/messages/t/PokemonQuestH5',
+      index: '//www.facebook.com/PokemonQuestH5'
     }
   }
 }

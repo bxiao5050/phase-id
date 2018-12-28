@@ -30,11 +30,11 @@ export default class Type0 extends React.Component<paymentProps, {}, any>  {
   //   mycardtip: 'none'
   // }
 
-  // componentDidMount() {
-  //   if (Utils.getUrlParam('pay')) {
-  //     RG.jssdk.App.hidePayment()
-  //   }
-  // }
+  componentDidMount() {
+    if (Utils.getUrlParam('pay')) {
+      RG.jssdk.App.hidePayment()
+    }
+  }
 
   render() {
     var source = this.props.Payment.state.paymentDatas[0]
