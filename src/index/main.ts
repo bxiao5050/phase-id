@@ -86,10 +86,10 @@ window.$rg_index = function (options: {
   window[ADV_CHANNEL] = options.advChannel
   window[SDK_VERSION] = options.sdkVersion
 
-  U.add(SDK_VERSION, window[SDK_VERSION])
-  U.add(APP_ID, window[APP_ID])
-  U.add(ADV_CHANNEL, window[ADV_CHANNEL])
-  U.add(T, options.hash)
+  !U.get(SDK_VERSION) && U.add(SDK_VERSION, window[SDK_VERSION])
+  !U.get(APP_ID) && U.add(APP_ID, window[APP_ID])
+  !U.get(ADV_CHANNEL) && U.add(ADV_CHANNEL, window[ADV_CHANNEL])
+  !U.get(T) && U.add(T, options.hash)
 
   sdk.src = `${options.origin}/jssdk/${options.sdkVersion}/sdk.js?${U.get(T)}`
   sdk.async = !0

@@ -24,8 +24,6 @@ export default class Main {
     try {
       await this.init()
       location.host === Mark.instance.game_host && RG.Mark(DOT.SDK_LOADED);
-
-      console.log(location.host !== Mark.instance.index_host, (RG.jssdk as any).init)
       location.host !== Mark.instance.index_host && (RG.jssdk as any).init()
     } catch (e) {
       console.error('error_log:', e)
