@@ -8,6 +8,7 @@ export default class Web extends Base {
 
   constructor(config, fb_sdk_loaded) {
     super()
+
     this.config = config
     this.fb_sdk_loaded = fb_sdk_loaded
 
