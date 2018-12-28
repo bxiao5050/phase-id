@@ -59,6 +59,8 @@ const kdxs_default = {
     bg_login: 'https://cdn-pixel.pkmonquest.com/resource/assets/loading/xuanfuBG_1d8feb01.jpg'
   },
   server: {
+    test: 'https://sdk-test.changic.net.cn/pocketgames/client',
+    formal: 'https://desdk-cdn.pkmonquest.com/pocketgames/client',
   },
   page: {
     game: {

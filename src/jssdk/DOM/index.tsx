@@ -9,11 +9,9 @@ root.style.zIndex = "999999999"
 document.body.appendChild(root)
 ReactDOM.render(<App />, root);
 
-const Loader = 1
 const Ins = App.instance
 
 export {
-  Loader,
   Ins
 }
 

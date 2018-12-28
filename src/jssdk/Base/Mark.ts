@@ -3,10 +3,7 @@ import Utils from "Base/Utils";
 export default class Mark {
 
   index_host: string
-  login_host: string
   game_host: string
-
-
   is_init: boolean = false
 
   static _ins: Mark
@@ -18,11 +15,9 @@ export default class Mark {
 
     let reg_exp = new RegExp(/[a-zA-Z0-9][-a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-a-zA-Z0-9]{0,62})+/)
     let index_page = config.page.index
-    let login_page = SERVER
     let game_page = Utils.getUrlParam('debugger') || window['debugger'] ? config.page.game.test : config.page.game.formal
 
     this.index_host = index_page.match(reg_exp)[0]
-    this.login_host = login_page.match(reg_exp)[0]
     this.game_host = game_page.match(reg_exp)[0]
 
     if (location.host === this.index_host) this.is_init = true
@@ -30,10 +25,8 @@ export default class Mark {
   }
 
   private init(config: JSSDK.Config) {
-
     if (config.mark_id.fb) {
       if (this.is_init) {
-
         (function (f, b, e, v, n, t, s) {
           if (f.fbq) return; n = f.fbq = function () {
             n.callMethod ?
@@ -50,10 +43,7 @@ export default class Mark {
           'https://connect.facebook.net/en_US/fbevents.js');
         window.fbq('init', config.mark_id.fb);
         window.fbq('track', 'PageView');
-
       }
-
-
       this.Mark = (function (Mark, facebook) {
         return function (name: string, param: object) {
           Mark(name, param)
@@ -62,7 +52,6 @@ export default class Mark {
       })(this.Mark, this.facebook)
     }
     if (config.mark_id.ga) {
-
       if (this.is_init) {
         (function (f, b, e, v, n, t, s) {
           t = b.createElement(e); t.async = !0;
@@ -74,7 +63,6 @@ export default class Mark {
         this.gtag('js', new Date());
         this.gtag('config', config.mark_id.ga)
       }
-
       this.Mark = (function (Mark, google) {
         return function (name: string, param: object) {
           Mark(name, param)
@@ -82,7 +70,6 @@ export default class Mark {
         }
       })(this.Mark, this.google)
     }
-
   }
 
   private gtag: any = function () {
@@ -117,8 +104,6 @@ export default class Mark {
     }
   }
 
-  Mark: (name: string, param?: object) => void = (...args) => {
-    console.log(this.is_init, args)
-  }
+  Mark: (name: string, param?: object) => void = () => { }
 
 }

@@ -29,19 +29,8 @@ export default class Base {
   }
 
   Redirect() {
-    let urlParam = Utils.getUrlParam()
-    let urlSearch = ''
-    let $i = 0
-    for (let name in urlParam) {
-      if (name === 'user') {
-        continue
-      } else {
-        urlSearch += (($i ? '&' : '?') + name + '=' + urlParam[name])
-        $i++
-      }
-    }
-    let href = SERVER + '/jssdk/' + Utils.getUrlParam('sdkVersion') + '/login.html' + urlSearch
-    location.href = href
+    window.name = 'redirect'
+    location.reload()
   }
 
   CurUserInfo = (): JSSDK.CurUserInfo => {

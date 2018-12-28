@@ -101,8 +101,6 @@ export default class Main {
     }
   }
 
-  $i = 0
-
   /**
    * 获取SDk的类型
    */

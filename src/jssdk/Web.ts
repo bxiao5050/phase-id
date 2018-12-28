@@ -43,39 +43,30 @@ export default class Web extends Base {
     }))
     let [{ Ins }] = await Promise.all([import('DOM/index'), RG.jssdk.Account.initPromise])
     window.RG.jssdk.App = Ins
-    let user = Utils.getUrlParam('user')
+    var user = RG.jssdk.Account.user
+    var autoLogin = false
     if (user) {
-      var { userType, accountType } = RG.CurUserInfo()
-      var isGuest = Utils.getAccountType(userType, accountType) === 'guest' ? true : false;
-      window.RG.jssdk.App.hideLogin()
-      window.RG.jssdk.App.showHover(isGuest)
-      if (window.rgAsyncInit) {
-        this.rgAsyncInit()
-      } else {
-        window.onload = () => {
-          this.rgAsyncInit()
-        }
-      }
+      autoLogin = true
     } else {
-      var userInfo = RG.jssdk.Account.user
-      var autoLogin = false
-      if (userInfo) {
+      var usersInfo = RG.jssdk.Account.users
+      var usersIdArr = Object.keys(usersInfo)
+      if (usersIdArr.length) {
+        var id = usersIdArr[0]
+        user = usersInfo[id]
         autoLogin = true
-      } else {
-        var usersInfo = RG.jssdk.Account.users
-        var usersIdArr = Object.keys(usersInfo)
-        if (usersIdArr.length) {
-          var id = usersIdArr[0]
-          userInfo = usersInfo[id]
-          autoLogin = true
-        }
       }
-      var LoginModule = window.RG.jssdk.App.showLogin()
+    }
+    var LoginModule = window.RG.jssdk.App.showLogin()
+    if (window.name === 'redirect') {
+      window.name = ''
+    } else {
       if (autoLogin) {
-        await RG.jssdk.Login(userInfo)
+        await RG.jssdk.Login(user)
         LoginModule.loginComplete()
       }
     }
+
+
   }
 
   ExposeApis() {
@@ -110,7 +101,6 @@ export default class Web extends Base {
       link = `${SERVER}/jssdk/${Utils.getUrlParam('sdkVersion')}/add-shortcut.html?lang=en&system=ios&appId=${RG.jssdk.config.appId}&link=${RG.jssdk.config.page.index}`
     } else if (/(Android)/i.test(navigator.userAgent)) {
       link = `${SERVER}/jssdk/${Utils.getUrlParam('sdkVersion')}/add-shortcut.html?lang=en&system=android&appId=${RG.jssdk.config.appId}&link=${RG.jssdk.config.page.index}`
-
     } else {
       window.name = 'install'
       link = RG.jssdk.config.page.index

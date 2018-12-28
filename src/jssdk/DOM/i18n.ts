@@ -114,7 +114,7 @@ var translation = {
     Purchase: 'buy',
     tuichu: 'Are you sure you want to quit the game?',
     winopen: 'Please jump to the stored value page',
-    jump: 'jump',
+    jump: 'Jump',
 
     loadException: 'Load exception',
     loading: 'Loading',

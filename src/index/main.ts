@@ -1,58 +1,18 @@
-class UrlParam {
-  urlParamKeyArr: string[] = []
-  urlParamMap: any = {}
-  constructor() {
-    let interrogationIndex = location.href.indexOf("?") + 1
-    let str = interrogationIndex === 0 ? "" : location.href.slice(interrogationIndex)
-    if (str) {
-      let arr = str.split(/&|%26/)
-      arr.forEach((item) => {
-        let arr = item.split(/=|%3D/)
-        let key = arr[0]
-        let val = arr[1]
-        this.urlParamMap[key] = val
-        this.urlParamKeyArr.push(key)
-      })
-    }
-  }
-  add(key: string, val: string) {
-    this.urlParamMap[key] = val
-    this.urlParamKeyArr.push(key)
-  }
-  del(key: string) {
-    let index = this.urlParamKeyArr.indexOf(key)
-    if (index !== -1) {
-      delete this.urlParamMap[key]
-      this.urlParamKeyArr.splice(index, 1)
-    }
-  }
-  get(name: string) {
-    return this.urlParamMap[name]
-  }
-  keys() {
-    return this.urlParamKeyArr
-  }
-}
-
 window.$rg_index = function (options: {
-  appId: string
-  advChannel: string
-  sdkVersion: string
-  login: HTMLIFrameElement
+  iframe: HTMLIFrameElement
   origin: string
-  hash: string
+  U: any
 }) {
   /**
    * init
    */
-  const U = new UrlParam()
+  const { iframe, U, origin } = options
+  const DEBUGGER = 'debugger'
+  const SDK_VERSION = 'sdkVersion'
+  const SDK_HASH = 't'
   const APP_ID = 'appId'
   const ADV_CHANNEL = 'advChannel'
-  const SDK_VERSION = 'sdkVersion'
-  const SHORTCUT = 'shortcut'
-  const T = 't'
-  const sdk = document.createElement('script')
-  const handleMessage = function (event: MessageEvent, iframe) {
+  const handleMessage = function (event: MessageEvent, iframe: HTMLIFrameElement) {
     if (event.data.action === 'get') {
       iframe.contentWindow.postMessage({
         user: localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : '',
@@ -69,44 +29,26 @@ window.$rg_index = function (options: {
   }
   const onMessage = function (event: MessageEvent) {
     console.log('index receive msg', event.origin, event.data)
-    if (event.origin === 'https://' + window.$rg_main.Mark.login_host) {
-      handleMessage(event, options.login)
-    }
-    else if (event.origin === 'https://' + window.$rg_main.Mark.game_host) {
-      handleMessage(event, options.login)
+    if (event.origin === 'https://' + window.$rg_main.Mark.game_host) {
+      handleMessage(event, iframe)
     }
   }
-
+  const sdk = document.createElement('script')
+  window[APP_ID] = U.get(APP_ID)
+  window[ADV_CHANNEL] = U.get(ADV_CHANNEL)
   window.addEventListener("message", onMessage, false);
-
-  window[APP_ID] = options.appId
-  window[ADV_CHANNEL] = options.advChannel
-  window[SDK_VERSION] = options.sdkVersion
-
-  !U.get(SDK_VERSION) && U.add(SDK_VERSION, window[SDK_VERSION])
-  !U.get(APP_ID) && U.add(APP_ID, window[APP_ID])
-  !U.get(ADV_CHANNEL) && U.add(ADV_CHANNEL, window[ADV_CHANNEL])
-  !U.get(T) && U.add(T, options.hash)
-
-  sdk.src = `${options.origin}/jssdk/${options.sdkVersion}/sdk.js?${U.get(T)}`
+  sdk.src = `${origin}/jssdk/${U.get(SDK_VERSION)}/sdk.js?${U.get(SDK_HASH)}`
   sdk.async = !0
   document.head.append(sdk)
-
-  // const src = `${options.origin}/jssdk/${options.sdkVersion}/login.html?${(function () {
-  //   return U.keys().map(key => {
-  //     return `${key}=${U.get(key)}`
-  //   }).join('&')
-  // })()}`
-
-  const src = ``
-
-  options.login.src = src
-
-  const link = `${options.origin}/platform/shortcut.jsp?link=${encodeURIComponent(location.origin + location.pathname)}?shortcut=1&fileName=Pokemon-Quest`;
-
-  return {
-    isFromShortcut: U.get(SHORTCUT),
-    link
+  sdk.onload = async function () {
+    await window.$rg_main.get_game_config
+    const config: JSSDK.Config = window.$rg_main.config
+    const src = `${U.get(DEBUGGER) ? config.page.game.test : config.page.game.formal}?${(function () {
+      return U.keys().map(key => {
+        return `${key}=${U.get(key)}`
+      }).join('&')
+    })()}`
+    iframe.src = src
   }
 
 }
