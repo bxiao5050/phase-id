@@ -96,7 +96,7 @@ export default class Mark {
         name,
         param
       }
-    }, 'http://' + this.index_host)
+    }, 'https://' + this.index_host)
   }
 
   private facebook = (name: string) => {

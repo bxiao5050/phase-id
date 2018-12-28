@@ -64,7 +64,7 @@ const kdxs_default = {
   },
   page: {
     game: {
-      test: 'https://xy.xulonggame.com/xy.html', // 'http://xytest.xulonggame.com/royalgame.html',
+      test: 'https://pixel.pkmonquest.com/pay-test/index.html', // 'http://xytest.xulonggame.com/royalgame.html',
       formal: 'https://xy.xulonggame.com/xy.html',
     },
     index: 'https://pixel.pkmonquest.com/h5-play-test/index.html',
