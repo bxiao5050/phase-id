@@ -3,6 +3,7 @@ import './Type0.scss'
 import * as React from 'react'
 import Payment from 'DOM/components/payment'
 import { History } from 'history'
+import Utils from 'Src/Base/Utils';
 
 type paymentProps = {
   Payment: Payment
@@ -18,12 +19,10 @@ export default class Type0 extends React.Component<paymentProps, {}, any>  {
   //       this.state.mycardtip = 'flex'
   //       this.setState(this.state)
   //     })
-
   //     var observer = new IntersectionObserver(function (entries, observer) {
   //       console.log(entries, observer)
   //     });
   //     observer.observe(ifram)
-
   //   }
   // }
 
@@ -31,10 +30,15 @@ export default class Type0 extends React.Component<paymentProps, {}, any>  {
   //   mycardtip: 'none'
   // }
 
+  // componentDidMount() {
+  //   if (Utils.getUrlParam('pay')) {
+  //     RG.jssdk.App.hidePayment()
+  //   }
+  // }
+
   render() {
     var source = this.props.Payment.state.paymentDatas[0]
     var url = source.url
-
     return <div className="payment-nav Type0">
       <iframe ref="iframe" className="web" src={url}></iframe>
       {/* {this.state.mycardtip !== 'none' && <a className="my-card-tip" href={url} target="_blank"
@@ -52,7 +56,6 @@ export default class Type0 extends React.Component<paymentProps, {}, any>  {
       >
         如果支付頁面出錯，請點擊此處
       </a>} */}
-
     </div>
   }
 
