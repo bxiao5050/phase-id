@@ -26,7 +26,7 @@ export default class Type4 extends React.Component<paymentProps, {}, any>  {
               onClick={() => {
                 RG.jssdk.Ordering(node).then((OrderRes: OrderRes) => {
                   if (OrderRes.code === 200) {
-                    this.props.Payment.state.paymentDatas[0] = OrderRes.data.returnInfo
+                    this.props.Payment.state.paymentDatas[0] = OrderRes.data
                     this.props.Payment.props.history.push(createLocation('/type0'))
                   } else {
                     console.error(OrderRes.error_msg)

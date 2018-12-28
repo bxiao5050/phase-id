@@ -30,7 +30,7 @@ export default class Payment extends React.Component<PaymentProps, {}, any> {
 
   orderCompleted(orderRes, payments) {
     if (orderRes.code === 200) {
-      this.state.paymentDatas[0] = orderRes.data.returnInfo
+      this.state.paymentDatas[0] = orderRes.data
       var nn = String.prototype.toLocaleLowerCase.call(payments.name.replace(/\s/g, ''))
       if (nn === 'paypal' || nn === 'mycard') {
         this.state.url = orderRes.data.returnInfo.url
