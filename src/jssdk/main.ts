@@ -96,7 +96,7 @@ export default class Main {
   })
 
   onMessage(event: MessageEvent) {
-    if (event.origin === ('http://' + Mark.instance.index_host)) {
+    if (event.origin === ('https://' + window.$rg_main.Mark.index_host)) {
       RG.jssdk.Account.init(event.data)
     }
   }
@@ -114,7 +114,7 @@ export default class Main {
     this.get_sdk_instance_promise.then(() => {
       if (location.host !== this.Mark.index_host) {
         window.addEventListener("message", this.onMessage, false);
-        window.parent.postMessage({ action: 'get' }, 'http://' + Mark.instance.index_host)
+        window.parent.postMessage({ action: 'get' }, 'https://' + window.$rg_main.Mark.index_host)
       }
     })
 

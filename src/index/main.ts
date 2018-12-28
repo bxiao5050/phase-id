@@ -72,10 +72,10 @@ window.$rg_index = function (options: {
   }
   const onMessage = function (event: MessageEvent) {
     console.log('index receive msg', event.origin, event.data)
-    if (event.origin.indexOf(window.$rg_main.Mark.login_host) > -1) {
+    if (event.origin === 'https://' + window.$rg_main.Mark.login_host) {
       handleMessage(event, options.login)
     }
-    if (event.origin.indexOf(window.$rg_main.Mark.game_host) > -1) {
+    else if (event.origin === 'https://' + window.$rg_main.Mark.game_host) {
       handleMessage(event, options.login)
     }
   }
