@@ -28,6 +28,7 @@ declare namespace JSSDK {
     scopeId?: string
     fb_app_id: string
     FbPageId: string
+    pic: any
     server: {
       test: string
       formal: string
@@ -110,7 +111,15 @@ declare interface Window {
   RgPolyfilled: Function
   debugger: boolean
   $rg_index: Function
-  $rg_main: any
+  $rg_main: {
+    config: JSSDK.Config
+    get_game_config: Promise<any>
+    Mark: {
+      index_url: HTMLAnchorElement
+      game_url: HTMLAnchorElement
+      Mark: Function
+    }
+  }
 }
 
 declare var FBVersion: string

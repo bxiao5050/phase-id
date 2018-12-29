@@ -29,7 +29,7 @@ window.$rg_index = function (options: {
   }
   const onMessage = function (event: MessageEvent) {
     console.log('index receive msg', event.origin, event.data)
-    if (event.origin === 'https://' + window.$rg_main.Mark.game_host) {
+    if (event.origin === window.$rg_main.Mark.game_url.origin) {
       handleMessage(event, iframe)
     }
   }

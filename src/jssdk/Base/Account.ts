@@ -45,7 +45,7 @@ export default class Account {
         user: this._user,
         users: this._users
       }
-    }, 'https://' + window.$rg_main.Mark.index_host)
+    }, window.$rg_main.Mark.index_url.origin)
   }
 
   set user(user) {

@@ -64,5 +64,5 @@ window.rgAsyncInit = function () {
   urlSearch += '&user=' + user;
   let href = (isDebugger ? RG.jssdk.config.page.game.test : RG.jssdk.config.page.game
     .formal) + urlSearch;
-  window.parent.postMessage({ action: 'location', data: href }, 'https://' + window.$rg_main.Mark.index_host)
+  window.parent.postMessage({ action: 'location', data: href }, window.$rg_main.Mark.index_url.origin)
 }

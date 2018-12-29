@@ -2,8 +2,8 @@ import Utils from "Base/Utils";
 
 export default class Mark {
 
-  index_host: string
-  game_host: string
+  index_url: HTMLAnchorElement
+  game_url: HTMLAnchorElement
   is_init: boolean = false
 
   static _ins: Mark
@@ -13,14 +13,12 @@ export default class Mark {
   constructor(config?: JSSDK.Config) {
     Mark._ins = this
 
-    let reg_exp = new RegExp(/[a-zA-Z0-9][-a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-a-zA-Z0-9]{0,62})+/)
-    let index_page = config.page.index
-    let game_page = Utils.getUrlParam('debugger') || window['debugger'] ? config.page.game.test : config.page.game.formal
+    this.index_url = document.createElement('a')
+    this.index_url.href = config.page.index
+    this.game_url = document.createElement('a')
+    this.game_url.href = Utils.getUrlParam('debugger') || window['debugger'] ? config.page.game.test : config.page.game.formal;
 
-    this.index_host = index_page.match(reg_exp)[0]
-    this.game_host = game_page.match(reg_exp)[0]
-
-    if (location.host === this.index_host) this.is_init = true
+    if (location.host === this.index_url.host && location.pathname === this.index_url.pathname) this.is_init = true
     this.init(config)
   }
 
@@ -83,7 +81,7 @@ export default class Mark {
         name,
         param
       }
-    }, 'https://' + this.index_host)
+    }, window.$rg_main.Mark.index_url.origin)
   }
 
   private facebook = (name: string) => {

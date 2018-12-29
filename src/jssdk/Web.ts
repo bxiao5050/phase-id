@@ -33,7 +33,7 @@ export default class Web extends Base {
 
   rgAsyncInit() {
     window.rgAsyncInit()
-    window.parent.postMessage({ action: 'rgAsyncInit' }, 'https://' + window.$rg_main.Mark.index_host)
+    window.parent.postMessage({ action: 'rgAsyncInit' }, window.$rg_main.Mark.index_url.origin)
   }
 
   async init() {

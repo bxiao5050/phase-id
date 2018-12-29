@@ -63,11 +63,13 @@ const kdxs_default = {
     formal: 'https://desdk-cdn.pkmonquest.com/pocketgames/client',
   },
   page: {
+    index: 'https://pixel.pkmonquest.com/h5-plays/index.html',
+    
     game: {
-      test: 'https://www.pocketgamesol.com/pay-test/index.html', // 'http://xytest.xulonggame.com/royalgame.html',
-      formal: 'https://www.pocketgamesol.com/pay-test/index.html', // 'https://xy.xulonggame.com/xy.html',
+      test: 'https://xytest.xulonggame.com/royalgame.html',
+      formal: 'https://xy.xulonggame.com/xy.html',
     },
-    index: 'https://pixel.pkmonquest.com/h5-play-test/index.html',
+   
     facebook: {
       messenger: 'https://www.facebook.com/messages/t/PokemonQuestH5',
       index: 'https://www.facebook.com/PokemonQuestH5'
