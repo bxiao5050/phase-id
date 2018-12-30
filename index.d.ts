@@ -28,7 +28,6 @@ declare namespace JSSDK {
     scopeId?: string
     fb_app_id: string
     FbPageId: string
-    pic: any
     server: {
       test: string
       formal: string

@@ -71,7 +71,6 @@ var webpackConfig = {
 	entry: {
 		sdk: path.join(__dirname, 'src/jssdk/main.ts'),
 		shortcut: path.join(__dirname, 'src/add-shortcut/main.ts'),
-		login: path.join(__dirname, 'src/login/main.ts'),
 		index: path.join(__dirname, 'src/index/main.ts'),
 	},
 
@@ -132,20 +131,6 @@ var webpackConfig = {
 	},
 
 	plugins: [
-		new HtmlWebpackPlugin({
-			filename: isDev ? 'login.html' : sdkVersion + '/' + 'login.html',
-			template: './src/login.html',
-			chunks: ['login'],
-			inject: 'body',
-			minify: isDev ? false : {
-				collapseWhitespace: true,
-				removeComments: true,
-				removeRedundantAttributes: true,
-				removeScriptTypeAttributes: true,
-				removeStyleLinkTypeAttributes: true,
-				useShortDoctype: true
-			}
-		}),
 		new HtmlWebpackPlugin({
 			filename: isDev ? 'add-shortcut.html' : sdkVersion + '/' + 'add-shortcut.html',
 			template: './src/add-shortcut.html',

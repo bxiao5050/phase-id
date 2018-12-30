@@ -55,21 +55,16 @@ const kdxs_default = {
     ga: 'UA-102180151-44',
     fb: '2245057485737002',
   },
-  pic: {
-    bg_login: 'https://cdn-pixel.pkmonquest.com/resource/assets/loading/xuanfuBG_1d8feb01.jpg'
-  },
   server: {
     test: 'https://sdk-test.changic.net.cn/pocketgames/client',
     formal: 'https://desdk-cdn.pkmonquest.com/pocketgames/client',
   },
   page: {
     index: 'https://pixel.pkmonquest.com/h5-plays/index.html',
-    
     game: {
-      test: 'https://xytest.xulonggame.com/royalgame.html',
+      test: 'https://pixel.pkmonquest.com/h5-test/index.html',
       formal: 'https://xy.xulonggame.com/xy.html',
     },
-   
     facebook: {
       messenger: 'https://www.facebook.com/messages/t/PokemonQuestH5',
       index: 'https://www.facebook.com/PokemonQuestH5'
