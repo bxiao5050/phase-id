@@ -4,7 +4,7 @@ export default class Mark {
 
   index_url: HTMLAnchorElement
   game_url: HTMLAnchorElement
-  is_init: boolean = false
+  isIndex: boolean = false
 
   static _ins: Mark
   static get instance(): Mark {
@@ -18,13 +18,13 @@ export default class Mark {
     this.game_url = document.createElement('a')
     this.game_url.href = Utils.getUrlParam('debugger') || window['debugger'] ? config.page.game.test : config.page.game.formal;
 
-    if (location.host === this.index_url.host && location.pathname === this.index_url.pathname) this.is_init = true
+    if (location.host === this.index_url.host && location.pathname === this.index_url.pathname) this.isIndex = true
     this.init(config)
   }
 
   private init(config: JSSDK.Config) {
     if (config.mark_id.fb) {
-      if (this.is_init) {
+      if (this.isIndex) {
         (function (f, b, e, v, n, t, s) {
           if (f.fbq) return; n = f.fbq = function () {
             n.callMethod ?
@@ -50,7 +50,7 @@ export default class Mark {
       })(this.Mark, this.facebook)
     }
     if (config.mark_id.ga) {
-      if (this.is_init) {
+      if (this.isIndex) {
         (function (f, b, e, v, n, t, s) {
           t = b.createElement(e); t.async = !0;
           t.src = v; t.async = true; s = b.getElementsByTagName(e)[0];
@@ -85,23 +85,21 @@ export default class Mark {
   }
 
   private facebook = (name: string) => {
-    if (this.is_init) {
+    if (this.isIndex) {
       window.fbq('track', name)
       console.info(`"${name}" has marked - facebook`)
-    } else {
-      this.asyncData(name)
     }
   }
 
   private google = (name: string, param: any) => {
-    if (this.is_init) {
+    if (this.isIndex) {
       param ? this.gtag('event', name, param) : this.gtag('event', name)
       console.info(`"${name}" has marked - google`, param)
-    } else {
-      this.asyncData(name, param)
     }
   }
 
-  Mark: (name: string, param?: object) => void = () => { }
+  Mark: (name: string, param?: object) => void = (name, param) => {
+    !this.isIndex && this.asyncData(name, param)
+  }
 
 }
