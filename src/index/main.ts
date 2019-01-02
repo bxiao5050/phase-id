@@ -14,10 +14,11 @@ window.$rg_index = function (options: {
   const ADV_CHANNEL = 'advChannel'
   const handleMessage = function (event: MessageEvent, iframe: HTMLIFrameElement) {
     if (event.data.action === 'get') {
-      iframe.contentWindow.postMessage({
+      const data = {
         user: localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : '',
         users: localStorage.getItem('users') ? JSON.parse(localStorage.getItem('users')) : {},
-      }, event.origin);
+      }
+      iframe.contentWindow.postMessage(data, event.origin);
     }
     else if (event.data.action === 'set') {
       localStorage.setItem('user', JSON.stringify(event.data.data.user))

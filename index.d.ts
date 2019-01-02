@@ -41,7 +41,10 @@ declare namespace JSSDK {
     i18n: any
     type: Type
     page: {
-      index: string
+      index: {
+        test: string
+        formal: string
+      }
       game: {
         test: string
         formal: string

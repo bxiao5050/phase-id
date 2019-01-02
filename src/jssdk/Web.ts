@@ -43,20 +43,22 @@ export default class Web extends Base {
     }))
     let [{ Ins }] = await Promise.all([import('DOM/index'), RG.jssdk.Account.initPromise])
     window.RG.jssdk.App = Ins
-    var user = RG.jssdk.Account.user
-    var autoLogin = false
+    let user = RG.jssdk.Account.user
+    let autoLogin = false
     if (user) {
       autoLogin = true
     } else {
-      var usersInfo = RG.jssdk.Account.users
-      var usersIdArr = Object.keys(usersInfo)
-      if (usersIdArr.length) {
-        var id = usersIdArr[0]
-        user = usersInfo[id]
-        autoLogin = true
+      if (RG.jssdk.Account.users) {
+        let usersIdArr = Object.keys(RG.jssdk.Account.users)
+        if (usersIdArr.length) {
+          user = RG.jssdk.Account.users[
+            usersIdArr[0]
+          ]
+          autoLogin = true
+        }
       }
     }
-    var LoginModule = window.RG.jssdk.App.showLogin()
+    let LoginModule = window.RG.jssdk.App.showLogin()
     if (window.name === 'redirect') {
       window.name = ''
     } else {
@@ -70,7 +72,7 @@ export default class Web extends Base {
   }
 
   ExposeApis() {
-    var exposeApis = [
+    let exposeApis = [
       "server",
       "version",
       "Redirect",

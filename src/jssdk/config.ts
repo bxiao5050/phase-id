@@ -60,9 +60,12 @@ const kdxs_default = {
     formal: 'https://desdk-cdn.pkmonquest.com/pocketgames/client',
   },
   page: {
-    index: 'https://pixel.pkmonquest.com/h5-plays/index.html',
+    index:{
+      test: 'https://pixel.pkmonquest.com/h5-test-3/index.html',
+      formal: 'https://pixel.pkmonquest.com/h5-plays/index.html',
+    },
     game: {
-      test: 'https://pixel.pkmonquest.com/h5-test-2/index.html',
+      test: 'https://xy.xulonggame.com/xy.html',
       formal: 'https://xy.xulonggame.com/xy.html',
     },
     facebook: {
