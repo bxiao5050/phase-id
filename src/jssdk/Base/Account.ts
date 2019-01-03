@@ -1,8 +1,6 @@
 import Utils from "Base/Utils";
 import Http from "Src/Base/Http";
-// import Cookies from 'js-cookie'
 import * as Const from "Src/Base/Constant"
-import Mark from "./Mark";
 
 export default class Account {
   static _ins: Account

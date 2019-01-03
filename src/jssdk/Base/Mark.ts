@@ -13,10 +13,17 @@ export default class Mark {
   constructor(config?: JSSDK.Config) {
     Mark._ins = this
 
+
     this.index_url = document.createElement('a')
-    this.index_url.href = config.page.index
     this.game_url = document.createElement('a')
-    this.game_url.href = Utils.getUrlParam('debugger') || window['debugger'] ? config.page.game.test : config.page.game.formal;
+    
+    if (Utils.getUrlParam('debugger') || window['debugger']) {
+      this.index_url.href = config.page.index.test
+      this.game_url.href = config.page.game.test
+    } else {
+      this.index_url.href = config.page.index.formal
+      this.game_url.href = config.page.game.formal
+    }
 
     if (location.host === this.index_url.host && location.pathname === this.index_url.pathname) this.isIndex = true
     this.init(config)

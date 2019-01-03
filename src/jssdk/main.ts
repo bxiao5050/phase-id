@@ -110,9 +110,15 @@ export default class Main {
       get_sdk_instance_resolve = resolve
     })
     this.get_sdk_instance_promise.then(() => {
-      if (location.host !== this.Mark.index_url.host || location.pathname !== this.Mark.index_url.pathname) {
+      if (!Mark.instance.isIndex) {
         window.addEventListener("message", this.onMessage, false);
         window.parent.postMessage({ action: 'get' }, window.$rg_main.Mark.index_url.origin)
+      } else {
+        const data = {
+          user: localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : '',
+          users: localStorage.getItem('users') ? JSON.parse(localStorage.getItem('users')) : {},
+        }
+        RG.jssdk.Account.init(data)
       }
     })
 
