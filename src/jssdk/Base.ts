@@ -11,7 +11,7 @@ export default class Base {
   Account = Account.instance
 
   Mark(markName: string, markParams: any) {
-    Mark.instance.Mark(markName)
+    Mark.instance.Mark(markName, markParams)
   }
 
   Login(loginParam: LoginParam): Promise<LoginRes> {
