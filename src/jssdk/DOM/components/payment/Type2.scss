@@ -1,0 +1,121 @@
+.Type2.payment-nav {
+  .card-head {
+    height: 1 * 2.67 + rem;
+    margin: 1 * 2.67 + rem auto 0;
+    display: block;
+  }
+
+  .card-inputs {
+    height: 0.8 * 2.67 + rem;
+    width: 90%;
+    font-size: 0.17 * 2.67 + rem;
+    line-height: 0.8 * 2.67 + rem;
+    text-align: left;
+    margin: 0.3 * 2.67 + rem auto 0;
+    border-radius: 0.06 * 2.67 + rem;
+    border: solid 1px #b3b3b3;
+  }
+
+  .card-inputs span {
+    width: 0.57 * 2.67 + rem;
+    color: #727272;
+    padding: 0 0.11 * 2.67 + rem 0 0.23 * 2.67 + rem;
+  }
+
+  .card-inputs input {
+    color: #727272;
+    border: none;
+    outline: none;
+    width: 68%;
+  }
+
+  .btn-pay {
+    width: 90%;
+    height: 0.72 * 2.67 + rem;
+    line-height: 0.72 * 2.67 + rem;
+    display: block;
+    color: white;
+    font-size: 0.36 * 2.67 + rem;
+    text-decoration: none;
+    margin: 0.3 * 2.67 + rem auto 0;
+    border-radius: 0.1 * 2.67 + rem;
+    background: #29acf0;
+    margin-bottom: 2.4rem;
+  }
+
+  .exchange {
+    display: block;
+    position: absolute;
+    right: 0.8rem;
+    cursor: pointer;
+  }
+  .exchange-wrap {
+    position: absolute;
+    width: 97%;
+    height: 13.4rem;
+    top: 21%;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    background: #000;
+    opacity: 0.6;
+    z-index: 1000;
+  }
+  .exchange-rate-list {
+    box-sizing: border-box;
+    width: 80%;
+    height: 12rem;
+    position: absolute;
+    left: 0;
+    right:0;
+    border-radius: 0.4rem;
+    margin: 0.8rem auto 0;
+    z-index: 1001;
+    background-color: #fff;
+    h2.exchange-name {
+      margin: 0 0.5rem;
+      height: 1 * 2.67 + rem;
+      font-size: 0.98rem;
+      border-bottom: 1px solid rgb(191, 191, 191);
+      color: #33a4e6;
+      line-height: 2.67rem;
+      background-color: #fff;
+      .close {
+        width: 1.1rem;
+        height: 1.1rem;
+        position: absolute;
+        top: 0.4rem;
+        right: 0.4rem;
+        background: url(../../assets/ui_close.png) center no-repeat;
+        background-size: contain;
+      }
+    }
+    .exchange-list {
+      box-sizing: border-box;
+      height: 9.2rem;
+      margin: 0.1rem 0 0 0;
+      padding: 0;
+      overflow-x: hidden;
+      overflow-y: scroll;
+      padding: 0 0.5rem;
+      li {
+        border-bottom: 1px solid rgb(191, 191, 191);
+        font-size: 0.6rem;
+        height: 1.8rem;
+        margin-top: 0.1rem;
+        line-height: 1.8rem;
+        .item-price,
+        .item-goods {
+          width: 48%;
+          display: inline-block;
+        }
+        i {
+          width: 4%;
+        }
+        .item-goods {
+          width: 48%;
+        }
+      }
+    }
+  }
+}

@@ -82,7 +82,7 @@ export default class Mark {
   }
 
   asyncData(name, param?) {
-    window.parent.postMessage({
+    window.$postMessage({
       action: 'mark',
       data: {
         name,
