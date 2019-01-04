@@ -106,7 +106,6 @@ export default class Mark {
   }
 
   Mark: (name: string, param?: object) => void = (name, param) => {
-    console.log('Mark')
     !this.isIndex && this.asyncData(name, param)
   }
 
