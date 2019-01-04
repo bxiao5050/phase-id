@@ -46,6 +46,7 @@
   .exchange {
     display: block;
     position: absolute;
+    top: 0;
     right: 0.8rem;
     cursor: pointer;
   }
@@ -108,12 +109,6 @@
         .item-goods {
           width: 48%;
           display: inline-block;
-        }
-        i {
-          width: 4%;
-        }
-        .item-goods {
-          width: 48%;
         }
       }
     }

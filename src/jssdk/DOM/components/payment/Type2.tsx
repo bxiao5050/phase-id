@@ -103,8 +103,7 @@ export default class Type2 extends React.Component<paymentProps, {}, any> {
         {isShowExchangeRate ? (
           <div className="exchange-rate-list">
             <h2 className="exchange-name">
-              {" "}
-              Exchange rate{" "}
+              Exchange rate
               <a
                 className="close"
                 onClick={() => {
