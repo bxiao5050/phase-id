@@ -61,7 +61,7 @@ const kdxs_default = {
   },
   page: {
     index:{
-      test: 'https://pixel.pkmonquest.com/h5-test-3/index.html',
+      test: 'https://pixel.pkmonquest.com/h5-plays/index.html',
       formal: 'https://pixel.pkmonquest.com/h5-plays/index.html',
     },
     game: {

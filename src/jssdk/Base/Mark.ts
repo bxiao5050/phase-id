@@ -16,7 +16,7 @@ export default class Mark {
 
     this.index_url = document.createElement('a')
     this.game_url = document.createElement('a')
-    
+
     if (Utils.getUrlParam('debugger') || window['debugger']) {
       this.index_url.href = config.page.index.test
       this.game_url.href = config.page.game.test
