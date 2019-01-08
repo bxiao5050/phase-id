@@ -20,7 +20,9 @@ export default class Main {
   }
 
   polyfilled = async () => {
-    window.$postMessage = window.parent.postMessage;
+    window.$postMessage = function (params,origin) {
+      window.parent.postMessage(params,origin);
+    }
     IS_DEV && (await import("./dev"));
     try {
       await this.init();
