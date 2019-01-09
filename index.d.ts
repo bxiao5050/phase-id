@@ -31,6 +31,9 @@ declare namespace JSSDK {
     scopeId?: string;
     fb_app_id: string;
     FbPageId: string;
+
+    hoverFromLeft: boolean
+    hoverTop: number
     server: {
       test: string;
       formal: string;
@@ -725,7 +728,7 @@ interface LoginParam {
   userId?: number;
 }
 
-interface PaymentItem {}
+interface PaymentItem { }
 
 interface requestParam {
   route?: string;

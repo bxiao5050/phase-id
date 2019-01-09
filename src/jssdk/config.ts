@@ -51,6 +51,9 @@ const kdxs_default = {
   fb_app_id: '738722513164399',
   language: 'EN',
   region: 'DE',
+
+  hoverTop: '.24',
+  hoverFromLeft: true,
   mark_id: {
     ga: 'UA-102180151-44',
     fb: '2245057485737002',
@@ -60,7 +63,7 @@ const kdxs_default = {
     formal: 'https://desdk-cdn.pkmonquest.com/pocketgames/client',
   },
   page: {
-    index:{
+    index: {
       test: 'https://pixel.pkmonquest.com/h5-plays/index.html',
       formal: 'https://pixel.pkmonquest.com/h5-plays/index.html',
     },

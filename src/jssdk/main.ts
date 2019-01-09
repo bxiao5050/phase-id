@@ -88,17 +88,10 @@ export default class Main {
     } else {
       let config, translation;
       Promise.all([
-<<<<<<< .mine
         new Promise(async function (resolve) {
           config = (await import("Src/config")).default[appId];
           config = config[advChannel] || config.default;
           resolve();
-=======
-        new Promise(async function(resolve) {
-          config = (await import("Src/config")).default[appId];
-          config = config[advChannel] || config.default;
-          resolve();
->>>>>>> .theirs
         }),
         new Promise(async resolve => {
           translation = (await import("DOM/i18n")).default;
