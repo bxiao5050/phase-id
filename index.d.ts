@@ -5,130 +5,131 @@
 // <reference path="./node_modules/@types/facebook-instant-games/index.d.ts" />
 
 /** jssdk 版本 */
-declare const VERSION: JSSDK.Version
-declare const VConsole: any
+declare const VERSION: JSSDK.Version;
+declare const VConsole: any;
+/** 是否为开发环境 */
+declare const IS_DEV: boolean;
+
 declare namespace JSSDK {
   /** 1: web端 2：原生应用 3：facebook页游平台 4：facebook instant games */
-  type Type = 1 | 2 | 3 | 4
+  type Type = 1 | 2 | 3 | 4;
   /** jssdk 版本 */
-  type Version = string
+  type Version = string;
   type CurUserInfo = {
-    userId: number
-    userName: string
-    token: string
-  }
+    userId: number;
+    userName: string;
+    token: string;
+  };
   /** jssdk 配置项 */
   interface RG {
-    CurUserInfo: CurUserInfo
+    CurUserInfo: CurUserInfo;
   }
   interface Config {
-    appId: number
-    app_key: string
-    advChannel: number
-    scopeId?: string
-    fb_app_id: string
-    FbPageId: string
+    appId: number;
+    app_key: string;
+    advChannel: number;
+    scopeId?: string;
+    fb_app_id: string;
+    FbPageId: string;
     server: {
-      test: string
-      formal: string
-    }
+      test: string;
+      formal: string;
+    };
     mark_id: {
-      fb: string
-      ga: string
-    }
-    test: string
-    language: string
-    i18n: any
-    type: Type
+      fb: string;
+      ga: string;
+    };
+    test: string;
+    language: string;
+    i18n: any;
+    type: Type;
     page: {
       index: {
-        test: string
-        formal: string
-      }
+        test: string;
+        formal: string;
+      };
       game: {
-        test: string
-        formal: string
-      }
+        test: string;
+        formal: string;
+      };
       facebook: {
-        index
-        messenger
-      },
-    }
+        index;
+        messenger;
+      };
+    };
   }
 }
-
 
 interface RG {
   /**
-     * SDK - 版本号
-     */
-  version: string
+   * SDK - 版本号
+   */
+  version: string;
 
-  jssdk: Base
+  jssdk: Base;
 
   /** 获取支付数据 */
-  Pay(paymentConfig: PaymentConfig): void
-  init()
+  Pay(paymentConfig: PaymentConfig): void;
+  init();
   /** 跳转到messenger页面 */
-  Messenger()
+  Messenger();
 
-  Redirect()
+  Redirect();
   /** x */
-  ChangeAccount()
+  ChangeAccount();
 
   /** 跳转到fb应用 */
-  Fb()
+  Fb();
 
   /** 获取当前用户数据2 */
-  CurUserInfo(): UserInfo
+  CurUserInfo(): UserInfo;
 
   /** 分享接口 */
-  Share(shareUrl: string)
+  Share(shareUrl: string);
 
   /** 绑定区服 */
-  BindZone(bindZoneParam: BindZoneParam): Promise<ServerRes>
+  BindZone(bindZoneParam: BindZoneParam): Promise<ServerRes>;
 
+  Mark(markName: string, extraParam?: any): void;
 
-  Mark(markName: string, extraParam?: any): void
-
-  Install(): void
+  Install(): void;
 }
-
 
 // import PaymentConfig from "DOM/payment/PaymentConfig";
 
 declare interface Window {
-  RG: RG
-  fbAsyncInit: Function
-  FB: fb.FacebookStatic
-  FBInstant: any
-  getLoginStatus: Promise<any>
-  rgAsyncInit: Function
-  fbq: Function
-  _fbq: Function
-  dataLayer: any[]
-  JsToNative: JsToNative
-  NativeToJs: NativeToJs
-  rgChangeAccount: Function
-  RgPolyfilled: Function
-  debugger: boolean
-  $rg_index: Function
+  RG: RG;
+  fbAsyncInit: Function;
+  FB: fb.FacebookStatic;
+  FBInstant: any;
+  getLoginStatus: Promise<any>;
+  rgAsyncInit: Function;
+  fbq: Function;
+  _fbq: Function;
+  dataLayer: any[];
+  JsToNative: JsToNative;
+  NativeToJs: NativeToJs;
+  rgChangeAccount: Function;
+  RgPolyfilled: Function;
+  debugger: boolean;
+  $rg_index: Function;
   $rg_main: {
-    config: JSSDK.Config
-    get_game_config: Promise<any>
+    config: JSSDK.Config;
+    get_game_config: Promise<any>;
     Mark: {
-      index_url: HTMLAnchorElement
-      game_url: HTMLAnchorElement
-      Mark: Function
-    }
-  }
+      index_url: HTMLAnchorElement;
+      game_url: HTMLAnchorElement;
+      Mark: Function;
+    };
+  };
+  $postMessage: Function;
 }
 
-declare var FBVersion: string
-declare var ACTION: string
-declare var reactSrc: string
-declare var reactDomSrc: string
-declare var reactRouterDomSrc: string
+declare var FBVersion: string;
+declare var ACTION: string;
+declare var reactSrc: string;
+declare var reactDomSrc: string;
+declare var reactRouterDomSrc: string;
 
 interface NativeToJs {
   // {
@@ -138,67 +139,67 @@ interface NativeToJs {
   //   money: string // 金额
   //   currency: string // 货币
   // }
-  jpworkResult(params: string)
+  jpworkResult(params: string);
   // {
   //   transactionId: string // 订单id
   //   channel: number // 支付方式
   //   receipt: string // APPSTORE单据或者Google play signatureData
-  //   signature: string	// Google play signature	
+  //   signature: string	// Google play signature
   //   exInfo: string // 支付校验接口回传的透传字段
   // }
-  consumeOrder(params: string)
+  consumeOrder(params: string);
 
-  goBack()
+  goBack();
 
-  deviceMsg(params: string)
+  deviceMsg(params: string);
 }
 
 interface initSDKParams {
   /** 平台方分配给游戏的appId */
-  appId: number
+  appId: number;
   /** 平台来源0=ios 1=android 2=web */
-  source: number
+  source: number;
   /** -1=IOS企业包0=AppsSore 1=GooglePlay等等，具体渠道请见渠道表 */
-  advChannel: number
+  advChannel: number;
   /** 网络 0=wifi 1 = 3g 2=其他 */
-  network: number
+  network: number;
   /** 机型 */
-  model: string
+  model: string;
   /** 操作系统 */
-  operatorOs: string
+  operatorOs: string;
   /** 设备号 */
-  deviceNo: string
+  deviceNo: string;
   /** 设备 (Android=MAC#ANDRIDID IOS=IDFA） */
-  device: string
+  device: string;
   /** 游戏版本 */
-  version: string
+  version: string;
   /** SDK 版本 */
-  sdkVersion: string
+  sdkVersion: string;
   /** 客户端时间 (yyyy-MM-dd HH:mm:ss) */
-  clientTime: string
+  clientTime: string;
   /** 0=非首次安装 1=首次安装 */
-  firstInstall: number
+  firstInstall: number;
   /** 参数签名结果 MD5(appId+source+advChannel+app_key) */
-  sign: string
+  sign: string;
 }
 
 interface JsToNativeDeviceMsg {
-  gaid: string
-  device: string
-  deviceNo: string
-  version: string
-  model: string
-  operatorOs: string
-  source: number
-  network: number
+  gaid: string;
+  device: string;
+  deviceNo: string;
+  version: string;
+  model: string;
+  operatorOs: string;
+  source: number;
+  network: number;
 }
 
 interface JsToNative {
   /**
    * 获取设备信息
    */
-  getDeviceMsg(): string
-  getDeviceMsgAsync(): Promise<JsToNativeDeviceMsg>
+  getDeviceMsg(): string;
+  getDeviceMsgAsync(): Promise<JsToNativeDeviceMsg>;
 
   /**
    * 初始化
@@ -208,10 +209,10 @@ interface JsToNative {
   //   gpVerify: string
   //   gpProduct: String
   // })
-  init(params: string)
+  init(params: string);
   /**
    * 事件打点
-   * @param params 
+   * @param params
    */
   // gameEvent(params: {
   //   /** 打点事件名称（必传） */
@@ -225,10 +226,10 @@ interface JsToNative {
   //   /** 游戏订单id（可选） */
   //   gameOrderId?: string
   // })
-  gameEvent(params: string)
+  gameEvent(params: string);
   /**
    * 调启支付
-   * @param params 
+   * @param params
    */
   // jpwork(params: {
   //   /** 商品名 */
@@ -242,98 +243,92 @@ interface JsToNative {
   //   /** 金额 */
   //   money: number
   // })
-  jpwork(params: string)
+  jpwork(params: string);
   /**
    * 消单
-   * @param param 
+   * @param param
    */
   // consumeOrder(param: {
   //   /** 支付校验接口回传的透传字段 */
   //   exInfo: string
   // })
-  consumeOrder(param: string)
+  consumeOrder(param: string);
 
-  exitApp()
+  exitApp();
 }
 
-declare var JsToNative: JsToNative
-declare var NativeToJs: NativeToJs
-declare var CryptoJS: any
-
+declare var JsToNative: JsToNative;
+declare var NativeToJs: NativeToJs;
+declare var CryptoJS: any;
 
 declare interface HTMLElement {
-  show: Function
-  hide: Function
+  show: Function;
+  hide: Function;
 }
 
 declare interface Date {
-  format: Function
+  format: Function;
 }
 
-
 /** Store类的前缀字符串 */
-declare var PREFIX: string
+declare var PREFIX: string;
 
-
-declare var md5: Function
+declare var md5: Function;
 
 /** 这个变量是什么意思 */
-declare var AvialableIp: string
+declare var AvialableIp: string;
 // declare var import: Promise<any>
-declare var React: any
-declare var ReactDom: any
-declare var Router: any
-declare var RG: RG
+declare var React: any;
+declare var ReactDom: any;
+declare var Router: any;
+declare var RG: RG;
 
-declare var SERVER: string
+declare var SERVER: string;
 
-
-type SDKs = RoyalGames | FacebookWebGames | NativeGames | FacebookInstantGames
+type SDKs = RoyalGames | FacebookWebGames | NativeGames | FacebookInstantGames;
 
 interface RoyalGames {
-  RoyalGames
-  Login()
+  RoyalGames;
+  Login();
 }
 
 interface FacebookWebGames {
-  FacebookWebGames
-  Login()
+  FacebookWebGames;
+  Login();
 }
 
 interface FacebookInstantGames {
-  FacebookInstantGames
-  Login()
+  FacebookInstantGames;
+  Login();
 }
 
 interface NativeGames {
-  NativeGames
-  Login()
-  init()
+  NativeGames;
+  Login();
+  init();
 }
 
 interface FinishOrderParams {
-  transactionId: string
-  channel: number
-  receipt: string
-  signature: string
-  exInfo: string
+  transactionId: string;
+  channel: number;
+  receipt: string;
+  signature: string;
+  exInfo: string;
 }
-
-
 
 interface Base0 {
   /**
-      * 版本号
-      */
-  version: string
+   * 版本号
+   */
+  version: string;
 
-  config: JSSDK.Config
+  config: JSSDK.Config;
 
-  fb_sdk_loaded: boolean
+  fb_sdk_loaded: boolean;
 
-  polyfilled()
+  polyfilled();
 
-  App: any
+  App: any;
 
   /**
    * 1: web端
@@ -341,32 +336,32 @@ interface Base0 {
    * 3：facebook页游平台
    * 4：facebook instant games
    */
-  type: number
+  type: number;
 
-  Login(params?: LoginParam): Promise<LoginRes>
+  Login(params?: LoginParam): Promise<LoginRes>;
 
-  initDebugger()
+  initDebugger();
 
   /** 跳转到messenger页面 */
-  Messenger()
+  Messenger();
 
   /** 跳转到fb应用 */
-  Fb()
+  Fb();
 
   /** 获取当前用户数据2 */
   CurUserInfo(): {
-    userId: number
-    userName: string
-    token: string
-  }
+    userId: number;
+    userName: string;
+    token: string;
+  };
 
   /** 分享接口 */
-  Share(shareUrl: string)
+  Share(shareUrl: string);
 
   /** 绑定区服 */
-  BindZone(bindZoneParam: BindZoneParam): Promise<ServerRes>
+  BindZone(bindZoneParam: BindZoneParam): Promise<ServerRes>;
 
-  Account: any
+  Account: any;
 
   // /** 获取当前用户数据 */
   // GetUser(): UserInfo
@@ -384,28 +379,24 @@ interface Base0 {
   // GetRedirectUrl()
 
   /** 修改当前账户密码 */
-  ChangePassword(oldpass: string, newpass: string): Promise<ServerRes>
+  ChangePassword(oldpass: string, newpass: string): Promise<ServerRes>;
 
-  VisitorUpgrade(username: string, pass: string): Promise<ServerRes>
+  VisitorUpgrade(username: string, pass: string): Promise<ServerRes>;
 
   /** 获取订单列表 */
-  GetPaymentHistory(): Promise<ServerRes>
+  GetPaymentHistory(): Promise<ServerRes>;
 
   /** 获取支付数据 */
-  PaymentConfig(PaymentConfig: PaymentConfig): Promise<PaymentConfigRes>
+  PaymentConfig(PaymentConfig: PaymentConfig): Promise<PaymentConfigRes>;
 
-  Ordering(OrderingData: OrderingData, extraInfo?: any): Promise<OrderRes>
+  Ordering(OrderingData: OrderingData, extraInfo?: any): Promise<OrderRes>;
 
-  FinishOrder(finishOrderParams: FinishOrderParams): Promise<ServerRes>
+  FinishOrder(finishOrderParams: FinishOrderParams): Promise<ServerRes>;
 }
 
-type Base = Base0
-
-
-
+type Base = Base0;
 
 declare namespace FBInstant {
-
   // interface FBinstantSDK extends Base {
   //   /**
   //    * 版本号
@@ -413,8 +404,6 @@ declare namespace FBInstant {
   //   version: string
   //   // CreateShortcut(): Promise<boolean>
   // }
-
-
 
   // interface SDK extends Base {
   //   /**
@@ -427,19 +416,19 @@ declare namespace FBInstant {
   // }
 
   interface DOMApp {
-    showLogin(): void
-    hideLogin(): void
-    showPayment(paymentConfig: PaymentConfigRes): void
-    hidePayment(): void
-    showNotice(msg: string): void
-    hideNotice(): void
-    showAccount(): void
-    hideAccount(): void
+    showLogin(): void;
+    hideLogin(): void;
+    showPayment(paymentConfig: PaymentConfigRes): void;
+    hidePayment(): void;
+    showNotice(msg: string): void;
+    hideNotice(): void;
+    showAccount(): void;
+    hideAccount(): void;
   }
 }
 
 interface App {
-  showPayment(paymentConfigRes: PaymentConfigRes)
+  showPayment(paymentConfigRes: PaymentConfigRes);
 }
 
 declare namespace RG {
@@ -447,327 +436,307 @@ declare namespace RG {
    * 下单参数
    */
 
-  type PayParams = FbWebGamesPayParams
+  type PayParams = FbWebGamesPayParams;
 
   interface FbWebGamesPayParams extends PaymentConfig {
-    product_id: string
+    product_id: string;
   }
 
   interface PaymentConfig {
-    userId: number
-    gameOrderId: number
-    gameZoneId: number
-    roleId: number
-    roleName: string
-    level: number
-    gameCoin: number
-    sign: string
+    userId: number;
+    gameOrderId: number;
+    gameZoneId: number;
+    roleId: number;
+    roleName: string;
+    level: number;
+    gameCoin: number;
+    sign: string;
   }
-
-
 }
-
-
-
 
 interface PaymentConfig {
-  gameOrderId: number
-  gameZoneId: number
-  roleId: number
-  roleName: string
-  level: number
-  gameCoin: number
+  gameOrderId: number;
+  gameZoneId: number;
+  roleId: number;
+  roleName: string;
+  level: number;
+  gameCoin: number;
 }
-
-
 
 interface OrderRes extends ServerRes {
   data: {
-    currency: string
-    money: number
-    transactionId: string
+    currency: string;
+    money: number;
+    transactionId: string;
     returnInfo: {
-      url: string
-    }
-  }
+      url: string;
+    };
+  };
 }
 
-type OrderingData = PaymentChannel
+type OrderingData = PaymentChannel;
 
 interface PaymentChannel {
-  isFacebook?: boolean
-  nodes?: PaymentChannel[]
-  channel: number
-  code: number
-  codeImg: string
-  description: string
-  exInfo: string
-  isOfficial: number
-  name: string
-  products: Product[]
-  selectedProduct: Product
-  showMethod: number
-  showProductList: number
+  isFacebook?: boolean;
+  nodes?: PaymentChannel[];
+  channel: number;
+  code: number;
+  codeImg: string;
+  description: string;
+  exInfo: string;
+  isOfficial: number;
+  name: string;
+  products: Product[];
+  selectedProduct: Product;
+  showMethod: number;
+  showProductList: number;
 }
-
-
 
 interface FinishOrderPostData {
   /** 交易流水 */
-  transactionId: string
+  transactionId: string;
   /** APPSTORE单据或者Google play signatureData */
-  receipt: string
+  receipt: string;
   /** Google play signature */
-  signature: String
+  signature: String;
   /** 支付方式 0=appstore 1=google play 2=vnpt 3=1pay 4=mol 28=facebook */
-  channel: number
+  channel: number;
   /** 包ID */
-  advChannel: number
+  advChannel: number;
   /** SDK版本 */
-  sdkVersion: string
+  sdkVersion: string;
   /** 客户端提交时间 "yyyy-MM-dd hh:mm:ss" */
-  clientTime: string
+  clientTime: string;
   /** 参数签名结果 MD5(transactionId + receipt + signature + channel + advChannel + app_key) */
-  sign: string
+  sign: string;
   /** 设备号 */
-  deviceNo: string
+  deviceNo: string;
   /** Android: MAC地址 IOS: IDFA */
-  device: string
+  device: string;
   /** 网络 0 = wifi 1 = 3g 2 = 其他 */
-  network: number
+  network: number;
   /** 机型 */
-  model: string
+  model: string;
   /** 操作系统，例如Android4.4 */
-  operatorOs: string
+  operatorOs: string;
   /** 游戏版本 */
-  version: string
+  version: string;
   /** 额外的信息 */
-  exInfo?: string
+  exInfo?: string;
 }
 
 interface PaymentConfigParams {
   /** 平台方分配给游戏的appId */
-  appId: number
+  appId: number;
   /** 0=appstore 1=google play 具体查看包常量表 */
-  advChannel: number
+  advChannel: number;
   /** 平台用户ID */
-  userId: number
+  userId: number;
   /** 游戏内角色id */
-  roleId: number
+  roleId: number;
   /** 0=ios 1=android */
-  source: number
+  source: number;
   // 网络 0=wifi 1 = 3g 2=其他
-  network: number
+  network: number;
   /** 角色等级 */
-  level: number
+  level: number;
   /** 游戏版本 控制每种支付方式的开关 */
-  version: string
+  version: string;
   /** 游戏币数量 */
-  gameCoin: number
+  gameCoin: number;
   /** 额外参数 */
-  exInfo?: string
+  exInfo?: string;
   /** 验证参数MD5(appId+ advChannel+userId+gameCoin+level +source+ network +app_key) */
-  sign: string
+  sign: string;
 }
 
 interface CreateOrderParams {
   /** 平台方分配给游戏的appId */
-  appId: number
+  appId: number;
   /** 0=appstore 1=google play 具体查看包常量表 */
-  advChannel: number
+  advChannel: number;
   /** 平台用户ID */
-  userId: number
+  userId: number;
   /** 游戏订单ID */
-  gameOrderId: string
+  gameOrderId: string;
   /** 游戏区服ID */
-  gameZoneId: string
+  gameZoneId: string;
   /** 角色ID */
-  roleId: string
+  roleId: string;
   /** 角色ID */
-  roleName: string
+  roleName: string;
   /** 角色等级 */
-  level: string
+  level: string;
   /** 充值来源 0=ANDROID客户端 1=IOS客户端 2=网页 */
-  source: number
+  source: number;
   /** 支付渠道 0=appstore 1=google play 2=vnpt 3=1pay 4=mol,具体见渠道常量表 */
-  channel: number
+  channel: number;
   /** CODE值，具体见支付方式常量表 */
-  code: number
+  code: number;
   /** 金额 */
-  amount: string
+  amount: string;
   /** 货币 */
-  currency: string
+  currency: string;
   /** 商品名称 */
-  productName: string
+  productName: string;
   /** 商品类型：0=普通商品，1=月卡，2=年卡.... */
-  itemType: number
+  itemType: number;
   /** 0=第三方，1=官方 */
-  isOfficial: number
+  isOfficial: number;
   /** 设备号 */
-  deviceNo: string
+  deviceNo: string;
   /** Android:MAC地址 IOS:IDFA */
-  device: string
+  device: string;
   /** 网络 0=wifi 1 = 3g 2=其他 */
-  network: number
+  network: number;
   /** 机型 */
-  model: string
+  model: string;
   /** 操作系统，例如Android4.4 */
-  operatorOs: string
+  operatorOs: string;
   /** 游戏版本 */
-  version: string
+  version: string;
   /** SDK版本号 */
-  sdkVersion: string
+  sdkVersion: string;
   /** 客户端提交时间 "yyyy-MM-dd hh:mm:ss" */
-  clientTime: string
+  clientTime: string;
   /** 额外的信息，如果是刮刮卡,它的格式是{“serialNo”:””,”pin”:””}JSON字符串 */
-  exInfo: string
+  exInfo: string;
   /** 参数签名结果 MD5(appId+advChannel+userId+roleId+gameOrderId+gameZoneId+code+source+channel+amount+currency+productName + exInfo +app_key)
-  */
-  sign: string
+   */
+  sign: string;
 }
 
-
 interface StoreMap extends JSSDK.Config {
-  FbLoginStatus?: Promise<fb.AuthResponse>
-  FbLogin?: Promise<fb.AuthResponse>
-  FB?: Promise<any>
-  FBInstant?: Promise<any>
-  appSecret?: string
-  user?: object
-  users?: object
+  FbLoginStatus?: Promise<fb.AuthResponse>;
+  FbLogin?: Promise<fb.AuthResponse>;
+  FB?: Promise<any>;
+  FBInstant?: Promise<any>;
+  appSecret?: string;
+  user?: object;
+  users?: object;
 }
 
 interface SDK {
   /**
    * 版本号
    */
-  version: string
-  Login(loginParam: LoginParam): void
+  version: string;
+  Login(loginParam: LoginParam): void;
 
-  polyfilled(): void
-
+  polyfilled(): void;
 }
 
 interface Product {
-  amount: number
-  currency: string
-  discountDesc?: string
-  gameCoin: number
-  gameCurrency: string
-  itemType: number
-  productDesc: string
-  productName: string
-  shortCurrency: string
+  amount: number;
+  currency: string;
+  discountDesc?: string;
+  gameCoin: number;
+  gameCurrency: string;
+  itemType: number;
+  productDesc: string;
+  productName: string;
+  shortCurrency: string;
 }
 
 interface BindZoneParam {
   // userId 用户id
-  userId: number
+  userId: number;
   // gameZoneId 区服id
-  gameZoneId: number
+  gameZoneId: number;
   // createRole  是否创角 0=否 1=是
-  createRole: number
+  createRole: number;
   // roleId  角色id
-  roleId: number
+  roleId: number;
   // level 角色等级
-  level: number
+  level: number;
 }
 
-
 interface ServerRes {
-  code: number
-  error_msg: string
+  code: number;
+  error_msg: string;
 }
 
 interface PaymentConfigRes extends ServerRes {
-  payments: PaymentChannel[]
+  payments: PaymentChannel[];
 }
 
-
-
 interface DeviceMsg {
-  gaid?: string
-  source: number
-  advChannel: number
-  network: number
-  model: string
-  operatorOs: string
-  deviceNo: string
-  device: string
-  version: string
-  sdkVersion: string
-  appId: number
+  gaid?: string;
+  source: number;
+  advChannel: number;
+  network: number;
+  model: string;
+  operatorOs: string;
+  deviceNo: string;
+  device: string;
+  version: string;
+  sdkVersion: string;
+  appId: number;
 }
 
 interface UserInfo {
-  accountType: number
-  emailValid: number
-  firstLogin: number
-  userId: number
-  userName: string
-  userType: number
-  password: string
-  token: string
+  accountType: number;
+  emailValid: number;
+  firstLogin: number;
+  userId: number;
+  userName: string;
+  userType: number;
+  password: string;
+  token: string;
 }
 
 interface UsersInfo {
-  [key: string]: UserInfo
+  [key: string]: UserInfo;
 }
 
 interface LoginData {
-  accountType: number
-  emailValid: number
-  firstLogin: number
-  userId: number
-  userName: string
-  userType: number
-  password?: string
+  accountType: number;
+  emailValid: number;
+  firstLogin: number;
+  userId: number;
+  userName: string;
+  userType: number;
+  password?: string;
 }
 
 interface LoginRes extends ServerRes {
-  data: LoginData
-  firstLogin: boolean
-  token: string
+  data: LoginData;
+  firstLogin: boolean;
+  token: string;
 }
 
 interface LoginParam {
-  password?: string
-  userName?: string
-  nickName?: string
-  isFacebook?: boolean
-  accountType?: number
-  thirdPartyId?: string
-  email?: string
-  telephone?: string
-  userChannel?: number
-  exInfo?: string
-  birthday?: string
-  source?: number
-  appId?: number
+  password?: string;
+  userName?: string;
+  nickName?: string;
+  isFacebook?: boolean;
+  accountType?: number;
+  thirdPartyId?: string;
+  email?: string;
+  telephone?: string;
+  userChannel?: number;
+  exInfo?: string;
+  birthday?: string;
+  source?: number;
+  appId?: number;
   /** 性别 0=男 1=女 */
-  sex?: number
-  isReg?: boolean
-  userId?: number
+  sex?: number;
+  isReg?: boolean;
+  userId?: number;
 }
 
-
-interface PaymentItem {
-
-}
-
+interface PaymentItem {}
 
 interface requestParam {
-  route?: string
-  method?: Methods
-  data?: object
-  url?: string
+  route?: string;
+  method?: Methods;
+  data?: object;
+  url?: string;
 }
 
 // interface IntrinsicElements {
 //   [elemName: string]: any;
 // }
 
-type PlatformLoginParam = LoginParam & DeviceMsg
-type Methods = "POST" | "GET"
-
-
+type PlatformLoginParam = LoginParam & DeviceMsg;
+type Methods = "POST" | "GET";

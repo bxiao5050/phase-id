@@ -6,6 +6,7 @@ import App from "DOM/App"
 var root = document.createElement('div')
 root.id = "RG-SDK"
 root.style.zIndex = "999999999"
+root.style.fontFamily = 'Helvetica, Arial, "Microsoft YaHei", sans-serif;'
 document.body.appendChild(root)
 ReactDOM.render(<App />, root);
 

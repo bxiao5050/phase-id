@@ -21,6 +21,10 @@ export default class Main {
   }
 
   polyfilled = async () => {
+    window.$postMessage = function (params,origin) {
+      window.parent.postMessage(params,origin);
+    }
+    IS_DEV && (await import("./dev"));
     try {
       await this.init();
       location.host === Mark.instance.game_url.host &&
@@ -84,10 +88,17 @@ export default class Main {
     } else {
       let config, translation;
       Promise.all([
+<<<<<<< .mine
         new Promise(async function (resolve) {
           config = (await import("Src/config")).default[appId];
           config = config[advChannel] || config.default;
           resolve();
+=======
+        new Promise(async function(resolve) {
+          config = (await import("Src/config")).default[appId];
+          config = config[advChannel] || config.default;
+          resolve();
+>>>>>>> .theirs
         }),
         new Promise(async resolve => {
           translation = (await import("DOM/i18n")).default;
@@ -122,7 +133,7 @@ export default class Main {
     this.get_sdk_instance_promise.then(() => {
       if (!Mark.instance.isIndex) {
         window.addEventListener("message", this.onMessage, false);
-        window.parent.postMessage(
+        window.$postMessage(
           { action: "get" },
           window.$rg_main.Mark.index_url.origin
         );

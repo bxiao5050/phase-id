@@ -3,6 +3,7 @@ import * as React from 'react'
 import { Switch, Route } from 'react-router-dom'
 import { History, createLocation } from 'history'
 import TypeList from "DOM/components/payment/TypeList";
+import Type2 from "Src/DOM/components/payment/Type2";
 import Type0 from "DOM/components/payment/Type0";
 import Type1 from "DOM/components/payment/Type1";
 import Type3 from "DOM/components/payment/Type3";
@@ -71,7 +72,8 @@ export default class Payment extends React.Component<PaymentProps, {}, any> {
           .then((orderRes: OrderRes) => {
             this.orderCompleted(orderRes, payments)
           })
-      } else {
+      }
+      else {
         pageName = 'type' + payments.showMethod
         this.state.paymentDatas[payments.showMethod] = payments
         this.props.history.push(
@@ -115,6 +117,7 @@ export default class Payment extends React.Component<PaymentProps, {}, any> {
               <Route exact path='/typeList' render={() => <TypeList Payment={this} />} />
               <Route exact path='/type0' render={({ history }) => <Type0 Payment={this} history={history} />} />
               <Route exact path='/type1' render={() => <Type1 Payment={this} />} />
+              <Route exact path='/type2' render={() => <Type2 Payment={this} />} />
               <Route exact path='/type3' render={() => <Type3 Payment={this} />} />
               <Route exact path='/type4' render={() => <Type4 Payment={this} />} />
               <Route exact path='/type5' render={() => <Type5 Payment={this} />} />
