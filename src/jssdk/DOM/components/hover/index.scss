@@ -1,6 +1,6 @@
 .floatBall {
-  width: 2.8rem;
-  height: 2.8rem;
+  width: 2.6rem;
+  height: 2.6rem;
   top: 40%;
   opacity: 0.6; // display: none;
   transform: translate(0, 0);
@@ -13,8 +13,8 @@
 }
 
 .ball {
-  width: 2.8rem;
-  height: 2.8rem;
+  width: 2.6rem;
+  height: 2.6rem;
   z-index: 2;
   position: absolute;
   background: url(../../assets/float_button.png) center no-repeat;
@@ -22,7 +22,7 @@
 }
 
 .menu {
-  height: 2.8rem;
+  height: 2.6rem;
   width: 10rem;
   display: none;
   /* justify-content: flex-end; */
