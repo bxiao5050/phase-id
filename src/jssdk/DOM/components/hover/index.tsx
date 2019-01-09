@@ -134,9 +134,9 @@ export default class Hover extends React.Component<{
       style={(() => {
         var combine
         if (this.initialPositionLeft) {
-          combine = { left: '-1.6rem' }
+          combine = { left: '-1.4rem' }
         } else {
-          combine = { right: '-1.6rem' }
+          combine = { right: '-1.4rem' }
         }
         return Object.assign({
           transform: `translate(${this.state.x}px, ${this.state.y}px)`
