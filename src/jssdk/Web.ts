@@ -33,7 +33,7 @@ export default class Web extends Base {
 
   rgAsyncInit() {
     window.rgAsyncInit()
-    window.parent.postMessage({ action: 'rgAsyncInit' }, window.$rg_main.Mark.index_url.origin)
+    window.$postMessage({ action: 'rgAsyncInit' }, window.$rg_main.Mark.index_url.origin)
   }
 
   async init() {
@@ -98,15 +98,17 @@ export default class Web extends Base {
   }
 
   Install() {
-    let link
+    let url: string, link: string
     if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) {
-      link = `${SERVER}/jssdk/${Utils.getUrlParam('sdkVersion')}/add-shortcut.html?lang=en&system=ios&appId=${RG.jssdk.config.appId}&link=${RG.jssdk.config.page.index}`
+      link = RG.jssdk.config.page.index.formal
+      url = `${SERVER}/jssdk/${Utils.getUrlParam('sdkVersion')}/add-shortcut.html?lang=en&system=ios&appId=${RG.jssdk.config.appId}&link=${link}`
     } else if (/(Android)/i.test(navigator.userAgent)) {
-      link = `${SERVER}/jssdk/${Utils.getUrlParam('sdkVersion')}/add-shortcut.html?lang=en&system=android&appId=${RG.jssdk.config.appId}&link=${RG.jssdk.config.page.index}`
+      link = RG.jssdk.config.page.index.formal
+      url = `${SERVER}/jssdk/${Utils.getUrlParam('sdkVersion')}/add-shortcut.html?lang=en&system=android&appId=${RG.jssdk.config.appId}&link=${link}`
     } else {
       window.name = 'install'
-      link = RG.jssdk.config.page.index
+      url = link
     }
-    window.open(link)
+    window.open(url)
   }
 }

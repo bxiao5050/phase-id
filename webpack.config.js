@@ -61,7 +61,7 @@ var definePlugin = {
 	PREFIX: JSON.stringify(md5('RoyalGame').slice(0, 4)),
 	VERSION: JSON.stringify(sdkVersion),
 	SERVER: JSON.stringify(SERVER),
-	ACTION: JSON.stringify(action),
+	IS_DEV: isDev,
 	reactSrc: JSON.stringify(reactSrc),
 	reactDomSrc: JSON.stringify(reactDomSrc),
 	reactRouterDomSrc: JSON.stringify(reactRouterDomSrc),
@@ -149,7 +149,26 @@ var webpackConfig = {
 				reactDomSrc,
 				reactRouterDomSrc
 			}
-		}),
+    }),
+    new HtmlWebpackPlugin({
+			filename: 'index.html',
+			template: './src/index.html',
+			chunks: ['sdk'],
+			inject: 'body',
+			minify: isDev ? false : {
+				collapseWhitespace: true,
+				removeComments: true,
+				removeRedundantAttributes: true,
+				removeScriptTypeAttributes: true,
+				removeStyleLinkTypeAttributes: true,
+				useShortDoctype: true
+			},
+			templateParameters: {
+				reactSrc,
+				reactDomSrc,
+				reactRouterDomSrc
+			}
+    }),
 		new webpack.ProvidePlugin({
 			md5: 'md5'
 		}),

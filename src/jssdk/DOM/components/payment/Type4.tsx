@@ -24,7 +24,12 @@ export default class Type4 extends React.Component<paymentProps, {}, any>  {
           this.props.Payment.state.paymentDatas[this.index].nodes.map((node, i) => (
             <li key={i} data-id={i}
               onClick={() => {
-                RG.jssdk.Ordering(node).then((OrderRes: OrderRes) => {
+                if(this.props.Payment.state.paymentDatas[this.index].nodes[i].showMethod === 2) {
+
+                  this.props.Payment.intoPay(this.props.Payment.state.paymentDatas[this.index].nodes[i])
+                  
+                }else{
+                   RG.jssdk.Ordering(node).then((OrderRes: OrderRes) => {
                   if (OrderRes.code === 200) {
                     this.props.Payment.state.paymentDatas[0] = OrderRes.data
                     this.props.Payment.props.history.push(createLocation('/type0'))
@@ -32,6 +37,8 @@ export default class Type4 extends React.Component<paymentProps, {}, any>  {
                     console.error(OrderRes.error_msg)
                   }
                 })
+                }
+               
               }}>
               <img src={node.codeImg} />
             </li>
