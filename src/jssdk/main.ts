@@ -21,8 +21,8 @@ export default class Main {
   }
 
   polyfilled = async () => {
-    window.$postMessage = function (params,origin) {
-      window.parent.postMessage(params,origin);
+    window.$postMessage = function (params, origin) {
+      window.parent.postMessage(params, origin);
     }
     IS_DEV && (await import("./dev"));
     try {
@@ -64,6 +64,7 @@ export default class Main {
         (Utils.getUrlParam(GET.DEV) || window[GET.DEV]) &&
           (await this.init_debugger());
         await this.get_game_config;
+
         this.get_sdk_instance();
         Promise.all([this.get_sdk_instance_promise, this.facebook_jssdk_init()])
           .then(() => {
@@ -123,6 +124,7 @@ export default class Main {
     this.get_sdk_instance_promise = new Promise(function (resolve) {
       get_sdk_instance_resolve = resolve;
     });
+
     this.get_sdk_instance_promise.then(() => {
       if (!Mark.instance.isIndex) {
         window.addEventListener("message", this.onMessage, false);

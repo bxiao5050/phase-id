@@ -329,6 +329,18 @@ interface Base0 {
 
   fb_sdk_loaded: boolean;
 
+  key
+  iv
+  deviceMsgPromise
+  deviceMsgResolve
+  nativeInit
+  nativeIsInit
+  AESdecode
+  consumeOrder
+  jpworkResult
+  goBack
+  gotDeviceMsg
+
   polyfilled();
 
   App: any;
