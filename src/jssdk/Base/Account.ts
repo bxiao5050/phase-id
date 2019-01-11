@@ -9,7 +9,7 @@ export default class Account {
   }
   constructor() {
     Account._ins = this;
-    this.initPromise = new Promise(resolve => {
+    this._initPromise = new Promise(resolve => {
       this.initResolve = resolve;
     });
   }
@@ -20,11 +20,22 @@ export default class Account {
   private _users: UsersInfo = {};
 
   initResolve;
-  initPromise;
+  _initPromise
+  initPromise() {
+    console.log('initPromiseinitPromiseinitPromise')
+    console.log()
+    if (RG.jssdk.config.type === 2) {
+      this.init({
+        user: JSON.parse(localStorage.getItem('user')),
+        users: JSON.parse(localStorage.getItem('users'))
+      })
+    }
+    return this._initPromise
+  }
 
   init(data) {
-    this._user = data.user;
-    this._users = data.users;
+    data.user && (this._user = data.user);
+    data.users && (this._users = data.users);
     this.initResolve();
   }
 
@@ -37,16 +48,21 @@ export default class Account {
   }
 
   asyncData() {
-    window.$postMessage(
-      {
-        action: "set",
-        data: {
-          user: this._user,
-          users: this._users
-        }
-      },
-      window.$rg_main.Mark.index_url.origin
-    );
+    if (RG.jssdk.type === 2) {
+      localStorage.setItem('user', JSON.stringify(this._user))
+      localStorage.setItem('users', JSON.stringify(this._users))
+    } else {
+      window.$postMessage(
+        {
+          action: "set",
+          data: {
+            user: this._user,
+            users: this._users
+          }
+        },
+        window.$rg_main.Mark.index_url.origin
+      )
+    }
   }
 
   set user(user) {

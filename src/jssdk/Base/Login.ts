@@ -142,8 +142,10 @@ export default class Login {
             this.reqRegister(params, { response, resolve, reject })
           })
         } else {
-          if (RG.jssdk.config.type === 2) {
-            location.href = `https://www.facebook.com/${FBVersion}/dialog/oauth?client_id=${RG.jssdk.config.fb_app_id}&redirect_uri=${encodeURIComponent(location.href)}&t=${Date.now()}`
+          if (RG.jssdk.config.type === 2 || true) {
+            let index = location.href.indexOf('&code=')
+            let url = index === -1 ? location.href : location.href.substr(0, index)
+            location.href = `https://www.facebook.com/${FBVersion}/dialog/oauth?client_id=${RG.jssdk.config.fb_app_id}&redirect_uri=${encodeURIComponent(url)}&t=${Date.now()}`
           } else {
             FB.login(response => {
               if (response.status === "connected") {

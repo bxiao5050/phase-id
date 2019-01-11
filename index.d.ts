@@ -31,6 +31,7 @@ declare namespace JSSDK {
     scopeId?: string;
     fb_app_id: string;
     FbPageId: string;
+    adjust: { [key: string]: string }
 
     hoverFromLeft: boolean
     hoverTop: number
@@ -341,6 +342,8 @@ interface Base0 {
   goBack
   gotDeviceMsg
 
+
+  init
   polyfilled();
 
   App: any;

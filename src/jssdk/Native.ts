@@ -98,7 +98,9 @@ export default class Native extends Base {
     await Promise.all([reactDomSrc, reactRouterDomSrc].map((src) => {
       return this.loadScript(src)
     }))
-    let [{ Ins }] = await Promise.all([import('DOM/index'), RG.jssdk.Account.initPromise])
+
+    let [{ Ins }] = await Promise.all([import('DOM/index'), RG.jssdk.Account.initPromise()])
+
     window.RG.jssdk.App = Ins
     let user = RG.jssdk.Account.user
     let autoLogin = false
@@ -156,8 +158,6 @@ export default class Native extends Base {
     // } else {
     // }
 
-
-
     const WK = window['webkit']
     if (WK) {
       window.JsToNative = {
@@ -174,6 +174,7 @@ export default class Native extends Base {
           WK.messageHandlers.init.postMessage(param)
         },
         gameEvent: function (param: string) {
+          console.log('gameEvent', param)
           WK.messageHandlers.gameEvent.postMessage(param)
         },
         jpwork: function (param: string) {
@@ -385,14 +386,14 @@ export default class Native extends Base {
 
   Mark(markName: string, extraParam?: any) {
     let markParmas: any = {
-      eventName: markName
+      eventName: markName,
+      eventToken: RG.jssdk.config.adjust[markName]
     }
     if (markName === DOT.SDK_PURCHASED_DONE) {
       markParmas = Object.assign(extraParam, markParmas)
     }
-    console.info('mark params', markParmas)
     window.JsToNative.gameEvent(JSON.stringify(markParmas))
-    console.info(`"${markName}" has marked - native`)
+    console.info(`"${markName}" has marked - native`, markParmas)
   }
 
 

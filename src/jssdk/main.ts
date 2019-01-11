@@ -22,26 +22,24 @@ export default class Main {
 
   polyfilled = async () => {
     window.$postMessage = function (params, origin) {
-      window.parent.postMessage(params, origin);
+      if (RG.jssdk.config.type !== 2) window.parent.postMessage(params, origin);
     }
     IS_DEV && (await import("./dev"));
     try {
       await this.init();
-      location.host === Mark.instance.game_url.host &&
-        location.pathname === Mark.instance.game_url.pathname &&
+      if (location.host === Mark.instance.game_url.host &&
+        location.pathname === Mark.instance.game_url.pathname) {
         RG.Mark(DOT.SDK_LOADED);
-      (location.host !== this.Mark.index_url.host ||
-        location.pathname !== this.Mark.index_url.pathname) &&
-        (RG.jssdk as any).init();
+        RG.jssdk.init()
+      }
     } catch (e) {
       console.error("error_log:", e);
       await this.get_sdk_instance_promise;
-      location.host === Mark.instance.game_url.host &&
-        location.pathname === Mark.instance.game_url.pathname &&
+      if (location.host === Mark.instance.game_url.host &&
+        location.pathname === Mark.instance.game_url.pathname) {
         RG.Mark(DOT.SDK_LOADED);
-      (location.host !== this.Mark.index_url.host ||
-        location.pathname !== this.Mark.index_url.pathname) &&
-        (RG.jssdk as any).init();
+        RG.jssdk.init()
+      }
     }
   };
 
@@ -61,7 +59,7 @@ export default class Main {
   async init() {
     return new Promise(async (resolve, reject) => {
       try {
-        (Utils.getUrlParam(GET.DEV) || window[GET.DEV]) &&
+        (Utils.getUrlParam(GET.DEV) || window[GET.DEV] || true) &&
           (await this.init_debugger());
         await this.get_game_config;
 
@@ -153,10 +151,15 @@ export default class Main {
       })
     } else if (this.config.advChannel < 30000) {
       this.config.type = 2;
-      import("Src/Native").then(module => {
-        this.sdkInstance = new module.default(this.config, this.fb_sdk_loaded);
-        get_sdk_instance_resolve();
-      })
+      if (location.origin === Mark.instance.index_url.origin) {
+        location.href = Mark.instance.game_url.origin + Mark.instance.game_url.pathname + location.search
+      } else {
+        import("Src/Native").then(module => {
+          this.sdkInstance = new module.default(this.config, this.fb_sdk_loaded);
+          get_sdk_instance_resolve();
+        })
+      }
+
     } else if (
       this.config.advChannel > 31000 &&
       this.config.advChannel < 32000

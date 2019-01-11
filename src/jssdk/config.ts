@@ -80,6 +80,16 @@ const kdxs_default = {
 
 let kdxs_01 = JSON.parse(JSON.stringify(kdxs_default))
 kdxs_01.mark_id.ga = 'UA-102180151-59'
+let kdxs_02 = JSON.parse(JSON.stringify(kdxs_default))
+kdxs_02.adjust = {
+  reachstage2: 'nabqrb',
+  sdk_contact_us: 'fj41q7',
+  sdk_loaded: 'mpy6ez',
+  sdk_purchased_done: 's9mjpp',
+  sdk_register: '51060t',
+  startgame: '5yrpx0',
+  vip3: '6apvi1',
+}
 
 const config = {
   10116: {
@@ -92,6 +102,7 @@ const config = {
   },
   10133: {
     default: kdxs_default,
+    2: kdxs_02,
     30002: kdxs_01
   }
 }
