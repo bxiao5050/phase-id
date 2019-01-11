@@ -22,8 +22,6 @@ export default class Account {
   initResolve;
   _initPromise
   initPromise() {
-    console.log('initPromiseinitPromiseinitPromise')
-    console.log()
     if (RG.jssdk.config.type === 2) {
       this.init({
         user: JSON.parse(localStorage.getItem('user')),

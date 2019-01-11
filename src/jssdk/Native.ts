@@ -108,9 +108,8 @@ export default class Native extends Base {
     let code = Utils.getUrlParam('code')
 
     if (code) {
-      RG.jssdk.Login({ isFacebook: true }).then(() => {
-        LoginModule.loginComplete()
-      })
+      await RG.jssdk.Login({ isFacebook: true })
+      LoginModule.loginComplete()
     } else {
       if (user) {
         autoLogin = true
