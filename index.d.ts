@@ -204,7 +204,6 @@ interface JsToNative {
    */
   getDeviceMsg(): string;
   getDeviceMsgAsync(): Promise<JsToNativeDeviceMsg>;
-
   /**
    * 初始化
    * @param params

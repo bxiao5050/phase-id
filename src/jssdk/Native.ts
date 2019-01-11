@@ -94,6 +94,68 @@ export default class Native extends Base {
   }
 
   async init() {
+
+    const WK = window['webkit']
+    if (WK) {
+      window.JsToNative = {
+        getDeviceMsgAsync: function () {
+          if (!RG.jssdk.deviceMsgPromise) {
+            RG.jssdk.deviceMsgPromise = new Promise(resolve => {
+              RG.jssdk.deviceMsgResolve = resolve
+            })
+            WK.messageHandlers.getDeviceMsg.postMessage(null)
+          }
+          return RG.jssdk.deviceMsgPromise
+        },
+        init: function (param: string) {
+          WK.messageHandlers.init.postMessage(param)
+        },
+        gameEvent: function (param: string) {
+          console.log('gameEvent', param)
+          WK.messageHandlers.gameEvent.postMessage(param)
+        },
+        jpwork: function (param: string) {
+          WK.messageHandlers.jpwork.postMessage(param)
+        },
+        consumeOrder: function (param: string) {
+          WK.messageHandlers.consumeOrder.postMessage(param)
+        },
+        exitApp: function () {
+          WK.messageHandlers.exitApp.postMessage(null)
+        }
+      } as any
+    } else {
+      window.JsToNative.getDeviceMsgAsync = () => {
+        if (!RG.jssdk.deviceMsgPromise) {
+          RG.jssdk.deviceMsgPromise = new Promise(resolve => {
+            RG.jssdk.deviceMsgResolve = resolve
+          })
+          setTimeout(function () {
+            let data = JSON.parse(window.JsToNative.getDeviceMsg())
+            data = Object.assign(data, {
+              advChannel: RG.jssdk.config.advChannel,
+              appId: RG.jssdk.config.appId
+            })
+          
+            RG.jssdk.deviceMsgResolve(data)
+            RG.jssdk.deviceMsgPromise = null
+          })
+        }
+        return RG.jssdk.deviceMsgPromise
+      }
+    }
+    /**
+     * 全局变量初始化
+     */
+    window.NativeToJs = {
+      consumeOrder: RG.jssdk.consumeOrder,
+      jpworkResult: RG.jssdk.jpworkResult,
+      goBack: RG.jssdk.goBack,
+      deviceMsg: RG.jssdk.gotDeviceMsg
+    }
+    RG.jssdk.nativeInit()
+
+    
     await this.loadScript(reactSrc)
     await Promise.all([reactDomSrc, reactRouterDomSrc].map((src) => {
       return this.loadScript(src)
@@ -157,66 +219,7 @@ export default class Native extends Base {
     // } else {
     // }
 
-    const WK = window['webkit']
-    if (WK) {
-      window.JsToNative = {
-        getDeviceMsgAsync: function () {
-          if (!RG.jssdk.deviceMsgPromise) {
-            RG.jssdk.deviceMsgPromise = new Promise(resolve => {
-              RG.jssdk.deviceMsgResolve = resolve
-            })
-            WK.messageHandlers.getDeviceMsg.postMessage(null)
-          }
-          return RG.jssdk.deviceMsgPromise
-        },
-        init: function (param: string) {
-          WK.messageHandlers.init.postMessage(param)
-        },
-        gameEvent: function (param: string) {
-          console.log('gameEvent', param)
-          WK.messageHandlers.gameEvent.postMessage(param)
-        },
-        jpwork: function (param: string) {
-          WK.messageHandlers.jpwork.postMessage(param)
-        },
-        consumeOrder: function (param: string) {
-          WK.messageHandlers.consumeOrder.postMessage(param)
-        },
-        exitApp: function () {
-          WK.messageHandlers.exitApp.postMessage(null)
-        }
-      } as any
-    } else {
-      window.JsToNative.getDeviceMsgAsync = () => {
-        if (!RG.jssdk.deviceMsgPromise) {
-          RG.jssdk.deviceMsgPromise = new Promise(resolve => {
-            RG.jssdk.deviceMsgResolve = resolve
-          })
-          setTimeout(function () {
-            let data = JSON.parse(window.JsToNative.getDeviceMsg())
-            data = Object.assign(data, {
-              advChannel: RG.jssdk.config.advChannel,
-              appId: RG.jssdk.config.appId
-            })
-            RG.jssdk.deviceMsgResolve(data)
-            RG.jssdk.deviceMsgPromise = null
-          })
-        }
-        return RG.jssdk.deviceMsgPromise
-      }
-    }
-
-    /**
-     * 全局变量初始化
-     */
-    window.NativeToJs = {
-      consumeOrder: RG.jssdk.consumeOrder,
-      jpworkResult: RG.jssdk.jpworkResult,
-      goBack: RG.jssdk.goBack,
-      deviceMsg: RG.jssdk.gotDeviceMsg
-    }
-
-    RG.jssdk.nativeInit()
+   
   }
 
   deviceMsgPromise

@@ -154,7 +154,7 @@ export default class NativeGames {
         }
       } as any
     } else {
-      window.JsToNative.getDeviceMsgAsync = () => {
+      JsToNative.getDeviceMsgAsync = () => {
         if (!NativeGames.instance.deviceMsgPromise) {
           NativeGames.instance.deviceMsgPromise = new Promise(resolve => {
             NativeGames.instance.deviceMsgResolve = resolve
@@ -204,7 +204,7 @@ export default class NativeGames {
 
   async nativeInit() {
     if (!NativeGames.instance.nativeIsInit) {
-      var deviceMsg = await window.JsToNative.getDeviceMsgAsync()
+      var deviceMsg = await JsToNative.getDeviceMsgAsync()
       var { source, network, model, operatorOs, deviceNo, device, version } = deviceMsg
       var initSDKParam: initSDKParams = {
         appId: RG.jssdk.config.appId,

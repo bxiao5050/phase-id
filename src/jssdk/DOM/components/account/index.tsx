@@ -17,7 +17,7 @@ class Main extends React.Component<accountProps, any, any> {
   }
 
   componentDidMount() {
-    window.JsToNative.getDeviceMsgAsync().then(device => {
+    JsToNative.getDeviceMsgAsync().then(device => {
       this.state.deviceNo = device.hasOwnProperty('device') ? device.device : device.hasOwnProperty('gaid') ? device.gaid : device.deviceNo;
       this.setState(this.state)
     })

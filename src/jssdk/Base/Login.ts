@@ -28,7 +28,6 @@ export default class Login {
         route = this.route.login
       }
     }
-
     return new Promise(async (resolve, reject) => {
       var data = await this.loginParamHandler(loginParam)
       Http.instance.post({ route, data }).then((res: LoginRes) => {
@@ -65,7 +64,6 @@ export default class Login {
     loginParam.password = loginParam.password.length === 32 ? loginParam.password : md5(loginParam.password)
     // 获取设备信息
     return new Promise(async (resolve) => {
-      // var data: JsToNativeDeviceMsg = 
       var deviceMsg: DeviceMsg = await JsToNative.getDeviceMsgAsync() as any
       // 获取签名信息
       var sign = Utils.signed({
@@ -134,10 +132,8 @@ export default class Login {
           }, resolve, reject
         })
       } else {
-        console.log('FB.getLoginStatus')
         FB.getLoginStatus(_res => {
           let response = _res.authResponse
-          console.log(response)
           if (response && response.userID) {
             var userID = response.userID
             FB.api('/me?fields=email', (response) => { // name,birthday,gender
