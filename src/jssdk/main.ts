@@ -102,6 +102,8 @@ export default class Main {
           advChannel,
           i18n: translation[config.language]
         });
+        return this.initAdjust()
+      }).then(() => {
         this.Mark = new Mark(this.config);
         resolve();
       });
@@ -193,6 +195,29 @@ export default class Main {
       };
       document.head.appendChild(script);
     });
+  }
+   /** 
+   * 加载adjust的全局打点代码
+   */
+  initAdjust() {
+    return new Promise((resolve,reject) => {
+      if(this.config.mark_id.adjust.id){
+        import("Base/adjust.min.js" as any)
+      .then(() => {
+        if(Adjust){
+          resolve();
+        }else{
+          reject("init Adjust failed");
+        }
+      })
+      .catch((err) => {
+        reject("init Adjust failed"+ err);
+      })
+      }else{
+        resolve()
+      }
+      
+    })
   }
 }
 

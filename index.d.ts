@@ -9,6 +9,7 @@ declare const VERSION: JSSDK.Version;
 declare const VConsole: any;
 /** 是否为开发环境 */
 declare const IS_DEV: boolean;
+declare const Adjust: any;
 
 declare namespace JSSDK {
   /** 1: web端 2：原生应用 3：facebook页游平台 4：facebook instant games */
@@ -38,6 +39,10 @@ declare namespace JSSDK {
     mark_id: {
       fb: string;
       ga: string;
+      adjust:{
+        id: string
+        adjustEventToken: object
+      }
     };
     test: string;
     language: string;
