@@ -46,7 +46,7 @@ export default class Account {
   }
 
   asyncData() {
-    if (RG.jssdk.type === 2) {
+    if (RG.jssdk.config.type === 2) {
       localStorage.setItem('user', JSON.stringify(this._user))
       localStorage.setItem('users', JSON.stringify(this._users))
     } else {
