@@ -70,12 +70,16 @@ export default class Mark {
         this.gtag('js', new Date());
         this.gtag('config', config.mark_id.ga)
       }
-      this.Mark = (function (Mark, google) {
-        return function (name: string, param: object) {
-          Mark(name, param)
-          google(name, param)
-        }
-      })(this.Mark, this.google)
+      this.Mark = (function(Mark, google) {
+        return function(name: string, param: {google: any}) {
+          Mark(name, param);
+          var paramGoogle;
+          if(param && param.google){
+            paramGoogle = param.google
+          }
+          google(name, paramGoogle);
+        };
+      })(this.Mark, this.google);
     }
     
     if (config.mark_id.adjust.id) {
@@ -103,9 +107,13 @@ export default class Mark {
            );
            this.Mark = (function(Mark, adjust) {
             var adjustEventToken = config.mark_id.adjust.adjustEventToken;
-            return function(name: string, param: object) {
+            return function(name: string, param: {adjust: object}) {
               Mark(name, param);
-              adjust(name, param, adjustEventToken);
+              var paramAdjust = {}
+              if(param && param.adjust){
+                paramAdjust = param.adjust
+              }
+              adjust(name, paramAdjust, adjustEventToken);
             };
           })(this.Mark, this.adjust);
       }
@@ -141,7 +149,7 @@ export default class Mark {
   }
 
   public adjust = (name: string, param: object, adjustEventToken: object) => {
-    // if(IS_DEV)name = 'login'
+
     if (this.isIndex) {
       if (!adjustEventToken[name]) {
         console.log(`This ${name} associated adjustEventToken not fined`);
