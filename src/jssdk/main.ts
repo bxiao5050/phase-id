@@ -98,7 +98,7 @@ export default class Main {
       ]).then(() => {
         this.config = Object.assign(config, {
           appId,
-          advChannel: 30001,
+          advChannel,
           i18n: translation[config.language]
         });
         this.Mark = new Mark(this.config);
