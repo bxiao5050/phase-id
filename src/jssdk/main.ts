@@ -98,7 +98,7 @@ export default class Main {
       ]).then(() => {
         this.config = Object.assign(config, {
           appId,
-          advChannel,
+          advChannel: 30001,
           i18n: translation[config.language]
         });
         this.Mark = new Mark(this.config);
@@ -150,15 +150,10 @@ export default class Main {
       })
     } else if (this.config.advChannel < 30000) {
       this.config.type = 2;
-      if (location.origin === Mark.instance.index_url.origin) {
-        location.href = Mark.instance.game_url.origin + Mark.instance.game_url.pathname + location.search
-      } else {
-        import("Src/Native").then(module => {
-          this.sdkInstance = new module.default(this.config, this.fb_sdk_loaded);
-          get_sdk_instance_resolve();
-        })
-      }
-
+      import("Src/Native").then(module => {
+        this.sdkInstance = new module.default(this.config, this.fb_sdk_loaded);
+        get_sdk_instance_resolve();
+      })
     } else if (
       this.config.advChannel > 31000 &&
       this.config.advChannel < 32000

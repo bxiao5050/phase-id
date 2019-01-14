@@ -54,6 +54,7 @@ const kdxs_default = {
 
   hoverTop: '.24',
   hoverFromLeft: true,
+  adjust: {},
   mark_id: {
     ga: 'UA-102180151-44',
     fb: '2245057485737002',

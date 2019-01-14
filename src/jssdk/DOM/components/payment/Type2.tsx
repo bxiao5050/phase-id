@@ -84,8 +84,7 @@ export default class Type2 extends React.Component<paymentProps, {}, any> {
           ) : null}
         </h2>
 
-        <img className="card-head" src={source.codeImg} />
-
+        <img className="card-head" src={source.codeImg.replace('http', 'https')} />
         <div className="card-inputs PIN" id="pin">
           <span>PIN: </span>
           <input placeholder="Please enter PIN" ref="pin" />
@@ -95,10 +94,10 @@ export default class Type2 extends React.Component<paymentProps, {}, any> {
             {RG.jssdk.config.i18n.loading} {this.state.isQueryingTxt}
           </a>
         ) : (
-          <a href="javascript:void(0);" className="btn-pay" onClick={this.pay}>
-            {RG.jssdk.config.i18n.PayCenter}
-          </a>
-        )}
+            <a href="javascript:void(0);" className="btn-pay" onClick={this.pay}>
+              {RG.jssdk.config.i18n.PayCenter}
+            </a>
+          )}
         {isShowExchangeRate ? <div className="exchange-wrap" /> : null}
         {isShowExchangeRate ? (
           <div className="exchange-rate-list">
