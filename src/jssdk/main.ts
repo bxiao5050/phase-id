@@ -111,7 +111,7 @@ export default class Main {
   });
 
   onMessage(event: MessageEvent) {
-    if (event.origin === window.$rg_main.Mark.index_url.origin) {
+    if ( window.$rg_main && window.$rg_main.Mark.index_url  event.origin === window.$rg_main.Mark.index_url.origin) {
       RG.jssdk.Account.init(event.data);
     }
   }
