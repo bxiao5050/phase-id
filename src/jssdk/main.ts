@@ -20,35 +20,26 @@ export default class Main {
   }
 
   polyfilled = async () => {
-    window.$postMessage = function (params,origin) {
-      window.parent.postMessage(params,origin);
-    }
-    IS_DEV && (await import("./dev"));
+    window.$postMessage = function(params, origin) {
+      window.parent.postMessage(params, origin);
+    };
+    // IS_DEV && (await import("./dev"));
     try {
       await this.init();
-      location.host === Mark.instance.game_url.host &&
-        location.pathname === Mark.instance.game_url.pathname &&
-        RG.Mark(DOT.SDK_LOADED);
-      (location.host !== this.Mark.index_url.host ||
-        location.pathname !== this.Mark.index_url.pathname) &&
-        (RG.jssdk as any).init();
+      location.host === Mark.instance.game_url.host && location.pathname === Mark.instance.game_url.pathname && RG.Mark(DOT.SDK_LOADED);
+      (location.host !== this.Mark.index_url.host || location.pathname !== this.Mark.index_url.pathname) && (RG.jssdk as any).init();
     } catch (e) {
       console.error("error_log:", e);
       await this.get_sdk_instance_promise;
-      location.host === Mark.instance.game_url.host &&
-        location.pathname === Mark.instance.game_url.pathname &&
-        RG.Mark(DOT.SDK_LOADED);
-      (location.host !== this.Mark.index_url.host ||
-        location.pathname !== this.Mark.index_url.pathname) &&
-        (RG.jssdk as any).init();
+      location.host === Mark.instance.game_url.host && location.pathname === Mark.instance.game_url.pathname && RG.Mark(DOT.SDK_LOADED);
+      (location.host !== this.Mark.index_url.host || location.pathname !== this.Mark.index_url.pathname) && (RG.jssdk as any).init();
     }
   };
 
   init_debugger() {
     return new Promise(resolve => {
       var js = document.createElement("script");
-      js.src =
-        "//cdnjs.cloudflare.com/ajax/libs/vConsole/3.2.0/vconsole.min.js";
+      js.src = "//cdnjs.cloudflare.com/ajax/libs/vConsole/3.2.0/vconsole.min.js";
       js.onload = () => {
         new VConsole();
         resolve();
@@ -60,8 +51,7 @@ export default class Main {
   async init() {
     return new Promise(async (resolve, reject) => {
       try {
-        (Utils.getUrlParam(GET.DEV) || window[GET.DEV]) &&
-          (await this.init_debugger());
+        (Utils.getUrlParam(GET.DEV) || window[GET.DEV]) && (await this.init_debugger());
         await this.get_game_config;
         this.get_sdk_instance();
         Promise.all([this.get_sdk_instance_promise, this.facebook_jssdk_init()])
@@ -80,8 +70,7 @@ export default class Main {
   /** 获取游戏配置 */
   get_game_config = new Promise((resolve, reject) => {
     let appId = Utils.getUrlParam(GET.APP_ID) || window[GET.APP_ID];
-    let advChannel =
-      Utils.getUrlParam(GET.ADV_CHANNEL) || window[GET.ADV_CHANNEL];
+    let advChannel = Utils.getUrlParam(GET.ADV_CHANNEL) || window[GET.ADV_CHANNEL];
     if (!appId || !advChannel) {
       reject(ERROR.E_001);
     } else {
@@ -96,22 +85,24 @@ export default class Main {
           translation = (await import("DOM/i18n")).default;
           resolve();
         })
-      ]).then(() => {
-        this.config = Object.assign(config, {
-          appId,
-          advChannel,
-          i18n: translation[config.language]
+      ])
+        .then(() => {
+          this.config = Object.assign(config, {
+            appId,
+            advChannel,
+            i18n: translation[config.language]
+          });
+          return this.initAdjust();
+        })
+        .then(() => {
+          this.Mark = new Mark(this.config);
+          resolve();
         });
-        return this.initAdjust()
-      }).then(() => {
-        this.Mark = new Mark(this.config);
-        resolve();
-      });
     }
   });
 
   onMessage(event: MessageEvent) {
-    if ( window.$rg_main && window.$rg_main.Mark.index_url  event.origin === window.$rg_main.Mark.index_url.origin) {
+    if (event.origin === window.$rg_main.Mark.index_url.origin) {
       RG.jssdk.Account.init(event.data);
     }
   }
@@ -127,18 +118,11 @@ export default class Main {
     this.get_sdk_instance_promise.then(() => {
       if (!Mark.instance.isIndex) {
         window.addEventListener("message", this.onMessage, false);
-        window.$postMessage(
-          { action: "get" },
-          window.$rg_main.Mark.index_url.origin
-        );
+        window.$postMessage({ action: "get" }, window.$rg_main.Mark.index_url.origin);
       } else {
         const data = {
-          user: localStorage.getItem("user")
-            ? JSON.parse(localStorage.getItem("user"))
-            : "",
-          users: localStorage.getItem("users")
-            ? JSON.parse(localStorage.getItem("users"))
-            : {}
+          user: localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : "",
+          users: localStorage.getItem("users") ? JSON.parse(localStorage.getItem("users")) : {}
         };
         RG.jssdk.Account.init(data);
       }
@@ -153,16 +137,10 @@ export default class Main {
     } else if (this.config.advChannel < 30000) {
       this.config.type = 2;
       return import("Src/NativeGames");
-    } else if (
-      this.config.advChannel > 31000 &&
-      this.config.advChannel < 32000
-    ) {
+    } else if (this.config.advChannel > 31000 && this.config.advChannel < 32000) {
       this.config.type = 3;
       return import("Src/FacebookWebGames");
-    } else if (
-      this.config.advChannel > 32000 &&
-      this.config.advChannel < 33000
-    ) {
+    } else if (this.config.advChannel > 32000 && this.config.advChannel < 33000) {
       this.config.type = 4;
       return import("Src/FacebookInstantGames");
     }
@@ -196,28 +174,27 @@ export default class Main {
       document.head.appendChild(script);
     });
   }
-   /** 
+  /**
    * 加载adjust的全局打点代码
    */
   initAdjust() {
-    return new Promise((resolve,reject) => {
-      if(this.config.mark_id.adjust.id){
+    return new Promise((resolve, reject) => {
+      if (this.config.mark_id.adjust.id) {
         import("Base/adjust.min.js" as any)
-      .then(() => {
-        if(Adjust){
-          resolve();
-        }else{
-          reject("init Adjust failed");
-        }
-      })
-      .catch((err) => {
-        reject("init Adjust failed"+ err);
-      })
-      }else{
-        resolve()
+          .then(() => {
+            if (Adjust) {
+              resolve();
+            } else {
+              reject("init Adjust failed");
+            }
+          })
+          .catch(err => {
+            reject("init Adjust failed" + err);
+          });
+      } else {
+        resolve();
       }
-      
-    })
+    });
   }
 }
 

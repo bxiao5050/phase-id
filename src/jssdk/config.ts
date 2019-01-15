@@ -52,8 +52,8 @@ const kdxs_default = {
   language: 'EN',
   region: 'DE',
   mark_id: {
-    ga: 'UA-102180151-44',
-    fb: '2245057485737002',
+    // ga: 'UA-102180151-44',
+    // fb: '2245057485737002',
     adjust: {
       id: 'pjrt3uo6at4w',
       adjustEventToken: {
