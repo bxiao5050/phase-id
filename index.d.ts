@@ -25,6 +25,8 @@ declare namespace JSSDK {
     CurUserInfo: CurUserInfo;
   }
   interface Config {
+    name
+    
     appId: number;
     app_key: string;
     advChannel: number;
@@ -32,6 +34,10 @@ declare namespace JSSDK {
     fb_app_id: string;
     FbPageId: string;
     adjust: { [key: string]: string }
+
+    download: {
+      android: string
+    }
 
     hoverFromLeft: boolean
     hoverTop: number

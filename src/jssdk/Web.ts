@@ -98,17 +98,20 @@ export default class Web extends Base {
   }
 
   Install() {
-    let url: string, link: string
-    if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) {
-      link = RG.jssdk.config.page.index.formal
-      url = `${SERVER}/jssdk/${Utils.getUrlParam('sdkVersion')}/add-shortcut.html?lang=en&system=ios&appId=${RG.jssdk.config.appId}&link=${link}`
-    } else if (/(Android)/i.test(navigator.userAgent)) {
-      link = RG.jssdk.config.page.index.formal
-      url = `${SERVER}/jssdk/${Utils.getUrlParam('sdkVersion')}/add-shortcut.html?lang=en&system=android&appId=${RG.jssdk.config.appId}&link=${link}`
-    } else {
-      window.name = 'install'
-      url = link
+    if (RG.jssdk.config.type !== 2) {
+      let url: string
+      if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) {
+        url = `${SERVER}/jssdk/${Utils.getUrlParam('sdkVersion')}/add-shortcut.html?lang=en&system=ios&appId=${RG.jssdk.config.appId}&link=${RG.jssdk.config.page.index.formal}`
+      } else if (/(Android)/i.test(navigator.userAgent)) {
+        if (RG.jssdk.config.download.android) {
+          url = RG.jssdk.config.download.android
+        } else {
+          url = `${SERVER}/jssdk/${Utils.getUrlParam('sdkVersion')}/add-shortcut.html?lang=en&system=android&appId=${RG.jssdk.config.appId}&link=${RG.jssdk.config.page.index.formal}`
+        }
+      } else {
+        url = `${SERVER}/platform/shortcut.jsp?link=${encodeURIComponent(RG.jssdk.config.page.index.formal + '?shortcut=true')}&fileName=${RG.jssdk.config.name}`
+      }
+      window.open(url)
     }
-    window.open(url)
   }
 }

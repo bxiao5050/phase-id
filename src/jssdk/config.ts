@@ -47,6 +47,8 @@ var config4 = { // 仙灵记
   language: 'TW'
 }
 const kdxs_default = {
+  name: 'PokemonQuest',
+
   app_key: 'bebb9e42c3984939ae9dd3410d13666f',
   fb_app_id: '738722513164399',
   language: 'EN',
@@ -63,10 +65,15 @@ const kdxs_default = {
     test: 'https://sdk-test.changic.net.cn/pocketgames/client',
     formal: 'https://desdk-cdn.pkmonquest.com/pocketgames/client',
   },
+  download: {
+    android: 'https://pixel.pkmonquest.com/Pokemon-Quest.apk?v1'
+  },
   page: {
     index: {
       test: 'https://pixel.pkmonquest.com/h5-plays/index.html',
+      // test: 'https://pixel.pkmonquest.com/h5-play_4/index.html',
       formal: 'https://pixel.pkmonquest.com/h5-plays/index.html',
+      // formal: 'https://pixel.pkmonquest.com/h5-play_4/index.html',
     },
     game: {
       test: 'https://xytest.xulonggame.com/royalgame.html',
