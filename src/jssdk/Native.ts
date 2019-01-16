@@ -136,7 +136,7 @@ export default class Native extends Base {
               advChannel: RG.jssdk.config.advChannel,
               appId: RG.jssdk.config.appId
             })
-          
+
             RG.jssdk.deviceMsgResolve(data)
             RG.jssdk.deviceMsgPromise = null
           })
@@ -155,7 +155,7 @@ export default class Native extends Base {
     }
     RG.jssdk.nativeInit()
 
-    
+
     await this.loadScript(reactSrc)
     await Promise.all([reactDomSrc, reactRouterDomSrc].map((src) => {
       return this.loadScript(src)
@@ -219,7 +219,7 @@ export default class Native extends Base {
     // } else {
     // }
 
-   
+
   }
 
   deviceMsgPromise
@@ -388,8 +388,10 @@ export default class Native extends Base {
 
   Mark(markName: string, extraParam?: any) {
     let markParmas: any = {
-      eventName: markName,
-      eventToken: RG.jssdk.config.adjust[markName]
+      eventName: markName
+    }
+    if (RG.jssdk.config.adjust[markName]) {
+      markParmas.eventToken = RG.jssdk.config.adjust[markName]
     }
     if (markName === DOT.SDK_PURCHASED_DONE) {
       markParmas = Object.assign(extraParam, markParmas)

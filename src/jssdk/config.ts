@@ -56,7 +56,15 @@ const kdxs_default = {
 
   hoverTop: '.24',
   hoverFromLeft: true,
-  adjust: {},
+  adjust: {
+    reachstage2: 'nabqrb',
+    sdk_contact_us: 'fj41q7',
+    sdk_loaded: 'mpy6ez',
+    sdk_purchased_done: 's9mjpp',
+    sdk_register: '51060t',
+    startgame: '5yrpx0',
+    vip3: '6apvi1',
+  },
   mark_id: {
     ga: 'UA-102180151-44',
     fb: '2245057485737002',
@@ -86,16 +94,6 @@ const kdxs_default = {
   }
 }
 
-let kdxs_01 = JSON.parse(JSON.stringify(kdxs_default))
-kdxs_01.adjust = {
-  reachstage2: 'nabqrb',
-  sdk_contact_us: 'fj41q7',
-  sdk_loaded: 'mpy6ez',
-  sdk_purchased_done: 's9mjpp',
-  sdk_register: '51060t',
-  startgame: '5yrpx0',
-  vip3: '6apvi1',
-}
 
 const config = {
   10116: {
@@ -107,8 +105,7 @@ const config = {
     32001: config4,
   },
   10133: {
-    default: kdxs_default,
-    2: kdxs_01,
+    default: kdxs_default
   }
 }
 
