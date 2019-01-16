@@ -27,8 +27,8 @@ export default class Main {
     IS_DEV && (await import("./dev"));
     try {
       await this.init();
-      if (location.host === Mark.instance.game_url.host &&
-        location.pathname === Mark.instance.game_url.pathname) {
+      if ((location.host === Mark.instance.game_url.host &&
+        location.pathname === Mark.instance.game_url.pathname) || IS_DEV) {
         RG.Mark(DOT.SDK_LOADED);
         RG.jssdk.init()
       }

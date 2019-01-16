@@ -70,10 +70,10 @@ const kdxs_default = {
   },
   page: {
     index: {
-      test: 'https://pixel.pkmonquest.com/h5-plays/index.html',
-      // test: 'https://pixel.pkmonquest.com/h5-play_4/index.html',
-      formal: 'https://pixel.pkmonquest.com/h5-plays/index.html',
-      // formal: 'https://pixel.pkmonquest.com/h5-play_4/index.html',
+      // test: 'https://pixel.pkmonquest.com/h5-plays/index.html',
+      test: 'https://pixel.pkmonquest.com/h5-play_4/index.html',
+      // formal: 'https://pixel.pkmonquest.com/h5-plays/index.html',
+      formal: 'https://pixel.pkmonquest.com/h5-play_4/index.html',
     },
     game: {
       test: 'https://xytest.xulonggame.com/royalgame.html',
@@ -87,9 +87,7 @@ const kdxs_default = {
 }
 
 let kdxs_01 = JSON.parse(JSON.stringify(kdxs_default))
-kdxs_01.mark_id.ga = 'UA-102180151-59'
-let kdxs_02 = JSON.parse(JSON.stringify(kdxs_default))
-kdxs_02.adjust = {
+kdxs_01.adjust = {
   reachstage2: 'nabqrb',
   sdk_contact_us: 'fj41q7',
   sdk_loaded: 'mpy6ez',
@@ -110,8 +108,7 @@ const config = {
   },
   10133: {
     default: kdxs_default,
-    2: kdxs_02,
-    30002: kdxs_01
+    2: kdxs_01,
   }
 }
 
