@@ -88,7 +88,10 @@ const kdxs_default = {
       formal: 'https://xy.xulonggame.com/xy.html',
     },
     facebook: {
-      messenger: 'https://www.facebook.com/messages/t/PokemonQuestH5',
+      messenger: {
+        pc: 'https://www.facebook.com/messages/t/PokemonQuestH5',
+        mobile: 'https://m.facebook.com/messages/read/?tid=cid.c.100022096656162%3A330991297630321&entrypoint=web%3Atrigger%3Athread_list_thread'
+      },
       index: 'https://www.facebook.com/PokemonQuestH5'
     }
   }

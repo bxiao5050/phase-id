@@ -93,7 +93,7 @@ export default class Web extends Base {
 
   Pay(paymentConfig: PaymentConfig) {
     return RG.jssdk.PaymentConfig(paymentConfig).then(paymentConfigRes => {
-      window.RG.jssdk.App.showPayment(paymentConfigRes)
+      paymentConfigRes.payments.length && window.RG.jssdk.App.showPayment(paymentConfigRes)
     })
   }
 

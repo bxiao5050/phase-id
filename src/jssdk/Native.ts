@@ -382,7 +382,7 @@ export default class Native extends Base {
   Pay(paymentConfig: PaymentConfig) {
     RG.jssdk.nativeInit()
     return RG.jssdk.PaymentConfig(paymentConfig).then(paymentConfigRes => {
-      window.RG.jssdk.App.showPayment(paymentConfigRes)
+      paymentConfigRes.payments.length && window.RG.jssdk.App.showPayment(paymentConfigRes)
     })
   }
 
