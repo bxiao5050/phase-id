@@ -11,7 +11,7 @@ export default class Base {
   Account = Account.instance
 
   Mark(markName: string, markParams: any) {
-    Mark.instance.Mark(markName)
+    Mark.instance.Mark(markName, markParams)
   }
 
   Login(loginParam: LoginParam): Promise<LoginRes> {
@@ -42,7 +42,11 @@ export default class Base {
   }
 
   Messenger() {
-    window.open(RG.jssdk.config.page.facebook.messenger)
+    if(RG.jssdk.config.type === 1) {
+      window.open(RG.jssdk.config.page.facebook.messenger.pc)
+    } else {
+      window.open(RG.jssdk.config.page.facebook.messenger.mobile)
+    }
   }
 
   Fb() {

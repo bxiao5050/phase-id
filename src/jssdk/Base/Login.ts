@@ -28,7 +28,6 @@ export default class Login {
         route = this.route.login
       }
     }
-
     return new Promise(async (resolve, reject) => {
       var data = await this.loginParamHandler(loginParam)
       Http.instance.post({ route, data }).then((res: LoginRes) => {
@@ -65,7 +64,6 @@ export default class Login {
     loginParam.password = loginParam.password.length === 32 ? loginParam.password : md5(loginParam.password)
     // 获取设备信息
     return new Promise(async (resolve) => {
-      // var data: JsToNativeDeviceMsg = 
       var deviceMsg: DeviceMsg = await JsToNative.getDeviceMsgAsync() as any
       // 获取签名信息
       var sign = Utils.signed({
@@ -134,36 +132,38 @@ export default class Login {
           }, resolve, reject
         })
       } else {
-        let response = FB.getAuthResponse()
-        if (response && response.userID) {
-          var userID = response.userID
-          FB.api('/me?fields=email', (response) => { // name,birthday,gender
-            response.userID = userID
-            this.reqRegister(params, { response, resolve, reject })
-          })
-        } else {
-          if (RG.jssdk.config.type === 2) {
-            location.href = `https://www.facebook.com/${FBVersion}/dialog/oauth?client_id=${RG.jssdk.config.fb_app_id}&redirect_uri=${encodeURIComponent(location.href)}&t=${Date.now()}`
+        FB.getLoginStatus(_res => {
+          let response = _res.authResponse
+          if (response && response.userID) {
+            var userID = response.userID
+            FB.api('/me?fields=email', (response) => { // name,birthday,gender
+              response.userID = userID
+              this.reqRegister(params, { response, resolve, reject })
+            })
           } else {
-            FB.login(response => {
-              if (response.status === "connected") {
-                var userID = response.authResponse.userID
-                FB.api('/me?fields=email', (response) => { // name,birthday,gender
-                  response.userID = userID
-                  this.reqRegister(params, { response, resolve, reject })
+            if (RG.jssdk.config.type === 2) {
+              let index = location.href.indexOf('&code=')
+              let url = index === -1 ? location.href : location.href.substr(0, index)
+              location.href = `https://www.facebook.com/${FBVersion}/dialog/oauth?client_id=${RG.jssdk.config.fb_app_id}&redirect_uri=${encodeURIComponent(url)}&t=${Date.now()}`
+            } else {
+              FB.login(response => {
+                if (response.status === "connected") {
+                  var userID = response.authResponse.userID
+                  FB.api('/me?fields=email', (response) => { // name,birthday,gender
+                    response.userID = userID
+                    this.reqRegister(params, { response, resolve, reject })
+                  })
+                } else {
+                  console.error(response.status)
+                }
+              }, {
+                  scope: 'email' // ,user_birthday,user_gender
                 })
-              } else {
-                console.error(response.status)
-              }
-            }, {
-                scope: 'email' // ,user_birthday,user_gender
-              })
+            }
           }
-
-        }
+        })
+        // let response = FB.getAuthResponse()
       }
-
-
     })
   }
 

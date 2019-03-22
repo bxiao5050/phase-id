@@ -113,8 +113,8 @@ var translation = {
     PayCenter: 'Payment',
     Purchase: 'buy',
     tuichu: 'Are you sure you want to quit the game?',
-    winopen: 'Please jump to the stored value page',
-    jump: 'Jump',
+    winopen: 'Please go to the recharge page.',
+    jump: 'GO',
 
     loadException: 'Load exception',
     loading: 'Loading',

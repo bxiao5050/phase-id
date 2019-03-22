@@ -26,12 +26,22 @@ declare namespace JSSDK {
     CurUserInfo: CurUserInfo;
   }
   interface Config {
+    name
+    
     appId: number;
     app_key: string;
     advChannel: number;
     scopeId?: string;
     fb_app_id: string;
     FbPageId: string;
+    adjust: { [key: string]: string }
+
+    download: {
+      android: string
+    }
+
+    hoverFromLeft: boolean
+    hoverTop: number
     server: {
       test: string;
       formal: string;
@@ -205,7 +215,6 @@ interface JsToNative {
    */
   getDeviceMsg(): string;
   getDeviceMsgAsync(): Promise<JsToNativeDeviceMsg>;
-
   /**
    * 初始化
    * @param params
@@ -331,6 +340,20 @@ interface Base0 {
 
   fb_sdk_loaded: boolean;
 
+  key
+  iv
+  deviceMsgPromise
+  deviceMsgResolve
+  nativeInit
+  nativeIsInit
+  AESdecode
+  consumeOrder
+  jpworkResult
+  goBack
+  gotDeviceMsg
+
+
+  init
   polyfilled();
 
   App: any;
@@ -730,7 +753,7 @@ interface LoginParam {
   userId?: number;
 }
 
-interface PaymentItem {}
+interface PaymentItem { }
 
 interface requestParam {
   route?: string;

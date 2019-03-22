@@ -4,11 +4,12 @@ import { checkJsToNative } from "Src/adapter";
 import Polyfill from "Base/Polyfill";
 import Mark from "Base/Mark";
 import Web from "./Web";
+import Native from "./Native";
 
 export default class Main {
   fb_sdk_loaded: boolean;
   config: JSSDK.Config;
-  sdkInstance: Web;
+  sdkInstance: Web | Native;
   get_sdk_instance_promise;
   Mark: Mark;
 
@@ -20,19 +21,25 @@ export default class Main {
   }
 
   polyfilled = async () => {
-    window.$postMessage = function(params, origin) {
-      window.parent.postMessage(params, origin);
-    };
-    // IS_DEV && (await import("./dev"));
+    window.$postMessage = function (params, origin) {
+      if (RG.jssdk.config.type !== 2) window.parent.postMessage(params, origin);
+    }
+    IS_DEV && (await import("./dev"));
     try {
       await this.init();
-      location.host === Mark.instance.game_url.host && location.pathname === Mark.instance.game_url.pathname && RG.Mark(DOT.SDK_LOADED);
-      (location.host !== this.Mark.index_url.host || location.pathname !== this.Mark.index_url.pathname) && (RG.jssdk as any).init();
+      if ((location.host === Mark.instance.game_url.host &&
+        location.pathname === Mark.instance.game_url.pathname) || IS_DEV) {
+        RG.Mark(DOT.SDK_LOADED);
+        RG.jssdk.init()
+      }
     } catch (e) {
       console.error("error_log:", e);
       await this.get_sdk_instance_promise;
-      location.host === Mark.instance.game_url.host && location.pathname === Mark.instance.game_url.pathname && RG.Mark(DOT.SDK_LOADED);
-      (location.host !== this.Mark.index_url.host || location.pathname !== this.Mark.index_url.pathname) && (RG.jssdk as any).init();
+      if (location.host === Mark.instance.game_url.host &&
+        location.pathname === Mark.instance.game_url.pathname) {
+        RG.Mark(DOT.SDK_LOADED);
+        RG.jssdk.init()
+      }
     }
   };
 
@@ -53,6 +60,7 @@ export default class Main {
       try {
         (Utils.getUrlParam(GET.DEV) || window[GET.DEV]) && (await this.init_debugger());
         await this.get_game_config;
+
         this.get_sdk_instance();
         Promise.all([this.get_sdk_instance_promise, this.facebook_jssdk_init()])
           .then(() => {
@@ -76,7 +84,7 @@ export default class Main {
     } else {
       let config, translation;
       Promise.all([
-        new Promise(async function(resolve) {
+        new Promise(async function (resolve) {
           config = (await import("Src/config")).default[appId];
           config = config[advChannel] || config.default;
           resolve();
@@ -112,9 +120,10 @@ export default class Main {
    */
   get_sdk_instance() {
     let get_sdk_instance_resolve: Function;
-    this.get_sdk_instance_promise = new Promise(function(resolve) {
+    this.get_sdk_instance_promise = new Promise(function (resolve) {
       get_sdk_instance_resolve = resolve;
     });
+
     this.get_sdk_instance_promise.then(() => {
       if (!Mark.instance.isIndex) {
         window.addEventListener("message", this.onMessage, false);
@@ -133,11 +142,17 @@ export default class Main {
       import("Src/Web").then(module => {
         this.sdkInstance = new module.default(this.config, this.fb_sdk_loaded);
         get_sdk_instance_resolve();
-      });
+      })
     } else if (this.config.advChannel < 30000) {
       this.config.type = 2;
-      return import("Src/NativeGames");
-    } else if (this.config.advChannel > 31000 && this.config.advChannel < 32000) {
+      import("Src/Native").then(module => {
+        this.sdkInstance = new module.default(this.config, this.fb_sdk_loaded);
+        get_sdk_instance_resolve();
+      })
+    } else if (
+      this.config.advChannel > 31000 &&
+      this.config.advChannel < 32000
+    ) {
       this.config.type = 3;
       return import("Src/FacebookWebGames");
     } else if (this.config.advChannel > 32000 && this.config.advChannel < 33000) {
@@ -152,7 +167,7 @@ export default class Main {
       script.src = "https://connect.facebook.net/en_US/sdk.js";
       script.onload = () => {
         if (window.FB) {
-          FB.init({
+          window.FB.init({
             appId: this.config.fb_app_id,
             status: true,
             xfbml: true,
@@ -168,7 +183,7 @@ export default class Main {
           reject("facebook jssdk onerror");
         }
       };
-      script.onerror = function() {
+      script.onerror = function () {
         reject("facebook jssdk onerror");
       };
       document.head.appendChild(script);
