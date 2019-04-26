@@ -9,7 +9,7 @@ export default class Polyfill {
   }
 
   polyfills = ['Promise', 'Set', 'Map', 'Object.assign']
-  polyfillUrl = 'https://polyfill.io/v2/polyfill.min.js'
+  polyfillUrl = 'https://polyfill.io/v3/polyfill.min.js'
   features = [];
   init() {
     this.polyfills.forEach(feature => {
@@ -19,9 +19,12 @@ export default class Polyfill {
     })
     if (this.features.length) {
       var s = document.createElement('script');
-      s.src = `${this.polyfillUrl}?features=${this.features.join(',')}&flags=gated,always&rum=0&callback=RgPolyfilled`;
+      s.src = `${this.polyfillUrl}?features=${this.features.join(',')}&flags=gated,always&rum=0`;
       s.async = true;
       document.head.appendChild(s);
+      s.onload = function () {
+        window.RgPolyfilled()
+      }
     } else {
       window.RgPolyfilled()
     }

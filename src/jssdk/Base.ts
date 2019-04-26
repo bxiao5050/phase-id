@@ -42,7 +42,11 @@ export default class Base {
   }
 
   Messenger() {
-    window.open(RG.jssdk.config.page.facebook.messenger)
+    if(RG.jssdk.config.type === 1) {
+      window.open(RG.jssdk.config.page.facebook.messenger.pc)
+    } else {
+      window.open(RG.jssdk.config.page.facebook.messenger.mobile)
+    }
   }
 
   Fb() {
