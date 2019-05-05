@@ -38,6 +38,29 @@ var getUrlParam = (function () {
 var isDebugger = getUrlParam('debugger') || window.debugger
 var sdkVersion = getUrlParam('sdkVersion') || window.sdkVersion
 
+window.rgAsyncInit = function () {
+  var urlParam = getUrlParam()
+  var urlSearch = ''
+  var $i = 0
+  for (var name in urlParam) {
+    // 去掉修改账户的标志
+    if (name === 'type') {
+      continue;
+    } else {
+      urlSearch += (($i ? '&' : '?') + name + '=' + urlParam[name])
+      $i++
+    }
+  }
+  var user = encodeURIComponent(JSON.stringify(
+    RG.CurUserInfo()
+  ))
+  urlSearch += '&user=' + user;
+  // TEST_URL:游戏的测试地址，FORMAL_URL：游戏的正式地址
+  var href = (isDebugger ? TEST_URL : FORMAL_URL) + urlSearch
+
+  location.href = href
+}
+
 /** 加载jsssdk */
 var src = 'https://sdk-vn.pocketgamesol.com/jssdk/' + sdkVersion + '/sdk.js';
 (function (d, s, id) {
@@ -48,27 +71,6 @@ var src = 'https://sdk-vn.pocketgamesol.com/jssdk/' + sdkVersion + '/sdk.js';
   js.src = src
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'rg-jssdk'));
-
-window.rgAsyncInit = function () {
-  var urlParam = getUrlParam()
-  var urlSearch = ''
-  var $i = 0
-  for (var name in urlParam) {
-    if (name === 'type') {
-      continue
-    } else {
-      urlSearch += (($i ? '&' : '?') + name + '=' + urlParam[name])
-      $i++
-    }
-  }
-  var user = encodeURIComponent(JSON.stringify(
-    RG.CurUserInfo()
-  ))
-  urlSearch += '&user=' + user;
-  var href = (isDebugger ? TEST_URL : FORMAL_URL) + urlSearch
-
-  location.href = href
-}
 ```
 
 ```
@@ -221,8 +223,8 @@ RG.Share('https://some-gaming-address-to-share.com').then(function(data) {
 
 * 通过调用Mark方法，传入对应的打点名即可完成打点
 
-* **google**: google的打点的参数
-* **adjust**: adjust的打点的参数　　
+* **google**: google的打点的参数，可以为空
+* **adjust**: adjust的打点的参数，可以为空
 
 ```
 使用方法 RG.Mark(markName: string, param?: {google?: object, adjust?: object}): void
