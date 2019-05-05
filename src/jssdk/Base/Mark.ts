@@ -70,52 +70,59 @@ export default class Mark {
         this.gtag('js', new Date());
         this.gtag('config', config.mark_id.ga)
       }
-      this.Mark = (function(Mark, google) {
-        return function(name: string, param: {google: any}) {
+      this.Mark = (function (Mark, google) {
+        return function (name: string, param: { google: any }) {
           Mark(name, param);
           var paramGoogle;
-          if(param && param.google){
+          if (param && param.google) {
             paramGoogle = param.google
           }
           google(name, paramGoogle);
         };
       })(this.Mark, this.google);
     }
-    
+
     if (config.mark_id.adjust.id) {
-      if(this.isIndex){
-         // 判断设备的平台，只区分ios和android
-         var os_name = Utils.deviceType.android ? "android" : "ios";
-         // 检测存在设备id吗，不存在就创建一个
-         Utils.CookieManager.getCookie("gps_adid") || Utils.CookieManager.setCookie("gps_adid",Utils.generateGpsAdid(),365 * 10);
-         this._adjust = new Adjust({
-           app_token: config.mark_id.adjust.id,
-           environment: IS_DEV ? "sandbox" : "production", // or 'sandbox' in case you are testing SDK locally with your web app
-           os_name: os_name,
-           device_ids: {
-             gps_adid: Utils.CookieManager.getCookie("gps_adid") // each web app user needs to have unique identifier
-           }
-         });
-         // session会话，adjust只有在30分钟之后重新打开才算做一次会话，当一个小时内每10分钟重复打开时，这一个小时都会算作一次会话，并且发送的请求会报错返回500
-           this._adjust.trackSession(
-             function(result) {
-               console.log(result);
-             },
-             function(errorMsg, error) {
-               console.log("get session time is short");
-             }
-           );
-           this.Mark = (function(Mark, adjust) {
-            var adjustEventToken = config.mark_id.adjust.adjustEventToken;
-            return function(name: string, param: {adjust: object}) {
-              Mark(name, param);
-              var paramAdjust = {}
-              if(param && param.adjust){
-                paramAdjust = param.adjust
-              }
-              adjust(name, paramAdjust, adjustEventToken);
-            };
-          })(this.Mark, this.adjust);
+      if (this.isIndex) {
+        // 判断设备的平台，只区分ios和android
+        var os_name = 'unknown';
+        if (Utils.deviceType.android) {
+          os_name = 'android';
+        } else if (Utils.deviceType.ios || Utils.deviceType.iPhone || Utils.deviceType.iPad) {
+          os_name = 'ios';
+        } else if (Utils.deviceType.win) {
+          os_name = 'windows';
+        };
+        // 检测存在设备id吗，不存在就创建一个
+        Utils.CookieManager.getCookie("gps_adid") || Utils.CookieManager.setCookie("gps_adid", Utils.generateGpsAdid(), 365 * 10);
+        this._adjust = new Adjust({
+          app_token: config.mark_id.adjust.id,
+          environment: IS_DEV ? "sandbox" : "production", // or 'sandbox' in case you are testing SDK locally with your web app
+          os_name: os_name,
+          device_ids: {
+            gps_adid: Utils.CookieManager.getCookie("gps_adid") // each web app user needs to have unique identifier
+          }
+        });
+        // session会话，adjust只有在30分钟之后重新打开才算做一次会话，当一个小时内每10分钟重复打开时，这一个小时都会算作一次会话，并且发送的请求会报错返回500
+        this._adjust.trackSession(
+          function (result) {
+            console.log(result);
+          },
+          function (errorMsg, error) {
+            console.log("get session time is short");
+          }
+        );
+        this.Mark = (function (Mark, adjust) {
+          var adjustEventToken = config.mark_id.adjust.adjustEventToken;
+          return function (name: string, param: { adjust: object }) {
+            Mark(name, param);
+            var paramAdjust = {}
+            if (param && param.adjust) {
+              paramAdjust = param.adjust
+            }
+            adjust(name, paramAdjust, adjustEventToken);
+          };
+        })(this.Mark, this.adjust);
       }
     }
   }
@@ -164,11 +171,11 @@ export default class Mark {
 
       this._adjust.trackEvent(
         _eventConfig,
-        function(result) {
+        function (result) {
           console.info(`"${name}" has marked - adjust`);
           console.log("_eventConfig", result);
         },
-        function(errorMsg, error) {
+        function (errorMsg, error) {
           console.log(`"${name}" mark filed - adjust`);
           console.log(errorMsg, error);
         }

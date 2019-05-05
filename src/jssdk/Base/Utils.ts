@@ -56,23 +56,23 @@ class CookieManager {
     * @param value cookie的值
     * @param exdays cookie的过期时间
     */
-  public setCookie(name:string, value: string, exdays?: number): void {
+  public setCookie(name: string, value: string, exdays?: number): void {
     var expires: string;
-    if(exdays){
+    if (exdays) {
       var d: Date = new Date();
       d.setTime(d.getTime() + exdays * 24 * 60 * 60 * 1000);
       expires = "expires=" + d.toUTCString();
-    }else{
+    } else {
       expires = ''
     }
     this.cookieMap[name] = value;
     document.cookie = name + "=" + value + "; " + expires;
   }
 
-  public getCookie(name?:string) {
+  public getCookie(name?: string) {
     return this.cookieMap[name];
   }
-  public delCookie (name: string) {
+  public delCookie(name: string) {
     this.setCookie(name, '', -1);
   };
 }
@@ -121,7 +121,8 @@ export default class Utils {
     ios: boolean
     iPhone: boolean
     iPad: boolean
-    android: boolean
+    android: boolean,
+    win: boolean
   }
 
   /** 获取设备参数 */
@@ -131,7 +132,8 @@ export default class Utils {
       ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/),
       iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1,
       iPad: u.indexOf('iPad') > -1,
-      android: u.indexOf('Android') > -1
+      android: u.indexOf('Android') > -1,
+      win: u.indexOf('Windows') > -1
     }
   }
   public static get deviceType() {
@@ -208,33 +210,33 @@ export default class Utils {
   }
 
   // 生成adjust中打点需要的设备参数
-  public static generateGpsAdid(len ?: number, radix ?: number){
+  public static generateGpsAdid(len?: number, radix?: number) {
     var chars = '0123456789abcdefghijklmnopqrstuvwxyz'.split('');
     var uuid = [], i: number;
     radix = radix || chars.length;
- 
+
     if (len) {
       // Compact form
-      for (i = 0; i < len; i++) uuid[i] = chars[0 | Math.random()*radix];
+      for (i = 0; i < len; i++) uuid[i] = chars[0 | Math.random() * radix];
     } else {
       // rfc4122, version 4 form
       var r;
- 
+
       // rfc4122 requires these characters
       uuid[8] = uuid[13] = uuid[18] = uuid[23] = '-';
       uuid[14] = '4';
- 
+
       // Fill in random data.  At i==19 set the high bits of clock sequence as
       // per rfc4122, sec. 4.1.5
       for (i = 0; i < 36; i++) {
         if (!uuid[i]) {
-          r = 0 | Math.random()*16;
+          r = 0 | Math.random() * 16;
           uuid[i] = chars[(i == 19) ? (r & 0x3) | 0x8 : r];
         }
       }
     }
     return uuid.join('');
-} 
+  }
   static TimeManager: TimeManager = TimeManager.instance
   static CookieManager: CookieManager = CookieManager.instance;
 }
