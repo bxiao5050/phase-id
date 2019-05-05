@@ -46,8 +46,7 @@ export default class Main {
   init_debugger() {
     return new Promise(resolve => {
       var js = document.createElement("script");
-      js.src =
-        "//cdnjs.cloudflare.com/ajax/libs/vConsole/3.2.0/vconsole.min.js";
+      js.src = "//cdnjs.cloudflare.com/ajax/libs/vConsole/3.2.0/vconsole.min.js";
       js.onload = () => {
         new VConsole();
         resolve();
@@ -79,8 +78,7 @@ export default class Main {
   /** 获取游戏配置 */
   get_game_config = new Promise((resolve, reject) => {
     let appId = Utils.getUrlParam(GET.APP_ID) || window[GET.APP_ID];
-    let advChannel =
-      Utils.getUrlParam(GET.ADV_CHANNEL) || window[GET.ADV_CHANNEL];
+    let advChannel = Utils.getUrlParam(GET.ADV_CHANNEL) || window[GET.ADV_CHANNEL];
     if (!appId || !advChannel) {
       reject(ERROR.E_001);
     } else {
@@ -95,15 +93,19 @@ export default class Main {
           translation = (await import("DOM/i18n")).default;
           resolve();
         })
-      ]).then(() => {
-        this.config = Object.assign(config, {
-          appId,
-          advChannel,
-          i18n: translation[config.language]
+      ])
+        .then(() => {
+          this.config = Object.assign(config, {
+            appId,
+            advChannel,
+            i18n: translation[config.language]
+          });
+          return this.initAdjust();
+        })
+        .then(() => {
+          this.Mark = new Mark(this.config);
+          resolve();
         });
-        this.Mark = new Mark(this.config);
-        resolve();
-      });
     }
   });
 
@@ -125,18 +127,11 @@ export default class Main {
     this.get_sdk_instance_promise.then(() => {
       if (!Mark.instance.isIndex) {
         window.addEventListener("message", this.onMessage, false);
-        window.$postMessage(
-          { action: "get" },
-          window.$rg_main.Mark.index_url.origin
-        );
+        window.$postMessage({ action: "get" }, window.$rg_main.Mark.index_url.origin);
       } else {
         const data = {
-          user: localStorage.getItem("user")
-            ? JSON.parse(localStorage.getItem("user"))
-            : "",
-          users: localStorage.getItem("users")
-            ? JSON.parse(localStorage.getItem("users"))
-            : {}
+          user: localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : "",
+          users: localStorage.getItem("users") ? JSON.parse(localStorage.getItem("users")) : {}
         };
         RG.jssdk.Account.init(data);
       }
@@ -160,10 +155,7 @@ export default class Main {
     ) {
       this.config.type = 3;
       return import("Src/FacebookWebGames");
-    } else if (
-      this.config.advChannel > 32000 &&
-      this.config.advChannel < 33000
-    ) {
+    } else if (this.config.advChannel > 32000 && this.config.advChannel < 33000) {
       this.config.type = 4;
       return import("Src/FacebookInstantGames");
     }
@@ -175,7 +167,7 @@ export default class Main {
       script.src = "https://connect.facebook.net/en_US/sdk.js";
       script.onload = () => {
         if (window.FB) {
-          FB.init({
+          window.FB.init({
             appId: this.config.fb_app_id,
             status: true,
             xfbml: true,
@@ -195,6 +187,28 @@ export default class Main {
         reject("facebook jssdk onerror");
       };
       document.head.appendChild(script);
+    });
+  }
+  /**
+   * 加载adjust的全局打点代码
+   */
+  initAdjust() {
+    return new Promise((resolve, reject) => {
+      if (this.config.mark_id.adjust.id) {
+        import("Base/adjust.min.js" as any)
+          .then(() => {
+            if (Adjust) {
+              resolve();
+            } else {
+              reject("init Adjust failed");
+            }
+          })
+          .catch(err => {
+            reject("init Adjust failed" + err);
+          });
+      } else {
+        resolve();
+      }
     });
   }
 }

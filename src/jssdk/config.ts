@@ -74,8 +74,30 @@ const kdxs_default = {
     vip9: 'eyb7xs',
   },
   mark_id: {
-    ga: 'UA-102180151-44',
-    fb: '2245057485737002',
+    // ga: 'UA-102180151-44',
+    // fb: '2245057485737002',
+    adjust: {
+      id: 'pjrt3uo6at4w',
+      adjustEventToken: {
+        sdk_loaded: 'iknv5s',
+        sdk_purchased_done: 'epzwq6',
+        sdk_register: 't3vg8g',
+        sdk_contact_us: 'crtd1q',
+        startgame: 'tzx0ib',
+        reachstage2: 'elccby',
+        after1fightpurchase: 'rof9dr',
+        vip9: 'r36s34',
+        vip3:'1w2pm8',
+        vip13:'gttht6',
+        '1checkin':'r673tm',
+        '7checkin':'xwaj66',
+        '15checkin':'no3fvr',
+        share_screen:'5hnsys',
+        reachstage10:'7ffprl',
+        purchase:'gsxt0v',
+        createrole: 'y45q47'
+      }
+    }
   },
   server: {
     test: 'https://sdk-test.changic.net.cn/pocketgames/client',
