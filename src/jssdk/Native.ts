@@ -390,9 +390,9 @@ export default class Native extends Base {
     let markParmas: any = {
       eventName: markName
     }
-    if (RG.jssdk.config.adjust[markName]) {
-      markParmas.eventToken = RG.jssdk.config.adjust[markName]
-    }
+    // if (RG.jssdk.config.adjust[markName]) {
+    //   markParmas.eventToken = RG.jssdk.config.adjust[markName]
+    // }
     if (markName === DOT.SDK_PURCHASED_DONE) {
       markParmas = Object.assign(extraParam, markParmas)
     }
