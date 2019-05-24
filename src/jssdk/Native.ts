@@ -64,7 +64,8 @@ export default class Native extends Base {
 
   rgAsyncInit() {
     window.rgAsyncInit()
-    window.parent.postMessage({ action: 'rgAsyncInit' }, window.$rg_main.Mark.index_url.origin)
+    const index_origin = IS_DEV ? window.$rg_main.config.page.index.test : window.$rg_main.config.page.index.formal;
+    window.parent.postMessage({ action: 'rgAsyncInit' }, /(http|https):\/\/(www.)?(\w+(\.)?)+/.exec(index_origin)[0])
   }
 
   ExposeApis() {
@@ -167,7 +168,7 @@ export default class Native extends Base {
     let user = RG.jssdk.Account.user
     let autoLogin = false
     let LoginModule = window.RG.jssdk.App.showLogin()
-    let code = Utils.getUrlParam('code')
+    let code = Utils.getUrlParam('code');
 
     if (code) {
       await RG.jssdk.Login({ isFacebook: true })
@@ -337,7 +338,13 @@ export default class Native extends Base {
 
   jpworkResult(params: string) {
     console.log('jpworkResult', params)
-    let result = JSON.parse(params)
+    let result;
+    try {
+      result = JSON.parse(params);
+    } catch (error) {
+      result = params;
+    }
+    // let result = JSON.parse(params)
     if (result.code === 200) {
       RG.Mark(DOT.SDK_PURCHASED_DONE, {
         userId: RG.jssdk.CurUserInfo().userId,
@@ -349,7 +356,14 @@ export default class Native extends Base {
   }
 
   consumeOrder(params: string) {
-    let paramParse: any = JSON.parse(params)
+    // ios 的原生的调用会自动解析为对象，不需要我们进行解析
+    let paramParse
+    try {
+      paramParse = JSON.parse(params)
+    } catch (error) {
+      console.log('ios params parse error', error);
+      paramParse = params;
+    }
     console.log('native to js consumeOrder', paramParse)
     RG.jssdk.FinishOrder({
       transactionId: paramParse.transactionId,
@@ -390,9 +404,9 @@ export default class Native extends Base {
     let markParmas: any = {
       eventName: markName
     }
-    // if (RG.jssdk.config.adjust[markName]) {
-    //   markParmas.eventToken = RG.jssdk.config.adjust[markName]
-    // }
+    /*  if (RG.jssdk.config.mark_id.adjust.adjustEventToken[markName]) {
+       markParmas.eventToken = RG.jssdk.config.mark_id.adjust.adjustEventToken[markName];
+     } */
     if (markName === DOT.SDK_PURCHASED_DONE) {
       markParmas = Object.assign(extraParam, markParmas)
     }

@@ -1,5 +1,5 @@
 import Utils from "Base/Utils";
-
+// 打点代码整体拿到了sspa中，有需要可以自行修改
 export default class Mark {
 
   index_url: HTMLAnchorElement
@@ -64,8 +64,7 @@ export default class Mark {
           t = b.createElement(e); t.async = !0;
           t.src = v; t.async = true; s = b.getElementsByTagName(e)[0];
           s.parentNode.insertBefore(t, s);
-        })(window, document, 'script',
-          `https://www.googletagmanager.com/gtag/js?id=${config.mark_id.ga}`);
+        })(window, document, 'script', `https://www.googletagmanager.com/gtag/js?id=${config.mark_id.ga}`);
         window.dataLayer = window.dataLayer || [];
         this.gtag('js', new Date());
         this.gtag('config', config.mark_id.ga)
@@ -90,9 +89,7 @@ export default class Mark {
           os_name = 'android';
         } else if (Utils.deviceType.ios || Utils.deviceType.iPhone || Utils.deviceType.iPad) {
           os_name = 'ios';
-        } else if (Utils.deviceType.win) {
-          os_name = 'windows';
-        };
+        }
         // 检测存在设备id吗，不存在就创建一个
         Utils.CookieManager.getCookie("gps_adid") || Utils.CookieManager.setCookie("gps_adid", Utils.generateGpsAdid(), 365 * 10);
         this._adjust = new Adjust({
@@ -132,13 +129,13 @@ export default class Mark {
   }
 
   asyncData(name, param?) {
-    window.$postMessage({
+    window.$postMessage(JSON.stringify({
       action: 'mark',
       data: {
         name,
         param
       }
-    }, window.$rg_main.Mark.index_url.origin)
+    }), window.$rg_main.Mark.index_url.origin)
   }
 
   private facebook = (name: string) => {

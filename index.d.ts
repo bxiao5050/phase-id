@@ -10,6 +10,7 @@ declare const VERSION: JSSDK.Version;
 declare const VConsole: any;
 /** 是否为开发环境 */
 declare const IS_DEV: boolean;
+declare const IS_TEST: boolean;
 declare const Adjust: any;
 
 declare namespace JSSDK {
@@ -45,12 +46,13 @@ declare namespace JSSDK {
     hoverTop: number
     server: {
       test: string;
-      formal: string;
+      web: string;
+      native: string;
     };
     mark_id: {
       fb: string;
       ga: string;
-      adjust:{
+      adjust: {
         id: string
         adjustEventToken: object
       }

@@ -31,9 +31,10 @@ export enum GET {
 }
 
 export enum DOT {
-  SDK_LOADED = 'sdk_loaded',
-  SDK_PURCHASED_DONE = 'sdk_purchased_done',
-  SDK_REGISTER = 'sdk_register',
-  SDK_CONTACT_US ='sdk_contact_us'
-
+  SDK_LOADED = 'sdkinifinish',
+  SDK_PURCHASED_DONE = 'Purchased',
+  SDK_REGISTER = 'CompleteRegistration',
+  SDK_CONTACT_US = 'contact_us',
+  SDK_LOGIN = 'login',
+  GAME_LAUNCH = 'gamelaunch'
 }

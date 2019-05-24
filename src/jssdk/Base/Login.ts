@@ -41,6 +41,8 @@ export default class Login {
             })
             if (res.data.firstLogin) {
               RG.Mark(DOT.SDK_REGISTER)
+            }else{
+              RG.Mark(DOT.SDK_LOGIN)
             }
             resolve(res)
             break;
@@ -66,7 +68,7 @@ export default class Login {
     loginParam.password = loginParam.password.length === 32 ? loginParam.password : md5(loginParam.password)
     // 获取设备信息
     return new Promise(async (resolve) => {
-      var deviceMsg: DeviceMsg = await JsToNative.getDeviceMsgAsync() as any
+      var deviceMsg: DeviceMsg = await JsToNative.getDeviceMsgAsync() as any;
       // 获取签名信息
       var sign = Utils.signed({
         appId: RG.jssdk.config.appId,

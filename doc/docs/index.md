@@ -223,11 +223,15 @@ RG.Share('https://some-gaming-address-to-share.com').then(function(data) {
 
 * 通过调用Mark方法，传入对应的打点名即可完成打点
 
-* **google**: google的打点的参数，可以为空
-* **adjust**: adjust的打点的参数，可以为空
+* **google**: google的打点的参数，可以不传
+* **adjust**: adjust的打点的参数，可以不传
+* **currency**: 只在购买打点是传
+* **money**: 只在购买打点时传
+* **eventToken**: adjust打点时传
 
 ```
-使用方法 RG.Mark(markName: string, param?: {google?: object, adjust?: object}): void
+使用方法 
+RG.Mark(markName: string, param?: {google?: object, adjust?: object, currency?: string, money?: string,eventToken：string}): void
 ```
 
 ## 引导用户添加桌面收藏

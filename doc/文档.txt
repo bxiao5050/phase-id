@@ -1,0 +1,3 @@
+﻿https://www.mkdocs.org/#installation
+修改后重新打包，mkdocs build
+修改查看： mkdocs serve
