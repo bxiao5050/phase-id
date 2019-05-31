@@ -3,12 +3,15 @@
 // <reference path="./node_modules/@types/react/index.d.ts" />
 // <reference path="./node_modules/@types/history/index.d.ts" />
 // <reference path="./node_modules/@types/facebook-instant-games/index.d.ts" />
+//<reference path="./node_modules/_@types_facebook-js-sdk@3.1.0@@types/facebook-js-sdk/index.d.ts" />
 
 /** jssdk 版本 */
 declare const VERSION: JSSDK.Version;
 declare const VConsole: any;
 /** 是否为开发环境 */
 declare const IS_DEV: boolean;
+declare const IS_TEST: boolean;
+declare const Adjust: any;
 
 declare namespace JSSDK {
   /** 1: web端 2：原生应用 3：facebook页游平台 4：facebook instant games */
@@ -26,7 +29,7 @@ declare namespace JSSDK {
   }
   interface Config {
     name
-    
+
     appId: number;
     app_key: string;
     advChannel: number;
@@ -43,11 +46,16 @@ declare namespace JSSDK {
     hoverTop: number
     server: {
       test: string;
-      formal: string;
+      web: string;
+      native: string;
     };
     mark_id: {
       fb: string;
       ga: string;
+      adjust: {
+        id: string
+        adjustEventToken: object
+      }
     };
     test: string;
     language: string;
@@ -734,6 +742,7 @@ interface LoginParam {
   nickName?: string;
   isFacebook?: boolean;
   accountType?: number;
+  // 在h5游戏即web中这个参数对应查询参数advertiseId,表示一个广告位
   thirdPartyId?: string;
   email?: string;
   telephone?: string;

@@ -32,8 +32,9 @@ export default class Web extends Base {
   }
 
   rgAsyncInit() {
-    window.rgAsyncInit()
-    window.$postMessage({ action: 'rgAsyncInit' }, window.$rg_main.Mark.index_url.origin)
+    window.rgAsyncInit();
+    const index_origin = IS_DEV || IS_TEST ? window.$rg_main.config.page.index.test : window.$rg_main.config.page.index.formal;
+    window.$postMessage(JSON.stringify({ action: 'rgAsyncInit' }), /(http|https):\/\/(www.)?(\w+(\.)?)+/.exec(index_origin)[0])
   }
 
   async init() {
@@ -46,7 +47,7 @@ export default class Web extends Base {
     let user = RG.jssdk.Account.user
     let autoLogin = false
     if (user) {
-      autoLogin = true
+      autoLogin = true;
     } else {
       if (RG.jssdk.Account.users) {
         let usersIdArr = Object.keys(RG.jssdk.Account.users)
@@ -54,7 +55,7 @@ export default class Web extends Base {
           user = RG.jssdk.Account.users[
             usersIdArr[0]
           ]
-          autoLogin = true
+          autoLogin = true;
         }
       }
     }

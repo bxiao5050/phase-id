@@ -22,18 +22,12 @@ export default class Loading extends React.Component<LoadingProp, {}, any> {
       clock: setTimeout(() => {
         var { userType, accountType } = RG.jssdk.Account.user;
         Ins.hideLogin();
-        if (
-          (location.host === window.$rg_main.Mark.game_url.host &&
-            location.pathname === window.$rg_main.Mark.game_url.pathname) ||
-          IS_DEV
-        ) {
-          var isGuest =
-            Utils.getAccountType(userType, accountType) === "guest"
-              ? true
-              : false;
-          Ins.showHover(isGuest);
+        var isGuest = Utils.getAccountType(userType, accountType) === "guest" ? true : false;
+        Ins.showHover(isGuest);
+        if (window.rgAsyncInit) {
+          RG.Mark('gamelaunch');
+          window.rgAsyncInit();
         }
-        window.rgAsyncInit && window.rgAsyncInit();
       }, 2000)
     });
   }

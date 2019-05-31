@@ -4,14 +4,22 @@ import Login from "Base/Login";
 import Api from "Base/Api";
 import Account from "Base/Account";
 import Utils from "Base/Utils";
-import Mark from "Base/Mark";
+import Mark from "Src/Base/Mark_old";
 
 export default class Base {
 
   Account = Account.instance
 
   Mark(markName: string, markParams: any) {
-    Mark.instance.Mark(markName, markParams)
+    // Mark.instance.Mark(markName, markParams);
+    const index_origin = IS_DEV || IS_TEST ? window.$rg_main.config.page.index.test : window.$rg_main.config.page.index.formal
+    window.$postMessage(JSON.stringify({
+      action: 'mark',
+      data: {
+        name: markName,
+        param: markParams
+      }
+    }), /(http|https):\/\/(www.)?(\w+(\.)?)+/.exec(index_origin)[0])
   }
 
   Login(loginParam: LoginParam): Promise<LoginRes> {
@@ -29,8 +37,8 @@ export default class Base {
   }
 
   Redirect() {
-    window.name = 'redirect'
-    location.reload()
+    window.name = 'redirect';
+    location.reload();
   }
 
   CurUserInfo = (): JSSDK.CurUserInfo => {
@@ -42,7 +50,7 @@ export default class Base {
   }
 
   Messenger() {
-    if(RG.jssdk.config.type === 1) {
+    if (RG.jssdk.config.type === 1) {
       window.open(RG.jssdk.config.page.facebook.messenger.pc)
     } else {
       window.open(RG.jssdk.config.page.facebook.messenger.mobile)

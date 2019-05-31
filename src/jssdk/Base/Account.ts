@@ -50,15 +50,16 @@ export default class Account {
       localStorage.setItem('user', JSON.stringify(this._user))
       localStorage.setItem('users', JSON.stringify(this._users))
     } else {
+      const index_origin = IS_DEV ? window.$rg_main.config.page.index.test : window.$rg_main.config.page.index.formal;
       window.$postMessage(
-        {
+        JSON.stringify({
           action: "set",
           data: {
             user: this._user,
             users: this._users
           }
-        },
-        window.$rg_main.Mark.index_url.origin
+        }),
+        /(http|https):\/\/(www.)?(\w+(\.)?)+/.exec(index_origin)[0]
       )
     }
   }

@@ -1,65 +1,68 @@
-import Utils from "Base/Utils";
 import { DOT, GET, ERROR } from "Base/Constant";
 import { checkJsToNative } from "Src/adapter";
-import Polyfill from "Base/Polyfill";
-import Mark from "Base/Mark";
 import Web from "./Web";
 import Native from "./Native";
+import Config from "./config";
+import Languages from "DOM/i18n";
 
-export default class Main {
-  fb_sdk_loaded: boolean;
-  config: JSSDK.Config;
-  sdkInstance: Web | Native;
-  get_sdk_instance_promise;
-  Mark: Mark;
+init(window);
 
-  constructor() {
-    window.$rg_main = this as any;
-    window.RgPolyfilled = this.polyfilled;
-    checkJsToNative();
-    Polyfill.instance.init();
+function init(window: Window) {
+  window.RgPolyfilled = RgPolyfilled;
+  const urlParams = getUrlParam() as UrlParams;
+  checkJsToNative(urlParams.appId, urlParams.advChannel);
+  polyfill();
+  async function RgPolyfilled() {
+
+    window.$postMessage = window.parent.postMessage.bind(window.parent);
+    urlParams.debugger && await initDebugger();
+    const config = await initSdk(urlParams.appId, urlParams.advChannel) as JSSDK.Config;
+    // 现阶段兼容
+    window.$rg_main = { config } as any;
+    fbSdkLoad(config.fb_app_id).then(() => {
+      RG.jssdk.fb_sdk_loaded = true;
+    });
+    // 在本地测试的时候，修改$postMessage
+    IS_DEV && (await import("./dev"));
+    const indexUrl = IS_DEV || IS_TEST ? config.page.index.test : config.page.index.formal;
+    window.$postMessage(JSON.stringify({ action: "get" }), /(http|https):\/\/(www.)?(\w+(\.)?)+/.exec(indexUrl)[0]);
+    RG.Mark(DOT.SDK_LOADED);
+    RG.jssdk.init();
   }
 
-  polyfilled = async () => {
-    window.$postMessage = function (params, origin) {
-      if (RG.jssdk.config.type !== 2) window.parent.postMessage(params, origin);
+  function polyfill() {
+    const polyfills = ['Promise', 'Set', 'Map', 'Object.assign', 'Function.prototype.bind'];
+    const polyfillUrl = 'https://polyfill.io/v3/polyfill.min.js';
+    const features = polyfills.filter(feature => !(feature in window));
+    if (!features.length) return window.RgPolyfilled()
+
+    var s = document.createElement('script');
+    s.src = `${polyfillUrl}?features=${features.join(',')}&flags=gated,always&rum=0`;
+    s.async = true;
+    document.head.appendChild(s);
+    s.onload = function () {
+      window.RgPolyfilled()
     }
-    IS_DEV && (await import("./dev"));
-    try {
-
-      console.log(
-        'this.init() before'
-      )
-      await this.init();
-      console.log(
-        'this.init() after'
-      )
-
-      console.log(
-        location.host, Mark.instance.game_url.host, location.pathname, Mark.instance.game_url.pathname
-      )
-
-      if ((location.host === Mark.instance.game_url.host &&
-        location.pathname === Mark.instance.game_url.pathname) || IS_DEV || Utils.getUrlParam(GET.CLIENT)) {
-        RG.Mark(DOT.SDK_LOADED);
-        RG.jssdk.init()
-      }
-    } catch (e) {
-      console.error("error_log:", e);
-      await this.get_sdk_instance_promise;
-      if (location.host === Mark.instance.game_url.host &&
-        location.pathname === Mark.instance.game_url.pathname) {
-        RG.Mark(DOT.SDK_LOADED);
-        RG.jssdk.init()
-      }
+  }
+  function getUrlParam() {
+    var result = Object.create(null);
+    var interrogationIndex = location.href.indexOf("?") + 1
+    var str = interrogationIndex === 0 ? "" : location.href.slice(interrogationIndex)
+    if (str) {
+      var arr = str.split(/&|%26/)
+      arr.forEach(item => {
+        var arr = item.split(/=|%3D/)
+        var key = arr[0]
+        var val = arr[1]
+        result[key] = val
+      })
     }
-  };
-
-  init_debugger() {
+    return result;
+  }
+  function initDebugger() {
     return new Promise(resolve => {
       var js = document.createElement("script");
-      js.src =
-        "https://cdnjs.cloudflare.com/ajax/libs/vConsole/3.2.0/vconsole.min.js";
+      js.src = "//cdnjs.cloudflare.com/ajax/libs/vConsole/3.2.0/vconsole.min.js";
       js.onload = () => {
         new VConsole();
         resolve();
@@ -67,152 +70,92 @@ export default class Main {
       document.head.appendChild(js);
     });
   }
-
-  async init() {
-    return new Promise(async (resolve, reject) => {
-      try {
-        (Utils.getUrlParam(GET.DEV) || window[GET.DEV]) && (await this.init_debugger());
-        await this.get_game_config;
-
-        this.get_sdk_instance();
-
-        console.log(
-          'this.get_sdk_instance() after'
-        )
-        Promise.all([this.get_sdk_instance_promise, this.facebook_jssdk_init()])
-          .then(() => {
-            resolve();
-          })
-          .catch(err => {
-            reject(err);
-          });
-      } catch (err) {
-        reject(err);
-      }
-    });
+  async function initSdk(appId: string, advChannel: string) {
+    let config = getConfig(appId, advChannel);
+    // 只用于web端的sdk，暂时先写在这里
+    const indexUrl = IS_DEV ? config.page.index.test : config.page.index.formal
+    window.addEventListener("message", onMessage(indexUrl), false);
+    config.type = getSdkType(advChannel);
+    await loadSdkWithType(config.type, config);
+    return config
   }
-
-  /** 获取游戏配置 */
-  get_game_config = new Promise((resolve, reject) => {
-    let appId = Utils.getUrlParam(GET.APP_ID) || window[GET.APP_ID];
-    let advChannel =
-      Utils.getUrlParam(GET.ADV_CHANNEL) || window[GET.ADV_CHANNEL];
-    if (!appId || !advChannel) {
-      reject(ERROR.E_001);
+  function getConfig(appId: string, advChannel: string) {
+    if (!appId || !advChannel) throw "appId or advChannel is not defined";
+    const gameConfig = Config[appId][advChannel] || Config[appId].default;
+    return Object.assign(gameConfig, { appId, advChannel, i18n: Languages[gameConfig.language] });
+  }
+  function getSdkType(advChannelStr: string) {
+    let type: number;
+    const advChannel = Number(advChannelStr)
+    if (advChannel > 30000 && advChannel < 31000) {
+      type = 1;
+    } else if (advChannel < 30000) {
+      type = 2;
+    } else if (advChannel > 31000 && advChannel < 32000
+    ) {
+      type = 3;
+    } else if (advChannel > 32000 && advChannel < 33000) {
+      type = 4;
     } else {
-      let config, translation;
-      Promise.all([
-        new Promise(async function (resolve) {
-          config = (await import("Src/config")).default[appId];
-          config = config[advChannel] || config.default;
-          resolve();
-        }),
-        new Promise(async resolve => {
-          translation = (await import("DOM/i18n")).default;
-          resolve();
-        })
-      ]).then(() => {
-        this.config = Object.assign(config, {
-          appId,
-          advChannel,
-          i18n: translation[config.language]
+      throw "unknow advChannel";
+    }
+    return type;
+  }
+  async function loadSdkWithType(sdkType: number, config: any) {
+    let sdk: Web | Native;
+    switch (sdkType) {
+      case 1:
+        await import("Src/Web").then(module => {
+          sdk = new module.default(config, false);
         });
-        this.Mark = new Mark(this.config);
-        resolve();
-      });
+        break;
+      case 2:
+        import("Src/Native").then(module => {
+          sdk = new module.default(config, false);
+        })
+        break;
+      case 3:
+        return import("Src/FacebookWebGames");
+      case 4:
+        return import("Src/FacebookInstantGames");
     }
-  });
-
-  onMessage(event: MessageEvent) {
-    if (event.origin === window.$rg_main.Mark.index_url.origin) {
-      RG.jssdk.Account.init(event.data);
-    }
+    return sdk;
   }
+  function fbSdkLoad(fbAppId: string) {
 
-  /**
-   * 获取SDk的类型
-   */
-  get_sdk_instance() {
-    let get_sdk_instance_resolve: Function;
-    this.get_sdk_instance_promise = new Promise(function (resolve) {
-      get_sdk_instance_resolve = resolve;
-    });
-
-    this.get_sdk_instance_promise.then(() => {
-      if (!Mark.instance.isIndex) {
-        window.addEventListener("message", this.onMessage, false);
-        window.$postMessage(
-          { action: "get" },
-          window.$rg_main.Mark.index_url.origin
-        );
-      } else {
-        const data = {
-          user: localStorage.getItem("user")
-            ? JSON.parse(localStorage.getItem("user"))
-            : "",
-          users: localStorage.getItem("users")
-            ? JSON.parse(localStorage.getItem("users"))
-            : {}
-        };
-        RG.jssdk.Account.init(data);
-      }
-    });
-
-    if (this.config.advChannel > 30000 && this.config.advChannel < 31000) {
-      this.config.type = 1;
-      import("Src/Web").then(module => {
-        this.sdkInstance = new module.default(this.config, this.fb_sdk_loaded);
-        get_sdk_instance_resolve();
-      })
-    } else if (this.config.advChannel < 30000) {
-      this.config.type = 2;
-      import("Src/Native").then(module => {
-        this.sdkInstance = new module.default(this.config, this.fb_sdk_loaded);
-        get_sdk_instance_resolve();
-      })
-    } else if (
-      this.config.advChannel > 31000 &&
-      this.config.advChannel < 32000
-    ) {
-      this.config.type = 3;
-      return import("Src/FacebookWebGames");
-    } else if (
-      this.config.advChannel > 32000 &&
-      this.config.advChannel < 33000
-    ) {
-      this.config.type = 4;
-      return import("Src/FacebookInstantGames");
-    }
-  }
-
-  facebook_jssdk_init() {
     return new Promise((resolve, reject) => {
-      const script = document.createElement("script");
-      script.src = "https://connect.facebook.net/en_US/sdk.js";
-      script.onload = () => {
-        if (window.FB) {
-          FB.init({
-            appId: this.config.fb_app_id,
-            status: true,
-            xfbml: true,
-            version: FBVersion
-          });
-          if (this.sdkInstance) {
-            RG.jssdk.fb_sdk_loaded = true;
-          } else {
-            this.fb_sdk_loaded = true;
-          }
-          resolve();
-        } else {
-          reject("facebook jssdk onerror");
-        }
+      window.fbAsyncInit = function () {
+        FB.init({
+          appId: fbAppId,
+          status: true,
+          xfbml: true,
+          version: FBVersion
+        });
+        resolve();
       };
-      script.onerror = function () {
-        reject("facebook jssdk onerror");
-      };
-      document.head.appendChild(script);
-    });
+      (function (d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = "https://connect.facebook.net/en_US/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+      }(document, 'script', 'facebook-jssdk'));
+    })
+
+  }
+  function onMessage(indexUrl: string) {
+    return function (event: MessageEvent) {
+      if (event.origin !== /(http|https):\/\/(www.)?(\w+(\.)?)+/.exec(indexUrl)[0]) return;
+      RG.jssdk.Account.init(JSON.parse(event.data));
+    }
   }
 }
 
-new Main();
+type UrlParams = {
+  appId: string;
+  advChannel: string;
+  sdkVersion: string;
+  t: string;
+  debugger?: boolean;
+  advertiseId?: string;
+}

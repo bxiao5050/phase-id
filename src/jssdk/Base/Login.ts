@@ -17,19 +17,21 @@ export default class Login {
   }
 
   public platformLogin(loginParam: LoginParam): Promise<LoginRes> {
-    var route
+    var route, isRegister = false;
     if (loginParam.isFacebook) {
-      route = this.route.register
+      route = this.route.register;
+      isRegister = true;
     } else {
       if (loginParam.isReg || !loginParam.userName) {
         route = this.route.register
+        isRegister = true;
       }
       else {
         route = this.route.login
       }
     }
     return new Promise(async (resolve, reject) => {
-      var data = await this.loginParamHandler(loginParam)
+      var data = await this.loginParamHandler(loginParam, isRegister)
       Http.instance.post({ route, data }).then((res: LoginRes) => {
         switch (res.code) {
           case 200:
@@ -39,6 +41,8 @@ export default class Login {
             })
             if (res.data.firstLogin) {
               RG.Mark(DOT.SDK_REGISTER)
+            }else{
+              RG.Mark(DOT.SDK_LOGIN)
             }
             resolve(res)
             break;
@@ -59,12 +63,12 @@ export default class Login {
 
   }
 
-  public loginParamHandler(loginParam: LoginParam): Promise<PlatformLoginParam> {
+  public loginParamHandler(loginParam: LoginParam, isRegister: boolean): Promise<PlatformLoginParam> {
     // 密码md5加密
     loginParam.password = loginParam.password.length === 32 ? loginParam.password : md5(loginParam.password)
     // 获取设备信息
     return new Promise(async (resolve) => {
-      var deviceMsg: DeviceMsg = await JsToNative.getDeviceMsgAsync() as any
+      var deviceMsg: DeviceMsg = await JsToNative.getDeviceMsgAsync() as any;
       // 获取签名信息
       var sign = Utils.signed({
         appId: RG.jssdk.config.appId,
@@ -73,6 +77,9 @@ export default class Login {
         source: deviceMsg.source
       })
       loginParam.source = deviceMsg.source
+      if (RG.jssdk.config.type === 1 && isRegister) {
+        loginParam.thirdPartyId = Utils.getUrlParam('advertiseId') ? Utils.getUrlParam('advertiseId') : '';
+      }
       resolve(Object.assign(
         deviceMsg,
         loginParam,

@@ -50,8 +50,8 @@ const kdxs_default = {
   name: 'PokemonQuest',
   app_key: 'bebb9e42c3984939ae9dd3410d13666f',
   fb_app_id: '738722513164399',
-  language: 'EN',
-  region: 'DE',
+  language: 'TW',
+  region: 'SG',
   hoverTop: '.24',
   hoverFromLeft: true,
   adjust: {
@@ -74,8 +74,30 @@ const kdxs_default = {
     vip9: 'eyb7xs',
   },
   mark_id: {
-    ga: 'UA-102180151-44',
-    fb: '2245057485737002',
+    // ga: 'UA-102180151-44',
+    // fb: '2245057485737002',
+    adjust: {
+      id: 'pjrt3uo6at4w',
+      adjustEventToken: {
+        sdk_loaded: 'iknv5s',
+        sdk_purchased_done: 'epzwq6',
+        sdk_register: 't3vg8g',
+        sdk_contact_us: 'crtd1q',
+        startgame: 'tzx0ib',
+        reachstage2: 'elccby',
+        after1fightpurchase: 'rof9dr',
+        vip9: 'r36s34',
+        vip3: '1w2pm8',
+        vip13: 'gttht6',
+        '1checkin': 'r673tm',
+        '7checkin': 'xwaj66',
+        '15checkin': 'no3fvr',
+        share_screen: '5hnsys',
+        reachstage10: '7ffprl',
+        purchase: 'gsxt0v',
+        createrole: 'y45q47'
+      }
+    }
   },
   server: {
     test: 'https://sdk-test.changic.net.cn/pocketgames/client',
@@ -102,6 +124,41 @@ const kdxs_default = {
     }
   }
 }
+// 火影游戏
+const hy_default = {
+  name: 'PokemonQuest',
+  app_key: '40af84c65b7d45439e2d3e102ba85bce',
+  fb_app_id: '663857194035716',
+  language: 'TW',
+  region: 'SG',
+  hoverTop: '.24',
+  hoverFromLeft: true,
+  mark_id: {
+    fb: '663857194035716',
+
+  },
+  server: {
+    test: 'https://sdk-test.changic.net.cn/pocketgames/client',
+    web: 'https://desdk-cdn.pkmonquest.com/pocketgames/client',
+    native: ' https://sdk.narutoh5game.com'
+  },
+  download: {
+    android: ''
+  },
+  page: {
+    index: {
+      test: 'https://www.narutoh5game.com/test_advertiseId/index.html',
+      formal: 'https://www.narutoh5game.com/hyrz/index.html',
+    },
+    facebook: {
+      messenger: {
+        pc: 'https://www.messenger.com/t/NarutoGame.H5',
+        mobile: 'https://m.facebook.com/NarutoGame.H5'
+      },
+      index: 'https://www.facebook.com/NarutoGame.H5'
+    }
+  }
+}
 
 
 const config = {
@@ -111,10 +168,14 @@ const config = {
   10120: {
     default: config2,
     18: config3,
-    32001: config4,
+    32001: config4
   },
   10133: {
     default: kdxs_default
+  },
+  // 修改
+  10183: {
+    default: hy_default
   }
 }
 
