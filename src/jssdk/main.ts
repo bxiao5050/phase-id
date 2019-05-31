@@ -26,9 +26,21 @@ export default class Main {
     }
     IS_DEV && (await import("./dev"));
     try {
+
+      console.log(
+        'this.init() before'
+      )
       await this.init();
+      console.log(
+        'this.init() after'
+      )
+
+      console.log(
+        location.host, Mark.instance.game_url.host, location.pathname, Mark.instance.game_url.pathname
+      )
+
       if ((location.host === Mark.instance.game_url.host &&
-        location.pathname === Mark.instance.game_url.pathname) || IS_DEV) {
+        location.pathname === Mark.instance.game_url.pathname) || IS_DEV || Utils.getUrlParam(GET.CLIENT)) {
         RG.Mark(DOT.SDK_LOADED);
         RG.jssdk.init()
       }
@@ -47,7 +59,7 @@ export default class Main {
     return new Promise(resolve => {
       var js = document.createElement("script");
       js.src =
-        "//cdnjs.cloudflare.com/ajax/libs/vConsole/3.2.0/vconsole.min.js";
+        "https://cdnjs.cloudflare.com/ajax/libs/vConsole/3.2.0/vconsole.min.js";
       js.onload = () => {
         new VConsole();
         resolve();
@@ -63,6 +75,10 @@ export default class Main {
         await this.get_game_config;
 
         this.get_sdk_instance();
+
+        console.log(
+          'this.get_sdk_instance() after'
+        )
         Promise.all([this.get_sdk_instance_promise, this.facebook_jssdk_init()])
           .then(() => {
             resolve();

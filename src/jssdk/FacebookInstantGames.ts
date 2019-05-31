@@ -1,4 +1,3 @@
-import Mark from 'Base/Mark'
 import { Ins } from 'DOM/index'
 import { DOT } from './Base/Constant';
 

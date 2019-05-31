@@ -27,13 +27,14 @@ export enum GET {
   APP_ID = 'appId',
   ADV_CHANNEL = 'advChannel',
   DEBUGGER = 'debugger',
-  DEV = 'dev'
+  DEV = 'dev',
+  CLIENT = 'client'
 }
 
 export enum DOT {
   SDK_LOADED = 'sdk_loaded',
   SDK_PURCHASED_DONE = 'sdk_purchased_done',
   SDK_REGISTER = 'sdk_register',
-  SDK_CONTACT_US ='sdk_contact_us'
+  SDK_CONTACT_US = 'sdk_contact_us'
 
 }
