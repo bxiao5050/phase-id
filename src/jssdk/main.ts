@@ -15,7 +15,7 @@ function init(window: Window) {
   async function RgPolyfilled() {
 
     window.$postMessage = window.parent.postMessage.bind(window.parent);
-    urlParams.debugger && await initDebugger();
+    (urlParams.debugger || window['debugger']) && await initDebugger();
     const config = await initSdk(urlParams.appId, urlParams.advChannel) as JSSDK.Config;
     // 现阶段兼容
     window.$rg_main = { config } as any;

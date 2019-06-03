@@ -28,8 +28,7 @@ declare namespace JSSDK {
     CurUserInfo: CurUserInfo;
   }
   interface Config {
-    name
-
+    name: string;
     appId: number;
     app_key: string;
     advChannel: number;
@@ -141,6 +140,7 @@ declare interface Window {
     };
   };
   $postMessage: Function;
+  opera: any;
 }
 
 declare var FBVersion: string;

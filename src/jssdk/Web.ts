@@ -20,7 +20,7 @@ export default class Web extends Base {
   }
 
   loadScript(src) {
-    let resolve, script = document.createElement('script')
+    let resolve, script = document.createElement('script');
     script.src = src
     script.onload = function () {
       resolve()

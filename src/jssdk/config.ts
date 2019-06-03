@@ -135,7 +135,6 @@ const hy_default = {
   hoverFromLeft: true,
   mark_id: {
     fb: '663857194035716',
-
   },
   server: {
     test: 'https://sdk-test.changic.net.cn/pocketgames/client',
@@ -152,8 +151,8 @@ const hy_default = {
     },
     facebook: {
       messenger: {
-        pc: 'https://www.messenger.com/t/NarutoGame.H5',
-        mobile: 'https://m.facebook.com/NarutoGame.H5'
+        pc: 'https://www.facebook.com/messages/t/NarutoGame.H5',
+        mobile: 'https://m.facebook.com/messages/read/?tid=445144659622899&entrypoint=web%3Atrigger%3Athread_list_thread&ref=bookmark',
       },
       index: 'https://www.facebook.com/NarutoGame.H5'
     }

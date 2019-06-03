@@ -22,6 +22,7 @@ var devServer = {
   inline: true,
   port: 7001,
   // https: true
+  host: '0.0.0.0'
 }
 if (sdkVersion === true) {
   console.error('miss sdkVersion')
