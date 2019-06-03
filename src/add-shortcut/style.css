@@ -55,6 +55,7 @@ body {
 .ios-page1::before {
   display: block;
   content: '';
+  width: 100%;
   height: 100%;
   background-image: url('./assets/ios/page1_bg.png');
   background-size: 100%;
@@ -91,6 +92,7 @@ body {
 .ios-page2::before {
   display: block;
   content: '';
+  width: 100%;
   height: 100%;
   background-image: url('./assets/ios/page1_bg.png');
   background-size: 100%;
