@@ -137,7 +137,7 @@ var webpackConfig = {
 
   plugins: [
     new HtmlWebpackPlugin({
-      filename: isDev ? 'add-shortcut.html' : 'index.html',
+      filename: isDev ? 'add-shortcut.html' : 'shortcut.html',
       template: './src/add-shortcut.html',
       chunks: ['shortcut'],
       inject: 'body',
