@@ -60,10 +60,10 @@ p {
 
 
 .ios-page1 {
-  background-image: url('./assets/ios/page1_game_image.png'), url('./assets/ios/page1_bg.png');
+  background-image: url('./assets/ios/page1_bg.png'), url('./assets/bg.jpg');
   background-size: contain, contain;
   background-repeat: no-repeat, no-repeat;
-  background-position: center, center;
+  background-position: center, 0vw 80%;
 }
 
 
@@ -72,7 +72,7 @@ p {
   box-sizing: border-box;
   padding: 0 2%;
   font-size: 4.4vw;
-  color: white;
+  color: red;
   position: absolute;
   bottom: 20%;
   left: 0;
@@ -196,6 +196,8 @@ p {
 .app-icon {
   width: 16.3%;
   height: auto;
+  margin-left: 6.2%;
+  margin-top: 6%;
 }
 
 .ios-page3-icon {
@@ -227,9 +229,7 @@ p {
 }
 
 .ios-page4 .app-icon {
-  display: block;
-  margin-left: 6.2%;
-  margin-top: 6%;
+  display: block
 }
 
 .ios-page4-app-name {
@@ -248,7 +248,7 @@ p {
 }
 
 .android-page {
-  background-image: url('./assets/android/page_bg_top.png'), url('./assets/android/page_bg_bottom.png');
+  background-image: url('./assets/android/page_bg_top.png'), url('./assets/bg.jpg');
   background-size: 100% auto, 100% auto;
   background-repeat: no-repeat, no-repeat;
   background-position: center top, center bottom;
@@ -267,7 +267,7 @@ p {
   width: 100%;
   padding: 0 2%;
   font-size: 4.4vw;
-  color: white;
+  color: red;
   font-weight: 600;
   margin: 0;
 }
@@ -322,14 +322,16 @@ p {
 }
 
 .android-page3-popup {
-  width: 81%;
+  position: relative;
+  width: 80%;
   height: 26%;
   margin: 0 auto;
-  background-image: url('./assets/android/page3_bg.png');
-  background-size: contain;
+  border-radius: 2%;
+  box-shadow: 0 0 1px 1px rgba(0, 0, 0, .3);
+  background: url('./assets/android/page3_bg.png');
+  background-size: 100% 100%;
   background-repeat: no-repeat;
   background-position: center;
-  position: relative;
 }
 
 .android-page3-select-text {
@@ -364,6 +366,7 @@ p {
   margin: 0 4%;
   width: 18%;
   height: 18%;
+  background: rgba(200, 10, 45, .3);
 }
 
 .app-info .app-Name {
@@ -415,11 +418,10 @@ p {
 }
 
 .android-page4-app-name {
-  width: 20%;
   text-align: left;
   line-height: 1.5;
   font-size: 3.5vw;
-  margin: 0 0 0 25%;
+  margin: 0 0 0 27%;
 }
 
 .android-page4-select-text {

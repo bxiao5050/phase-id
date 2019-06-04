@@ -1,6 +1,3 @@
-import('swiper/dist/css/swiper.min.css' as any)
-import('./style.css' as any)
-
 import * as React from 'react';
 import Swiper from 'react-id-swiper';
 import swiper from 'swiper';
@@ -20,9 +17,6 @@ export default class Slides extends React.Component<{
     // setInterval(() => {
     //   this.swiper.slideNext()
     // }, 3000)
-    this.swiper.slideNext();
-    this.swiper.slideNext();
-    this.swiper.slideNext();
   }
   config = {
     containerClass: 'swiper-container',
@@ -69,7 +63,7 @@ export default class Slides extends React.Component<{
                 {i18n.selectHome}
               </p>
               <img className="ios-page2-select-image" src={require('./assets/ios/page2_select_image.png')} alt="select" />
-              <p className={language === 'EN' ? 'ios-page2-tags' : 'ios-page2-tags ios-page2-tags-TW'}>
+              <p className={language === 'TW' ? 'ios-page2-tags ios-page2-tags-TW' : 'ios-page2-tags'}>
                 <span className="ios-page2-tags-text">{i18n.page2Tip1}</span>
                 <span className="ios-page2-tags-text">{i18n.page2Tip2}</span>
                 <span className="ios-page2-tags-text">{i18n.page2Tip3}</span>
