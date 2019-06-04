@@ -20,14 +20,17 @@ export default class Slides extends React.Component<{
     // setInterval(() => {
     //   this.swiper.slideNext()
     // }, 3000)
+    this.swiper.slideNext();
+    this.swiper.slideNext();
+    this.swiper.slideNext();
   }
   config = {
     containerClass: 'swiper-container',
-    loop: true,
+    // loop: true,
     pagination: {
       el: '.swiper-pagination',
       type: 'bullets',
-      dynamicBullets: true,
+      dynamicBullets: true
     },
   }
 
@@ -49,14 +52,14 @@ export default class Slides extends React.Component<{
     };
     const language = this.props.language;
     const system = this.props.system;
-    return (<div>
+    return (<div className="swiper-container-wrap">
       {system === 'ios' ? (
         <Swiper {...this.config} ref={node => node ? this.swiper = node.swiper : null}>
           <div className="ios-page1">
             <p className="ios-page1-select-text">{i18n.openMenu}</p>
             <img className="ios-page1-select-image" src={require('./assets/ios/page1_select_image.png')} alt="select" />
           </div>
-          <div className="ios-page2">
+          <div className="ios-page2 ios-page1">
             <div className="ios-page2-tip">
               <p className="ios-page2-top">
                 <span className="ios-page2-top-text">{i18n.page2TopText}
@@ -99,7 +102,7 @@ export default class Slides extends React.Component<{
               <p className="android-select-text">{i18n.openMenu}</p>
             </div>
             <div className="android-page">
-              <div className={language === 'TW' ? 'android-page2-menu android-page2-menu-TW' : 'android-page2-menu android-page2-menu-EN'}>
+              <div className={language === 'EN' ? 'android-page2-menu android-page2-menu-EN' : 'android-page2-menu android-page2-menu-TW'}>
                 <p className="android-select-text android-page2-select-text">{i18n.selectHome}</p>
                 <img className="android-page2-select-image" src={require('./assets/android/page2_select_image.png')} alt="select" />
                 <p className="android-page2-menu-text">{i18n.page2Tip4}</p>
@@ -111,7 +114,7 @@ export default class Slides extends React.Component<{
                 <p className="android-page3-popup-title">{i18n.androidAddHome}</p>
                 <p className="app-info"><img className="app-icon" src={require('./assets/app_icon.png')} alt="app icon" /><span className="app-Name">{i18n.appName}</span></p>
                 <p className="popup-button">
-                  <span className={language === 'TW' ? 'popup-button-cancel popup-button-cancel-TW' : 'popup-button-cancel'}>{i18n.cancel}</span>
+                  <span className={language === 'EN' ? 'popup-button-cancel' : 'popup-button-cancel popup-button-cancel-TW'}>{i18n.cancel}</span>
                   <span className="popup-button-add">{i18n.add}</span>
                 </p>
                 <img className="android-page3-select-image" src={require('./assets/android/page3_select_image.png')} alt="select" />
