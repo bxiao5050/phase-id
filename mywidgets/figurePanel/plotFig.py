@@ -220,7 +220,7 @@ class PlotCanvas():
             vline.remove()
         self.filenameAndV_lines.clear()
         self.canvas_line.draw()
-        self.fig_line.subplots_adjust(left=0.06, bottom=0.1, right=0.99, top=1, wspace=0, hspace=0)
+        self.fig_line.subplots_adjust(left=0.6, bottom=0.1, right=0.99, top=1, wspace=0, hspace=0)
 
 
 
