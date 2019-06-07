@@ -116,7 +116,7 @@ class PlotCanvas():
 
         self.poly = PolyCollection(verts, closed = False, edgecolors = colors, linewidths = 1, facecolors = self.ax_threeD.get_facecolor())
 
-        self.poly.set_alpha(0.9)
+        self.poly.set_alpha(0.90)
         self.ax_threeD.set_ylim3d(-1  , self.z_len)
         self.ax_threeD.add_collection3d(self.poly, zs=zs, zdir='y')
         self.canvas_threeD.draw()
