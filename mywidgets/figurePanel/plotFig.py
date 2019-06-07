@@ -142,7 +142,7 @@ class PlotCanvas():
 
     def up(self):
         # self.offset_up += 0.01
-        self.offset = self.offset + 0.01
+        self.offset = self.offset + 0.015
         self.reDraw()
 
     def down(self):
