@@ -176,7 +176,7 @@ class PlotCanvas():
     def plotLine(self, data, filename):
         vline = self.ax_line.vlines(data.x, np.zeros(len(data.x)), data.y/100, label = filename)
         self.filenameAndV_lines[filename] = vline
-        vline.set_color(np.random.rand(3))
+        vline.set_color(np.random.rand(2))
         self.setLegend()
 
 
