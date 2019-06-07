@@ -73,7 +73,7 @@ class PlotCanvas():
         self.ax_threeD = self.fig_threeD.add_subplot(111, projection='3d')
         self.z_len = 4
         self.ax_threeD.set_xlabel('2Theta')
-        self.ax_threeD.set_zlabel('Intensity')
+        self.ax_threeD.set_zlabel('Intensities')
         self.ax_threeD.set_zlim3d(0, 1)
 
         self.canvas_threeD.draw()
