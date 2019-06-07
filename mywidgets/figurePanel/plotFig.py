@@ -111,7 +111,7 @@ class PlotCanvas():
             xs = xs[::10] #only use partial data, increase plot speed
             ys = ys[::10]
             colors.append(color)
-            ys[0], ys[-1] = 0, 0
+            ys[0], ys[0] = 0, 0
             verts.append(list(zip(xs, ys)))
 
         self.poly = PolyCollection(verts, closed = False, edgecolors = colors, linewidths = 1, facecolors = self.ax_threeD.get_facecolor())
