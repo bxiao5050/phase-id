@@ -62,14 +62,6 @@ class PlotCanvas():
         self.bdown = Button(fOffset, text = 'offset --', width = 9, command = self.down)
         self.yscale = Scale(fOffset, from_=1.3, to=15.0, resolution = 0.1, variable = ymax, length = 300, showvalue = 0, orient=HORIZONTAL, command = self.set_ymax)
 
-        ftoolbar = Frame(fOffset)
-        toolbar = NavigationToolbar2Tk(self.canvas_line, ftoolbar)
-        toolbar.update()
-        self.bUp.grid(row = 0, column = 0, padx = (0,10), sticky = 'n')
-        self.bdown.grid(row = 0, column = 1, sticky = 'n')
-        Label(fOffset, text = 'set y-axis:').grid(row = 0, column =2, sticky = 'n', padx = (10,0))
-        self.yscale.grid(row = 0, column = 3, sticky = 'n')
-        ftoolbar.grid(row = 0, column = 4,padx = (20,10),  sticky = 'nw')
 
 
         #2.preparation draw for threeD page
