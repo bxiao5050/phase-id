@@ -99,7 +99,7 @@ class PlotCanvas():
 
 ######################################3d###############################
     def threeDUpdata(self):
-        if self.poly is not None:
+        if self.poly is  None:
             self.poly.remove()
 
         zs = range(len(self.posAndexpLine.keys()))
