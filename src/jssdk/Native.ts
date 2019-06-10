@@ -18,8 +18,12 @@ export default class Native extends Base {
 
     let RG = function () { }
     RG.prototype.jssdk = this
-
     window.RG = new RG
+
+    console.log(
+      'this.ExposeApis() before'
+    )
+
     this.ExposeApis()
 
     /**
@@ -154,6 +158,11 @@ export default class Native extends Base {
       goBack: RG.jssdk.goBack,
       deviceMsg: RG.jssdk.gotDeviceMsg
     }
+
+    console.log(
+      'RG.jssdk.nativeInit() before'
+    )
+
     RG.jssdk.nativeInit()
 
 
@@ -239,6 +248,7 @@ export default class Native extends Base {
   nativeIsInit = false
 
   async nativeInit() {
+
     if (!RG.jssdk.nativeIsInit) {
       let deviceMsg = await window.JsToNative.getDeviceMsgAsync()
       let { source, network, model, operatorOs, deviceNo, device, version } = deviceMsg
