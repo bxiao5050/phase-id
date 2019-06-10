@@ -17,7 +17,7 @@ class Popup():
   return
 
  def functions_binding_key(self):
-  self.text.bind("<Button-3>",self.show_menu_)
+  self.text.bind("<Button-2>",self.show_menu_)
 
   return
 
