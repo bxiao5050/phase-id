@@ -160,15 +160,7 @@ class PlotCanvas():
 
 
 
-    #get cal Vline from linecollection
-    def segToLine(self, seg):
-        a = seg.get_segments()
-        x = []
-        y = []
-        for i in range(len(a)):
-          x.append(a[i][0][0])
-          y.append(a[i][1][1])
-        return [x, y]
+
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
