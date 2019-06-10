@@ -20,7 +20,7 @@ var SERVER = ''
 var devServer = {
   contentBase: path.join(__dirname, 'build'),
   inline: true,
-  port: 7001,
+  port: 9898,
   // https: true
   host: '0.0.0.0'
 }
