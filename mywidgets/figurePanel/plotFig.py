@@ -147,7 +147,7 @@ class PlotCanvas():
 
     def down(self):
         # self.offset_down -= 0.01
-        self.offset = self.offset - 0.01
+        self.offset = self.offset + 0.01
         self.reDraw()
 
     def wide(self):
