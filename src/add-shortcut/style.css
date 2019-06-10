@@ -1,8 +1,27 @@
+@charset "UTF-8";
+
+html,
 body {
+  width: 100%;
+  height: 100%;
   margin: 0;
   padding: 0;
   overflow: hidden;
   background: #000;
+}
+
+p {
+  /* white-space: pre-line; */
+  word-break: keep-all;
+  word-wrap: break-word;
+  text-align: center;
+  margin: 0;
+}
+
+.app-container,
+.swiper-container-wrap {
+  width: 100%;
+  height: 100%;
 }
 
 .swiper-container {
@@ -10,7 +29,6 @@ body {
   height: 92vh;
   max-height: 163.55555vw;
   max-width: 92vw;
-
   overflow: hidden;
   position: relative;
 }
@@ -18,21 +36,16 @@ body {
 .swiper-container .swiper-wrapper {
   display: flex;
   width: 10000px;
-  /* visibility: hidden; */
-}
-
-.swiper-img {
-  width: 100%;
 }
 
 .swiper-pagination {
   bottom: 3.2rem !important;
-  width: 100vw !important;
+  width: 100% !important;
 }
 
 #app {
   width: 100%;
-  max-width: 800px;
+  max-width: 750px;
   height: 100%;
   position: absolute;
   display: flex;
@@ -47,81 +60,57 @@ body {
 
 
 .ios-page1 {
-  background-image: url('./assets/ios/page1_game_image.png');
-  background-size: contain;
-  background-repeat: no-repeat;
+  background-image: url('./assets/ios/page1_game_image.png'), url('./assets/ios/page1_bg.png');
+  background-size: contain, contain;
+  background-repeat: no-repeat, no-repeat;
+  background-position: center, center;
 }
 
-.ios-page1::before {
-  display: block;
-  content: '';
-  height: 100%;
-  background-image: url('./assets/ios/page1_bg.png');
-  background-size: 100%;
-  background-repeat: no-repeat;
-  position: relative;
-}
 
 .ios-page1-select-text {
   width: 100%;
   box-sizing: border-box;
-  padding: 0 2vw;
+  padding: 0 2%;
   font-size: 4.4vw;
   color: white;
-  text-align: center;
   position: absolute;
-  bottom: 20vw;
+  bottom: 20%;
   left: 0;
 }
 
 .ios-page1-select-image {
-  width: 24vw;
+  width: 24%;
   position: absolute;
-  bottom: 0vw;
-  left: 24vw;
-
-}
-
-.ios-page2 {
-  background-image: url('./assets/ios/page1_game_image.png');
-  background-size: contain;
-  background-repeat: no-repeat;
-}
-
-.ios-page2::before {
-  display: block;
-  content: '';
-  height: 100%;
-  background-image: url('./assets/ios/page1_bg.png');
-  background-size: 100%;
-  background-repeat: no-repeat;
-  position: absolute;
-  top: 0;
-  left: 0;
+  bottom: 0;
+  left: 31%;
 
 }
 
 .ios-page2-tip {
   width: 96.8%;
-  height: 121.5vw;
+  height: 70%;
   background-image: url('./assets/ios/page2_bg.png');
-  background-size: 100% auto;
-  background-position: center top;
+  background-size: 100%;
   background-repeat: no-repeat;
-  margin: 48vw auto 0;
+  background-position: center top;
+  margin: 54% auto 0;
+  position: relative;
 }
 
 .ios-page2-top {
-  width: 100%;
-  height: 27vw;
-  line-height: 27vw;
-  margin: 0;
+  width: 73%;
+  height: 27%;
+  text-align: left;
+  margin: 0 0 0 23%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .ios-page2-top-text {
+  width: 100%;
   display: inline-block;
-  width: 74%;
-  margin-left: 21vw;
+  vertical-align: middle;
   line-height: 1;
   font-size: 3.2vw;
   vertical-align: middle;
@@ -133,31 +122,27 @@ body {
   color: red;
   font-size: 4.6vw;
   text-align: center;
-  margin-top: 22vw;
-  padding: 0 2vw;
+  margin-top: 22%;
+  padding: 0 2%;
   margin-bottom: 0;
   word-wrap: break-word;
   white-space: pre-line;
 }
 
 .ios-page2-select-image {
-  width: 38.4vw;
+  width: 46%;
   height: auto;
   position: absolute;
-  right: 4.6vw;
-  bottom: 18vw;
+  right: 1%;
+  bottom: 17%;
 }
 
 .ios-page2-tags {
-  margin: 25vw 0 0 -12vw;
+  margin: 30% 0 0 -15%;
   box-sizing: border-box;
   width: 126%;
   transform: scale(0.8);
-  padding-left: 2vw;
-}
-
-.ios-page2-tags-TW {
-  margin: 26vw 0 0 -12vw;
+  padding-left: 2%;
 }
 
 .ios-page2-tags-text {
@@ -167,23 +152,23 @@ body {
   vertical-align: middle;
   font-size: 3.2vw;
   text-align: center;
-  word-wrap: break-word;
-  white-space: pre-line;
+}
+
+.ios-page2-tags-TW {
+  margin-bottom: 5%;
 }
 
 .ios-page2-cancle-text {
-  margin-top: 4vw;
+  padding-top: 8%;
   width: 100%;
   text-align: center;
-  height: 16vw;
-  line-height: 15vw;
   color: #007eff;
   font-weight: 700;
 }
 
 .ios-page3 {
   background-image: url('./assets/ios/page3_bg.png');
-  background-size: 100%;
+  background-size: contain;
   background-repeat: no-repeat;
 }
 
@@ -191,35 +176,48 @@ body {
   color: #1673d3;
   font-size: 4.6vw;
   text-align: right;
-  margin-right: 4vw;
-  margin-top: 6vw;
+  margin-right: 4%;
+  margin-top: 6%;
 }
 
 .ios-page3-select-image {
-  width: 32vw;
+  display: block;
+  width: 32.26%;
   height: auto;
-  position: absolute;
-  top: 4vw;
-  right: 1vw;
+  margin: -9% 0 0 66%;
 }
 
 .ios-page3-select-text {
   color: red;
-  text-align: right;
   font-size: 4.6vw;
-  line-height: 1.2;
-  padding: 0 3vw;
+  padding: 0 3%;
+}
+
+.app-icon {
+  width: 16.3%;
+  height: auto;
+}
+
+.ios-page3-icon {
+  overflow: hidden;
+  width: 100%;
+  height: 12%;
+  margin-top: 5%;
+  margin-left: 3%;
 }
 
 .ios-page3-icon .app-icon {
-  margin: -1vw 0 0 2.4vw;
-  padding: 0;
+  display: block;
   float: left;
+  margin-top: 1.2%;
+  margin-left: 0.2%;
 }
 
 .ios-page3-app-name {
-  margin-left: 22vw;
+  margin-left: 4%;
+  float: left;
 }
+
 
 .ios-page4 {
   background-image: url('./assets/ios/page4_bg.png');
@@ -228,65 +226,60 @@ body {
   color: white
 }
 
-.app-icon {
-  margin-left: 5vw;
-  margin-top: 6vw;
-  width: 16.3vw;
-  height: 16.3vw;
+.ios-page4 .app-icon {
+  display: block;
+  margin-left: 6.2%;
+  margin-top: 6%;
 }
 
 .ios-page4-app-name {
-  width: 16vw;
+  width: 20%;
+  text-align: left;
   line-height: 1.5;
   font-size: 3.5vw;
-  margin: 0 0 0 5vw;
+  margin: 0 0 0 7%;
 }
 
 .ios-page4-select-text {
   font-size: 4.6vw;
   line-height: 1.5;
-  padding: 0 2vw;
-  white-space: pre-line;
-  word-break: keep-all;
-  word-wrap: break-word;
-  text-align: center;
+  padding: 0 2%;
+  margin-top: 5%;
 }
 
 .android-page {
   background-image: url('./assets/android/page_bg_top.png'), url('./assets/android/page_bg_bottom.png');
-  background-size: contain, contain;
+  background-size: 100% auto, 100% auto;
   background-repeat: no-repeat, no-repeat;
   background-position: center top, center bottom;
 }
 
 .android-page1-select-image {
-  width: 21.33vw;
+  display: block;
+  width: 21.33%;
   height: auto;
-  margin-top: 9.6vw;
-  margin-left: 67.6vw;
+  margin-top: 10.6%;
+  margin-left: 75%;
 }
 
 .android-select-text {
   box-sizing: border-box;
   width: 100%;
-  padding: 0 2vw;
+  padding: 0 2%;
   font-size: 4.4vw;
   color: white;
-  text-align: center;
   font-weight: 600;
   margin: 0;
-  word-wrap: break-word;
 }
 
 .android-page2-menu {
   float: right;
   width: 72.8%;
   height: 100%;
-
   background-size: 100% auto;
   background-position: center top;
   background-repeat: no-repeat;
-  margin-top: 6.67vw;
+  margin-top: 6.67%;
 }
 
 .android-page2-menu-TW {
@@ -299,24 +292,26 @@ body {
 
 .android-page2-select-text {
   color: red;
-  margin-top: 108vw;
+  margin-top: 157%;
   font-size: 4vw;
 }
 
 .android-page2-select-image {
-  width: 47.6vw;
+  width: 65.4%;
   height: auto;
-  margin-left: 2vw;
-  margin-top: 8vw;
+  margin-left: 2%;
+  margin-top: 12%;
 }
 
 .android-page2-menu-TW .android-page2-select-image {
-  margin-top: 6vw;
+  margin-top: 13%;
 }
 
 .android-page2-menu-text {
-  margin-top: -8vw;
-  margin-left: 4vw;
+  text-align: left;
+  width: 100%;
+  margin-top: -11%;
+  margin-left: 4%;
   margin-bottom: 0;
   font-size: 4vw;
 }
@@ -327,9 +322,9 @@ body {
 }
 
 .android-page3-popup {
-  width: 87%;
-  height: 45vw;
-  margin: 1vw auto 0;
+  width: 81%;
+  height: 26%;
+  margin: 0 auto;
   background-image: url('./assets/android/page3_bg.png');
   background-size: contain;
   background-repeat: no-repeat;
@@ -338,68 +333,73 @@ body {
 }
 
 .android-page3-select-text {
-  width: 106%;
+  position: absolute;
+  top: -14%;
+  text-align: left;
+  width: 100%;
   color: #fff;
   padding: 0;
-  margin-top: -8vw;
-  margin-left: -3vw;
 }
 
 .android-page3-popup-title {
   color: #000;
   box-sizing: border-box;
   width: 100%;
-  padding: 0 4vw;
+  padding: 0 4%;
   font-size: 5vw;
   text-align: left;
   font-weight: 600;
-  margin: 5.8vw 0 0 0;
-  word-wrap: break-word;
+  margin: 5% 0 0;
 }
 
 .app-info {
-  margin: 0;
+  margin: 5% 0 0;
+  text-align: left;
+  overflow: hidden;
 }
 
 .app-info .app-icon {
-  margin: 6vw 4vw 0;
-  width: 12vw;
-  height: 12vw;
+  display: block;
+  float: left;
+  margin: 0 4%;
+  width: 18%;
+  height: 18%;
 }
 
 .app-info .app-Name {
-  display: inline-block;
+  display: block;
+  float: left;
   font-size: 4vw;
   color: #000;
-  vertical-align: 1vw;
+  margin-top: 9%;
   font-weight: 600;
 }
 
 .popup-button {
   color: #3a88dc;
   font-size: 4vw;
-  margin: 6vw 0 0;
+  margin-top: 6%;
   text-transform: uppercase;
 }
 
 .popup-button-add {
-  margin-left: 8vw;
+  margin-left: 10%;
 }
 
 .popup-button-cancel {
-  margin-left: 40vw;
+  margin-left: 36%;
 }
 
 .popup-button-cancel-TW {
-  margin-left: 48vw;
+  margin-top: 1%;
+  margin-left: 48%;
 }
 
 .android-page3-select-image {
-  width: 22vw;
-  height: 20.6vw;
+  width: 27.1%;
   position: absolute;
-  bottom: 4vw;
-  right: 2vw;
+  bottom: 12%;
+  right: 5%;
 }
 
 .android-page4 {
@@ -411,14 +411,15 @@ body {
 }
 
 .android-page4 .app-icon {
-  margin-left: 24vw;
+  margin-left: 24%;
 }
 
 .android-page4-app-name {
-  width: 16vw;
+  width: 20%;
+  text-align: left;
   line-height: 1.5;
   font-size: 3.5vw;
-  margin: 0 0 0 24vw;
+  margin: 0 0 0 25%;
 }
 
 .android-page4-select-text {
