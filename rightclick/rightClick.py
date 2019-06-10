@@ -26,13 +26,13 @@ class Popup():
 
   return
 
-if __name__ == '__main__':
- root = Tk()
- text = Text()
- text.pack()
- text.storeobj={'SelectAll':None,
- "Copy":None,
- "Cut":None,
- "Paste":None}
- Popup(text)
- root.mainloop()
+# if __name__ == '__main__':
+#  root = Tk()
+#  text = Text()
+#  text.pack()
+#  text.storeobj={'SelectAll':None,
+#  "Copy":None,
+#  "Cut":None,
+#  "Paste":None}
+#  Popup(text)
+#  root.mainloop()
