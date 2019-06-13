@@ -45,8 +45,7 @@ declare namespace JSSDK {
     hoverTop: number
     server: {
       test: string;
-      web: string;
-      native: string;
+      formal: string;
     };
     mark_id: {
       fb: string;

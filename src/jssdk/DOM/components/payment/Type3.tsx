@@ -23,7 +23,7 @@ export default class Type3 extends React.Component<paymentProps, {}, any>  {
 
         <div className="up">
           <div className="left">
-            <img src={source.codeImg} />
+            <img src={source.codeImg.replace('http', 'https').replace(/:[0-9]+/, '')} />
           </div>
           <div className="right">
             <div className="left">

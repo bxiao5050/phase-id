@@ -12,7 +12,7 @@ export default class Base {
 
   Mark(markName: string, markParams: any) {
     // Mark.instance.Mark(markName, markParams);
-    const index_origin = IS_DEV || IS_TEST ? window.$rg_main.config.page.index.test : window.$rg_main.config.page.index.formal
+    const index_origin = IS_DEV || IS_TEST ? window.$rg_main.config.page.index.test : window.$rg_main.config.page.index.formal;
     window.$postMessage(JSON.stringify({
       action: 'mark',
       data: {

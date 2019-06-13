@@ -41,8 +41,6 @@ export default class Login {
             })
             if (res.data.firstLogin) {
               RG.Mark(DOT.SDK_REGISTER)
-            }else{
-              RG.Mark(DOT.SDK_LOGIN)
             }
             resolve(res)
             break;

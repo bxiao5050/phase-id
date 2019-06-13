@@ -35,7 +35,7 @@ export default class Native extends Base {
           console.log('jpwork.jpwork', OrderingData.showMethod, orderRes)
           if (orderRes.code === 200) { // 下单完成
             if (OrderingData.showMethod === 3) {
-              let jpParams = { // 获取Native的交易凭据 
+              let jpParams = { // 获取Native的交易凭据
                 productName: OrderingData.selectedProduct.productName,
                 transactionId: orderRes.data.transactionId,
                 channel: OrderingData.channel,
@@ -411,20 +411,24 @@ export default class Native extends Base {
   }
 
   Mark(markName: string, extraParam?: any) {
+    let eventName: string = markName;
+    if (markName === 'sdk_loaded') eventName = 'sdkinifinish';
+    if (markName === 'sdk_purchased_done') eventName = 'purchased';
+    if (markName === 'sdk_purchased_done') eventName = 'purchased';
+    if (markName === 'sdk_register') eventName = 'register';
+    if (markName === 'sdk_contact_us') eventName = 'contact_us';
     let markParmas: any = {
-      eventName: markName
+      eventName
     }
-    /*  if (RG.jssdk.config.mark_id.adjust.adjustEventToken[markName]) {
-       markParmas.eventToken = RG.jssdk.config.mark_id.adjust.adjustEventToken[markName];
-     } */
+    if (RG.jssdk.config.mark_id.adjust[eventName]) {
+      markParmas.eventToken = RG.jssdk.config.mark_id.adjust[eventName];
+    }
     if (markName === DOT.SDK_PURCHASED_DONE) {
       markParmas = Object.assign(extraParam, markParmas)
     }
     window.JsToNative.gameEvent(JSON.stringify(markParmas))
     console.info(`"${markName}" has marked - native`, markParmas)
   }
-
-
 }
 
 

@@ -20,44 +20,42 @@ var SERVER = ''
 var devServer = {
   contentBase: path.join(__dirname, 'build'),
   inline: true,
-  port: 9898,
+  port: 7001,
   // https: true
-  host: '0.0.0.0'
 }
 if (sdkVersion === true) {
   console.error('miss sdkVersion')
   process.exit()
 }
-var filename = isDev ? '[name].js' : `[name].js?[hash:6]`
-var chunkFilename = isDev ? '[name].js' : `[name].js?[hash:6]`
+var filename = isDev ? '[name].js' : `${sdkVersion}/[name].js?[hash:6]`
+var chunkFilename = isDev ? '[name].js' : `${sdkVersion}/[name].js?[hash:6]`
 var output = {
   path: path.join(__dirname, 'build'),
   filename,
-  // chunkFilename,
-  publicPath: '.'
+  chunkFilename
 }
-// switch (action) {
-//   case 'sg':
-//     SERVER = 'https://sdk-sg.pocketgamesol.com'
-//     output.publicPath = SERVER + '/jssdk/'
-//     break;
-//   case 'vn':
-//     SERVER = 'https://sdk-vn.pocketgamesol.com'
-//     output.publicPath = './'
-//     break;
-//   case 'de':
-//     SERVER = 'https://desdk-cdn.pkmonquest.com'
-//     output.publicPath = SERVER + '/jssdk/'
-//     break;
-//   case 'dev':
-//     SERVER = 'https://sdk-test.changic.net.cn'
-//     output.publicPath = ''
-//     break
-//   case 'test':
-//     SERVER = 'https://sdk-test.changic.net.cn'
-//     output.publicPath = SERVER + '/jssdk/'
-//     break
-// }
+switch (action) {
+  case 'sg':
+    SERVER = 'https://sdk-sg.pocketgamesol.com'
+    output.publicPath = SERVER + '/jssdk/'
+    break;
+  case 'vn':
+    SERVER = 'https://sdk-vn.pocketgamesol.com'
+    output.publicPath = SERVER + '/jssdk/'
+    break;
+  case 'de':
+    SERVER = 'https://desdk-cdn.pkmonquest.com'
+    output.publicPath = SERVER + '/jssdk/'
+    break;
+  case 'dev':
+    SERVER = 'https://sdk-test.changic.net.cn'
+    output.publicPath = ''
+    break
+  case 'test':
+    SERVER = 'https://sdk-test.changic.net.cn'
+    output.publicPath = SERVER + '/jssdk/'
+    break
+}
 var definePlugin = {
   FBVersion: JSON.stringify('v3.2'),
   PREFIX: JSON.stringify(md5('RoyalGame').slice(0, 4)),
@@ -72,7 +70,7 @@ var definePlugin = {
 var webpackConfig = {
 
   entry: {
-    // sdk: path.join(__dirname, 'src/jssdk/main.ts'),
+    sdk: path.join(__dirname, 'src/jssdk/main.ts'),
     shortcut: path.join(__dirname, 'src/add-shortcut/main.ts'),
     // index: path.join(__dirname, 'src/index/main.ts'),
   },
@@ -129,7 +127,7 @@ var webpackConfig = {
         loader: 'file-loader',
         options: {
           name: '[name]-[hash:4].[ext]',
-          outputPath: '/img'
+          outputPath: sdkVersion + '/img'
         }
       }]
     }]
@@ -137,7 +135,7 @@ var webpackConfig = {
 
   plugins: [
     new HtmlWebpackPlugin({
-      filename: isDev ? 'add-shortcut.html' : 'shortcut.html',
+      filename: isDev ? 'add-shortcut.html' : sdkVersion + '/' + 'add-shortcut.html',
       template: './src/add-shortcut.html',
       chunks: ['shortcut'],
       inject: 'body',
@@ -155,29 +153,29 @@ var webpackConfig = {
         reactRouterDomSrc
       }
     }),
-    // new HtmlWebpackPlugin({
-    //   filename: 'index.html',
-    //   template: './src/index.html',
-    //   chunks: ['sdk'],
-    //   inject: 'body',
-    //   minify: isDev ? false : {
-    //     collapseWhitespace: true,
-    //     removeComments: true,
-    //     removeRedundantAttributes: true,
-    //     removeScriptTypeAttributes: true,
-    //     removeStyleLinkTypeAttributes: true,
-    //     useShortDoctype: true
-    //   },
-    //   templateParameters: {
-    //     reactSrc,
-    //     reactDomSrc,
-    //     reactRouterDomSrc
-    //   }
-    // }),
-    // new webpack.ProvidePlugin({
-    //   md5: 'md5'
-    // }),
-    // new webpack.DefinePlugin(definePlugin),
+    new HtmlWebpackPlugin({
+      filename: 'index.html',
+      template: './src/index.html',
+      chunks: ['sdk'],
+      inject: 'body',
+      minify: isDev ? false : {
+        collapseWhitespace: true,
+        removeComments: true,
+        removeRedundantAttributes: true,
+        removeScriptTypeAttributes: true,
+        removeStyleLinkTypeAttributes: true,
+        useShortDoctype: true
+      },
+      templateParameters: {
+        reactSrc,
+        reactDomSrc,
+        reactRouterDomSrc
+      }
+    }),
+    new webpack.ProvidePlugin({
+      md5: 'md5'
+    }),
+    new webpack.DefinePlugin(definePlugin),
   ],
 
   devServer: devServer,

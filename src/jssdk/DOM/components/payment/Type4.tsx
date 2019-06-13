@@ -39,7 +39,7 @@ export default class Type4 extends React.Component<paymentProps, {}, any>  {
 
               }}>
               <img src={
-                node.codeImg.replace('http', 'https').replace(':80', '')
+                node.codeImg.replace('http', 'https').replace(/:[0-9]+/, '')
               } />
             </li>
           ))

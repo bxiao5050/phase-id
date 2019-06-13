@@ -85,7 +85,7 @@ export default class Type2 extends React.Component<paymentProps, {}, any> {
         </h2>
 
         <img className="card-head" src={
-          source.codeImg.replace('http', 'https').replace(':80', '')
+          source.codeImg.replace('http', 'https').replace(/:[0-9]+/, '')
         } />
         <div className="card-inputs PIN" id="pin">
           <span>PIN: </span>
