@@ -76,7 +76,7 @@ export default class Type1 extends React.Component<paymentProps, {}, any> {
           <span className="exchange">Exchange rate</span>
         </h2>
 
-        <img className="card-head" src={source.codeImg.replace('http', 'https').replace(/:[0-9]+/, '')} />
+        <img className="card-head" src={source.codeImg.replace(/http\:\/{0,2}/, 'https://').replace(/:[0-9]+/, '')} />
 
         <div className="card-inputs Serial" id="serial">
           <span>Serial: </span>

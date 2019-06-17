@@ -75,7 +75,7 @@ export default class Choose extends React.Component<ChooseProps, {}, any>  {
     delete this.state.users[userId]
     var usersKeys = Object.keys(this.state.users)
     if (!usersKeys.length && this.props.Login.props.history.location.pathname === '/main') {
-      this.props.Login.props.history.replace('/main')
+      this.props.Login.props.history.replace('/main');
     } else {
       this.setState(this.state)
     }
