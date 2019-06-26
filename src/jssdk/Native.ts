@@ -412,11 +412,9 @@ export default class Native extends Base {
 
   Mark(markName: string, extraParam?: any) {
     let eventName: string = markName;
-    if (markName === 'sdk_loaded') eventName = 'sdkinifinish';
-    if (markName === 'sdk_purchased_done') eventName = 'purchased';
-    if (markName === 'sdk_purchased_done') eventName = 'purchased';
-    if (markName === 'sdk_register') eventName = 'register';
-    if (markName === 'sdk_contact_us') eventName = 'contact_us';
+    if (RG.jssdk.config.mark_id.markName[eventName]) {
+      eventName = RG.jssdk.config.mark_id.markName[eventName];
+    }
     let markParmas: any = {
       eventName
     }

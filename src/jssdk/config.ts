@@ -169,6 +169,12 @@ const hy_ios_0 = {
   hoverFromLeft: true,
   mark_id: {
     fb: '663857194035716',
+    markName: {
+      "sdk_loaded": "sdkinifinish",
+      "sdk_purchased_done": "Purchased",
+      "sdk_register": "register",
+      "sdk_contact_us": "contact_us"
+    },
     adjust: {
       "level20": 'uc5jjw',
       "level100": 'bpi2ty',

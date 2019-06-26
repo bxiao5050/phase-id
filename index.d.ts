@@ -50,9 +50,11 @@ declare namespace JSSDK {
     mark_id: {
       fb: string;
       ga: string;
+      markName: {
+        [key: string]: string
+      }
       adjust: {
-        id: string
-        adjustEventToken: object
+        [key: string]: string
       }
     };
     test: string;
