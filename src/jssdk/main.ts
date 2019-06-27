@@ -25,7 +25,7 @@ function init(window: Window) {
     // 在本地测试的时候，修改$postMessage
     IS_DEV && (await import("./dev"));
     const indexUrl = IS_DEV || IS_TEST ? config.page.index.test : config.page.index.formal;
-    window.$postMessage(JSON.stringify({ action: "get" }), /(http|https):\/\/(www.)?(\w+(\.)?)+/.exec(indexUrl)[0]);
+    window.$postMessage(JSON.stringify({ action: "get" }), /(http|https):\/\/(www.)?([A-Za-z0-9-_]+(\.)?)+/.exec(indexUrl)[0]);
     RG.Mark(DOT.SDK_LOADED);
     RG.jssdk.init();
   }
@@ -145,7 +145,7 @@ function init(window: Window) {
   }
   function onMessage(indexUrl: string) {
     return function (event: MessageEvent) {
-      if (event.origin !== /(http|https):\/\/(www.)?(\w+(\.)?)+/.exec(indexUrl)[0]) return;
+      if (event.origin !== /(http|https):\/\/(www.)?([A-Za-z0-9-_]+(\.)?)+/.exec(indexUrl)[0]) return;
       RG.jssdk.Account.init(JSON.parse(event.data));
     }
   }

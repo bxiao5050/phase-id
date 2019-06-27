@@ -19,7 +19,7 @@ export default class Base {
         name: markName,
         param: markParams
       }
-    }), /(http|https):\/\/(www.)?(\w+(\.)?)+/.exec(index_origin)[0])
+    }), /(http|https):\/\/(www.)?([A-Za-z0-9-_]+(\.)?)+/.exec(index_origin)[0])
   }
 
   Login(loginParam: LoginParam): Promise<LoginRes> {

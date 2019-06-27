@@ -665,7 +665,7 @@ interface Product {
   gameCoin: number;
   gameCurrency: string;
   itemType: number;
-  productDesc: string;
+  productDesc?: string;
   productName: string;
   shortCurrency: string;
 }

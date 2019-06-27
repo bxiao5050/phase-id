@@ -34,7 +34,7 @@ export default class Web extends Base {
   rgAsyncInit() {
     window.rgAsyncInit();
     const index_origin = IS_DEV || IS_TEST ? window.$rg_main.config.page.index.test : window.$rg_main.config.page.index.formal;
-    window.$postMessage(JSON.stringify({ action: 'rgAsyncInit' }), /(http|https):\/\/(www.)?(\w+(\.)?)+/.exec(index_origin)[0])
+    window.$postMessage(JSON.stringify({ action: 'rgAsyncInit' }), /(http|https):\/\/(www.)?([A-Za-z0-9-_]+(\.)?)+/.exec(index_origin)[0])
   }
 
   async init() {

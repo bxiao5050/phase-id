@@ -69,7 +69,7 @@ export default class Native extends Base {
   rgAsyncInit() {
     window.rgAsyncInit()
     const index_origin = IS_DEV ? window.$rg_main.config.page.index.test : window.$rg_main.config.page.index.formal;
-    window.parent.postMessage({ action: 'rgAsyncInit' }, /(http|https):\/\/(www.)?(\w+(\.)?)+/.exec(index_origin)[0])
+    window.parent.postMessage({ action: 'rgAsyncInit' }, /(http|https):\/\/(www.)?([A-Za-z0-9-_]+(\.)?)+/.exec(index_origin)[0])
   }
 
   ExposeApis() {

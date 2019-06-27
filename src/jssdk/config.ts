@@ -138,8 +138,7 @@ const hy_default = {
   },
   server: {
     test: 'https://sdk-test.changic.net.cn/pocketgames/client',
-    web: 'https://desdk-cdn.pkmonquest.com/pocketgames/client',
-    native: ' https://sdk.narutoh5game.com'
+    formal: 'https://sdk-sg.pocketgamesol.com/pocketgames/client'
   },
   download: {
     android: ''
@@ -193,7 +192,7 @@ const hy_ios_0 = {
   },
   server: {
     test: 'https://sdk-test.changic.net.cn/pocketgames/client',
-    formal: 'https://desdk-cdn.pkmonquest.com/pocketgames/client'
+    formal: 'https://sdk-sg.pocketgamesol.com/pocketgames/client'
   },
   download: {
     android: ''
