@@ -110,7 +110,7 @@ export default class Mark {
           }
         );
         this.Mark = (function (Mark, adjust) {
-          var adjustEventToken = config.mark_id.adjust.adjustEventToken;
+          var adjustEventToken = config.mark_id.adjust;
           return function (name: string, param: { adjust?: object }) {
             Mark(name, param);
             var paramAdjust = {}

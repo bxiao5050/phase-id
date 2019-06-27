@@ -2,7 +2,7 @@ import './index.scss'
 import * as React from 'react'
 import { Switch, Route } from 'react-router-dom'
 import { History, createLocation } from 'history'
-import TypeList from "DOM/components/payment/TypeList";
+import TypeList from "Src/DOM/components/payment/TypeList";
 import Type2 from "Src/DOM/components/payment/Type2";
 import Type0 from "DOM/components/payment/Type0";
 import Type1 from "DOM/components/payment/Type1";

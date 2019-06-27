@@ -140,11 +140,12 @@ export default class Login {
         FB.getLoginStatus(_res => {
           let response = _res.authResponse
           if (response && response.userID) {
-            var userID = response.userID
-            FB.api('/me?fields=email', (response) => { // name,birthday,gender
-              response.userID = userID
-              this.reqRegister(params, { response, resolve, reject })
-            })
+            // var userID = response.authResponse.userID
+            // FB.api('/me?fields=email', (response) => { // name,birthday,gender
+            //   response.userID = userID
+            //   this.reqRegister(params, { response, resolve, reject })
+            // })
+            this.reqRegister(params, { response, resolve, reject })
           } else {
             if (RG.jssdk.config.type === 2) {
               let index = location.href.indexOf('&code=')
@@ -153,11 +154,12 @@ export default class Login {
             } else {
               FB.login(response => {
                 if (response.status === "connected") {
-                  var userID = response.authResponse.userID
-                  FB.api('/me?fields=email', (response) => { // name,birthday,gender
-                    response.userID = userID
-                    this.reqRegister(params, { response, resolve, reject })
-                  })
+                  this.reqRegister(params, { response, resolve, reject })
+                  // var userID = response.authResponse.userID
+                  // FB.api('/me?fields=email', (response) => { // name,birthday,gender
+                  //   response.userID = userID
+                  //   this.reqRegister(params, { response, resolve, reject })
+                  // })
                 } else {
                   console.error(response.status)
                 }

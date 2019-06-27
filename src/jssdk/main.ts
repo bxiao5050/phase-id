@@ -110,7 +110,7 @@ function init(window: Window) {
         });
         break;
       case 2:
-        import("Src/Native").then(module => {
+        await import("Src/Native").then(module => {
           sdk = new module.default(config, false);
         })
         break;
