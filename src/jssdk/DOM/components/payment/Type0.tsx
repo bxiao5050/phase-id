@@ -46,8 +46,8 @@ export default class Type0 extends React.Component<paymentProps, {}, any>  {
   }
 
   render() {
-  	return <div className="payment-nav Type0">
-      <iframe ref="iframe" className="web" src={this.props.Payment.state.paymentDatas[0].returnInfo.url}></iframe>
+    return <div className="payment-nav Type0">
+      <iframe ref="iframe" className="web" src={this.props.Payment.state.paymentDatas[0].returnInfo.url.replace(/http\:\/{0,2}/, 'https://')}></iframe>
       {/* {this.state.mycardtip !== 'none' && <a className="my-card-tip" href={url} target="_blank"
         style={{
           position: 'absolute',

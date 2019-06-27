@@ -28,8 +28,7 @@ declare namespace JSSDK {
     CurUserInfo: CurUserInfo;
   }
   interface Config {
-    name
-
+    name: string;
     appId: number;
     app_key: string;
     advChannel: number;
@@ -46,15 +45,16 @@ declare namespace JSSDK {
     hoverTop: number
     server: {
       test: string;
-      web: string;
-      native: string;
+      formal: string;
     };
     mark_id: {
       fb: string;
       ga: string;
+      markName: {
+        [key: string]: string
+      }
       adjust: {
-        id: string
-        adjustEventToken: object
+        [key: string]: string
       }
     };
     test: string;
@@ -141,6 +141,7 @@ declare interface Window {
     };
   };
   $postMessage: Function;
+  opera: any;
 }
 
 declare var FBVersion: string;
@@ -664,7 +665,7 @@ interface Product {
   gameCoin: number;
   gameCurrency: string;
   itemType: number;
-  productDesc: string;
+  productDesc?: string;
   productName: string;
   shortCurrency: string;
 }

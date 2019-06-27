@@ -1,6 +1,7 @@
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import Swiper from './swiper'
+import Languages from './i18n'
 
 export class App extends React.Component {
 
@@ -33,12 +34,13 @@ export class App extends React.Component {
   })()
 
   state = {
-    images: this.getUrlParam('system') === 'ios' ? ['ios/1.jpg', 'ios/2.jpg', 'ios/3.jpg', 'ios/4.jpg'] : ['android/1.jpg', 'android/2.jpg', 'android/3.jpg', 'android/4.jpg']
+    system: (this.getUrlParam('system') === 'ios' ? 'ios' : "android") as 'ios' | 'android',
+    i18n: this.getUrlParam('language') ? Languages[this.getUrlParam('language')] : Languages['EN']
   }
 
   render() {
-    return <div className="app-container">
-      <Swiper images={this.state.images} />
+    return <div className={'app-container'}>
+      <Swiper language={this.getUrlParam('language') ? this.getUrlParam('language') : 'EN'} system={this.state.system} i18n={this.state.i18n} />
     </div>
   }
 }

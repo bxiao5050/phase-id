@@ -20,7 +20,7 @@ export default class Web extends Base {
   }
 
   loadScript(src) {
-    let resolve, script = document.createElement('script')
+    let resolve, script = document.createElement('script');
     script.src = src
     script.onload = function () {
       resolve()
@@ -34,7 +34,7 @@ export default class Web extends Base {
   rgAsyncInit() {
     window.rgAsyncInit();
     const index_origin = IS_DEV || IS_TEST ? window.$rg_main.config.page.index.test : window.$rg_main.config.page.index.formal;
-    window.$postMessage(JSON.stringify({ action: 'rgAsyncInit' }), /(http|https):\/\/(www.)?(\w+(\.)?)+/.exec(index_origin)[0])
+    window.$postMessage(JSON.stringify({ action: 'rgAsyncInit' }), /(http|https):\/\/(www.)?([A-Za-z0-9-_]+(\.)?)+/.exec(index_origin)[0])
   }
 
   async init() {
@@ -102,12 +102,12 @@ export default class Web extends Base {
     if (RG.jssdk.config.type !== 2) {
       let url: string
       if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) {
-        url = `${SERVER}/jssdk/${Utils.getUrlParam('sdkVersion')}/add-shortcut.html?lang=en&system=ios&appId=${RG.jssdk.config.appId}&link=${RG.jssdk.config.page.index.formal}`
+        url = `${SERVER}/jssdk/${Utils.getUrlParam('sdkVersion')}/add-shortcut.html?lang=EN&system=ios&appId=${RG.jssdk.config.appId}&link=${RG.jssdk.config.page.index.formal}`
       } else if (/(Android)/i.test(navigator.userAgent)) {
         if (RG.jssdk.config.download.android) {
           url = RG.jssdk.config.download.android
         } else {
-          url = `${SERVER}/jssdk/${Utils.getUrlParam('sdkVersion')}/add-shortcut.html?lang=en&system=android&appId=${RG.jssdk.config.appId}&link=${RG.jssdk.config.page.index.formal}`
+          url = `${SERVER}/jssdk/${Utils.getUrlParam('sdkVersion')}/add-shortcut.html?lang=EN&system=android&appId=${RG.jssdk.config.appId}&link=${RG.jssdk.config.page.index.formal}`
         }
       } else {
         url = `${SERVER}/platform/shortcut.jsp?link=${encodeURIComponent(RG.jssdk.config.page.index.formal + '?shortcut=true')}&fileName=${RG.jssdk.config.name}`

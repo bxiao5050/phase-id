@@ -1,16 +1,34 @@
+@charset "UTF-8";
+
+html,
 body {
+  width: 100%;
+  height: 100%;
   margin: 0;
   padding: 0;
   overflow: hidden;
   background: #000;
 }
 
+p {
+  /* white-space: pre-line; */
+  word-break: keep-all;
+  word-wrap: break-word;
+  text-align: center;
+  margin: 0;
+}
+
+.app-container,
+.swiper-container-wrap {
+  width: 100%;
+  height: 100%;
+}
+
 .swiper-container {
   width: 51.75vh;
   height: 92vh;
   max-height: 163.55555vw;
-  max-width: 92vw; 
-
+  max-width: 92vw;
   overflow: hidden;
   position: relative;
 }
@@ -18,34 +36,16 @@ body {
 .swiper-container .swiper-wrapper {
   display: flex;
   width: 10000px;
-  /* visibility: hidden; */
-}
-
-.swiper-img {
-  width: 100%;
 }
 
 .swiper-pagination {
   bottom: 3.2rem !important;
-  width: 100vw !important;
+  width: 100% !important;
 }
-
-/* .swiper-pagination-bullets-dynamic {} */
-
-/* .swiper-pagination-bullet-active {
-  background: #000 !important;
-  opacity: 1 !important;
-}
-
-.swiper-pagination-bullet {
-  background: #fff;
-  opacity: .5 !important;
-} */
-
 
 #app {
   width: 100%;
-  max-width: 800px;
+  max-width: 750px;
   height: 100%;
   position: absolute;
   display: flex;
@@ -56,6 +56,381 @@ body {
 
 .app-container {
   position: relative;
+}
+
+
+.ios-page1 {
+  background-image: url('./assets/ios/page1_bg.png'), url('./assets/bg.jpg');
+  background-size: contain, contain;
+  background-repeat: no-repeat, no-repeat;
+  background-position: center, 0vw 80%;
+}
+
+
+.ios-page1-select-text {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0 2%;
+  font-size: 4.4vw;
+  color: red;
+  position: absolute;
+  bottom: 20%;
+  left: 0;
+}
+
+.ios-page1-select-image {
+  width: 24%;
+  position: absolute;
+  bottom: 0;
+  left: 31%;
+
+}
+
+.ios-page2-tip {
+  width: 96.8%;
+  height: 70%;
+  background-image: url('./assets/ios/page2_bg.png');
+  background-size: 100%;
+  background-repeat: no-repeat;
+  background-position: center top;
+  margin: 54% auto 0;
+  position: relative;
+}
+
+.ios-page2-top {
+  width: 73%;
+  height: 27%;
+  text-align: left;
+  margin: 0 0 0 23%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.ios-page2-top-text {
+  width: 100%;
+  display: inline-block;
+  vertical-align: middle;
+  line-height: 1;
+  font-size: 3.2vw;
+  vertical-align: middle;
+}
+
+.ios-page2-select-text {
+  box-sizing: border-box;
+  width: 100%;
+  color: red;
+  font-size: 4.6vw;
+  text-align: center;
+  margin-top: 22%;
+  padding: 0 2%;
+  margin-bottom: 0;
+  word-wrap: break-word;
+  white-space: pre-line;
+}
+
+.ios-page2-select-image {
+  width: 46%;
+  height: auto;
+  position: absolute;
+  right: 1%;
+  bottom: 17%;
+}
+
+.ios-page2-tags {
+  margin: 30% 0 0 -15%;
+  box-sizing: border-box;
+  width: 126%;
+  transform: scale(0.8);
+  padding-left: 2%;
+}
+
+.ios-page2-tags-text {
+  box-sizing: border-box;
+  display: inline-block;
+  width: 24%;
+  vertical-align: middle;
+  font-size: 3.2vw;
+  text-align: center;
+}
+
+.ios-page2-tags-TW {
+  margin-bottom: 5%;
+}
+
+.ios-page2-cancle-text {
+  padding-top: 8%;
+  width: 100%;
+  text-align: center;
+  color: #007eff;
+  font-weight: 700;
+}
+
+.ios-page3 {
+  background-image: url('./assets/ios/page3_bg.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.ios-page3-tip-text {
+  color: #1673d3;
+  font-size: 4.6vw;
+  text-align: right;
+  margin-right: 4%;
+  margin-top: 6%;
+}
+
+.ios-page3-select-image {
+  display: block;
+  width: 32.26%;
+  height: auto;
+  margin: -9% 0 0 66%;
+}
+
+.ios-page3-select-text {
+  color: red;
+  font-size: 4.6vw;
+  padding: 0 3%;
+}
+
+.app-icon {
+  width: 16.3%;
+  height: auto;
+  margin-left: 6.2%;
+  margin-top: 6%;
+}
+
+.ios-page3-icon {
+  overflow: hidden;
+  width: 100%;
+  height: 12%;
+  margin-top: 5%;
+  margin-left: 3%;
+}
+
+.ios-page3-icon .app-icon {
+  display: block;
+  float: left;
+  margin-top: 1.2%;
+  margin-left: 0.2%;
+}
+
+.ios-page3-app-name {
+  margin-left: 4%;
+  float: left;
+}
+
+
+.ios-page4 {
+  background-image: url('./assets/ios/page4_bg.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  color: white
+}
+
+.ios-page4 .app-icon {
+  display: block
+}
+
+.ios-page4-app-name {
+  width: 20%;
+  text-align: left;
+  line-height: 1.5;
+  font-size: 3.5vw;
+  margin: 0 0 0 7%;
+}
+
+.ios-page4-select-text {
+  font-size: 4.6vw;
+  line-height: 1.5;
+  padding: 0 2%;
+  margin-top: 5%;
+}
+
+.android-page {
+  background-image: url('./assets/android/page_bg_top.png'), url('./assets/bg.jpg');
+  background-size: 100% auto, 100% auto;
+  background-repeat: no-repeat, no-repeat;
+  background-position: center top, center bottom;
+}
+
+.android-page1-select-image {
+  display: block;
+  width: 21.33%;
+  height: auto;
+  margin-top: 10.6%;
+  margin-left: 75%;
+}
+
+.android-select-text {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 0 2%;
+  font-size: 4.4vw;
+  color: red;
+  font-weight: 600;
+  margin: 0;
+}
+
+.android-page2-menu {
+  float: right;
+  width: 72.8%;
+  height: 100%;
+  background-size: 100% auto;
+  background-position: center top;
+  background-repeat: no-repeat;
+  margin-top: 6.67%;
+}
+
+.android-page2-menu-TW {
+  background-image: url('./assets/android/page2_bg_TW.png');
+}
+
+.android-page2-menu-EN {
+  background-image: url('./assets/android/page2_bg_EN.png');
+}
+
+.android-page2-select-text {
+  color: red;
+  margin-top: 157%;
+  font-size: 4vw;
+}
+
+.android-page2-select-image {
+  width: 65.4%;
+  height: auto;
+  margin-left: 2%;
+  margin-top: 12%;
+}
+
+.android-page2-menu-TW .android-page2-select-image {
+  margin-top: 13%;
+}
+
+.android-page2-menu-text {
+  text-align: left;
+  width: 100%;
+  margin-top: -11%;
+  margin-left: 4%;
+  margin-bottom: 0;
+  font-size: 4vw;
+}
+
+.android-page3 {
+  display: flex;
+  align-items: center;
+}
+
+.android-page3-popup {
+  position: relative;
+  width: 80%;
+  height: 26%;
+  margin: 0 auto;
+  border-radius: 2%;
+  box-shadow: 0 0 1px 1px rgba(0, 0, 0, .3);
+  background: url('./assets/android/page3_bg.png');
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.android-page3-select-text {
+  position: absolute;
+  top: -14%;
+  text-align: left;
+  width: 100%;
+  color: #fff;
+  padding: 0;
+}
+
+.android-page3-popup-title {
+  color: #000;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 0 4%;
+  font-size: 5vw;
+  text-align: left;
+  font-weight: 600;
+  margin: 5% 0 0;
+}
+
+.app-info {
+  margin: 5% 0 0;
+  text-align: left;
+  overflow: hidden;
+}
+
+.app-info .app-icon {
+  display: block;
+  float: left;
+  margin: 0 4%;
+  width: 18%;
+  height: 18%;
+  background: rgba(200, 10, 45, .3);
+}
+
+.app-info .app-Name {
+  display: block;
+  float: left;
+  font-size: 4vw;
+  color: #000;
+  margin-top: 9%;
+  font-weight: 600;
+}
+
+.popup-button {
+  color: #3a88dc;
+  font-size: 4vw;
+  margin-top: 6%;
+  text-transform: uppercase;
+}
+
+.popup-button-add {
+  margin-left: 10%;
+}
+
+.popup-button-cancel {
+  margin-left: 36%;
+}
+
+.popup-button-cancel-TW {
+  margin-top: 1%;
+  margin-left: 48%;
+}
+
+.android-page3-select-image {
+  width: 27.1%;
+  position: absolute;
+  bottom: 12%;
+  right: 5%;
+}
+
+.android-page4 {
+  background-image: url('./assets/android/page4_bg.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  color: #fff;
+}
+
+.android-page4 .app-icon {
+  margin-left: 24%;
+}
+
+.android-page4-app-name {
+  text-align: left;
+  line-height: 1.5;
+  font-size: 3.5vw;
+  margin: 0 0 0 27%;
+}
+
+.android-page4-select-text {
+  font-size: 4.6vw;
+  line-height: 1.5;
+  padding: 0 2vw;
+  word-wrap: break-word;
+  white-space: pre-line;
+  text-align: center;
 }
 
 .clk-next {

@@ -35,7 +35,7 @@ export default class Native extends Base {
           console.log('jpwork.jpwork', OrderingData.showMethod, orderRes)
           if (orderRes.code === 200) { // 下单完成
             if (OrderingData.showMethod === 3) {
-              let jpParams = { // 获取Native的交易凭据 
+              let jpParams = { // 获取Native的交易凭据
                 productName: OrderingData.selectedProduct.productName,
                 transactionId: orderRes.data.transactionId,
                 channel: OrderingData.channel,
@@ -69,7 +69,7 @@ export default class Native extends Base {
   rgAsyncInit() {
     window.rgAsyncInit()
     const index_origin = IS_DEV ? window.$rg_main.config.page.index.test : window.$rg_main.config.page.index.formal;
-    window.parent.postMessage({ action: 'rgAsyncInit' }, /(http|https):\/\/(www.)?(\w+(\.)?)+/.exec(index_origin)[0])
+    window.parent.postMessage({ action: 'rgAsyncInit' }, /(http|https):\/\/(www.)?([A-Za-z0-9-_]+(\.)?)+/.exec(index_origin)[0])
   }
 
   ExposeApis() {
@@ -411,20 +411,22 @@ export default class Native extends Base {
   }
 
   Mark(markName: string, extraParam?: any) {
-    let markParmas: any = {
-      eventName: markName
+    let eventName: string = markName;
+    if (RG.jssdk.config.mark_id.markName[eventName]) {
+      eventName = RG.jssdk.config.mark_id.markName[eventName];
     }
-    /*  if (RG.jssdk.config.mark_id.adjust.adjustEventToken[markName]) {
-       markParmas.eventToken = RG.jssdk.config.mark_id.adjust.adjustEventToken[markName];
-     } */
+    let markParmas: any = {
+      eventName
+    }
+    if (RG.jssdk.config.mark_id.adjust[eventName]) {
+      markParmas.eventToken = RG.jssdk.config.mark_id.adjust[eventName];
+    }
     if (markName === DOT.SDK_PURCHASED_DONE) {
       markParmas = Object.assign(extraParam, markParmas)
     }
     window.JsToNative.gameEvent(JSON.stringify(markParmas))
     console.info(`"${markName}" has marked - native`, markParmas)
   }
-
-
 }
 
 

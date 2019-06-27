@@ -25,7 +25,6 @@ export default class Loading extends React.Component<LoadingProp, {}, any> {
         var isGuest = Utils.getAccountType(userType, accountType) === "guest" ? true : false;
         Ins.showHover(isGuest);
         if (window.rgAsyncInit) {
-          RG.Mark('gamelaunch');
           window.rgAsyncInit();
         }
       }, 2000)

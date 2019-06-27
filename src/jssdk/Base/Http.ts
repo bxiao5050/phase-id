@@ -9,7 +9,7 @@ export default class Http {
     Http._ins = this
   }
 
-  private serverAddress = IS_TEST || IS_DEV ? RG.jssdk.config.server.test : RG.jssdk.config.type === 2 ? RG.jssdk.config.server.native : RG.jssdk.config.server.web
+  private serverAddress = IS_TEST || IS_DEV ? RG.jssdk.config.server.test :RG.jssdk.config.server.formal;
 
   private request(param: requestParam): Promise<ServerRes> {
 
