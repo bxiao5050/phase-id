@@ -1,68 +1,77 @@
 .payment-nav.type-3 {
-  .item {
+  .type3-item {
     display: flex;
-    flex-direction: column;
-    padding: 0;
+    flex-flow: column nowrap;
     width: 90%;
     margin-left: .75rem;
     margin-top: 2.5rem;
-    .up {
-      display: flex;
-      justify-content: space-between;
-      .left {
-        width: 3.6rem;
-        height: 3.6rem;
-        img {
-          width: 100%;
-          height: 100%;
-        }
-      }
-      .right {
-        display: flex;
-        flex-direction: row;
-        line-height: 1.5rem;
-        .left {
-          color: #6d6d6d;
-          height: 2rem;
-          border-right: 1px dashed #c4c4c5;
-          display: flex;
-          width: auto;
-          padding-right: .7rem;
-          font-size: auto;
-          margin-right: .7rem;
-
-          width: 8rem;
-    // background: red;
-    height: 100%;
-    overflow: hidden;
-
-        }
-        .right {
-          color: #000;
-          line-height: 1.9rem;
-        }
-      }
-    }
+    padding: 0;
+    font-size: .8rem;
   }
-  .down {
+
+  .type3-product-content {
     display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-between;
+    flex-grow: 1;
+  }
+
+  .type3-product-top {
+    display: flex;
+    flex-flow: row nowrap;
+  }
+
+  .type3-product-img-wrap {
+    width: 3.6rem;
+    height: 3.6rem;
+    flex-shrink: 0;
+    margin-right: .8rem;
+  }
+
+  .type3-product-img {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .type3-product-desc {
+    flex-grow: 1;
+    text-align: left;
+    color: #6d6d6d;
+  }
+
+  .type3-product-center {
+    display: flex;
+    flex-flow: row nowrap;
     justify-content: space-between;
     align-items: center;
-    height: 2.4rem;
+    padding: 10px;
+  }
+
+  .type3-product-price {
+    font-size: .9rem;
+    color: #000;
+    font-weight: 700;
+    padding: 5px;
+  }
+
+  .type3-buy-btn {
+    background: #28abf0;
+    color: #fff;
+    border-radius: .3rem;
+    padding: .25rem .9rem;
+    font-size: .8rem;
+    margin-top: .1rem;
+  }
+
+  .type3-product-down {
+    flex-grow: 0;
+    font-size: .7rem;
+    height: 1rem;
+    padding-top: 10px;
+    color: rgb(109, 109, 109);
+    text-align: left;
+    line-height: 1rem;
     border-top: 1px dashed #c4c4c5;
-    margin-top: .8rem;
-    .left {
-      color: rgb(109, 109, 109);
-      display: flex;
-      font-size: .7rem;
-    }
-    .right {
-      background: #28abf0;
-      color: #fff;
-      border-radius: .3rem;
-      padding: .25rem .9rem;
-      font-size: .8rem;
-      margin-top: .1rem;
-    }
   }
 }

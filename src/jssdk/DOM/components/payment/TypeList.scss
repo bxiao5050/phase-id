@@ -12,19 +12,19 @@
       margin-left: 10%;
       border-bottom: 1px solid rgb(191, 191, 191);
       width: 80%;
-      // height: 15vw;
+      height: auto;
       background: #fff;
       display: flex;
-      justify-content: space-between;
-      height: 3.4rem;
       margin-top: .8rem;
+      align-items: center;
+      padding-bottom: .5rem;
 
       .item-name {
-        display: flex;
-        flex-direction: column;
-
-        // background: red;
-        width: 8rem;
+        font-size: .5rem;
+        line-height: 1.2;
+        text-align: left;
+        flex-grow: 1;
+        margin-right: .3rem;
 
         .up,
         .down {
@@ -44,8 +44,9 @@
       .item-price-btn {
         display: flex;
         flex-direction: column;
+        flex-shrink: 0;
         /* justify-content: space-around; */
-        height: 6rem;
+        /*  height: 6rem; */
 
         .price-item {
           color: #000;

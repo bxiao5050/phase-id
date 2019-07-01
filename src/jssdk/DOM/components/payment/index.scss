@@ -81,6 +81,7 @@
   background: #858585;
   display: flex;
   max-height: 75vh;
+
   &.type0 {
     height: 75vh;
   }
@@ -197,7 +198,28 @@
   color: #1eafe5;
 }
 
-.payment-nav li span {
+.pay-channel-name {
+  width: 100%;
+  font-size: .8rem;
+}
+
+.pay-channel-discount {
+  width: 2.08rem;
+  height: .54rem;
+  position: absolute;
+  bottom: .8rem;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+
+.pay-channel-discount-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.payment-nav .pay-main-icon {
   width: .20*2.67+rem;
   height: .32*2.67+rem;
   position: absolute;
@@ -208,7 +230,7 @@
   background-size: contain;
 }
 
-.payment-nav li.active span {
+.payment-nav li.active .pay-main-icon {
   display: block;
 }
 

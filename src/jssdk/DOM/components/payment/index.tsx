@@ -125,11 +125,17 @@ export default class Payment extends React.Component<PaymentProps, {}, any> {
                 {
                   Ins.state.paymentConfig.payments.map((node, index) => {
                     return <li key={index} data-id={index}
-                      className={this.state.isActive == index ? "active" : ""}
+                      className={this.state.isActive == index ? "pay-main-li active" : "pay-main-li"}
                       onClick={(e) => this.change(e)}
                     >
-                      <p>{node.name}</p>
-                      <span></span>
+                      <p className="pay-channel-name">{node.name}</p>
+                      {node.discountImg && (<div className="pay-channel-discount">
+                        <img className="pay-channel-discount-img"
+                          src={node.discountImg.replace(/http\:\/{0,2}/, 'https://').replace(/:[0-9]+/, '')}
+                          alt="discount image"
+                        /></div>)}
+
+                      <span className="pay-main-icon"></span>
                     </li>
                   })
                 }

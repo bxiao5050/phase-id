@@ -2,7 +2,7 @@ html,
 body {
   width: 100%;
   height: 100%;
-  font-family: Helvetica, Arial,  "Microsoft YaHei", sans-serif;
+  font-family: Helvetica, Arial, "Microsoft YaHei", sans-serif;
   position: relative;
   overflow: hidden;
   margin: 0;
@@ -29,6 +29,14 @@ html {
   font-size: 5vw;
 }
 
+@media screen and (orientation: landscape) {
+  /*横屏 css*/
+
+  html {
+    font-size: 3vw;
+  }
+}
+
 @media screen and (max-width: 320px) {
   html {
     font-size: 16px;
@@ -47,11 +55,13 @@ html {
     top: 0;
     left: 0;
   }
+
   .input-root {
     div[class^=MuiSelect-root-] {
       display: flex;
       align-items: center;
     }
+
     svg[class^=MuiSvgIcon-root-] {
       position: static;
       top: 0;
@@ -59,6 +69,7 @@ html {
       width: 2rem;
       height: 2rem;
     }
+
     div[class^=MuiSelect-select-] {
       text-align: center;
     }
@@ -80,19 +91,23 @@ a {
 li {
   list-style: none;
 }
+
 ::-webkit-scrollbar {
   width: 5px;
   height: 5px;
 }
+
 ::-webkit-scrollbar-track-piece {
   background-color: rgba(0, 0, 0, 0.2);
   -webkit-border-radius: 6px;
 }
+
 ::-webkit-scrollbar-thumb:vertical {
   height: 5px;
   background-color: rgba(125, 125, 125, 0.7);
   -webkit-border-radius: 6px;
 }
+
 ::-webkit-scrollbar-thumb:horizontal {
   width: 5px;
   background-color: rgba(125, 125, 125, 0.7);
