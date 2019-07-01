@@ -44,8 +44,7 @@ var translation = {
     float_button_service: '客服',
     float_button_bind_account: '帳號升級',
     txt_change_psw: '修改密碼',
-    net_error_30200: '支付完成',
-
+    net_error_30200: '支付完成'
   },
   VN: {
     UnknownErr: 'Lỗi không xác định',

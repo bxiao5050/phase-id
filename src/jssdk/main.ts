@@ -91,8 +91,7 @@ function init(window: Window) {
       type = 1;
     } else if (advChannel < 30000) {
       type = 2;
-    } else if (advChannel > 31000 && advChannel < 32000
-    ) {
+    } else if (advChannel > 31000 && advChannel < 32000) {
       type = 3;
     } else if (advChannel > 32000 && advChannel < 33000) {
       type = 4;
@@ -110,7 +109,7 @@ function init(window: Window) {
         });
         break;
       case 2:
-        import("Src/Native").then(module => {
+        await import("Src/Native").then(module => {
           sdk = new module.default(config, false);
         })
         break;
