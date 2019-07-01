@@ -3,11 +3,9 @@ import './Type3.scss'
 import * as React from 'react'
 import Payment from 'DOM/components/payment'
 
-
 type paymentProps = {
   Payment: Payment
 }
-
 
 export default class Type3 extends React.Component<paymentProps, {}, any>  {
 
@@ -15,6 +13,8 @@ export default class Type3 extends React.Component<paymentProps, {}, any>  {
 
   render() {
     var source = this.props.Payment.state.paymentDatas[this.index]
+    // source
+    // debugger
     return <div className="payment-nav type-3">
       <h2 className="name">
         {source.name}
@@ -23,11 +23,12 @@ export default class Type3 extends React.Component<paymentProps, {}, any>  {
 
         <div className="up">
           <div className="left">
-            <img src={source.code.replace(/http\:\/{0,2}/, 'https://').replace(/:[0-9]+/, '')} />
+            <img src={source.codeImg.replace(/http\:\/{0,2}/, 'https://').replace(/:[0-9]+/, '')} />
           </div>
           <div className="right">
-            <div className="left">
-              {source.selectedProduct.gameCurrency} *{source.selectedProduct.gameCoin}
+            <div className="left" dangerouslySetInnerHTML={{__html: source.selectedProduct.productDesc}}>
+              {/* {source.selectedProduct.productDesc} */}
+              {/* {source.selectedProduct.gameCurrency} *{source.selectedProduct.gameCoin} */}
             </div>
             <div className="right">
               {source.selectedProduct.shortCurrency + ' ' + source.selectedProduct.amount}

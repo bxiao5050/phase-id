@@ -95,7 +95,9 @@ export default class FacebookWebGames {
       FB.api(
         '/' + purchaseToken + '/consume',    // Replace the PURCHASE_TOKEN
         'post',
-        // { access_token: access_token },  
+        {
+          // access_token: access_token 
+        },
         ({ success }) => {
           if (success) { // facebook 消单成功
             RG.Mark(DOT.SDK_PURCHASED_DONE)
@@ -125,7 +127,9 @@ export default class FacebookWebGames {
     FB.api(
       '/app/purchases',
       'get',
-      // { access_token: 'ACCESS_TOKEN' },
+      {
+        // access_token: 'ACCESS_TOKEN' 
+      },
       (payload: {
         data: {
           app_id: number,

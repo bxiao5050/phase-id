@@ -23,13 +23,13 @@ export default class TypeList extends React.Component<paymentProps, {}, any>  {
           source.products.map((product, i) => (
             <li key={i} data-id={i}
             >
-              <div className="item-name">
-                <div className="up">
+              <div className="item-name" dangerouslySetInnerHTML={{__html: product.productDesc}}>
+                {/* <div className="up">
                   {product.gameCurrency} *{product.gameCoin}
                 </div>
                 <div className="down">
-                  {product.productDesc}
-                </div>
+                </div> */}
+                {/* {product.productDesc} */}
               </div>
               <div className="item-price-btn">
                 <div className="price-item">

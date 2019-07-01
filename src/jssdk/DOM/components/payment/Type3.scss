@@ -27,9 +27,15 @@
           border-right: 1px dashed #c4c4c5;
           display: flex;
           width: auto;
-          padding-right: .9rem;
-          font-size: .84rem;
+          padding-right: .7rem;
+          font-size: auto;
           margin-right: .7rem;
+
+          width: 8rem;
+    // background: red;
+    height: 100%;
+    overflow: hidden;
+
         }
         .right {
           color: #000;
