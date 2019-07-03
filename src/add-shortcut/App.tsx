@@ -34,6 +34,7 @@ export class App extends React.Component {
   })()
 
   state = {
+    appId: this.getUrlParam('appId'),
     system: (this.getUrlParam('system') === 'ios' ? 'ios' : "android") as 'ios' | 'android',
     i18n: this.getUrlParam('language') ? Languages[this.getUrlParam('language')] : Languages['EN']
   }

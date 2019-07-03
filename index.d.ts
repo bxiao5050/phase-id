@@ -743,7 +743,7 @@ interface LoginParam {
   nickName?: string;
   isFacebook?: boolean;
   accountType?: number;
-  // 在h5游戏即web中这个参数对应查询参数advertiseId,表示一个广告位
+  // 在h5游戏即web中这个参数对应查询参数advertiseId,表示一个广告位,用户注册时使用
   thirdPartyId?: string;
   email?: string;
   telephone?: string;

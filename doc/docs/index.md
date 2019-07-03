@@ -14,55 +14,33 @@ JavaScript 版 SDK 无需下载和安装任何独立文件，您只需在 HTML �
  * @param name 参数名称
  */
 var getUrlParam = (function () {
-  var urlParamMap = {}
-  var interrogationIndex = location.href.indexOf("?") + 1
-  var str = interrogationIndex === 0 ? "" : location.href.slice(interrogationIndex)
+  var urlParamMap = {};
+  var interrogationIndex = location.href.indexOf("?") + 1;
+  var str = interrogationIndex === 0 ? "" : location.href.slice(interrogationIndex);
   if (str) {
-    var arr = str.split(/&|%26/)
+    var arr = str.split(/&|%26/);
     arr.forEach(item => {
-      var arr = item.split(/=|%3D/)
-      var key = arr[0]
-      var val = arr[1]
-      urlParamMap[key] = val
-    })
+      var arr = item.split(/=|%3D/);
+      var key = arr[0];
+      var val = arr[1];
+    })；
   }
   return function (name) {
-    if (name) {
-      return urlParamMap.hasOwnProperty(name) ? urlParamMap[name] : null
-    } else {
-      return urlParamMap
-    }
+    return urlParamMap.hasOwnProperty(name) ? urlParamMap[name] : null;
   }
 })()
+// 查询参数debugger，区分测试服和正式服
+var isDebugger = getUrlParam('debugger') || window.debugger;
+// 根据sdk的版本来去加载sdk
+var sdkVersion = getUrlParam('sdkVersion') || window.sdkVersion;
 
-var isDebugger = getUrlParam('debugger') || window.debugger
-var sdkVersion = getUrlParam('sdkVersion') || window.sdkVersion
-
+// 游戏方实现的函数，在登录完成后会调用，请在加载sdk之前实现
 window.rgAsyncInit = function () {
-  var urlParam = getUrlParam()
-  var urlSearch = ''
-  var $i = 0
-  for (var name in urlParam) {
-    // 去掉修改账户的标志
-    if (name === 'type') {
-      continue;
-    } else {
-      urlSearch += (($i ? '&' : '?') + name + '=' + urlParam[name])
-      $i++
-    }
-  }
-  var user = encodeURIComponent(JSON.stringify(
-    RG.CurUserInfo()
-  ))
-  urlSearch += '&user=' + user;
-  // TEST_URL:游戏的测试地址，FORMAL_URL：游戏的正式地址
-  var href = (isDebugger ? TEST_URL : FORMAL_URL) + urlSearch
-
-  location.href = href
+  var user = RG.CurUserInfo()
 }
 
 /** 加载jsssdk */
-var src = 'https://sdk-vn.pocketgamesol.com/jssdk/' + sdkVersion + '/sdk.js';
+var src = 'https://sdk-test.changic.net.cn/jssdk/' + sdkVersion + '/sdk.js';
 (function (d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0];
   if (d.getElementById(id)) return;
@@ -77,6 +55,8 @@ var src = 'https://sdk-vn.pocketgamesol.com/jssdk/' + sdkVersion + '/sdk.js';
 德国的sdk主机域名     https://sdk-de.pocketgamesol.com
 新加坡的sdk主机域名   https://sdk-sg.pocketgamesol.com
 越南的sdk主机域名     https://sdk-vn.pocketgamesol.com
+
+测试的sdk主机域名     https://sdk-test.changic.net.cn/jssdk/
 
 jssdk静态文件地址     ${HOST}/jssdk/${GET.sdkVersion || window.sdkVersion}/sdk.js
 ```
