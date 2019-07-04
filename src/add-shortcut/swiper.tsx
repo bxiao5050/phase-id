@@ -5,7 +5,8 @@ import swiper from 'swiper';
 export default class Slides extends React.Component<{
   system: string;
   i18n: any;
-  language: string
+  language: string;
+  appId: string
 }> {
   constructor(props) {
     super(props)
@@ -46,14 +47,18 @@ export default class Slides extends React.Component<{
     };
     const language = this.props.language;
     const system = this.props.system;
+    const appId = this.props.appId;
+    const bg = require('./assets/bg/' + appId + '.png');
+    const icon = require('./assets/bg/' + appId + 'icon.png');
+    console.log(bg, icon)
     return (<div className="swiper-container-wrap">
       {system === 'ios' ? (
         <Swiper {...this.config} ref={node => node ? this.swiper = node.swiper : null}>
-          <div className="ios-page1">
+          <div className="ios-page1" style={{ backgroundImage: `url(${require('./assets/ios/page1_bg.png')}), url(${bg})` }}>
             <p className="ios-page1-select-text">{i18n.openMenu}</p>
             <img className="ios-page1-select-image" src={require('./assets/ios/page1_select_image.png')} alt="select" />
           </div>
-          <div className="ios-page2 ios-page1">
+          <div className="ios-page2 ios-page1" style={{ backgroundImage: `url(${require('./assets/ios/page1_bg.png')}), url(${bg})` }}>
             <div className="ios-page2-tip">
               <p className="ios-page2-top">
                 <span className="ios-page2-top-text">{i18n.page2TopText}
@@ -79,34 +84,34 @@ export default class Slides extends React.Component<{
               <p className="ios-page3-select-text">{i18n.clickAdd}</p>
             </div>
             <div className="ios-page3-icon">
-              <img className="app-icon" src={require('./assets/app_icon.png')} alt="app icon" />
-              <p className="ios-page3-app-name">{i18n.appName}</p>
+              <img className="app-icon" src={icon} alt="app icon" />
+              <p className="ios-page3-app-name">{i18n['appName' + appId]}</p>
             </div>
           </div>
           <div className="ios-page4">
-            <img className="app-icon" src={require('./assets/app_icon.png')} alt="app icon" />
-            <p className="ios-page4-app-name">{i18n.appName}</p>
+            <img className="app-icon" src={icon} alt="app icon" />
+            <p className="ios-page4-app-name">{i18n['appName' + appId]}</p>
             <p className="ios-page4-select-text" dangerouslySetInnerHTML={{ __html: i18n.openApp }} />
           </div>
         </Swiper>
       ) : (
           <Swiper {...this.config} ref={node => node ? this.swiper = node.swiper : null}>
-            <div className="android-page">
+            <div className="android-page" style={{ backgroundImage: `url(${require('./assets/android/page_bg_top.png')}), url(${bg})` }}>
               <img className="android-page1-select-image" src={require('./assets/android/page1_select_image.png')} alt="select" />
               <p className="android-select-text">{i18n.openMenu}</p>
             </div>
-            <div className="android-page">
+            <div className="android-page" style={{ backgroundImage: `url(${require('./assets/android/page_bg_top.png')}), url(${bg})` }}>
               <div className={language === 'EN' ? 'android-page2-menu android-page2-menu-EN' : 'android-page2-menu android-page2-menu-TW'}>
                 <p className="android-select-text android-page2-select-text">{i18n.selectHome}</p>
                 <img className="android-page2-select-image" src={require('./assets/android/page2_select_image.png')} alt="select" />
                 <p className="android-page2-menu-text">{i18n.page2Tip4}</p>
               </div>
             </div>
-            <div className="android-page android-page3">
+            <div className="android-page android-page3" style={{ backgroundImage: `url(${require('./assets/android/page_bg_top.png')}), url(${bg})` }}>
               <div className="android-page3-popup">
                 <p className="android-select-text android-page3-select-text">{i18n.clickAdd}</p>
                 <p className="android-page3-popup-title">{i18n.androidAddHome}</p>
-                <p className="app-info"><img className="app-icon" src={require('./assets/app_icon.png')} alt="app icon" /><span className="app-Name">{i18n.appName}</span></p>
+                <p className="app-info"><img className="app-icon" src={icon} alt="app icon" /><span className="app-Name">{i18n['appName' + appId]}</span></p>
                 <p className="popup-button">
                   <span className={language === 'EN' ? 'popup-button-cancel' : 'popup-button-cancel popup-button-cancel-TW'}>{i18n.cancel}</span>
                   <span className="popup-button-add">{i18n.add}</span>
@@ -115,8 +120,8 @@ export default class Slides extends React.Component<{
               </div>
             </div>
             <div className="android-page4">
-              <img className="app-icon" src={require('./assets/app_icon.png')} alt="app icon" />
-              <p className="android-page4-app-name">{i18n.appName}</p>
+              <img className="app-icon" src={icon} alt="app icon" />
+              <p className="android-page4-app-name">{i18n['appName' + appId]}</p>
               <p className="android-page4-select-text">{i18n.openApp}</p>
             </div>
 

@@ -60,7 +60,7 @@ p {
 
 
 .ios-page1 {
-  background-image: url('./assets/ios/page1_bg.png'), url('./assets/bg.jpg');
+  background-image: url('./assets/ios/page1_bg.png'), url('./assets/bg/10183.png');
   background-size: contain, contain;
   background-repeat: no-repeat, no-repeat;
   background-position: center, 0vw 80%;
@@ -159,7 +159,7 @@ p {
 }
 
 .ios-page2-cancle-text {
-  padding-top: 8%;
+  padding-top: 10%;
   width: 100%;
   text-align: center;
   color: #007eff;
@@ -233,8 +233,8 @@ p {
 }
 
 .ios-page4-app-name {
-  width: 20%;
-  text-align: left;
+  width: 16%;
+  text-align: center;
   line-height: 1.5;
   font-size: 3.5vw;
   margin: 0 0 0 7%;
@@ -248,7 +248,7 @@ p {
 }
 
 .android-page {
-  background-image: url('./assets/android/page_bg_top.png'), url('./assets/bg.jpg');
+  background-image: url('./assets/android/page_bg_top.png'), url('./assets/bg/10183.png');
   background-size: 100% auto, 100% auto;
   background-repeat: no-repeat, no-repeat;
   background-position: center top, center bottom;
@@ -280,6 +280,7 @@ p {
   background-position: center top;
   background-repeat: no-repeat;
   margin-top: 6.67%;
+  overflow: hidden;
 }
 
 .android-page2-menu-TW {
@@ -292,7 +293,7 @@ p {
 
 .android-page2-select-text {
   color: red;
-  margin-top: 157%;
+  margin-top: 165%;
   font-size: 4vw;
 }
 
@@ -418,10 +419,11 @@ p {
 }
 
 .android-page4-app-name {
-  text-align: left;
+  width: 16%;
+  text-align: center;
   line-height: 1.5;
   font-size: 3.5vw;
-  margin: 0 0 0 27%;
+  margin: 0 0 0 24.4%;
 }
 
 .android-page4-select-text {

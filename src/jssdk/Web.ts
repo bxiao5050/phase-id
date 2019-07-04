@@ -102,12 +102,12 @@ export default class Web extends Base {
     if (RG.jssdk.config.type !== 2) {
       let url: string
       if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) {
-        url = `${SERVER}/jssdk/${Utils.getUrlParam('sdkVersion')}/add-shortcut.html?lang=EN&system=ios&appId=${RG.jssdk.config.appId}&link=${RG.jssdk.config.page.index.formal}`
+        url = `${SERVER}/jssdk/${Utils.getUrlParam('sdkVersion')}/add-shortcut.html?language=${RG.jssdk.config.language}&system=ios&appId=${RG.jssdk.config.appId}&link=${RG.jssdk.config.page.index.formal}`
       } else if (/(Android)/i.test(navigator.userAgent)) {
         if (RG.jssdk.config.download.android) {
           url = RG.jssdk.config.download.android
         } else {
-          url = `${SERVER}/jssdk/${Utils.getUrlParam('sdkVersion')}/add-shortcut.html?lang=EN&system=android&appId=${RG.jssdk.config.appId}&link=${RG.jssdk.config.page.index.formal}`
+          url = `${SERVER}/jssdk/${Utils.getUrlParam('sdkVersion')}/add-shortcut.html?language=${RG.jssdk.config.language}&system=android&appId=${RG.jssdk.config.appId}&link=${RG.jssdk.config.page.index.formal}`
         }
       } else {
         url = `${SERVER}/platform/shortcut.jsp?link=${encodeURIComponent(RG.jssdk.config.page.index.formal + '?shortcut=true')}&fileName=${RG.jssdk.config.name}`

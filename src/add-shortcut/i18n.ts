@@ -10,7 +10,7 @@ export default {
     cancel: '取消',
     clickAdd: '輸入遊戲名稱，點擊新增',
     openApp: '從手機桌面點擊遊戲圖標登錄遊戲領取獎勵',
-    appName: '4Her',
+    appName10183: '火影忍者 H5',
     add: '新增',
     androidAddHome: '加到主畫面'
   },
@@ -25,7 +25,7 @@ export default {
     cancel: 'Hủy',
     clickAdd: 'Nhập\u0020tên\u0020nhân\u0020vật,\u0020nhấp\u0020thêm\u0020vào',
     openApp: 'Tại\u0020giao\u0020diện\u0020điện\u0020thoại\u0020nhấp\u0020icon\u0020game\u0020đăng\u0020nhập\u0020nhận\u0020quà',
-    appName: '4Her',
+    appName10183: '火影忍者 H5',
     add: 'Thêm',
     androidAddHome: 'Thêm\u0020vào\u0020trang\u0020chính'
   },
@@ -41,7 +41,7 @@ export default {
     add: 'Add',
     clickAdd: 'Enter\u0020"pokemon"\u0020and\u0020click\u0020Add',
     openApp: "Login\u0020game\u0020by\u0020click\u0020icon\u0020from\u0020your\u0020phone\u0020desktop\u0020and\u0020receive\u0020the\u0020reward.",
-    appName: '4Her',
+    appName10183: '火影忍者 H5',
     androidAddHome: 'Add\u0020to\u0020Home\u0020screen'
   },
   ZH: {
@@ -55,7 +55,7 @@ export default {
     cancel: '取消',
     clickAdd: '输入游戏名称，点击新增',
     openApp: '从手机桌面点击游戏图标登录游戏领取奖励',
-    appName: '4Her',
+    appName10183: '火影忍者 H5',
     add: '新增',
     androidAddHome: '加到主画面'
   }

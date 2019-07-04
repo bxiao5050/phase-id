@@ -41,7 +41,7 @@ export class App extends React.Component {
 
   render() {
     return <div className={'app-container'}>
-      <Swiper language={this.getUrlParam('language') ? this.getUrlParam('language') : 'EN'} system={this.state.system} i18n={this.state.i18n} />
+      <Swiper appId={this.state.appId} language={this.getUrlParam('language') ? this.getUrlParam('language') : 'EN'} system={this.state.system} i18n={this.state.i18n} />
     </div>
   }
 }
