@@ -114,9 +114,8 @@ export default class Slides extends React.Component<{
                 <p className="app-info"><img className="app-icon" src={icon} alt="app icon" /><span className="app-Name">{i18n['appName' + appId]}</span></p>
                 <p className="popup-button">
                   <span className={language === 'EN' ? 'popup-button-cancel' : 'popup-button-cancel popup-button-cancel-TW'}>{i18n.cancel}</span>
-                  <span className="popup-button-add">{i18n.add}</span>
+                  <span className="popup-button-add">{i18n.add}<img className="android-page3-select-image" src={require('./assets/android/page3_select_image.png')} alt="select" /></span>
                 </p>
-                <img className="android-page3-select-image" src={require('./assets/android/page3_select_image.png')} alt="select" />
               </div>
             </div>
             <div className="android-page4">

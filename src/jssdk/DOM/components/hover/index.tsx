@@ -162,7 +162,7 @@ export default class Hover extends React.Component<{
   }
 
   render() {
-    return <div className="floatBall"
+    return <div className={"floatBall" + (this.state.flag ? ' active ' : '')}
       ref="floatBall"
       style={{
         transform: `translate(${this.state.x}px, ${this.state.y}px)`,

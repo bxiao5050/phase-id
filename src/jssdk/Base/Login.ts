@@ -96,7 +96,7 @@ export default class Login {
     reject: Function
   }) {
     if (loginParam.isFacebook) {
-      loginParam.userName = 'fb-' + additional.response.userID
+      loginParam.userName = 'fb-' + additional.response.userID;
     }
 
     if ('email' in additional.response) {
@@ -152,16 +152,16 @@ export default class Login {
               let url = index === -1 ? location.href : location.href.substr(0, index)
               location.href = `https://www.facebook.com/${FBVersion}/dialog/oauth?client_id=${RG.jssdk.config.fb_app_id}&redirect_uri=${encodeURIComponent(url)}&t=${Date.now()}`
             } else {
-              FB.login(response => {
-                if (response.status === "connected") {
-                  this.reqRegister(params, { response, resolve, reject })
+              FB.login(_res => {
+                if (_res.status === "connected") {
+                  this.reqRegister(params, { response: _res.authResponse, resolve, reject })
                   // var userID = response.authResponse.userID
                   // FB.api('/me?fields=email', (response) => { // name,birthday,gender
                   //   response.userID = userID
                   //   this.reqRegister(params, { response, resolve, reject })
                   // })
                 } else {
-                  console.error(response.status)
+                  console.error(_res.status)
                 }
               }, {
                   scope: 'email' // ,user_birthday,user_gender
