@@ -46,6 +46,11 @@ export default class Account {
   }
 
   asyncData() {
+    /* 去掉之前的所有fb的值，在上线后前可以删除掉 */
+    Object.keys(this._users).forEach((key) => {
+      this._users[key].accountType = 2;
+      delete this._users[key];
+    })
     if (RG.jssdk.config.type === 2) {
       localStorage.setItem('user', JSON.stringify(this._user))
       localStorage.setItem('users', JSON.stringify(this._users))
@@ -59,14 +64,16 @@ export default class Account {
             users: this._users
           }
         }),
-        /(http|https):\/\/(www.)?([A-Za-z0-9-_]+(\.)?)+/.exec(index_origin)[0]
+        /(http|https):\/\/(www.)?(\w+(\.)?)+/.exec(index_origin)[0]
       )
     }
   }
 
   set user(user) {
     this._user = user;
-    this._users[user.userId] = user;
+    if (user.accountType !== 2) {
+      this._users[user.userId] = user;
+    }
     this.asyncData();
   }
 
