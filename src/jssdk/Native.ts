@@ -421,10 +421,14 @@ export default class Native extends Base {
     if (RG.jssdk.config.mark_id.adjust[eventName]) {
       markParmas.eventToken = RG.jssdk.config.mark_id.adjust[eventName];
     }
-    if (markName === DOT.SDK_PURCHASED_DONE) {
+    if (eventName === "Purchased") {
       markParmas = Object.assign(extraParam, markParmas)
     }
-    window.JsToNative.gameEvent(JSON.stringify(markParmas))
+    if (RG.jssdk.config.mark_id.adjust[eventName + '_unique']) {
+      window.JsToNative.gameEvent(JSON.stringify({ eventName: eventName + '_unique', eventToken: RG.jssdk.config.mark_id.adjust[eventName + '_unique'] }));
+      console.info(`"${eventName + '_unique'}" has marked - native`, { eventName: eventName + '_unique', eventToken: RG.jssdk.config.mark_id.adjust[eventName + '_unique'] })
+    }
+    window.JsToNative.gameEvent(JSON.stringify(markParmas));
     console.info(`"${markName}" has marked - native`, markParmas)
   }
 }
