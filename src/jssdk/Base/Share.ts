@@ -9,6 +9,7 @@ export default class Share {
   }
 
   share(shareUrl) {
+    console.log("facebook share" + shareUrl);
     return new Promise((resolve, reject) => {
       FB.ui({
         method: 'share',

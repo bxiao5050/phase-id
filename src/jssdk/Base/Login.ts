@@ -74,7 +74,7 @@ export default class Login {
         password: loginParam.password,
         source: deviceMsg.source
       })
-      loginParam.source = deviceMsg.source
+      loginParam.source = deviceMsg.source;
       if (RG.jssdk.config.type === 1 && isRegister) {
         loginParam.thirdPartyId = Utils.getUrlParam('advertiseId') ? Utils.getUrlParam('advertiseId') : '';
       }
