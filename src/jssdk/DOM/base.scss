@@ -2,7 +2,7 @@ html,
 body {
   width: 100%;
   height: 100%;
-  font-family: Helvetica, Arial, "Microsoft YaHei", sans-serif;
+  // font-family: Helvetica, Arial, "Microsoft YaHei", sans-serif;
   position: relative;
   overflow: hidden;
   margin: 0;
@@ -112,4 +112,10 @@ li {
   width: 5px;
   background-color: rgba(125, 125, 125, 0.7);
   -webkit-border-radius: 6px;
+}
+
+a,
+img {
+  -webkit-touch-callout: none;
+  /* 禁止长按链接与图片弹出菜单 */
 }

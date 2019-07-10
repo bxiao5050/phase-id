@@ -24,7 +24,7 @@
 }
 
 .menu {
-  height: 2.4rem;
+  height: 2.5rem;
   width: 10rem;
   display: none;
   -webkit-box-sizing: border-box;
@@ -45,13 +45,14 @@
     .icon {
       transform-origin: 50% 50%;
       display: block;
-      font-size: .5rem;
+      font-size: .7rem;
       line-height: 5rem;
       text-align: center;
       width: 2.4rem;
       margin-top: .1rem;
       height: 3.5rem;
       color: #0a6482;
+      // -webkit-text-size-adjust: 100%;
 
       &.contact {
         background: url(../../assets/fb_cs_0.png) center no-repeat;
@@ -61,7 +62,8 @@
       &.account {
         width: 3rem;
         background: url(../../assets/fb_user_center_0.png) center no-repeat;
-        background-size: 2.4rem;
+        // background-size: 2.4rem;
+        background-size: contain;
       }
     }
   }

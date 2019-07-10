@@ -118,7 +118,7 @@
   padding: 0.0801rem 0.2937rem;
   right: .8rem;
   text-decoration: none;
-  bottom: .3rem;
+  bottom: 1.2rem;
   position: absolute;
   color: #42aae6;
   border: solid 1px #42aae6;
@@ -141,6 +141,7 @@
   border-bottom: solid 1px #758096;
   width: 94%;
   margin-left: 3%;
+
   &:last-child {
     border: 0;
   }
@@ -230,7 +231,7 @@
   height: 0.51*2.67+rem;
   display: block;
   line-height: 0.51*2.67+rem;
-  font-size: 0.15*2.67+rem;
+  font-size: 0.18*2.67+rem;
   color: white;
   border: none;
   outline: none;

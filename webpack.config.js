@@ -18,7 +18,7 @@ const reactRouterDomSrc = 'https://cdnjs.cloudflare.com/ajax/libs/react-router-d
 var sdkVersion = argv.sdkVersion
 var SERVER = ''
 var devServer = {
-  host: "127.0.0.1",
+  host: "0.0.0.0",
   contentBase: path.join(__dirname, 'build'),
   inline: true,
   port: 7001,
