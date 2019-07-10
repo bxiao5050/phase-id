@@ -1,4 +1,4 @@
-var config2 = { // 仙灵记
+/* var config2 = { // 仙灵记
   app_key: '6a5e960397cc47918ce7655cb14ddc57',
   fb_app_id: '230571104400727',//
   messenger: 'https://business.facebook.com/ipocketgames.xlj/?business_id=272212516313332&ref=bookmarks',
@@ -33,7 +33,7 @@ var config4 = { // 仙灵记
   markFBID: '248456995960454',
   markGAID: 'UA-121906563-4',
   language: 'TW'
-}
+} */
 
 // 火影游戏
 const hy_default = {
@@ -57,7 +57,7 @@ const hy_default = {
   page: {
     index: {
       test: 'https://www.narutoh5game.com/test_hyrz/index.html',
-      formal: 'https://www.narutoh5game.com/hyrz/index.html',
+      formal: 'https://www.narutoh5game.com/h5-plays/index.html',
     },
     facebook: {
       messenger: {
@@ -93,12 +93,15 @@ const hy_ios_0 = {
       "VIP5": '97n4a6',
       "VIP10": 'uc0jn4',
       "create_role": 'da23d9',
+      "create_role_unique": "t7sth0",
       "login": 'czl1se',
+      "login_unique": "ayxneh",
+      "register_unique": "7dgfe1",
       "register": 'tgh0a5',
       "Purchased": 'ua8cxm',
       "gamelaunch": 'owaaxh',
       "contact_us": '5pat1a',
-      "sdkinifinish": 'i1pi4r',
+      "sdkinifinish": 'i1pi4r'
     },
   },
   server: {
@@ -111,7 +114,7 @@ const hy_ios_0 = {
   page: {
     index: {
       test: 'https://www.narutoh5game.com/test_hyrz/index.html',
-      formal: 'https://www.narutoh5game.com/hyrz/index.html',
+      formal: 'https://www.narutoh5game.com/h5-plays/index.html',
     },
     facebook: {
       messenger: {
@@ -154,7 +157,7 @@ const hy_google_1 = {
       "Purchased": 'ua8cxm',
       "gamelaunch": 'owaaxh',
       "contact_us": '5pat1a',
-      "sdkinifinish": 'i1pi4r',
+      "sdkinifinish": 'i1pi4r'
     },
   },
   server: {
@@ -167,7 +170,7 @@ const hy_google_1 = {
   page: {
     index: {
       test: 'https://www.narutoh5game.com/test_hyrz/index.html',
-      formal: 'https://www.narutoh5game.com/hyrz/index.html',
+      formal: 'https://www.narutoh5game.com/h5-plays/index.html',
     },
     facebook: {
       messenger: {
@@ -181,11 +184,11 @@ const hy_google_1 = {
 
 
 const config = {
-  10120: {
-    default: config2,
-    18: config3,
-    32001: config4
-  },
+  /*   10120: {
+      default: config2,
+      18: config3,
+      32001: config4
+    }, */
   // 修改
   10183: {
     1: hy_google_1,
