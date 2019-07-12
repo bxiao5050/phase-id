@@ -355,14 +355,14 @@ export default class Native extends Base {
       result = params;
     }
     // let result = JSON.parse(params)
-    if (result.code === 200) {
-      RG.Mark(DOT.SDK_PURCHASED_DONE, {
-        userId: RG.jssdk.CurUserInfo().userId,
-        money: result.money,
-        currency: result.currency,
-      })
-    }
-    window.RG.jssdk.App.hidePayment()
+    // if (result.code === 200) {
+    //   RG.Mark(DOT.SDK_PURCHASED_DONE, {
+    //     userId: RG.jssdk.CurUserInfo().userId,
+    //     money: result.money,
+    //     currency: result.currency,
+    //   });
+    // }
+    window.RG.jssdk.App.hidePayment();
   }
 
   consumeOrder(params: string) {
@@ -418,18 +418,18 @@ export default class Native extends Base {
     let markParmas: any = {
       eventName
     }
+    if (eventName === "Purchased" || eventName === "sdk_purchased_done") {
+      markParmas = Object.assign(extraParam, markParmas)
+    }
     if (RG.jssdk.config.mark_id.adjust[eventName]) {
       markParmas.eventToken = RG.jssdk.config.mark_id.adjust[eventName];
-    }
-    if (eventName === "Purchased") {
-      markParmas = Object.assign(extraParam, markParmas)
     }
     if (RG.jssdk.config.mark_id.adjust[eventName + '_unique']) {
       window.JsToNative.gameEvent(JSON.stringify({ eventName: eventName + '_unique', eventToken: RG.jssdk.config.mark_id.adjust[eventName + '_unique'] }));
       console.info(`"${eventName + '_unique'}" has marked - native`, { eventName: eventName + '_unique', eventToken: RG.jssdk.config.mark_id.adjust[eventName + '_unique'] })
     }
     window.JsToNative.gameEvent(JSON.stringify(markParmas));
-    console.info(`"${markName}" has marked - native`, markParmas)
+    console.info(`"${eventName}" has marked - native`, markParmas)
   }
 }
 
