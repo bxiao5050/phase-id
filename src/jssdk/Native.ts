@@ -354,14 +354,15 @@ export default class Native extends Base {
     } catch (error) {
       result = params;
     }
+    // 打点判断游戏方是否打点，如果打点就不打这个点
     // let result = JSON.parse(params)
-    // if (result.code === 200) {
-    //   RG.Mark(DOT.SDK_PURCHASED_DONE, {
-    //     userId: RG.jssdk.CurUserInfo().userId,
-    //     money: result.money,
-    //     currency: result.currency,
-    //   });
-    // }
+    if (RG.jssdk.config.isPurchasedMark && result.code === 200) {
+      RG.Mark(DOT.SDK_PURCHASED_DONE, {
+        userId: RG.jssdk.CurUserInfo().userId,
+        money: result.money,
+        currency: result.currency,
+      });
+    }
     window.RG.jssdk.App.hidePayment();
   }
 
@@ -412,22 +413,28 @@ export default class Native extends Base {
 
   Mark(markName: string, extraParam?: any) {
     let eventName: string = markName;
+    // 从配置中获取点名的配置
     if (RG.jssdk.config.mark_id.markName[eventName]) {
       eventName = RG.jssdk.config.mark_id.markName[eventName];
     }
+    // 传递给服务端的参数
     let markParmas: any = {
       eventName
     }
+    // config中配置过后只需要sdk_purchased_done，原生端根据此字符串来做是否支付的判断
     if (eventName === "Purchased" || eventName === "sdk_purchased_done") {
       markParmas = Object.assign(extraParam, markParmas)
     }
+    // 获取adjust参数
     if (RG.jssdk.config.mark_id.adjust[eventName]) {
       markParmas.eventToken = RG.jssdk.config.mark_id.adjust[eventName];
     }
+    // 匹配唯一点
     if (RG.jssdk.config.mark_id.adjust[eventName + '_unique']) {
       window.JsToNative.gameEvent(JSON.stringify({ eventName: eventName + '_unique', eventToken: RG.jssdk.config.mark_id.adjust[eventName + '_unique'] }));
       console.info(`"${eventName + '_unique'}" has marked - native`, { eventName: eventName + '_unique', eventToken: RG.jssdk.config.mark_id.adjust[eventName + '_unique'] })
     }
+    // 打点、输出日志
     window.JsToNative.gameEvent(JSON.stringify(markParmas));
     console.info(`"${eventName}" has marked - native`, markParmas)
   }

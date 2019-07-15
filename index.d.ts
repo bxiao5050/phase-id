@@ -35,21 +35,23 @@ declare namespace JSSDK {
     scopeId?: string;
     fb_app_id: string;
     FbPageId: string;
-    adjust: { [key: string]: string }
-
-    download: {
-      android: string
-    }
-
-    hoverFromLeft: boolean
+    test: string;
+    // 语言
+    language: string;
+    i18n: any;
+    type: Type;
+    // 控制首次请求的地址，将来放在urlParams中有sg、de、vn三个值
+    region: string;
+    // 悬浮球距离顶边的距离rem
     hoverTop: number
-    server: {
-      test: string;
-      formal: string;
-    };
+    // 悬浮球是在左边还是右边
+    hoverFromLeft: boolean
+    // 如果游戏会进行支付打点，此值是false，反之则是true
+    isPurchasedMark: boolean,
     mark_id: {
       fb: string;
       ga: string;
+      // 需要改变的打点的名称
       markName: {
         [key: string]: string
       }
@@ -57,10 +59,13 @@ declare namespace JSSDK {
         [key: string]: string
       }
     };
-    test: string;
-    language: string;
-    i18n: any;
-    type: Type;
+    server: {
+      test: string;
+      formal: string;
+    };
+    download: {
+      android: string
+    }
     page: {
       index: {
         test: string;
@@ -71,8 +76,11 @@ declare namespace JSSDK {
         formal: string;
       };
       facebook: {
-        index;
-        messenger;
+        messenger: {
+          pc: string;
+          mobile: string;
+        },
+        index: string
       };
     };
   }
