@@ -83,8 +83,8 @@ export default class Hover extends React.Component<{
     }
     isMoving = true
     if (this.state.flag) this.state.flag = false
-    this.moveX = (event.clientX || event.touches[0].clientX)
-    this.moveY = (event.clientY || event.touches[0].clientY)
+    this.moveX = (event.clientX || (event.touches && event.touches[0].clientX)) || 0
+    this.moveY = (event.clientY || (event.touches && event.touches[0].clientY)) || 0
     this.state.x = this.moveX - this.deltaX
     this.state.y = this.moveY - this.deltaY
     this.setState(this.state)
