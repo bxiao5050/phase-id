@@ -23,7 +23,7 @@ export default class TypeList extends React.Component<paymentProps, {}, any>  {
           source.products.map((product, i) => (
             <li key={i} data-id={i}
             >
-              <div className="item-name" dangerouslySetInnerHTML={{__html: product.productDesc}}>
+              <div className="item-name" dangerouslySetInnerHTML={{ __html: product.productDesc }}>
                 {/* <div className="up">
                   {product.gameCurrency} *{product.gameCoin}
                 </div>
@@ -37,7 +37,7 @@ export default class TypeList extends React.Component<paymentProps, {}, any>  {
                 </div>
                 <div className="btn-item"
                   onClick={() => {
-                    console.log('typeList', product, source)
+                    // console.log('typeList', product, source)
                     RG.jssdk.Ordering(Object.assign(source, {
                       channel: source.channel,
                       code: source.code,

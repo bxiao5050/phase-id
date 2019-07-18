@@ -50,7 +50,7 @@ export default class Slides extends React.Component<{
     const appId = this.props.appId;
     const bg = require('./assets/bg/' + appId + '.png');
     const icon = require('./assets/bg/' + appId + 'icon.png');
-    console.log(bg, icon)
+
     return (<div className="swiper-container-wrap">
       {system === 'ios' ? (
         <Swiper {...this.config} ref={node => node ? this.swiper = node.swiper : null}>

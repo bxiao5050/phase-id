@@ -103,10 +103,10 @@ export default class Mark {
         // session会话，adjust只有在30分钟之后重新打开才算做一次会话，当一个小时内每10分钟重复打开时，这一个小时都会算作一次会话，并且发送的请求会报错返回500
         this._adjust.trackSession(
           function (result) {
-            console.log('adjust get session', result);
+            console.info('adjust get session', result);
           },
           function (errorMsg, error) {
-            console.log("adjust get session time is short");
+            console.info("adjust get session time is short");
           }
         );
         this.Mark = (function (Mark, adjust) {

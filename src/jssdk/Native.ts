@@ -417,17 +417,20 @@ export default class Native extends Base {
     if (RG.jssdk.config.mark_id.markName[eventName]) {
       eventName = RG.jssdk.config.mark_id.markName[eventName];
     }
-    // 传递给服务端的参数
+    // 传递给原生的参数
     let markParmas: any = {
       eventName
     }
-    // config中配置过后只需要sdk_purchased_done，原生端根据此字符串来做是否支付的判断
-    if (eventName === "Purchased" || eventName === "sdk_purchased_done") {
-      markParmas = Object.assign(extraParam, markParmas)
-    }
-    // 获取adjust参数
+
+
+    // 获取adjust Token
     if (RG.jssdk.config.mark_id.adjust[eventName]) {
       markParmas.eventToken = RG.jssdk.config.mark_id.adjust[eventName];
+    }
+    // sdk_purchased_done，原生端根据此字符串来做是否支付的判断,adjust只需要token
+    if (eventName === "Purchased") {
+      markParmas = Object.assign(extraParam, markParmas);
+      markParmas.eventName = "sdk_purchased_done";
     }
     // 匹配唯一点
     if (RG.jssdk.config.mark_id.adjust[eventName + '_unique']) {
@@ -436,7 +439,7 @@ export default class Native extends Base {
     }
     // 打点、输出日志
     window.JsToNative.gameEvent(JSON.stringify(markParmas));
-    console.info(`"${eventName}" has marked - native`, markParmas)
+    console.info(`"${eventName}" has marked - native`, markParmas);
   }
 }
 

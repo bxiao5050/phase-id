@@ -179,7 +179,7 @@ const hy_ios_0 = {
     markName: {
       "sdk_loaded": "sdkinifinish",
       "sdk_register": "register",
-      "Purchased": "sdk_purchased_done",
+      "sdk_purchased_done": "Purchased",
       "sdk_contact_us": "contact_us"
     },
     adjust: {
@@ -237,7 +237,7 @@ const hy_google_1 = {
     fb: '663857194035716',
     markName: {
       "sdk_loaded": "sdkinifinish",
-      "Purchased": "sdk_purchased_done",
+      "sdk_purchased_done": "Purchased",
       "sdk_register": "register",
       "sdk_contact_us": "contact_us"
     },
