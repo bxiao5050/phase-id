@@ -437,7 +437,7 @@ export default class Native extends Base {
     }
     // 打点、输出日志
     window.JsToNative.gameEvent(JSON.stringify(markParmas));
-    console.info(`"${eventName}" has marked - native`, markParmas);
+    console.info(`"${markParmas.eventName}" has marked - native`, markParmas);
   }
 }
 
