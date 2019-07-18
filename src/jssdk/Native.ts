@@ -421,13 +421,11 @@ export default class Native extends Base {
     let markParmas: any = {
       eventName
     }
-
-
     // 获取adjust Token
     if (RG.jssdk.config.mark_id.adjust[eventName]) {
       markParmas.eventToken = RG.jssdk.config.mark_id.adjust[eventName];
     }
-    // sdk_purchased_done，原生端根据此字符串来做是否支付的判断,adjust只需要token
+    // sdk_purchased_done，原生端根据此字符串来做是否支付的判断,adjust只需要token，不要调整代码的顺序，最后匹配购买的点名
     if (eventName === "Purchased") {
       markParmas = Object.assign(extraParam, markParmas);
       markParmas.eventName = "sdk_purchased_done";
