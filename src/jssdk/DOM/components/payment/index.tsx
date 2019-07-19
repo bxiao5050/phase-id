@@ -34,7 +34,7 @@ export default class Payment extends React.Component<PaymentProps, {}, any> {
       this.state.paymentDatas[0] = orderRes.data
       var nn = String.prototype.toLocaleLowerCase.call(payments.name.replace(/\s/g, ''))
       if (nn === 'paypal' || nn === 'mycard') {
-        this.state.url = orderRes.data.returnInfo.url.replace(/http\:\/{0,2}/, 'https://').replace(/\:\d{1,10}/, '').replace('payPalResult.jsp', 'payPalHttpsResult.jsp')
+        this.state.url = orderRes.data.returnInfo.url.replace(/http\:\/{0,2}/, 'https://').replace(/\:\d{1,10}/, '');
         this.state.winOpen = true
         this.setState(this.state)
       } else {
