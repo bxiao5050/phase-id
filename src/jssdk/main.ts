@@ -25,7 +25,7 @@ function init(window: Window) {
     // 在本地测试的时候，修改$postMessage
     IS_DEV && (await import("./dev"));
     const indexUrl = (IS_DEV || IS_TEST) ? config.page.index.test : config.page.index.formal;
-    if (config.type === 2) {
+    if (config.type !== 2) {
       window.$postMessage(JSON.stringify({ action: "get" }), /(http|https):\/\/(www.)?([A-Za-z0-9-_]+(\.)?)+/.exec(indexUrl)[0]);
     }
 

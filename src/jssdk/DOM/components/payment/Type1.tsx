@@ -80,11 +80,11 @@ export default class Type1 extends React.Component<paymentProps, {}, any> {
 
         <div className="card-inputs Serial" id="serial">
           <span>Serial: </span>
-          <input placeholder="Please enter Serial Number" ref="serial" />
+          <input placeholder="Please enter Serial Number" ref="serial" onBlur={() => { document.body.scrollTop = document.documentElement.scrollTop = 0 }} />
         </div>
         <div className="card-inputs PIN" id="pin">
           <span>PIN: </span>
-          <input placeholder="Please enter PIN" ref="pin" />
+          <input placeholder="Please enter PIN" ref="pin" onBlur={() => { document.body.scrollTop = document.documentElement.scrollTop = 0 }} />
         </div>
         {this.state.isQuerying ? <a href="javascript:void(0);" className="btn-pay">Đang kiểm tra {this.state.isQueryingTxt}</a> : <a href="javascript:void(0);" className="btn-pay" onClick={this.pay}>Payment</a>}
 

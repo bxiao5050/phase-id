@@ -130,7 +130,8 @@ export default class Register extends React.Component<RegisterProp, {}, any>  {
         default:
           break;
       }
-    }, 100)
+    }, 100);
+    document.body.scrollTop = document.documentElement.scrollTop = 0;
   }
 
   focusInput = (id) => {
@@ -160,13 +161,15 @@ export default class Register extends React.Component<RegisterProp, {}, any>  {
       </div>
       <div className="box-input">
         <div className="line-input username"
-          onBlur={() => this.blurInput("userName")}
-          onFocus={() => this.focusInput("userName")}
+        /*  onBlur={() => this.blurInput("userName")}
+         onFocus={() => this.focusInput("userName")} */
         >
           <div className="icon"></div>
           <input type="text" placeholder={RG.jssdk.config.i18n.dom001}
             value={this.state.userName}
             onChange={(e) => this.onChange(e)}
+            onBlur={() => this.blurInput("userName")}
+            onFocus={() => this.focusInput("userName")}
             id="userName" />
           <div
             className={"icon-close "

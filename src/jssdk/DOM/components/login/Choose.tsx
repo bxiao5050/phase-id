@@ -122,7 +122,8 @@ export default class Choose extends React.Component<ChooseProps, {}, any>  {
           closePass: false
         })
       }
-    }, 100)
+    }, 100);
+    document.body.scrollTop = document.documentElement.scrollTop = 0;
   }
 
   focusInput = (name) => {

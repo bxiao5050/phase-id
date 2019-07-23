@@ -100,15 +100,15 @@ class VisitorUpgrade extends React.Component<accountProps, {}, {}>  {
     return <div className="change-pass">
       <div className="item-pass">
         <div className="ui_account"></div>
-        <input ref="account" type="text" placeholder="Please enter your username" />
+        <input ref="account" type="text" placeholder="Please enter your username" onBlur={() => { document.body.scrollTop = document.documentElement.scrollTop = 0 }} />
       </div>
       <div className="item-pass">
         <div className="ui_password"></div>
-        <input ref="pass1" type="password" placeholder="Please enter your new password(6-20)" />
+        <input ref="pass1" type="password" placeholder="Please enter your new password(6-20)" onBlur={() => { document.body.scrollTop = document.documentElement.scrollTop = 0 }} />
       </div>
       <div className="item-pass">
         <div className="ui_password"></div>
-        <input ref="pass2" type="password" placeholder="Please enter your new password" />
+        <input ref="pass2" type="password" placeholder="Please enter your new password" onBlur={() => { document.body.scrollTop = document.documentElement.scrollTop = 0 }} />
       </div>
       <button className="btn-change"
         onClick={() => {

@@ -130,7 +130,7 @@ const kdxs_default = {
 
 // 火影游戏
 const hy_default = {
-  name: '火影忍者 H5',
+  name: '火影忍者H5',
   app_key: '40af84c65b7d45439e2d3e102ba85bce',
   fb_app_id: '663857194035716',
   language: 'TW',
@@ -165,7 +165,7 @@ const hy_default = {
 
 
 const hy_ios_0 = {
-  name: '火影忍者 H5',
+  name: '火影忍者H5',
   app_key: '40af84c65b7d45439e2d3e102ba85bce',
   fb_app_id: '663857194035716',
   language: 'TW',
@@ -224,7 +224,7 @@ const hy_ios_0 = {
   }
 }
 const hy_google_1 = {
-  name: '火影忍者 H5',
+  name: '火影忍者H5',
   app_key: '40af84c65b7d45439e2d3e102ba85bce',
   fb_app_id: '663857194035716',
   language: 'TW',

@@ -89,7 +89,9 @@ export default class Type2 extends React.Component<paymentProps, {}, any> {
         } />
         <div className="card-inputs PIN" id="pin">
           <span>PIN: </span>
-          <input placeholder="Please enter PIN" ref="pin" />
+          <input placeholder="Please enter PIN" ref="pin"
+            onBlur={() => { document.body.scrollTop = document.documentElement.scrollTop = 0 }}
+          />
         </div>
         {this.state.isQuerying ? (
           <a href="javascript:void(0);" className="btn-pay">
