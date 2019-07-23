@@ -14,23 +14,6 @@ Date.prototype.format = function (fmt) { // author: meizz
   return fmt;
 }
 
-class TimeManager {
-  private static _ins: TimeManager
-  public static get instance(): TimeManager {
-    return this._ins || new TimeManager
-  }
-  constructor() {
-    TimeManager._ins = this
-  }
-
-  /**
-   * 返回当前时间戳 毫秒数
-   */
-  public get dateNow() {
-    return Date.now()
-  }
-}
-
 // 操作cookie的类，共有setCookie,getCookie,delCookie三个方法
 class CookieManager {
   private static _ins: CookieManager;
@@ -237,7 +220,7 @@ export default class Utils {
     }
     return uuid.join('');
   }
-  static TimeManager: TimeManager = TimeManager.instance
+
   static CookieManager: CookieManager = CookieManager.instance;
 }
 
