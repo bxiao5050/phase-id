@@ -160,15 +160,15 @@ class Changepass extends React.Component<accountProps, {}, {}>  {
     return <div className="change-pass">
       <div className="item-pass">
         <div className="ui_setting"></div>
-        <input ref="oldpass" type="password" placeholder="Please enter your current password" />
+        <input ref="oldpass" type="password" placeholder="Please enter your current password" onBlur={() => { document.body.scrollTop = document.documentElement.scrollTop = 0 }}  />
       </div>
       <div className="item-pass">
         <div className="ui_password"></div>
-        <input ref="pass1" type="password" placeholder="Please enter your new password(6-20)" />
+        <input ref="pass1" type="password" placeholder="Please enter your new password(6-20)" onBlur={() => { document.body.scrollTop = document.documentElement.scrollTop = 0 }}  />
       </div>
       <div className="item-pass">
         <div className="ui_password"></div>
-        <input ref="pass2" type="password" placeholder="Please enter your new password" />
+        <input ref="pass2" type="password" placeholder="Please enter your new password" onBlur={() => { document.body.scrollTop = document.documentElement.scrollTop = 0 }}  />
       </div>
       <button className="btn-change"
         onClick={() => {
