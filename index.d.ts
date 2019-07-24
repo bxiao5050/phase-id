@@ -62,6 +62,7 @@ declare namespace JSSDK {
     };
     download: {
       android: string
+      ios: string
     }
     page: {
       index: {
