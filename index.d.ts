@@ -1,9 +1,3 @@
-// import Main from "Src/jssdk/main";
-
-// <reference path="./node_modules/@types/react/index.d.ts" />
-// <reference path="./node_modules/@types/history/index.d.ts" />
-// <reference path="./node_modules/@types/facebook-instant-games/index.d.ts" />
-//<reference path="./node_modules/_@types_facebook-js-sdk@3.1.0@@types/facebook-js-sdk/index.d.ts" />
 
 /** jssdk 版本 */
 declare const VERSION: JSSDK.Version;
@@ -12,7 +6,10 @@ declare const VConsole: any;
 declare const IS_DEV: boolean;
 declare const IS_TEST: boolean;
 declare const Adjust: any;
-
+/* 账户类型0. 普通用户  1.Email用户 2 fb账号 3.gamecent账号 4. Google账号 5.line账号
+6.vk账号 */
+type AccountType = 0 | 1 | 2 | 3 | 4 | 5 | 6;
+type UserType = 0 | 1;
 declare namespace JSSDK {
   /** 1: web端 2：原生应用 3：facebook页游平台 4：facebook instant games */
   type Type = 1 | 2 | 3 | 4;
@@ -222,9 +219,8 @@ interface JsToNativeDeviceMsg {
 }
 
 interface JsToNative {
-  /**
-   * 获取设备信息
-   */
+
+  //获取设备参数 ios是解析后的对象不是JSON字符串
   getDeviceMsg(): string;
   getDeviceMsgAsync(): Promise<JsToNativeDeviceMsg>;
   /**

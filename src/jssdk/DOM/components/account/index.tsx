@@ -4,6 +4,7 @@ import { Switch, Route, Link } from 'react-router-dom'
 import { History, createLocation } from 'history'
 import { Ins } from 'DOM/index'
 import { match } from 'react-router-dom'
+import Utils from 'Base/Utils';
 
 type accountProps = {
   match?: match<{ curPath: string }>
@@ -20,9 +21,8 @@ class Main extends React.Component<accountProps, any, any> {
     JsToNative.getDeviceMsgAsync().then(device => {
       this.state.deviceNo = device.hasOwnProperty('device') ? device.device : device.hasOwnProperty('gaid') ? device.gaid : device.deviceNo;
       this.setState(this.state)
-    })
+    });
   }
-
 
   changeAccount = async () => {
     await Promise.race([
@@ -38,6 +38,9 @@ class Main extends React.Component<accountProps, any, any> {
 
   render() {
     var props = this.props
+    var { userType, accountType } = RG.jssdk.Account.user;
+    const userTypeIsFB = Utils.getAccountType(userType, accountType) === 'fb';
+
     return <div className="info-main">
       <div className="info-account">
         <div className="info-head"></div>
@@ -65,11 +68,11 @@ class Main extends React.Component<accountProps, any, any> {
         </div>
       </div>
       <div className="others">
-        <Link className="item-other" to="/change-password">
+        <a className={userTypeIsFB ? "item-other setting" : "item-other"} onClick={() => { !userTypeIsFB && props.history.push(createLocation('/change-password')) }} >
           <img src={require("DOM/assets/ui_setting.png")} />
           <p>{RG.jssdk.config.i18n.dom010}</p>
           <img src={require("DOM/assets/ui_right_arrow.png")} className="right" />
-        </Link>
+        </a>
         <a className="item-other setting" onClick={() => {
           // RG.Install && RG.Install('仙靈計', 'http://xianlingji.bilivfun.com/xlj')
         }}>
@@ -160,15 +163,15 @@ class Changepass extends React.Component<accountProps, {}, {}>  {
     return <div className="change-pass">
       <div className="item-pass">
         <div className="ui_setting"></div>
-        <input ref="oldpass" type="password" placeholder="Please enter your current password" onBlur={() => { document.body.scrollTop = document.documentElement.scrollTop = 0 }}  />
+        <input ref="oldpass" type="password" placeholder="Please enter your current password" onBlur={() => { document.body.scrollTop = document.documentElement.scrollTop = 0 }} />
       </div>
       <div className="item-pass">
         <div className="ui_password"></div>
-        <input ref="pass1" type="password" placeholder="Please enter your new password(6-20)" onBlur={() => { document.body.scrollTop = document.documentElement.scrollTop = 0 }}  />
+        <input ref="pass1" type="password" placeholder="Please enter your new password(6-20)" onBlur={() => { document.body.scrollTop = document.documentElement.scrollTop = 0 }} />
       </div>
       <div className="item-pass">
         <div className="ui_password"></div>
-        <input ref="pass2" type="password" placeholder="Please enter your new password" onBlur={() => { document.body.scrollTop = document.documentElement.scrollTop = 0 }}  />
+        <input ref="pass2" type="password" placeholder="Please enter your new password" onBlur={() => { document.body.scrollTop = document.documentElement.scrollTop = 0 }} />
       </div>
       <button className="btn-change"
         onClick={() => {

@@ -7,6 +7,7 @@
     "baseUrl": ".",
     "jsx": "react",
     "lib": ["es6", "es7", "dom"],
+    "esModuleInterop": true,
     "paths": {
       "Src/*": ["./src/jssdk/*"],
       "DOM/*": ["./src/jssdk/DOM/*"],
@@ -16,9 +17,7 @@
   "include": [
     "./index.d.ts",
     "./src/**/*.tsx",
-    "./src/**/*.ts",
-    "./test/**/*.tsx",
-    "./test/**/*.ts"
+    "./src/**/*.ts"
   ],
   "exclude": [
     "./src/**/*.psd",
