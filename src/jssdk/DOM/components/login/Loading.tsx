@@ -47,7 +47,7 @@ export default class Loading extends React.Component<LoadingProp, {}, any> {
         <h2 className="logo block">IPOCKET GAMES</h2>
         <div className="info">
           <p>
-            {RG.jssdk.config.i18n.txt_account_name}:{" "}
+            {RG.jssdk.config.i18n.txt_account_name}{" "}
             <span>{user.userName}</span>
           </p>
           <p>
