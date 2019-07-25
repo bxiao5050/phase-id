@@ -56,7 +56,7 @@ var src = 'https://sdk-test.changic.net.cn/jssdk/' + sdkVersion + '/sdk.js';
 新加坡的sdk主机域名   https://sdk-sg.pocketgamesol.com
 越南的sdk主机域名     https://sdk-vn.pocketgamesol.com
 
-测试的sdk主机域名     https://sdk-test.changic.net.cn/jssdk/
+测试的sdk主机域名     https://sdk-test.changic.net.cn
 
 jssdk静态文件地址     ${HOST}/jssdk/${GET.sdkVersion || window.sdkVersion}/sdk.js
 ```
@@ -211,7 +211,7 @@ RG.Share('https://some-gaming-address-to-share.com').then(function(data) {
 
 ```
 使用方法 
-RG.Mark(markName: string, param?: {google?: object, adjust?: object, currency?: string, money?: string,eventToken：string}): void
+RG.Mark(markName: string, param?: {google?: object, adjust?: object, currency?: string, money?: string}): void
 ```
 
 ## 引导用户添加桌面收藏
