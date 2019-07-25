@@ -1,5 +1,5 @@
 site_name: SDK Docs
 theme: readthedocs
 pages:
-    - Home: index.md
-    - Question: question.md
+    - 'SDK文档': index.md
+    - '常见问题解答': question.md
