@@ -145,7 +145,8 @@ const hy_default = {
     formal: 'https://sdk-sg.pocketgamesol.com/pocketgames/client'
   },
   download: {
-    android: ''
+    android: 'https://play.google.com/store/apps/details?id=com.fengkuangzhi.renzhe',
+    ios: 'https://apps.apple.com/tw/app/id1466051116'
   },
   page: {
     index: {
@@ -206,9 +207,6 @@ const hy_ios_0 = {
     test: 'https://sdk-test.changic.net.cn/pocketgames/client',
     formal: 'https://sdk-sg.pocketgamesol.com/pocketgames/client'
   },
-  download: {
-    android: ''
-  },
   page: {
     index: {
       test: 'https://www.narutoh5game.com/test_hyrz/index.html',
@@ -264,9 +262,6 @@ const hy_google_1 = {
   server: {
     test: 'https://sdk-test.changic.net.cn/pocketgames/client',
     formal: 'https://sdk-sg.pocketgamesol.com/pocketgames/client'
-  },
-  download: {
-    android: ''
   },
   page: {
     index: {
