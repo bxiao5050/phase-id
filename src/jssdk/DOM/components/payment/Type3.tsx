@@ -32,7 +32,11 @@ export default class Type3 extends React.Component<paymentProps, {}, any>  {
             <div className="type3-buy-btn"
               onClick={() => {
                 RG.jssdk.Ordering(source).then((OrderRes: OrderRes) => {
-                  if (OrderRes.code !== 200) {
+                  if (OrderRes.code === 200) {
+                    if (source.code === 15) {
+                      this.props.Payment.orderCompleted(OrderRes, source)
+                    }
+                  } else {
                     console.error(OrderRes.error_msg)
                   }
                 })
