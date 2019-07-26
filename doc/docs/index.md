@@ -40,7 +40,7 @@ window.rgAsyncInit = function () {
 }
 
 /** 加载jsssdk */
-var src = 'https://sdk-test.changic.net.cn/jssdk/' + sdkVersion + '/sdk.js';
+var src = 'https://sdk-test.changic.net.cn/jssdk/' + sdkVersion + '/sdk.js?t='+ Date.now();
 (function (d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0];
   if (d.getElementById(id)) return;
