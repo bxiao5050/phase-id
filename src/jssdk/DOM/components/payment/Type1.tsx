@@ -12,7 +12,8 @@ export default class Type1 extends React.Component<paymentProps, {}, any> {
   setInterval = undefined
   state = {
     isQuerying: false,
-    isQueryingTxt: '.'
+    isQueryingTxt: '.',
+    isShowExchangeRate: false
   }
 
   setState(state) {
@@ -67,13 +68,24 @@ export default class Type1 extends React.Component<paymentProps, {}, any> {
   }
 
   render() {
-    var source = this.props.Payment.state.paymentDatas[this.index]
+    var source = this.props.Payment.state.paymentDatas[this.index];
+    var isShowExchangeRate = this.state.isShowExchangeRate;
     console.log(source)
     return (
       <div className="Type1 payment-nav">
         <h2 className="name">
           {source.name}
-          <span className="exchange">Exchange rate</span>
+          {source.products && source.products[0] ? (
+            <span
+              className="exchange"
+              onClick={() => {
+                this.state.isShowExchangeRate = true;
+                this.setState(this.state);
+              }}
+            >
+              Exchange rate
+            </span>
+          ) : null}
         </h2>
 
         <img className="card-head" src={source.codeImg.replace(/http\:\/{0,2}/, 'https://').replace(/:[0-9]+/, '')} />
@@ -87,7 +99,35 @@ export default class Type1 extends React.Component<paymentProps, {}, any> {
           <input placeholder="Please enter PIN" ref="pin" onBlur={() => { document.body.scrollTop = document.documentElement.scrollTop = 0 }} />
         </div>
         {this.state.isQuerying ? <a href="javascript:void(0);" className="btn-pay">Đang kiểm tra {this.state.isQueryingTxt}</a> : <a href="javascript:void(0);" className="btn-pay" onClick={this.pay}>Payment</a>}
+        {isShowExchangeRate ? <div className="exchange-wrap" /> : null}
+        {isShowExchangeRate ? (
+          <div className="exchange-rate-list">
+            <h2 className="exchange-name">
+              Exchange rate
+              <a
+                className="close"
+                onClick={() => {
+                  this.state.isShowExchangeRate = false;
+                  this.setState(this.state);
+                }}
+              />
+            </h2>
 
+            <ul className="exchange-list">
+              {source.products.map((product, i) => (
+                <li key={i} data-id={i}>
+                  <div className="item-price">
+                    {product.amount + " " + product.currency}
+                  </div>
+                  =
+                  <div className="item-goods">
+                    {product.gameCoin + " " + product.gameCurrency}
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ) : null}
       </div>
     )
   }

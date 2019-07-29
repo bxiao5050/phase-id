@@ -74,8 +74,14 @@ export default class Payment extends React.Component<PaymentProps, {}, any> {
           })
       }
       else {
-        pageName = 'type' + payments.showMethod
-        this.state.paymentDatas[payments.showMethod] = payments
+        if (payments.showMethod > 8) {
+          pageName = 'type3';
+          this.state.paymentDatas[3] = payments;
+        } else {
+          pageName = 'type' + payments.showMethod;
+          this.state.paymentDatas[payments.showMethod] = payments;
+        }
+
         this.props.history.push(
           createLocation(pageName)
         )
@@ -120,8 +126,8 @@ export default class Payment extends React.Component<PaymentProps, {}, any> {
               <Route exact path='/type2' render={() => <Type2 Payment={this} />} />
               <Route exact path='/type3' render={() => <Type3 Payment={this} />} />
               <Route exact path='/type4' render={() => <Type4 Payment={this} />} />
-              {/* 现在只使用了0-4,9-11 */}
-              {/* <Route exact path='/type5' render={() => <Type5 Payment={this} />} /> */}
+              {/* 现在只使用了0-5,9-11 */}
+              <Route exact path='/type5' render={() => <Type5 Payment={this} />} />
               <Route path="/main" render={() => <ul className="payment-nav">
                 {
                   Ins.state.paymentConfig.payments.map((node, index) => {
@@ -133,7 +139,7 @@ export default class Payment extends React.Component<PaymentProps, {}, any> {
                       {node.discountImg && (<div className="pay-channel-discount">
                         <img className="pay-channel-discount-img"
                           src={node.discountImg.replace(/http\:\/{0,2}/, 'https://').replace(/:[0-9]+/, '')}
-                          alt="discount image"
+                          alt=""
                         /></div>)}
 
                       <span className="pay-main-icon"></span>

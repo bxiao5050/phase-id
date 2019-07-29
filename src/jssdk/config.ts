@@ -127,6 +127,43 @@ const kdxs_default = {
   }
 }
 */
+// 测试支付页面
+const test = {
+  name: 'test',
+  app_key: 'f43968a73df747aab4b9b1e506265050',
+  fb_app_id: '',
+  language: 'TW',
+  region: 'SG',
+  hoverTop: '.24',
+  hoverFromLeft: true,
+  mark_id: {
+    fb: '',
+    markName: {
+    },
+    adjust: {}
+  },
+  server: {
+    test: 'https://sdk-test.changic.net.cn/pocketgames/client',
+    formal: 'https://sdk-sg.pocketgamesol.com/pocketgames/client'
+  },
+  download: {
+    android: 'https://play.google.com/store/apps/details?id=com.fengkuangzhi.renzhe',
+    ios: 'https://apps.apple.com/tw/app/id1466051116'
+  },
+  page: {
+    index: {
+      test: 'https://www.narutoh5game.com/test_hyrz/index.html',
+      formal: 'https://www.narutoh5game.com/h5-plays/index.html',
+    },
+    facebook: {
+      messenger: {
+        pc: 'https://www.facebook.com/messages/t/NarutoGame.H5',
+        mobile: 'https://m.facebook.com/messages/read/?tid=445144659622899&entrypoint=web%3Atrigger%3Athread_list_thread&ref=bookmark',
+      },
+      index: 'https://www.facebook.com/NarutoGame.H5'
+    }
+  }
+}
 
 // 火影游戏
 const hy_default = {
@@ -286,6 +323,10 @@ const config = {
       32001: config4
     }, */
   // 修改
+  10062: {
+    1: test,
+    default: test
+  },
   10183: {
     1: hy_google_1,
     0: hy_ios_0,

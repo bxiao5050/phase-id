@@ -35,18 +35,16 @@ export default class Native extends Base {
         return Ordering(OrderingData).then(orderRes => {
           console.log('jpwork.jpwork', OrderingData.showMethod, orderRes)
           if (orderRes.code === 200) { // 下单完成
-            if (OrderingData.code === -1) {
-              let jpParams = { // 获取Native的交易凭据
-                productName: OrderingData.selectedProduct.productName,
-                transactionId: orderRes.data.transactionId,
-                channel: OrderingData.channel,
-                currency: OrderingData.selectedProduct.currency,
-                money: OrderingData.selectedProduct.amount
-              }
-              let jpParamsStr = JSON.stringify(jpParams)
-              console.log('jpParamsStr', jpParams, jpParamsStr)
-              JsToNative.jpwork(jpParamsStr)
+            let jpParams = { // 获取Native的交易凭据
+              productName: OrderingData.selectedProduct.productName,
+              transactionId: orderRes.data.transactionId,
+              channel: OrderingData.channel,
+              currency: OrderingData.selectedProduct.currency,
+              money: OrderingData.selectedProduct.amount
             }
+            let jpParamsStr = JSON.stringify(jpParams)
+            console.log('jpParamsStr', jpParams, jpParamsStr)
+            JsToNative.jpwork(jpParamsStr)
           }
           return orderRes
         })
@@ -415,7 +413,7 @@ export default class Native extends Base {
   Mark(markName: string, extraParam?: any) {
     let eventName: string = markName;
     // 从配置中获取点名的配置
-    if (RG.jssdk.config.mark_id.markName[eventName]) {
+    if (RG.jssdk.config.mark_id.markName && RG.jssdk.config.mark_id.markName[eventName]) {
       eventName = RG.jssdk.config.mark_id.markName[eventName];
     }
     // 传递给原生的参数
@@ -423,7 +421,7 @@ export default class Native extends Base {
       eventName
     }
     // 获取adjust Token
-    if (RG.jssdk.config.mark_id.adjust[eventName]) {
+    if (RG.jssdk.config.mark_id.adjust && RG.jssdk.config.mark_id.adjust[eventName]) {
       markParmas.eventToken = RG.jssdk.config.mark_id.adjust[eventName];
     }
     // sdk_purchased_done，原生端根据此字符串来做是否支付的判断,adjust只需要token，不要调整代码的顺序，最后匹配购买的点名
@@ -432,7 +430,7 @@ export default class Native extends Base {
       markParmas.eventName = "sdk_purchased_done";
     }
     // 匹配唯一点
-    if (RG.jssdk.config.mark_id.adjust[eventName + '_unique']) {
+    if (RG.jssdk.config.mark_id.adjust && RG.jssdk.config.mark_id.adjust[eventName + '_unique']) {
       window.JsToNative.gameEvent(JSON.stringify({ eventName: eventName + '_unique', eventToken: RG.jssdk.config.mark_id.adjust[eventName + '_unique'] }));
       console.info(`"${eventName + '_unique'}" has marked - native`, { eventName: eventName + '_unique', eventToken: RG.jssdk.config.mark_id.adjust[eventName + '_unique'] })
     }
