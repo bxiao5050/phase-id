@@ -778,3 +778,5 @@ interface requestParam {
 
 type PlatformLoginParam = LoginParam & DeviceMsg;
 type Methods = "POST" | "GET";
+
+/* 以下为新的类型 */
