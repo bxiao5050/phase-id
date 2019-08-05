@@ -291,7 +291,7 @@ const config = {
   10183: {
     1: hy_google_1,
     0: hy_ios_0,
-    39: hy_ios_0,
+    39: hy_google_1,
     default: hy_default
   }
 }
