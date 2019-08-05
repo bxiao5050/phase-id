@@ -138,7 +138,9 @@ const hy_default = {
   hoverTop: '.24',
   hoverFromLeft: true,
   mark_id: {
-    fb: '663857194035716'
+    fb: '663857194035716',
+    markName: {},
+    adjust: {},
   },
   server: {
     test: 'https://sdk-test.changic.net.cn/pocketgames/client',
@@ -289,6 +291,7 @@ const config = {
   10183: {
     1: hy_google_1,
     0: hy_ios_0,
+    39: hy_ios_0,
     default: hy_default
   }
 }
