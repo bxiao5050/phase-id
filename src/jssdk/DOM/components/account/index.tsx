@@ -221,6 +221,7 @@ class PaymentHistory extends React.Component<accountProps, {}, {}> {
   }
 
   render() {
+    console.log(this.state.list);
     if (this.state.list.length) {
       return <div className="order-list">
         {
@@ -232,7 +233,7 @@ class PaymentHistory extends React.Component<accountProps, {}, {}> {
               </div>
               <div className="order-line">
                 <p className="order-blue">{RG.jssdk.config.i18n.txt_charge_way_tips}</p>
-                <p>{RG.jssdk.config.type === 1 ? RG.jssdk.config.i18n.txt_other_way : RG.jssdk.config.i18n.txt_official}</p>
+                <p>{(node.channel === 1 || node.channel === 0) ? RG.jssdk.config.i18n.txt_official : RG.jssdk.config.i18n.txt_other_way}</p>
               </div>
               <div className="order-line">
                 <p className="order-blue">{RG.jssdk.config.i18n.txt_order_num_tips}</p>
