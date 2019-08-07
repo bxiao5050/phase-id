@@ -8,13 +8,8 @@
 ├── doc # jssdk的文档
 ├── src # 代码目录
 │   ├── jssdk # sdk目录
-│   │   ├── api #所有的请求的文件，暂时未使用 
 │   │   ├── Base #所有的基础的配置
-│   │   ├── config #配置文件的目录，暂时未使用 
 │   │   ├── DOM #dom组件的内容 
-│   │   ├── native #微端sdk，暂时未使用 
-│   │   ├── plugins #所有的插件，暂时未使用 
-│   │   ├── untils #公共方法 ，暂时未使用 
 │   │   └── main.ts # 主入口
 │   │
 │   ├── add-shortcut # 引导桌面收藏目录
@@ -25,7 +20,7 @@
 │   │   ├── style.css # 引导页样式
 │   │   └── swiper.tsx # swiper组件
 │   │
-│   ├── index # 首页的逻辑，已经废弃，全部加载在sspa中
+│   ├── index # 首页的逻辑,现在全部加载在sspa中
 │   ├── add-shortcut.html # 引导页的html文件
 │   └── index.html # 测试启动的页面
 ├── babel.config.js #babel配置文件
