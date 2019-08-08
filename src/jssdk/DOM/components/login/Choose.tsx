@@ -3,7 +3,7 @@
 import './Choose.scss'
 import * as React from 'react'
 import { Route } from 'react-router-dom'
-import Login from 'DOM/components/login'
+import Login from './index'
 import { Ins } from 'DOM/index'
 import Utils from 'Base/Utils';
 

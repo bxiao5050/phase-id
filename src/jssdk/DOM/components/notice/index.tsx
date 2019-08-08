@@ -1,6 +1,6 @@
 import './index.scss'
 import * as React from 'react'
-import { Ins } from 'Src/DOM';
+import { Ins } from 'DOM/index';
 
 export default class Notice extends React.Component<{
   msg?: string

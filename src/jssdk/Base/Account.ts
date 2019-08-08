@@ -1,6 +1,6 @@
-import Utils from "Base/Utils";
-import Http from "Src/Base/Http";
-import * as Const from "Src/Base/Constant";
+import Utils from "./Utils";
+import Http from "./Http";
+import * as Const from "./Constant";
 
 export default class Account {
   static _ins: Account;

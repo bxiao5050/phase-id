@@ -3,8 +3,8 @@ import "./Main.scss"
 import * as React from 'react'
 import { Route } from 'react-router-dom'
 import { createLocation } from 'history'
-import Login from "DOM/components/login"
-import Choose from "DOM/components/login/Choose"
+import Login from "./index"
+import Choose from "./Choose"
 import { Ins } from 'DOM/index'
 
 export default class Main extends React.Component<{

@@ -2,7 +2,7 @@ import './index.scss'
 import * as React from 'react'
 import { History } from 'history'
 import { Ins } from 'DOM/index'
-import { DOT } from 'Src/Base/Constant';
+import { DOT } from 'Base/Constant';
 
 var canTouch = false
 var isMoving = false

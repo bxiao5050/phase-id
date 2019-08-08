@@ -1,8 +1,8 @@
 
-import Http from "Src/Base/Http";
-import Utils from "Base/Utils";
-import Account from "Src/Base/Account";
-import * as Const from "Src/Base/Constant";
+import Http from "./Http";
+import Utils from "./Utils";
+import Account from "./Account";
+import * as Const from "./Constant";
 
 export default class Payment {
   static _ins: Payment

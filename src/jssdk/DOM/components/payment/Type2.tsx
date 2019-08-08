@@ -1,6 +1,6 @@
 import "./Type2.scss";
 import * as React from "react";
-import Payment from "DOM/components/payment";
+import Payment from "./index";
 import { Ins } from "DOM/index";
 
 type paymentProps = {

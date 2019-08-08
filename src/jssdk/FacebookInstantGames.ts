@@ -1,6 +1,6 @@
-import Mark from 'Src/Base/Mark_old'
+import Mark from 'Base/Mark_old'
 import { Ins } from 'DOM/index'
-import { DOT } from './Base/Constant';
+import { DOT } from 'Base/Constant';
 
 export default class FacebookInstantGames {
 
@@ -39,7 +39,7 @@ export default class FacebookInstantGames {
 
   /**
   * 支付接口
-  * @param paymentConfig 
+  * @param paymentConfig
   */
   async Pay(payParams: RG.PayParams): Promise<ServerRes> {
     var paymentConfig = await RG.jssdk.PaymentConfig(payParams)
@@ -57,8 +57,8 @@ export default class FacebookInstantGames {
 
   /**
    * sdk 服务器消单完成
-   * @param data 
-   * @param purchaseToken 
+   * @param data
+   * @param purchaseToken
    */
   serverFinishOrderCompleted(data: ServerRes, purchaseToken: string): Promise<ServerRes> {
     return FacebookInstantGames.instance.consumePurchaseAsync(purchaseToken)
@@ -66,7 +66,7 @@ export default class FacebookInstantGames {
 
   /**
    * facebook 消单
-   * @param purchaseToken 
+   * @param purchaseToken
    */
   consumePurchaseAsync(purchaseToken: string): Promise<ServerRes> {
     return new Promise((resolve, reject) => {
@@ -113,9 +113,9 @@ export default class FacebookInstantGames {
 
   /**
    * 购买商品
-   * @param payParams 
-   * @param orderingData 
-   * @param orderRes 
+   * @param payParams
+   * @param orderingData
+   * @param orderRes
    */
   purchaseAsync(orderingData, orderRes): Promise<ServerRes> {
     return new Promise(resolve => {

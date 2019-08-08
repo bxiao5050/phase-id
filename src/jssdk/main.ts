@@ -1,5 +1,5 @@
 import { DOT, GET, ERROR } from "Base/Constant";
-import { checkJsToNative } from "Src/adapter";
+import { checkJsToNative } from "./adapter";
 import Web from "./Web";
 import Native from "./Native";
 import Config from "./config";
@@ -107,19 +107,19 @@ function init(window: Window) {
     let sdk: Web | Native;
     switch (sdkType) {
       case 1:
-        await import("Src/Web").then(module => {
+        await import("SDK/Web").then(module => {
           sdk = new module.default(config, false);
         });
         break;
       case 2:
-        await import("Src/Native").then(module => {
+        await import("SDK/Native").then(module => {
           sdk = new module.default(config, false);
         })
         break;
       case 3:
-        return import("Src/FacebookWebGames");
+        return import("SDK/FacebookWebGames");
       case 4:
-        return import("Src/FacebookInstantGames");
+        return import("SDK/FacebookInstantGames");
     }
     return sdk;
   }

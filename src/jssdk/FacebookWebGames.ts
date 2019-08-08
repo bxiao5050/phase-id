@@ -1,6 +1,6 @@
 // import Mark from 'Src/Base/Mark_old'
 import { Ins } from 'DOM/index'
-import { DOT } from './Base/Constant';
+import { DOT } from 'Base/Constant';
 
 /**
  * facebook web games javascript SDK
@@ -41,7 +41,7 @@ export default class FacebookWebGames {
   }
 
   ExposeApis() {
-    window.RG = <any>{}
+    window.RG = <any> {}
     var exposeApis = [
       "server",
       "version",
@@ -60,7 +60,7 @@ export default class FacebookWebGames {
 
   /**
    * 支付接口
-   * @param paymentConfig 
+   * @param paymentConfig
    */
   async Pay(payParams: RG.PayParams): Promise<ServerRes> {
     // if ('product_id' in payParams) {
@@ -79,8 +79,8 @@ export default class FacebookWebGames {
 
   /**
    * sdk 服务器消单完成
-   * @param data 
-   * @param purchaseToken 
+   * @param data
+   * @param purchaseToken
    */
   serverFinishOrderCompleted(data: ServerRes, purchaseToken: string): Promise<ServerRes> {
     return FacebookWebGames.instance.consumePurchaseAsync(purchaseToken)
@@ -88,7 +88,7 @@ export default class FacebookWebGames {
 
   /**
    * facebook 消单
-   * @param purchaseToken 
+   * @param purchaseToken
    */
   consumePurchaseAsync(purchaseToken: string): Promise<ServerRes> {
     return new Promise((resolve, reject) => {
@@ -96,7 +96,7 @@ export default class FacebookWebGames {
         '/' + purchaseToken + '/consume',    // Replace the PURCHASE_TOKEN
         'post',
         {
-          // access_token: access_token 
+          // access_token: access_token
         },
         ({ success }) => {
           if (success) { // facebook 消单成功
@@ -128,7 +128,7 @@ export default class FacebookWebGames {
       '/app/purchases',
       'get',
       {
-        // access_token: 'ACCESS_TOKEN' 
+        // access_token: 'ACCESS_TOKEN'
       },
       (payload: {
         data: {
@@ -168,9 +168,9 @@ export default class FacebookWebGames {
 
   /**
    * 购买商品
-   * @param payParams 
-   * @param orderingData 
-   * @param orderRes 
+   * @param payParams
+   * @param orderingData
+   * @param orderRes
    */
   purchaseAsync(orderingData, orderRes): Promise<ServerRes> {
     return new Promise(resolve => {

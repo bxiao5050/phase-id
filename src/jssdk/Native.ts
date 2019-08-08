@@ -1,8 +1,8 @@
-import Http from 'Src/Base/Http';
+import Http from 'Base/Http';
 import Utils from 'Base/Utils';
 import * as CryptoJS from 'crypto-js'
-import { DOT } from './Base/Constant';
-import Base from './Base';
+import { DOT } from 'Base/Constant';
+import Base from './base';
 
 export default class Native extends Base {
 

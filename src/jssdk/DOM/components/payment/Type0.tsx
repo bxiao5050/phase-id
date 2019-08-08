@@ -3,8 +3,8 @@ import './Type0.scss'
 import * as React from 'react'
 import Payment from 'DOM/components/payment'
 import { History } from 'history'
-import Utils from 'Src/Base/Utils';
-import Http from 'Src/Base/Http';
+import Utils from 'Base/Utils';
+import Http from 'Base/Http';
 
 type paymentProps = {
   Payment: Payment

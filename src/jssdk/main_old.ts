@@ -1,9 +1,9 @@
 /* 此文件已经废弃，下一次更新时删除 */
 import Utils from "Base/Utils";
 import { DOT, GET, ERROR } from "Base/Constant";
-import { checkJsToNative } from "Src/adapter";
+import { checkJsToNative } from "SDK/adapter";
 import Polyfill from "Base/Polyfill";
-import Mark from "Src/Base/Mark_old";
+import Mark from "Base/Mark_old";
 import Web from "./Web";
 import Native from "./Native";
 
@@ -86,7 +86,7 @@ export default class Main {
       let config, translation;
       Promise.all([
         new Promise(async function (resolve) {
-          config = (await import("Src/config")).default[appId];
+          config = (await import("SDK/config")).default[appId];
           config = config[advChannel] || config.default;
           resolve();
         }),
@@ -140,13 +140,13 @@ export default class Main {
 
     if (this.config.advChannel > 30000 && this.config.advChannel < 31000) {
       this.config.type = 1;
-      import("Src/Web").then(module => {
+      import("SDK/Web").then(module => {
         this.sdkInstance = new module.default(this.config, this.fb_sdk_loaded);
         get_sdk_instance_resolve();
       })
     } else if (this.config.advChannel < 30000) {
       this.config.type = 2;
-      import("Src/Native").then(module => {
+      import("SDK/Native").then(module => {
         this.sdkInstance = new module.default(this.config, this.fb_sdk_loaded);
         get_sdk_instance_resolve();
       })
@@ -155,10 +155,10 @@ export default class Main {
       this.config.advChannel < 32000
     ) {
       this.config.type = 3;
-      return import("Src/FacebookWebGames");
+      return import("SDK/FacebookWebGames");
     } else if (this.config.advChannel > 32000 && this.config.advChannel < 33000) {
       this.config.type = 4;
-      return import("Src/FacebookInstantGames");
+      return import("SDK/FacebookInstantGames");
     }
   }
 

@@ -1,16 +1,17 @@
-import './index.scss'
-import * as React from 'react'
-import { Switch, Route } from 'react-router-dom'
-import { History, createLocation } from 'history'
-import TypeList from "Src/DOM/components/payment/TypeList";
-import Type2 from "Src/DOM/components/payment/Type2";
-import Type0 from "DOM/components/payment/Type0";
-import Type1 from "DOM/components/payment/Type1";
-import Type3 from "DOM/components/payment/Type3";
-import Type4 from "DOM/components/payment/Type4";
-import Type5 from "DOM/components/payment/Type5";
-import WinOpen from "DOM/components/payment/WinOpen"
-import { Ins } from 'DOM/index'
+import './index.scss';
+import * as React from 'react';
+import { Switch, Route } from 'react-router-dom';
+import { History, createLocation } from 'history';
+import { Ins } from 'DOM/index';
+import TypeList from "./TypeList";
+import Type2 from "./Type2";
+import Type0 from "./Type0";
+import Type1 from "./Type1";
+import Type3 from "./Type3";
+import Type4 from "./Type4";
+import Type5 from "./Type5";
+import WinOpen from "./WinOpen";
+
 
 type PaymentProps = {
   history: History

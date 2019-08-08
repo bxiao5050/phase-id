@@ -2,8 +2,8 @@ import './Entry.scss'
 import * as React from 'react'
 import { createLocation } from 'history'
 import { Ins } from 'DOM/index'
-import Login from "DOM/components/login"
-import Choose from "DOM/components/login/Choose"
+import Login from "./index"
+import Choose from "./Choose"
 
 type EntryProp = {
   Login: Login

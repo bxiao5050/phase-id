@@ -1,6 +1,3 @@
-
-
-
 var translation = {
   TW: {
     UnknownErr: '未知错误',
