@@ -1,7 +1,6 @@
 
 import Http from "./Http";
-import Utils from "./Utils";
-import Account from "./Account";
+import { signed, formatDate } from "../utils";
 import * as Const from "./Constant";
 
 export default class Payment {
@@ -37,15 +36,16 @@ export default class Payment {
       sign: null
     }
 
-    data.sign = Utils.signed({
-      appId: data.appId,
-      advChannel: data.advChannel,
-      userId: data.userId,
-      gameCoin: data.gameCoin,
-      level: data.level,
-      source: data.source,
-      network: data.network
-    })
+    data.sign = signed([
+      data.appId,
+      data.advChannel,
+      data.userId,
+      data.gameCoin,
+      data.level,
+      data.source,
+      data.network,
+      RG.jssdk.config.app_key
+    ])
 
     return Http.instance.post({
       route: this.route.config,
@@ -63,10 +63,11 @@ export default class Payment {
       appId: RG.jssdk.config.appId,
       userId: RG.jssdk.CurUserInfo().userId,
       lastTime: 1525771365401,
-      sign: Utils.signed({
-        appId: RG.jssdk.config.appId,
-        userId: RG.jssdk.CurUserInfo().userId
-      })
+      sign: signed([
+        RG.jssdk.config.appId,
+        RG.jssdk.CurUserInfo().userId,
+        RG.jssdk.config.app_key
+      ])
     }
 
     return Http.instance.get({ route: this.route.history + '/' + Object.keys(data).map(key => data[key]).join('/') }).then((history) => {
@@ -111,25 +112,26 @@ export default class Payment {
       operatorOs: deviceMsg.operatorOs,
       version: deviceMsg.version,
       sdkVersion: RG.jssdk.version,
-      clientTime: new Date().format("yyyy-MM-dd hh:mm:ss"),
+      clientTime: formatDate(),
       sign: null
     }
 
-    data.sign = Utils.signed({
-      appId: data.appId,
-      advChannel: data.advChannel,
-      userId: data.userId,
-      roleId: data.roleId,
-      gameOrderId: data.gameOrderId,
-      gameZoneId: data.gameZoneId,
-      code: data.code,
-      source: data.source,
-      channel: data.channel,
-      amount: data.amount,
-      currency: data.currency,
-      productName: data.productName,
-      exInfo: data.exInfo
-    })
+    data.sign = signed([
+      data.appId,
+      data.advChannel,
+      data.userId,
+      data.roleId,
+      data.gameOrderId,
+      data.gameZoneId,
+      data.code,
+      data.source,
+      data.channel,
+      data.amount,
+      data.currency,
+      data.productName,
+      data.exInfo,
+      RG.jssdk.config.app_key
+    ])
 
     return Http.instance.post({ route: this.route.createOrder, data }).then((orderRes: OrderRes) => {
       if (orderRes.code !== 200) {
@@ -152,7 +154,7 @@ export default class Payment {
 
       advChannel: RG.jssdk.config.advChannel,
       sdkVersion: RG.jssdk.version,
-      clientTime: new Date().format("yyyy-MM-dd hh:mm:ss"),
+      clientTime: formatDate(),
 
       version: version,
       deviceNo: deviceNo,
@@ -161,13 +163,15 @@ export default class Payment {
       model: model,
       operatorOs: operatorOs,
 
-      sign: Utils.signed({
-        transactionId: finishOrderParams.transactionId,
-        receipt: finishOrderParams.receipt,
-        signature: finishOrderParams.signature,
-        channel: finishOrderParams.channel,
-        advChannel: RG.jssdk.config.advChannel
-      })
+      sign: signed([
+        finishOrderParams.transactionId,
+        finishOrderParams.receipt,
+        finishOrderParams.signature,
+        finishOrderParams.channel,
+        RG.jssdk.config.advChannel,
+        RG.jssdk.config.app_key
+
+      ])
     }
     return Http.instance.post({ route: this.route.finish, data: finishOrderPostData }).then((serverRes: ServerRes) => {
       if (serverRes.code !== 200) {

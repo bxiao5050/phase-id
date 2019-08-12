@@ -221,7 +221,7 @@ export default class Utils {
     return uuid.join('');
   }
 
-  static CookieManager: CookieManager = CookieManager.instance;
+  // static CookieManager: CookieManager = CookieManager.instance;
 }
 
 

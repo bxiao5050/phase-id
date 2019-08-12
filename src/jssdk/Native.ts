@@ -1,5 +1,5 @@
 import Http from 'Base/Http';
-import Utils from 'Base/Utils';
+import { getUrlParam, signed, formatDate, getAccountType } from './utils';
 import * as CryptoJS from 'crypto-js'
 import { DOT } from 'Base/Constant';
 import Base from './base';
@@ -176,7 +176,7 @@ export default class Native extends Base {
     let user = RG.jssdk.Account.user
     let autoLogin = false
     let LoginModule = window.RG.jssdk.App.showLogin()
-    let code = Utils.getUrlParam('code');
+    let code = getUrlParam('code');
 
     if (code) {
       await RG.jssdk.Login({ isFacebook: true })
@@ -209,7 +209,7 @@ export default class Native extends Base {
 
     // if (user) {
     //   let { userType, accountType } = user
-    //   let isGuest = Utils.getAccountType(userType, accountType) === 'guest' ? true : false;
+    //   let isGuest = getAccountType(userType, accountType) === 'guest' ? true : false;
     //   window.RG.jssdk.App.hideLogin()
     //   window.RG.jssdk.App.showHover(isGuest)
     //   if (window.rgAsyncInit) {
@@ -262,13 +262,14 @@ export default class Native extends Base {
         device: device,
         version: version,
         sdkVersion: RG.jssdk.version,
-        clientTime: new Date().format("yyyy-MM-dd hh:mm:ss"),
+        clientTime: formatDate(),
         firstInstall: 0,
-        sign: Utils.signed({
-          appId: RG.jssdk.config.appId,
-          source: source,
-          advChannel: RG.jssdk.config.advChannel,
-        })
+        sign: signed([
+          RG.jssdk.config.appId,
+          source,
+          RG.jssdk.config.advChannel,
+          RG.jssdk.config.app_key
+        ])
       }
 
       console.log('initSDKParams', initSDKParam)

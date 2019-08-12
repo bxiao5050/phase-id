@@ -1,5 +1,3 @@
-import Utils from "./Utils";
-
 export default class Http {
   static _ins: Http
   static get instance(): Http {
@@ -9,7 +7,7 @@ export default class Http {
     Http._ins = this
   }
 
-  private serverAddress = IS_TEST || IS_DEV ? RG.jssdk.config.server.test :RG.jssdk.config.server.formal;
+  private serverAddress = IS_TEST || IS_DEV ? RG.jssdk.config.server.test : RG.jssdk.config.server.formal;
 
   private request(param: requestParam): Promise<ServerRes> {
 

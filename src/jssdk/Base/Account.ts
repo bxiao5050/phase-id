@@ -1,4 +1,4 @@
-import Utils from "./Utils";
+import { signed } from "../utils";
 import Http from "./Http";
 import * as Const from "./Constant";
 
@@ -94,12 +94,13 @@ export default class Account {
       sign: null
     };
 
-    data.sign = Utils.signed({
-      appId: RG.jssdk.config.appId,
-      userId: this.user.userId,
-      password: oldpass,
-      newPassword: newpass
-    });
+    data.sign = signed([
+      RG.jssdk.config.appId,
+      this.user.userId,
+      oldpass,
+      newpass,
+      RG.jssdk.config.app_key
+    ]);
 
     return Http.instance.post({
       route: Const.RouteChangePassword,

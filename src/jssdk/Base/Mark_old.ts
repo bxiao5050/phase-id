@@ -1,4 +1,4 @@
-import Utils from "./Utils";
+import { getUrlParam, CookieManager, getDeviceType, generateGpsAdid } from "../utils";
 // 打点代码整体拿到了sspa中，有需要可以自行修改
 export default class Mark {
 
@@ -6,7 +6,7 @@ export default class Mark {
   game_url: HTMLAnchorElement
   isIndex: boolean = false
   _adjust: any
-
+  deviceType = getDeviceType();
   static _ins: Mark
   static get instance(): Mark {
     return this._ins || new Mark;
@@ -18,7 +18,7 @@ export default class Mark {
     this.index_url = document.createElement('a')
     this.game_url = document.createElement('a')
 
-    if (Utils.getUrlParam('debugger') || window['debugger']) {
+    if (getUrlParam('debugger') || window['debugger']) {
       this.index_url.href = config.page.index.test
       this.game_url.href = config.page.game.test
     } else {
@@ -85,19 +85,19 @@ export default class Mark {
       if (this.isIndex) {
         // 判断设备的平台，只区分ios和android
         var os_name = 'unknown';
-        if (Utils.deviceType.android) {
+        if (this.deviceType.android) {
           os_name = 'android';
-        } else if (Utils.deviceType.ios || Utils.deviceType.iPhone || Utils.deviceType.iPad) {
+        } else if (this.deviceType.ios || this.deviceType.iPhone || this.deviceType.iPad) {
           os_name = 'ios';
         }
         // 检测存在设备id吗，不存在就创建一个
-        Utils.CookieManager.getCookie("gps_adid") || Utils.CookieManager.setCookie("gps_adid", Utils.generateGpsAdid(), 365 * 10);
+        CookieManager.instance.getCookie("gps_adid") || CookieManager.instance.setCookie("gps_adid", generateGpsAdid(), 365 * 10);
         this._adjust = new Adjust({
           app_token: config.mark_id.adjust.id,
           environment: IS_DEV ? "sandbox" : "production", // or 'sandbox' in case you are testing SDK locally with your web app
           os_name: os_name,
           device_ids: {
-            gps_adid: Utils.CookieManager.getCookie("gps_adid") // each web app user needs to have unique identifier
+            gps_adid: CookieManager.instance.getCookie("gps_adid") // each web app user needs to have unique identifier
           }
         });
         // session会话，adjust只有在30分钟之后重新打开才算做一次会话，当一个小时内每10分钟重复打开时，这一个小时都会算作一次会话，并且发送的请求会报错返回500

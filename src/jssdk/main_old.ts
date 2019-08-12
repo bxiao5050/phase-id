@@ -1,5 +1,5 @@
 /* 此文件已经废弃，下一次更新时删除 */
-import Utils from "Base/Utils";
+import { getUrlParam } from "Src/jssdk/utils";
 import { DOT, GET, ERROR } from "Base/Constant";
 import { checkJsToNative } from "SDK/adapter";
 import Polyfill from "Base/Polyfill";
@@ -59,7 +59,7 @@ export default class Main {
   async init() {
     return new Promise(async (resolve, reject) => {
       try {
-        (Utils.getUrlParam(GET.DEV) || window[GET.DEV]) && (await this.init_debugger());
+        (getUrlParam(GET.DEV) || window[GET.DEV]) && (await this.init_debugger());
         await this.get_game_config;
 
         this.get_sdk_instance();
@@ -78,8 +78,8 @@ export default class Main {
 
   /** 获取游戏配置 */
   get_game_config = new Promise((resolve, reject) => {
-    let appId = Utils.getUrlParam(GET.APP_ID) || window[GET.APP_ID];
-    let advChannel = Utils.getUrlParam(GET.ADV_CHANNEL) || window[GET.ADV_CHANNEL];
+    let appId = getUrlParam(GET.APP_ID) || window[GET.APP_ID];
+    let advChannel = getUrlParam(GET.ADV_CHANNEL) || window[GET.ADV_CHANNEL];
     if (!appId || !advChannel) {
       reject(ERROR.E_001);
     } else {
@@ -155,10 +155,10 @@ export default class Main {
       this.config.advChannel < 32000
     ) {
       this.config.type = 3;
-      return import("SDK/FacebookWebGames");
+      return import("Src/jssdk/FacebookWebGames");
     } else if (this.config.advChannel > 32000 && this.config.advChannel < 33000) {
       this.config.type = 4;
-      return import("SDK/FacebookInstantGames");
+      return import("Src/jssdk/FacebookInstantGames");
     }
   }
 

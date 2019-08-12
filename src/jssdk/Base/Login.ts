@@ -1,4 +1,4 @@
-import Utils from "./Utils";
+import { getUrlParam, signed } from "../utils";
 import Http from "./Http";
 import { DOT } from "./Constant";
 
@@ -68,15 +68,16 @@ export default class Login {
     return new Promise(async (resolve) => {
       var deviceMsg: DeviceMsg = await JsToNative.getDeviceMsgAsync() as any;
       // 获取签名信息
-      var sign = Utils.signed({
-        appId: RG.jssdk.config.appId,
-        userName: loginParam.userName,
-        password: loginParam.password,
-        source: deviceMsg.source
-      })
+      var sign = signed([
+        RG.jssdk.config.appId,
+        loginParam.userName,
+        loginParam.password,
+        deviceMsg.source,
+        RG.jssdk.config.app_key
+      ])
       loginParam.source = deviceMsg.source;
       if (RG.jssdk.config.type === 1 && isRegister) {
-        loginParam.thirdPartyId = Utils.getUrlParam('advertiseId') ? Utils.getUrlParam('advertiseId') : '';
+        loginParam.thirdPartyId = getUrlParam('advertiseId') ? getUrlParam('advertiseId') : '';
       }
       resolve(Object.assign(
         deviceMsg,

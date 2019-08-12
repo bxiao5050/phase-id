@@ -83,7 +83,8 @@ var webpackConfig = {
     alias: {
       Base: path.join(__dirname, 'src/jssdk/Base'),
       DOM: path.join(__dirname, 'src/jssdk/DOM'),
-      Src: path.join(__dirname, 'src/jssdk'),
+      Src: path.join(__dirname, 'src'),
+      SDK: path.join(__dirname, 'src/jssdk')
     }
   },
   output: output,

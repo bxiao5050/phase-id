@@ -18,9 +18,9 @@ var getUrlParam = (function () {
   var interrogationIndex = location.href.indexOf("?") + 1;
   var str = interrogationIndex === 0 ? "" : location.href.slice(interrogationIndex);
   if (str) {
-    var arr = str.split(/&|%26/);
+    var arr = str.split(/&/);
     arr.forEach(item => {
-      var arr = item.split(/=|%3D/);
+      var arr = item.split(/=/);
       var key = arr[0];
       var val = arr[1];
     })；

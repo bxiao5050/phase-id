@@ -44,5 +44,11 @@
 
 
 
-注意事项：
-1. sdk_purchased_done 这个点的点名不能改变的，在微端根据这个点名来判断进行购买打点
+### 注意事项：
+
+  1. sdk_purchased_done 这个点的点名不能改变的，在微端根据这个点名来判断进行购买打点;
+
+### 需完成的点
+
+  1. 登录添加忘记密码功能，点击后弹出输入账号发送邮件修改密码功能，忘记账号联系客服
+  2. 添加邮箱功能，http://ip:port/pocketgames/client/user/operatorEmail   使用此接口添加 operatorType这个值暂时没有用可以直接传0;

@@ -4,7 +4,7 @@ import { Switch, Route, Link } from 'react-router-dom'
 import { History, createLocation } from 'history'
 import { Ins } from 'DOM/index'
 import { match } from 'react-router-dom'
-import Utils from 'Base/Utils';
+import { getAccountType } from 'Src/jssdk/utils';
 
 type accountProps = {
   match?: match<{ curPath: string }>
@@ -39,7 +39,7 @@ class Main extends React.Component<accountProps, any, any> {
   render() {
     var props = this.props
     var { userType, accountType } = RG.jssdk.Account.user;
-    const userTypeIsFB = Utils.getAccountType(userType, accountType) === 'fb';
+    const userTypeIsFB = getAccountType(userType, accountType) === 'fb';
 
     return <div className="info-main">
       <div className="info-account">

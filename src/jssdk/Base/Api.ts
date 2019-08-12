@@ -1,5 +1,5 @@
 import * as Const from "./Constant"
-import Utils from "./Utils";
+import { signed } from "../utils";
 import Http from "./Http";
 
 export default class Api {
@@ -25,12 +25,13 @@ export default class Api {
       deviceMsg,
       BindZoneParam,
       {
-        sign: Utils.signed({
-          userId: BindZoneParam.userId,
-          appId: RG.jssdk.config.appId,
-          gameZoneId: BindZoneParam.gameZoneId,
-          source: deviceMsg.source
-        })
+        sign: signed([
+          BindZoneParam.userId,
+          RG.jssdk.config.appId,
+          BindZoneParam.gameZoneId,
+          deviceMsg.source,
+          RG.jssdk.config.app_key
+        ])
       }
     )
     return Http.instance.post({ route: this.route.bind, data }).then(data => {
@@ -45,12 +46,13 @@ export default class Api {
       userName: account,
       password: password,
       email: '',
-      sign: Utils.signed({
-        appId: RG.jssdk.config.appId,
-        userId: RG.CurUserInfo().userId,
-        userName: account,
-        password: password
-      })
+      sign: signed([
+        RG.jssdk.config.appId,
+        RG.CurUserInfo().userId,
+        account,
+        password,
+        RG.jssdk.config.app_key
+      ])
     }
     return Http.instance.post({ route: this.route.bindVisitor, data }).then(data => {
       if (data.code === 200) {
