@@ -1,11 +1,11 @@
 /* 此文件已经废弃，下一次更新时删除 */
 import { getUrlParam } from "Src/jssdk/utils";
-import { DOT, GET, ERROR } from "Src/jssdk/config/Constant";
+import { DOT, GET } from "Src/jssdk/config/Constant";
 import { checkJsToNative } from "SDK/adapter";
-import Polyfill from "Base/Polyfill";
-import Mark from "Base/Mark_old";
-import Web from "./Web";
-import Native from "./Native";
+import Polyfill from "Src/jssdk/0_Old/Polyfill_old";
+import Mark from "Src/jssdk/0_Old/Mark_old";
+import Web from "../Web";
+import Native from "../Native";
 
 export default class Main {
   fb_sdk_loaded: boolean;
@@ -25,7 +25,7 @@ export default class Main {
     window.$postMessage = function (params, origin) {
       if (RG.jssdk.config.type !== 2) window.parent.postMessage(params, origin);
     }
-    IS_DEV && (await import("./dev"));
+    IS_DEV && (await import("../dev"));
     try {
       await this.init();
       if ((location.host === Mark.instance.game_url.host &&
@@ -81,7 +81,7 @@ export default class Main {
     let appId = getUrlParam(GET.APP_ID) || window[GET.APP_ID];
     let advChannel = getUrlParam(GET.ADV_CHANNEL) || window[GET.ADV_CHANNEL];
     if (!appId || !advChannel) {
-      reject(ERROR.E_001);
+      reject('appId or advChannel is not defined');
     } else {
       let config, translation;
       Promise.all([
@@ -91,7 +91,7 @@ export default class Main {
           resolve();
         }),
         new Promise(async resolve => {
-          translation = (await import("DOM/i18n")).default;
+          translation = (await import("DOM/i18n/index"));
           resolve();
         })
       ])

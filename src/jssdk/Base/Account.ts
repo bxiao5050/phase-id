@@ -1,7 +1,6 @@
 import { signed } from "../utils";
 import Http from "./Http";
 import * as Const from "../config/Constant";
-
 export default class Account {
   static _ins: Account;
   static get instance(): Account {

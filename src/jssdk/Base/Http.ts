@@ -48,7 +48,4 @@ export default class Http {
     )
   }
 
-
-
-
 }

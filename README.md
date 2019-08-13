@@ -18,19 +18,30 @@
 │   │   └── main
 │   ├── jssdk # sdk目录
 │   │   ├── Base #
-│   │   │   ├── DOM
-│   │   │   └── main.ts # 主入口
+│   │   │   ├── Account.ts
+│   │   │   ├── Api.ts
+│   │   │   ├── Http.ts
+│   │   │   ├── Login.ts
+│   │   │   ├── Payment.ts
+│   │   │   └── Share.ts
+│   │   ├── config #配置文件和一些常量
+│   │   ├── dev #本地环境下测试使用的mock代码
 │   │   ├── DOM #dom组件的内容 
-│   │   ├── native #微端sdk，暂时未使用 
-│   │   ├── plugins #第三方插件
-│   │   ├── untils #公共方法 ，暂时未使用 
+│   │   ├── plugins #第三方库 
+│   │   ├── utils #公用的方法
+│   │   ├── adapter.ts #添加JsToNative
+│   │   ├── Base.ts #web和native的父类
+│   │   ├── FacebookInstantGame.ts 
+│   │   ├── FacebookWebGame.ts 
+│   │   ├── Web.ts 
+│   │   ├── Native.ts 
 │   │   └── main.ts # 主入口
 │   │  
 │   ├── add-shortcut.html # 引导页的html文件
 │   └── index.html # 测试启动的页面
 │ 
 ├── .editorconfig #格式化样式配置文件
-├── 。gitignore #git版本控制忽略文件
+├── .gitignore #git版本控制忽略文件
 ├── babel.config.js #babel配置文件
 ├── index.d.ts # 全局类型文件
 ├── jest.config.js #jest测试的配置文件
