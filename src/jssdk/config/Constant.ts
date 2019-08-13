@@ -2,22 +2,24 @@
 // export var UserInfo = PREFIX + '-' + 'userInfo'
 // export var UsersInfo = PREFIX + '-' + 'usersInfo'
 // export var LoginData = PREFIX + '-' + 'loginData'
-/** 
+/**
  * route
  */
 
-export var RouteChangePassword = '/user/changePwd'
-export var RouteBindZone = '/user/v3/bindZone'
+
+export const RouteBindZone = '/user/v3/bindZone';
 
 /** Payment */
-export var RoutePaymentConfig = '/config/paymentConfig/v4.0'
-export var RouteCreateOrder = '/order/create/v4.0'
-export var RouteOrderList = '/order/getOrderList'
-export var RouteFinishOrder = '/official/order/finish/v4.0'
+export const RoutePaymentConfig = '/config/paymentConfig/v4.0';
+export const RouteCreateOrder = '/order/create/v4.0';
+export const RouteOrderList = '/order/getOrderList';
+export const RouteFinishOrder = '/official/order/finish/v4.0';
 
 
-export var RouteBindVisitor = '/user/bindVisitor'
-
+export const RouteBindVisitor = '/user/bindVisitor';
+export const RouteChangePassword = '/user/changePwd';
+/*  找回密码的接口/pocketgames/client/user/forgetPwd/{appId}/{userName}/{sign}*/
+export const RouteForgetPwd = "/user/forgetPwd";
 export enum ERROR {
   E_001 = 'appId or advChannel is not defined'
 }
