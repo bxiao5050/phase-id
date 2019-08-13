@@ -1,6 +1,6 @@
 // import Mark from 'Src/Base/Mark_old'
 import { Ins } from 'DOM/index'
-import { DOT } from 'Base/Constant';
+import { DOT } from 'Src/jssdk/config/Constant';
 
 /**
  * facebook web games javascript SDK

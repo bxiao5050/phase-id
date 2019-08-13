@@ -1,4 +1,4 @@
-import { DOT, GET, ERROR } from "Base/Constant";
+import { DOT, GET, ERROR } from "Src/jssdk/config/Constant";
 import { checkJsToNative } from "./adapter";
 import Web from "./Web";
 import Native from "./Native";

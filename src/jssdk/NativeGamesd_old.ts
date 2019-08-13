@@ -2,7 +2,7 @@ import Http from 'Base/Http';
 import { getUrlParam, signed, getAccountType, formatDate } from './utils';
 import * as CryptoJS from 'crypto-js'
 import { Ins } from 'DOM/index'
-import { DOT } from 'Base/Constant';
+import { DOT } from 'Src/jssdk/config/Constant';
 export default class NativeGames {
 
   NativeGames = true

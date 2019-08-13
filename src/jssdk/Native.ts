@@ -1,7 +1,7 @@
 import Http from 'Base/Http';
 import { getUrlParam, signed, formatDate, getAccountType } from './utils';
 import * as CryptoJS from 'crypto-js'
-import { DOT } from 'Base/Constant';
+import { DOT } from 'Src/jssdk/config/Constant';
 import Base from './base';
 
 export default class Native extends Base {

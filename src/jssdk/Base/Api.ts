@@ -1,4 +1,4 @@
-import * as Const from "./Constant"
+import * as Const from "../config/Constant"
 import { signed } from "../utils";
 import Http from "./Http";
 

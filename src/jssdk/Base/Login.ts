@@ -1,6 +1,6 @@
 import { getUrlParam, signed } from "../utils";
 import Http from "./Http";
-import { DOT } from "./Constant";
+import { DOT } from "../config/Constant";
 
 export default class Login {
   static _ins: Login

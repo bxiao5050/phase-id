@@ -1,6 +1,6 @@
 /* 此文件已经废弃，下一次更新时删除 */
 import { getUrlParam } from "Src/jssdk/utils";
-import { DOT, GET, ERROR } from "Base/Constant";
+import { DOT, GET, ERROR } from "Src/jssdk/config/Constant";
 import { checkJsToNative } from "SDK/adapter";
 import Polyfill from "Base/Polyfill";
 import Mark from "Base/Mark_old";
@@ -86,7 +86,7 @@ export default class Main {
       let config, translation;
       Promise.all([
         new Promise(async function (resolve) {
-          config = (await import("SDK/config")).default[appId];
+          config = (await import("Src/jssdk/config")).default[appId];
           config = config[advChannel] || config.default;
           resolve();
         }),

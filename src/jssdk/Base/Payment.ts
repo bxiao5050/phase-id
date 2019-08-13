@@ -1,7 +1,7 @@
 
 import Http from "./Http";
 import { signed, formatDate } from "../utils";
-import * as Const from "./Constant";
+import * as Const from "../config/Constant";
 
 export default class Payment {
   static _ins: Payment
