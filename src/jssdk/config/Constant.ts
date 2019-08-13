@@ -20,6 +20,8 @@ export const RouteBindVisitor = '/user/bindVisitor';
 export const RouteChangePassword = '/user/changePwd';
 /*  找回密码的接口/pocketgames/client/user/forgetPwd/{appId}/{userName}/{sign}*/
 export const RouteForgetPwd = "/user/forgetPwd";
+//绑定密保邮箱
+export const RouteOperatorEmail = "/user/operatorEmail";
 export enum ERROR {
   E_001 = 'appId or advChannel is not defined'
 }
