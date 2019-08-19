@@ -2,7 +2,7 @@ import { DOT } from "Src/jssdk/config/Constant";
 import { checkJsToNative } from "./adapter";
 import Web from "./Web";
 import Native from "./Native";
-import Config from "./config";
+// import Config from "./config";
 import Languages from "DOM/i18n";
 
 init(window);
@@ -22,8 +22,8 @@ function init(window: Window) {
     fbSdkLoad(config.fb_app_id).then(() => {
       RG.jssdk.fb_sdk_loaded = true;
     });
-    // 在本地测试的时候，修改$postMessage
-    IS_DEV && (await import("./dev"));
+    // 在本地测试的时候，修改$postMessage和修改region,此函数定义在dev中，webpack自动加载
+    IS_DEV && (window.changePostmessageAndRegion(window));
     const indexUrl = (IS_DEV || IS_TEST) ? config.page.index.test : config.page.index.formal;
     if (config.type !== 2) {
       window.$postMessage(JSON.stringify({ action: "get" }), /(http|https):\/\/(www.)?([A-Za-z0-9-_]+(\.)?)+/.exec(indexUrl)[0]);
@@ -74,7 +74,7 @@ function init(window: Window) {
     });
   }
   async function initSdk(appId: string, advChannel: string) {
-    let config = getConfig(appId, advChannel);
+    let config = await getConfig(appId, advChannel);
     // 只用于web端的sdk，暂时先写在这里
     const indexUrl = IS_DEV ? config.page.index.test : config.page.index.formal
     window.addEventListener("message", onMessage(indexUrl), false);
@@ -82,9 +82,9 @@ function init(window: Window) {
     await loadSdkWithType(config.type, config);
     return config
   }
-  function getConfig(appId: string, advChannel: string) {
+  async function getConfig(appId: string, advChannel: string) {
     if (!appId || !advChannel) throw "appId or advChannel is not defined";
-    const gameConfig = Config[appId][advChannel] || Config[appId].default;
+    const gameConfig = await import(`./config/${appId}_${advChannel}.ts`).then(module => module.default);
     return Object.assign(gameConfig, { appId, advChannel, i18n: Languages[gameConfig.language] });
   }
   function getSdkType(advChannelStr: string) {

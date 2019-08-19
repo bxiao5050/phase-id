@@ -83,7 +83,7 @@ export default class Type1 extends React.Component<paymentProps, {}, any> {
                 this.setState(this.state);
               }}
             >
-              Exchange rate
+              {RG.jssdk.config.i18n.dom011}
             </span>
           ) : null}
         </h2>
@@ -91,19 +91,19 @@ export default class Type1 extends React.Component<paymentProps, {}, any> {
         <img className="card-head" src={source.codeImg.replace(/http\:\/{0,2}/, 'https://').replace(/:[0-9]+/, '')} />
 
         <div className="card-inputs Serial" id="serial">
-          <span>Serial: </span>
+          <span>{RG.jssdk.config.i18n.dom014} </span>
           <input placeholder="Please enter Serial Number" ref="serial" onBlur={() => { document.body.scrollTop = document.documentElement.scrollTop = 0 }} />
         </div>
         <div className="card-inputs PIN" id="pin">
           <span>PIN: </span>
           <input placeholder="Please enter PIN" ref="pin" onBlur={() => { document.body.scrollTop = document.documentElement.scrollTop = 0 }} />
         </div>
-        {this.state.isQuerying ? <a href="javascript:void(0);" className="btn-pay">Đang kiểm tra {this.state.isQueryingTxt}</a> : <a href="javascript:void(0);" className="btn-pay" onClick={this.pay}>Payment</a>}
+        {this.state.isQuerying ? <a href="javascript:void(0);" className="btn-pay">{RG.jssdk.config.i18n.dom012} {this.state.isQueryingTxt}</a> : <a href="javascript:void(0);" className="btn-pay" onClick={this.pay}>{RG.jssdk.config.i18n.dom012}</a>}
         {isShowExchangeRate ? <div className="exchange-wrap" /> : null}
         {isShowExchangeRate ? (
           <div className="exchange-rate-list">
             <h2 className="exchange-name">
-              Exchange rate
+              {RG.jssdk.config.i18n.dom011}
               <a
                 className="close"
                 onClick={() => {

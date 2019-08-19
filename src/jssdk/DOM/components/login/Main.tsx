@@ -44,6 +44,7 @@ export default class Main extends React.Component<{
 
   render() {
     return <div className={"content win-login win-choose"}>
+      {/* 在css中文字不能显示,做优化 */}
       <h2 className="logo block">POCKET GAMES</h2>
       <div className="wrapper">
 

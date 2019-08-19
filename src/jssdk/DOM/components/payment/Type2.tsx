@@ -79,7 +79,7 @@ export default class Type2 extends React.Component<paymentProps, {}, any> {
                 this.setState(this.state);
               }}
             >
-              Exchange rate
+              {RG.jssdk.config.i18n.dom011}
             </span>
           ) : null}
         </h2>
@@ -106,7 +106,7 @@ export default class Type2 extends React.Component<paymentProps, {}, any> {
         {isShowExchangeRate ? (
           <div className="exchange-rate-list">
             <h2 className="exchange-name">
-              Exchange rate
+            {RG.jssdk.config.i18n.dom011}
               <a
                 className="close"
                 onClick={() => {

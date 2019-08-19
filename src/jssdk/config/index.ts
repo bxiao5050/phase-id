@@ -5,7 +5,7 @@ const test = {
   app_key: 'f43968a73df747aab4b9b1e506265050',
   fb_app_id: '',
   language: 'TW',
-  region: 'SG',
+  region: 'sg',
   hoverTop: '.24',
   hoverFromLeft: true,
   mark_id: {
@@ -43,7 +43,7 @@ const hy_default = {
   app_key: '40af84c65b7d45439e2d3e102ba85bce',
   fb_app_id: '663857194035716',
   language: 'TW',
-  region: 'SG',
+  region: 'sg',
   hoverTop: '.24',
   hoverFromLeft: true,
   mark_id: {
@@ -81,7 +81,7 @@ const hy_ios_0 = {
   app_key: '40af84c65b7d45439e2d3e102ba85bce',
   fb_app_id: '663857194035716',
   language: 'TW',
-  region: 'SG',
+  region: 'sg',
   hoverTop: '.24',
   hoverFromLeft: true,
   // 如果游戏会进行支付打点，此值是false，反之则是true
@@ -137,7 +137,7 @@ const hy_google_1 = {
   app_key: '40af84c65b7d45439e2d3e102ba85bce',
   fb_app_id: '663857194035716',
   language: 'TW',
-  region: 'SG',
+  region: 'sg',
   hoverTop: '.24',
   hoverFromLeft: true,
   // 如果游戏会进行支付打点，此值是false，反之则是true

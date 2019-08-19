@@ -16,6 +16,11 @@ export const RouteChangePassword = '/user/changePwd';
 export const RouteForgetPwd = "/user/forgetPwd";
 //绑定密保邮箱
 export const RouteOperatorEmail = "/user/operatorEmail";
+
+// 登录注册
+export const RouteLogin = '/user/v3/login';
+export const RouteRegister = '/user/v3/register';
+
 // 地址栏参数
 export const GET = {
   USER: 'user',
@@ -23,9 +28,10 @@ export const GET = {
   ADV_CHANNEL: 'advChannel',
   DEBUGGER: 'debugger',
   DEV: 'dev',
-  CLIENT: 'client'
+  CLIENT: 'client',
+  ADVERTISE_Id: "advertiseId"
 };
-//
+//sdk内部固定点的点名
 export const DOT = {
   SDK_LOADED: 'sdk_loaded',
   SDK_PURCHASED_DONE: 'sdk_purchased_done',

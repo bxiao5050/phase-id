@@ -25,7 +25,7 @@
 │   │   │   ├── Payment.ts
 │   │   │   └── Share.ts
 │   │   ├── config #配置文件和一些常量
-│   │   ├── dev #本地环境下测试使用的mock代码
+│   │   ├── dev #本地环境下测试使用的代码，webpack加载在index.html中
 │   │   ├── DOM #dom组件的内容 
 │   │   ├── plugins #第三方库 
 │   │   ├── utils #公用的方法
@@ -39,7 +39,7 @@
 │   │  
 │   ├── add-shortcut.html # 引导页的html文件
 │   └── index.html # 测试启动的页面
-│ 
+├── test # 测试代码目录
 ├── .editorconfig #格式化样式配置文件
 ├── .gitignore #git版本控制忽略文件
 ├── babel.config.js #babel配置文件
@@ -58,8 +58,10 @@
 ### 注意事项：
 
   1. sdk_purchased_done 这个点的点名不能改变的，在微端根据这个点名来判断进行购买打点;
+  2. 本地开发测试文件利用webpack加载,更改window上的值.
 
 ### 需完成的点
 
   1. 登录添加忘记密码功能，点击后弹出输入账号发送邮件修改密码功能，忘记账号联系客服
   2. 添加邮箱功能，http://ip:port/pocketgames/client/user/operatorEmail   使用此接口添加 operatorType这个值暂时没有用可以直接传0;
+  3. 日志，测试情况下直接输出，正式情况下写在特定的数组中，每两分钟清除一次，去掉引用自动回收，如要长时间查看，定义一个变量保存即可

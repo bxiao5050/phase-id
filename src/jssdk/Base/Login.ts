@@ -1,6 +1,7 @@
 import { getUrlParam, signed } from "../utils";
 import Http from "./Http";
-import { DOT } from "../config/Constant";
+import { DOT, RouteLogin, RouteRegister, GET } from "../config/Constant";
+import Account from "./Account";
 
 export default class Login {
   static _ins: Login
@@ -12,8 +13,8 @@ export default class Login {
   }
 
   private route = {
-    register: "/user/v3/register",
-    login: "/user/v3/login",
+    register: RouteRegister,
+    login: RouteLogin,
   }
 
   public platformLogin(loginParam: LoginParam): Promise<LoginRes> {
@@ -77,7 +78,7 @@ export default class Login {
       ])
       loginParam.source = deviceMsg.source;
       if (RG.jssdk.config.type === 1 && isRegister) {
-        loginParam.thirdPartyId = getUrlParam('advertiseId') ? getUrlParam('advertiseId') : '';
+        loginParam.thirdPartyId = getUrlParam(GET.ADVERTISE_Id) ? getUrlParam(GET.ADVERTISE_Id) : '';
       }
       resolve(Object.assign(
         deviceMsg,
@@ -174,5 +175,89 @@ export default class Login {
       }
     })
   }
+  // // 平台登录
+  // login(userName: string, password: string, exInfo: string = "", loginBaseParams: LoginBaseParams) {
+  //   const data = Object.assign({ userName, password, exInfo: exInfo }, loginBaseParams);
+  //   return Http.instance.post({ route: this.route.login, data }).then((res: LoginAndRegisterRes) => {
+  //     if (res.code === 200) {
+  //       Account.instance.user = Object.assign(res.data, { password: data.password, token: res.token });
+  //     }
+  //     return res;
+  //   });
+  // }
+  // // 平台注册，第三方登录全部走平台注册
+  // register(userName: string, password: string, loginBaseParams: LoginBaseParams, params: RegisterRemainingParams, exInfo: string = "") {
 
+  //   const data: RegisterParams = Object.assign({ userName, password, exInfo: exInfo }, loginBaseParams, params);
+  //   // return this.api.register(data);
+  // }
 }
+// interface LoginBaseParams {
+//   appId: number;
+//   source: SourceType;
+//   advChannel: number;
+//   network: NetWork;
+//   model: string;
+//   operatorOs: string;
+//   deviceNo: string;
+//   device: string;
+//   version: string;
+//   sdkVersion: string;
+// }
+// interface RegisterRemainingParams {
+//   nickName?: string;
+//   accountType: AccountType;
+//   thirdPartyId?: string;
+//   sex?: Sex;
+//   birthday?: string;
+//   email?: string;
+//   telephone?: string;
+//   userChannel: UserChannel;
+// }
+// // 注册的参数
+// type RegisterParams = LoginParam & RegisterRemainingParams;
+// interface LoginAndRegisterRes extends ServerRes {
+//   data: {
+//     // 用户id
+//     userId: number;
+//     // 用户名
+//     userName: string;
+//     // 1.正式账号 0.游客账号
+//     userType: UserType
+//     // 账号类型
+//     accountType: AccountType;
+//     // 邮箱
+//     email: string;
+//     // 邮箱是否验证，0=未设置 1=未验证 2=已验证
+//     emailValid: 0 | 1 | 2;
+//     // 电话号
+//     telephone: string;
+//     // 0=登陆  1 = 注册
+//     firstLogin: 0 | 1;
+//   };
+//   // 是否第一次登录
+//   firstLogin: boolean;
+//   // 平台token
+//   token: string;
+// }
+// interface fbUserInfo {
+//   name?: string;
+//   email?: string;
+//   birthday?: string;
+//   gender?: string;
+//   id: string;
+// }
+// interface info {
+//   nickName?: string;
+//   email?: string;
+//   birthday?: string;
+//   sex?: 0 | 1;
+//   userName: string;
+// }
+// interface kaKaoUserInfo {
+//   nickname?: string;
+//   email?: string;
+//   birthday?: string;
+//   gender?: string;
+//   id: string;
+// }

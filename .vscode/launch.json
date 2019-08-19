@@ -1,0 +1,35 @@
+{
+  // 使用 IntelliSense 了解相关属性。
+  // 悬停以查看现有属性的描述。
+  // 欲了解更多信息，请访问: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [{
+      "type": "node",
+      "request": "launch",
+      "name": "Launch Program",
+      "program": "${workspaceFolder}\\index.js",
+      "outFiles": [
+        "${workspaceFolder}/**/*.js"
+      ]
+    },
+    {
+      "name": "Jest", //This is the configuration name you will see in debug sidebar
+      "type": "node",
+      "request": "launch",
+      "port": 5858,
+      "address": "localhost",
+      "stopOnEntry": false,
+      "runtimeExecutable": null,
+      "env": {
+        "NODE_ENV": "production" // You can setup here any env vars you
+      },
+      "sourceMaps": true,
+      "runtimeArgs": [
+        "--inspect-brk",
+        "./node_modules/.bin/jest", // Path to Jest
+        "-i"
+      ],
+      "cwd": "${workspaceRoot}"
+    }
+  ]
+}

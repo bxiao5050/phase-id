@@ -1,7 +1,7 @@
 
 import Http from "./Http";
 import { signed, formatDate } from "../utils";
-import * as Const from "../config/Constant";
+import { RoutePaymentConfig, RouteCreateOrder, RouteOrderList, RouteFinishOrder } from "../config/Constant";
 
 export default class Payment {
   static _ins: Payment
@@ -13,10 +13,10 @@ export default class Payment {
   }
 
   private route = {
-    config: Const.RoutePaymentConfig,
-    createOrder: Const.RouteCreateOrder,
-    history: Const.RouteOrderList,
-    finish: Const.RouteFinishOrder
+    config: RoutePaymentConfig,
+    createOrder: RouteCreateOrder,
+    history: RouteOrderList,
+    finish: RouteFinishOrder
   }
 
   async getPaymentConfig(PaymentConfig: PaymentConfig) {

@@ -10,6 +10,16 @@ declare const Adjust: any;
 6.vk账号 */
 type AccountType = 0 | 1 | 2 | 3 | 4 | 5 | 6;
 type UserType = 0 | 1;
+type Region = "test" | "sg" | "de" | "vn";
+// 平台来源 0 = ios 1 = android 2 = 网页支付 3 = PC web登录
+type SourceType = 0 | 1 | 2 | 3;
+// 网络 0=wifi 1 = 3g 2=其他
+type NetWork = 0 | 1 | 2;
+// 性别 0=男 1=女
+type Sex = 0 | 1;
+// 用户渠道 0=默认渠道 1=appota 2=mwork
+type UserChannel = 0 | 1 | 2;
+
 declare namespace JSSDK {
   /** 1: web端 2：原生应用 3：facebook页游平台 4：facebook instant games */
   type Type = 1 | 2 | 3 | 4;
@@ -37,7 +47,7 @@ declare namespace JSSDK {
     language: string;
     i18n: any;
     type: Type;
-    // 控制首次请求的地址，将来放在urlParams中有sg、de、vn三个值
+    // 控制首次请求的地址，将来放在urlParams中有sg、de、vn,或者test三个值
     region: string;
     // 悬浮球距离顶边的距离rem
     hoverTop: number
@@ -147,7 +157,11 @@ declare interface Window {
     };
   };
   $postMessage: Function;
+  XMLHttpRequest: any;
   opera: any;
+  // 测试使用
+  _RG_REGION: string;
+  changePostmessageAndRegion: Function;
 }
 
 declare var FBVersion: string;
@@ -780,3 +794,4 @@ type PlatformLoginParam = LoginParam & DeviceMsg;
 type Methods = "POST" | "GET";
 
 /* 以下为新的类型 */
+

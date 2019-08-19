@@ -82,7 +82,7 @@ class Main extends React.Component<accountProps, any, any> {
         </a>
         <a className="item-other" onClick={this.changeAccount}>
           <img src={require("DOM/assets/ui_switch_account.png")} />
-          <p>{RG.jssdk.config.i18n.dom011}</p>
+          <p>{RG.jssdk.config.i18n.dom003}</p>
           <img src={require("DOM/assets/ui_right_arrow.png")} className="right" />
         </a>
       </div>

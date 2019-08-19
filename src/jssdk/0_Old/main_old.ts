@@ -25,7 +25,7 @@ export default class Main {
     window.$postMessage = function (params, origin) {
       if (RG.jssdk.config.type !== 2) window.parent.postMessage(params, origin);
     }
-    IS_DEV && (await import("../dev"));
+    IS_DEV && (await import("./dev"));
     try {
       await this.init();
       if ((location.host === Mark.instance.game_url.host &&
