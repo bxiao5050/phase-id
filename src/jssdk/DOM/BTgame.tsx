@@ -44,7 +44,7 @@ var root = document.createElement('div')
 root.id = "RG-SDK"
 root.style.zIndex = "9999"
 root.style.fontFamily = 'Helvetica, Arial, "Microsoft YaHei", sans-serif;'
-document.body.appendChild(root)
+document.body.appendChild(root);
 ReactDOM.render(<App />, root);
 
 const Ins = App.instance

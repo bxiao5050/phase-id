@@ -1,4 +1,4 @@
-import { Ins } from 'DOM/BTgame';
+// import { Ins } from 'DOM/BTgame';
 import Share from 'Base/Share';
 import Api from "Base/Api";
 import Http from "Base/Http";
@@ -15,7 +15,7 @@ interface BTUrlParams extends UrlParams {
   channel: number;
 }
 
-export class UniteSdk {
+export default class UniteSdk {
   private _user: UserInfo;
   config: JSSDK.Config;
   reactPromise: any;
@@ -23,12 +23,15 @@ export class UniteSdk {
 
   constructor(config: any) {
     this.reactPromise = this.loadScript(reactSrc);
-    this.reactDomPromise = this.loadScript(reactDomSrc);
+    this.reactDomPromise = this.loadScript(reactDomSrc).then(() => {
+      import('DOM/BTgame').then((res) => {
+        window.RG.jssdk.App = res.Ins;
+      })
+    });
     this.config = config;
     let rg = function () { }
     rg.prototype.jssdk = this
     window.RG = new rg();
-    window.RG.jssdk.App = Ins;
     console.log('this.ExposeApis() before');
     this.ExposeApis();
     this.initGetDeviceMsgAsync();
@@ -37,7 +40,7 @@ export class UniteSdk {
   async showNotice(msg: string) {
     await this.reactPromise;
     await this.reactDomPromise;
-    window.RG.jssdk.App.showNotice(msg);
+    window.RG.jssdk.App && window.RG.jssdk.App.showNotice(msg);
   }
   CurUserInfo = (): JSSDK.CurUserInfo => {
     const { userId, userName, token } = this._user;
@@ -167,7 +170,67 @@ export class UniteSdk {
     })
   }
   initGetDeviceMsgAsync() {
-    throw "this methods dont defind here."
+    const WK = window['webkit'];
+    if (WK) {
+      this.initIosGetDeviceMsgAsync();
+    } else {
+      window.JsToNative.getDeviceMsgAsync = () => {
+        if (!RG.jssdk.deviceMsgPromise) {
+          RG.jssdk.deviceMsgPromise = new Promise(resolve => {
+            RG.jssdk.deviceMsgResolve = resolve
+          })
+          setTimeout(function () {
+            let data = JSON.parse(window.JsToNative.getDeviceMsg())
+            data = Object.assign(data, {
+              advChannel: RG.jssdk.config.advChannel,
+              appId: RG.jssdk.config.appId
+            })
+
+            RG.jssdk.deviceMsgResolve(data)
+            RG.jssdk.deviceMsgPromise = null
+          })
+        }
+        return RG.jssdk.deviceMsgPromise
+      }
+    }
+
+    /* 初始化NativeToJs */
+    window.NativeToJs = {
+      consumeOrder: () => { },
+      jpworkResult: () => { },
+      goBack: this.goBack,
+      deviceMsg: this.gotDeviceMsg
+    }
+  }
+  initIosGetDeviceMsgAsync() {
+    const WK = window['webkit'];
+    window.JsToNative = {
+      getDeviceMsgAsync: function () {
+        if (!RG.jssdk.deviceMsgPromise) {
+          RG.jssdk.deviceMsgPromise = new Promise(resolve => {
+            RG.jssdk.deviceMsgResolve = resolve
+          })
+          WK.messageHandlers.getDeviceMsg.postMessage(null)
+        }
+        return RG.jssdk.deviceMsgPromise
+      },
+      init: function (param: string) {
+        WK.messageHandlers.init.postMessage(param)
+      },
+      gameEvent: function (param: string) {
+        console.log('gameEvent', param)
+        WK.messageHandlers.gameEvent.postMessage(param)
+      },
+      jpwork: function (param: string) {
+        WK.messageHandlers.jpwork.postMessage(param)
+      },
+      consumeOrder: function (param: string) {
+        WK.messageHandlers.consumeOrder.postMessage(param)
+      },
+      exitApp: function () {
+        WK.messageHandlers.exitApp.postMessage(null)
+      }
+    } as any;
   }
   /* 退出 */
   goBack() {

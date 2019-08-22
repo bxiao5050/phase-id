@@ -113,10 +113,8 @@ function init(window: Window) {
     } else if (advChannel > 32000 && advChannel < 33000) {
       // facebook instantgame的sdk
       type = 4;
-    } else if (advChannel > 33000 && advChannel < 34000) {
-      type = 5;
     } else if (advChannel > 33000 && advChannel < 35000) {
-      type = 6;
+      type = 5;
     } else {
       throw "unknow advChannel";
     }
@@ -146,16 +144,10 @@ function init(window: Window) {
         });
         break;
       case 5:
-        await import("SDK/uniteSdk/BTgame/ios").then(module => {
+        await import("SDK/uniteSdk/BTgame/UniteSdk").then(module => {
           sdk = new module.default(config);
         });
         break;
-      case 6:
-        await import("SDK/uniteSdk/BTgame/android").then(module => {
-          sdk = new module.default(config);
-        });
-        break;
-
     }
     return sdk;
   }
