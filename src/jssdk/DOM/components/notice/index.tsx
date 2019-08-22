@@ -1,8 +1,8 @@
 import './index.scss'
 import * as React from 'react'
-import { Ins } from 'DOM/index';
 
 export default class Notice extends React.Component<{
+  Ins: any
   msg?: string
 }, {}, any> {
 
@@ -11,6 +11,7 @@ export default class Notice extends React.Component<{
   }
 
   componentDidMount() {
+    const Ins = this.props.Ins;
     setTimeout(() => {
       this.state.opacity = true
       this.setState(this.state)

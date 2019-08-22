@@ -1,7 +1,8 @@
 import { DOT } from "Src/jssdk/config/Constant";
 import { checkJsToNative } from "./adapter";
-import Web from "./Web";
-import Native from "./Native";
+import Http from "Base/Http";
+// import Web from "./Web";
+// import Native from "./Native";
 // import Config from "./config";
 import Languages from "DOM/i18n";
 
@@ -14,23 +15,28 @@ function init(window: Window) {
   polyfill();
   async function RgPolyfilled() {
 
-    window.$postMessage = window.parent.postMessage.bind(window.parent);
     (urlParams.debugger || window['debugger']) && await initDebugger();
     const config = await initSdk(urlParams.appId, urlParams.advChannel) as JSSDK.Config;
-    // 现阶段兼容
+    Http.instance.init(urlParams.region);
     window.$rg_main = { config } as any;
     fbSdkLoad(config.fb_app_id).then(() => {
       RG.jssdk.fb_sdk_loaded = true;
     });
-    // 在本地测试的时候，修改$postMessage和修改region,此函数定义在dev中，webpack自动加载
-    IS_DEV && (window.changePostmessageAndRegion(window));
-    const indexUrl = (IS_DEV || IS_TEST) ? config.page.index.test : config.page.index.formal;
-    if (config.type !== 2) {
-      window.$postMessage(JSON.stringify({ action: "get" }), /(http|https):\/\/(www.)?([A-Za-z0-9-_]+(\.)?)+/.exec(indexUrl)[0]);
+
+    if (+urlParams.advChannel < 33000) {
+      // 现阶段兼容
+      window.$postMessage = window.parent.postMessage.bind(window.parent);
+      // 在本地测试的时候，修改$postMessage和修改region,此函数定义在dev中，webpack自动加载
+      IS_DEV && (window.changePostmessageAndRegion && window.changePostmessageAndRegion(window));
+      const indexUrl = (IS_DEV || IS_TEST) ? config.page.index.test : config.page.index.formal;
+      if (config.type !== 2) {
+        window.$postMessage(JSON.stringify({ action: "get" }), /(http|https):\/\/(www.)?([A-Za-z0-9-_]+(\.)?)+/.exec(indexUrl)[0]);
+      }
+
+      RG.Mark(DOT.SDK_LOADED);
+      RG.jssdk.init();
     }
 
-    RG.Mark(DOT.SDK_LOADED);
-    RG.jssdk.init();
   }
 
   function polyfill() {
@@ -74,11 +80,15 @@ function init(window: Window) {
     });
   }
   async function initSdk(appId: string, advChannel: string) {
+    const type = getSdkType(advChannel);
     let config = await getConfig(appId, advChannel);
     // 只用于web端的sdk，暂时先写在这里
-    const indexUrl = IS_DEV ? config.page.index.test : config.page.index.formal
-    window.addEventListener("message", onMessage(indexUrl), false);
-    config.type = getSdkType(advChannel);
+    if (type === 1) {
+      const indexUrl = IS_DEV ? config.page.index.test : config.page.index.formal
+      window.addEventListener("message", onMessage(indexUrl), false);
+    }
+    config.urlParams = urlParams;
+    config.type = type;
     await loadSdkWithType(config.type, config);
     return config
   }
@@ -89,22 +99,31 @@ function init(window: Window) {
   }
   function getSdkType(advChannelStr: string) {
     let type: number;
-    const advChannel = Number(advChannelStr)
+    const advChannel = Number(advChannelStr);
+
     if (advChannel > 30000 && advChannel < 31000) {
+      // web端的sdk
       type = 1;
     } else if (advChannel < 30000) {
+      // native端的sdk
       type = 2;
     } else if (advChannel > 31000 && advChannel < 32000) {
+      // facebook webgame的sdk
       type = 3;
     } else if (advChannel > 32000 && advChannel < 33000) {
+      // facebook instantgame的sdk
       type = 4;
+    } else if (advChannel > 33000 && advChannel < 34000) {
+      type = 5;
+    } else if (advChannel > 33000 && advChannel < 35000) {
+      type = 6;
     } else {
       throw "unknow advChannel";
     }
     return type;
   }
   async function loadSdkWithType(sdkType: number, config: any) {
-    let sdk: Web | Native;
+    let sdk: any;
     switch (sdkType) {
       case 1:
         await import("SDK/Web").then(module => {
@@ -117,9 +136,26 @@ function init(window: Window) {
         })
         break;
       case 3:
-        return import("SDK/FacebookWebGames");
+        await import("SDK/FacebookWebGames").then(module => {
+          sdk = new module.default();
+        });
+        break;
       case 4:
-        return import("SDK/FacebookInstantGames");
+        await import("SDK/FacebookInstantGames").then(module => {
+          sdk = new module.default();
+        });
+        break;
+      case 5:
+        await import("SDK/uniteSdk/BTgame/ios").then(module => {
+          sdk = new module.default(config);
+        });
+        break;
+      case 6:
+        await import("SDK/uniteSdk/BTgame/android").then(module => {
+          sdk = new module.default(config);
+        });
+        break;
+
     }
     return sdk;
   }
@@ -151,13 +187,4 @@ function init(window: Window) {
       RG.jssdk.Account.init(JSON.parse(event.data));
     }
   }
-}
-
-type UrlParams = {
-  appId: string;
-  advChannel: string;
-  sdkVersion: string;
-  t: string;
-  debugger?: boolean;
-  advertiseId?: string;
 }

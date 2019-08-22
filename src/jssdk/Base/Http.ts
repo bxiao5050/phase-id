@@ -4,10 +4,10 @@ export default class Http {
     return this._ins || new Http;
   }
   // private serverAddress = IS_TEST || IS_DEV ? RG.jssdk.config.server.test : RG.jssdk.config.server.formal;
-  private serverAddress: string = "/api";
-  constructor(region?: Region) {
+  private serverAddress: string;
+  constructor() {
     Http._ins = this;
-    this.init(region);
+    this.init();
   }
   init(region?: Region) {
     const regions = {

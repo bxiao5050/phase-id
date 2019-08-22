@@ -91,6 +91,11 @@ declare namespace JSSDK {
         index: string
       };
     };
+    urlParams: UrlParams;
+    /* 联运需要的参数 */
+    code?: number;
+    channel?: number;
+    userChannel?: number;
   }
 }
 
@@ -506,8 +511,9 @@ declare namespace RG {
 }
 
 interface PaymentConfig {
-  gameOrderId: number;
+  userId: number;
   gameZoneId: number;
+  gameOrderId: number;
   roleId: number;
   roleName: string;
   level: number;
@@ -519,6 +525,8 @@ interface OrderRes extends ServerRes {
     currency: string;
     money: number;
     transactionId: string;
+    /* BTgame用到 */
+    key?: string;
     returnInfo: {
       url: string;
     };
@@ -792,6 +800,14 @@ interface requestParam {
 
 type PlatformLoginParam = LoginParam & DeviceMsg;
 type Methods = "POST" | "GET";
-
+interface UrlParams {
+  appId: string;
+  region: Region;
+  advChannel: string;
+  sdkVersion: string;
+  t: string;
+  debugger?: boolean;
+  advertiseId?: string;
+}
 /* 以下为新的类型 */
 

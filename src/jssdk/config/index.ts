@@ -74,8 +74,6 @@ const hy_default = {
   }
 }
 
-
-
 const hy_ios_0 = {
   name: '火影忍者H5',
   app_key: '40af84c65b7d45439e2d3e102ba85bce',
@@ -188,7 +186,6 @@ const hy_google_1 = {
     }
   }
 }
-
 
 const config = {
   /*   10120: {
