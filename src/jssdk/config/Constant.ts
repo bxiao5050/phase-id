@@ -16,6 +16,8 @@ export const RouteChangePassword = '/user/changePwd';
 export const RouteForgetPwd = "/user/forgetPwd";
 //绑定密保邮箱
 export const RouteOperatorEmail = "/user/operatorEmail";
+// 获取游戏角色信息
+export const RouteGetRoleInfo = "/user/role";
 
 // 登录注册
 export const RouteLogin = '/user/v3/login';

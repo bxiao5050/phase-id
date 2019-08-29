@@ -6,6 +6,7 @@ declare const VConsole: any;
 declare const IS_DEV: boolean;
 declare const IS_TEST: boolean;
 declare const Adjust: any;
+declare const QuickSDK: any;
 /* 账户类型0. 普通用户  1.Email用户 2 fb账号 3.gamecent账号 4. Google账号 5.line账号
 6.vk账号 */
 type AccountType = 0 | 1 | 2 | 3 | 4 | 5 | 6;
@@ -96,6 +97,11 @@ declare namespace JSSDK {
     code?: number;
     channel?: number;
     userChannel?: number;
+    /*  联营的传3 */
+    accountType?: number;
+    appSecret?: string;
+    productCode?: string;
+    productKey?: string;
   }
 }
 
@@ -167,6 +173,7 @@ declare interface Window {
   // 测试使用
   _RG_REGION: string;
   changePostmessageAndRegion: Function;
+  QuickSDK: any
 }
 
 declare var FBVersion: string;
@@ -525,8 +532,6 @@ interface OrderRes extends ServerRes {
     currency: string;
     money: number;
     transactionId: string;
-    /* BTgame用到 */
-    key?: string;
     returnInfo: {
       url: string;
     };

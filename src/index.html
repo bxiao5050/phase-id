@@ -12,16 +12,22 @@
   <div id="app"></div>
   <script>
     window.rgAsyncInit = function () {
+
       var payParams = {
         gameOrderId: Math.floor(Math.random() * 100000000), // 假设的订单id
         gameZoneId: 1,
-        roleId: 17179869195,
+        roleId: 17179869202,
         roleName: "test-pay",
-        level: 7,
-        gameCoin: 1
+        level: 80,
+        gameCoin: 50
       }
+      RG.BindZone({
+        userId: 67750133, gameZoneId: 1,
+        createRole: 0, roleId: 17179869202, level: 80
+      }).then(res => {
+        RG.Pay(payParams)
+      })
 
-      RG.Pay(payParams)
     }
   </script>
 </body>

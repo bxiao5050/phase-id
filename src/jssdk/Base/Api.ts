@@ -16,6 +16,7 @@ export default class Api {
     bindVisitor: Const.RouteBindVisitor,
     forgetPwd: Const.RouteForgetPwd,
     operatorEmail: Const.RouteOperatorEmail,
+    getRoleInfo: Const.RouteGetRoleInfo
   }
 
   /** 绑定区服 */
@@ -40,7 +41,7 @@ export default class Api {
       return data
     })
   }
-
+  /*  绑定游客 */
   public BindVisitor(account: string, password: string) {
     var data = {
       appId: RG.jssdk.config.appId,
@@ -66,12 +67,14 @@ export default class Api {
       return data
     })
   }
+  /* 忘记密码 */
   forgetPwd(params: forgetPwdParams): Promise<forgetPwdRes> {
     const { appId, userName } = params;
     // MD5(appId+userName+appKey)
     const sign = signed([appId, userName]);
     return Http.instance.get({ route: this.route.forgetPwd + `/${appId}/${userName}/${sign}` }) as Promise<forgetPwdRes>;
   }
+  /* 添加邮箱 */
   operatorEmail(params: opeartorEmailParams): Promise<opeartorEmailRes> {
     const { appId, userId, email, operatorType } = params;
     var data = {
@@ -96,6 +99,12 @@ export default class Api {
       }
       return data
     }) as Promise<opeartorEmailRes>;
+  }
+  getGameRoleInfo({ appId, userId, gameZoneId, appSecret }: { appId: string, userId: number, gameZoneId: number, appSecret: string }) {
+    // userId+gameZoneId+timestamp+appSecret
+    const timestamp = Date.now();
+    const route = `${this.route.getRoleInfo}?appId=${appId}&userId=${userId}&gameZoneId=${gameZoneId}&timestamp=${timestamp}&sign=${signed([userId, gameZoneId, timestamp, appSecret])}`;
+    return Http.instance.get({ route });
   }
 }
 // https://sdk-test.changic.net.cn/pocketgames/client/user/forgetPwd/10183/gtest/000ad20ed2da714d05c58cf3521c8cce

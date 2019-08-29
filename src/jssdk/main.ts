@@ -17,6 +17,7 @@ function init(window: Window) {
 
     (urlParams.debugger || window['debugger']) && await initDebugger();
     const config = await initSdk(urlParams.appId, urlParams.advChannel) as JSSDK.Config;
+    // init 调用之前初始化Http
     Http.instance.init(urlParams.region);
     window.$rg_main = { config } as any;
     fbSdkLoad(config.fb_app_id).then(() => {
@@ -26,17 +27,14 @@ function init(window: Window) {
     if (+urlParams.advChannel < 33000) {
       // 现阶段兼容
       window.$postMessage = window.parent.postMessage.bind(window.parent);
-      // 在本地测试的时候，修改$postMessage和修改region,此函数定义在dev中，webpack自动加载
-      IS_DEV && (window.changePostmessageAndRegion && window.changePostmessageAndRegion(window));
       const indexUrl = (IS_DEV || IS_TEST) ? config.page.index.test : config.page.index.formal;
       if (config.type !== 2) {
         window.$postMessage(JSON.stringify({ action: "get" }), /(http|https):\/\/(www.)?([A-Za-z0-9-_]+(\.)?)+/.exec(indexUrl)[0]);
       }
 
       RG.Mark(DOT.SDK_LOADED);
-      RG.jssdk.init();
     }
-
+    RG.jssdk.init();
   }
 
   function polyfill() {
@@ -144,7 +142,7 @@ function init(window: Window) {
         });
         break;
       case 5:
-        await import("SDK/uniteSdk/BTgame/UniteSdk").then(module => {
+        await import("Src/jssdk/uniteSdk").then(module => {
           sdk = new module.default(config);
         });
         break;

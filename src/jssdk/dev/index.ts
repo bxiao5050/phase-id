@@ -1,6 +1,18 @@
 window.changePostmessageAndRegion = function changePostmessageAndRegion(w: Window) {
   w._RG_REGION = "test";
-
+  w.QuickSDK = {
+    login(fn: Function) {
+      fn({ status: true, data: { uid: 123, username: "quicksdk", token: "testToken", isLogin: true }, message: "" })
+    },
+    pay(payInfo: string, fn: Function) {
+      console.log(JSON.parse(payInfo));
+      fn("aaaaaaaaaaaaaaaaaaaaa");
+    },
+    uploadGameRoleInfo(roleInfoJson: string, fn: Function) {
+      console.log("uploadGameRoleInfo", JSON.parse(roleInfoJson))
+      fn("aaaaaaaaaaaaaaaaaaaaa");
+    }
+  }
   w.$postMessage = function (paramsStr: string) {
     const param = JSON.parse(paramsStr) as {
       action: string;
@@ -31,3 +43,4 @@ window.changePostmessageAndRegion = function changePostmessageAndRegion(w: Windo
     }
   };
 }
+window.changePostmessageAndRegion(window)
