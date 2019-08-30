@@ -3,7 +3,7 @@ export default {
   app_key: '40af84c65b7d45439e2d3e102ba85bce',
   fb_app_id: '663857194035716',
   language: 'TW',
-  region: 'test',
+  region: 'sg',
   code: 118,
   channel: 37,
   userChannel: 5,

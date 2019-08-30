@@ -17,6 +17,8 @@ function init(window: Window) {
 
     (urlParams.debugger || window['debugger']) && await initDebugger();
     const config = await initSdk(urlParams.appId, urlParams.advChannel) as JSSDK.Config;
+    // init 调用之前初始化Http
+    Http.instance.init(urlParams.region);
 
     window.$rg_main = { config } as any;
     fbSdkLoad(config.fb_app_id).then(() => {
