@@ -91,7 +91,7 @@ export default class UniteSdk {
           }
         } else {
           console.log('GameDemo:QuickSDK登录失败:' + JSON.stringify(callbackData));
-          if (callbackData.data.message === "cancel") {
+          if (callbackData.message === "cancel") {
             that.quickLogin();
           }
         }
@@ -402,6 +402,7 @@ interface QuickLoginRes {
     channelId: string;
     message: string
   }
+  message?: string
 }
 
 interface PayRes {

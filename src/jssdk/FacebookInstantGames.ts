@@ -1,6 +1,6 @@
 import Mark from 'Src/jssdk/0_Old/Mark_old'
 import { Ins } from 'DOM/index'
-import { DOT } from 'Src/jssdk/config/Constant';
+import { DOT } from 'Src/jssdk/Base/Constant';
 
 export default class FacebookInstantGames {
 

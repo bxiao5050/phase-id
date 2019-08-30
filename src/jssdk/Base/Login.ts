@@ -1,6 +1,6 @@
 import { getUrlParam, signed } from "../utils";
 import Http from "./Http";
-import { DOT, RouteLogin, RouteRegister, GET } from "../config/Constant";
+import { DOT, RouteLogin, RouteRegister, GET } from "./Constant";
 import Account from "./Account";
 
 export default class Login {

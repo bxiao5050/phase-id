@@ -1,4 +1,4 @@
-import { DOT } from "Src/jssdk/config/Constant";
+import { DOT } from "Src/jssdk/Base/Constant";
 import { checkJsToNative } from "./adapter";
 import Http from "Base/Http";
 // import Web from "./Web";
@@ -17,8 +17,7 @@ function init(window: Window) {
 
     (urlParams.debugger || window['debugger']) && await initDebugger();
     const config = await initSdk(urlParams.appId, urlParams.advChannel) as JSSDK.Config;
-    // init 调用之前初始化Http
-    Http.instance.init(urlParams.region);
+
     window.$rg_main = { config } as any;
     fbSdkLoad(config.fb_app_id).then(() => {
       RG.jssdk.fb_sdk_loaded = true;

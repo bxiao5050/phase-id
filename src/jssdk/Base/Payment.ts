@@ -1,7 +1,7 @@
 
 import Http from "./Http";
 import { signed, formatDate } from "../utils";
-import { RoutePaymentConfig, RouteCreateOrder, RouteOrderList, RouteFinishOrder } from "../config/Constant";
+import { RoutePaymentConfig, RouteCreateOrder, RouteOrderList, RouteFinishOrder } from "./Constant";
 
 export default class Payment {
   static _ins: Payment

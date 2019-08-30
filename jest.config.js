@@ -14,7 +14,10 @@ module.exports = {
     RG: {
       jssdk: {
         config: {
-
+          server: {
+            test: "",
+            formal: ""
+          }
         }
       }
     }

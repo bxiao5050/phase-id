@@ -3,23 +3,10 @@ export default class Http {
   static get instance(): Http {
     return this._ins || new Http;
   }
-  // private serverAddress = IS_TEST || IS_DEV ? RG.jssdk.config.server.test : RG.jssdk.config.server.formal;
-  private serverAddress: string;
+  private serverAddress = IS_TEST || IS_DEV ? RG.jssdk.config.server.test : RG.jssdk.config.server.formal;
   constructor() {
     Http._ins = this;
-    this.init();
   }
-  init(region?: Region) {
-    const regions = {
-      sg: 'https://sdk-sg.pocketgamesol.com',
-      de: 'https://sdk-de.pocketgamesol.com',
-      vn: 'https://sdk-vn.pocketgamesol.com',
-      test: 'https://sdk-test.changic.net.cn'
-    }
-    const key = region || window._RG_REGION || window.RG.jssdk.config.region || "test";
-    this.serverAddress = regions[key] + "/pocketgames/client";
-  }
-
   private request(param: requestParam): Promise<ServerRes> {
 
     let data: any

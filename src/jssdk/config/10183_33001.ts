@@ -10,5 +10,9 @@ export default {
   accountType: 3,
   appSecret: "4912f82366c44253b19c480cf47ddc21",
   productCode: "54282632146715785412525610449394",
-  productKey: "72208630"
+  productKey: "72208630",
+  server: {
+    test: 'https://sdk-test.changic.net.cn/pocketgames/client',
+    formal: 'https://sdk-sg.pocketgamesol.com/pocketgames/client'
+  }
 }
