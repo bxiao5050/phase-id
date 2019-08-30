@@ -1,8 +1,8 @@
 import "./Loading.scss";
 import * as React from "react";
-import Login from "DOM/components/login";
+import Login from "./index";
 import { Ins } from "DOM/index";
-import Utils from "Base/Utils";
+import { getAccountType } from "Src/jssdk/utils";
 
 type LoadingProp = {
   Login: Login;
@@ -22,7 +22,7 @@ export default class Loading extends React.Component<LoadingProp, {}, any> {
       clock: setTimeout(() => {
         var { userType, accountType } = RG.jssdk.Account.user;
         Ins.hideLogin();
-        var isGuest = Utils.getAccountType(userType, accountType) === "guest" ? true : false;
+        var isGuest = getAccountType(userType, accountType) === "guest" ? true : false;
         Ins.showHover(isGuest);
         if (window.rgAsyncInit) {
           window.rgAsyncInit();

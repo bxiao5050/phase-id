@@ -1,7 +1,8 @@
 
 import './Type3.scss'
 import * as React from 'react'
-import Payment from 'DOM/components/payment'
+import Payment from './index'
+import { History, createLocation } from 'history'
 
 type paymentProps = {
   Payment: Payment
@@ -31,15 +32,31 @@ export default class Type3 extends React.Component<paymentProps, {}, any>  {
             <div className="type3-product-price"> {source.selectedProduct.shortCurrency + ' ' + source.selectedProduct.amount}</div>
             <div className="type3-buy-btn"
               onClick={() => {
-                RG.jssdk.Ordering(source).then((OrderRes: OrderRes) => {
-                  if (OrderRes.code === 200) {
-                    if (source.code === 15) {
-                      this.props.Payment.orderCompleted(OrderRes, source)
+                if (source.showMethod === 10 || source.showMethod === 11) {
+                  let pageName: string;
+                  if (source.showMethod === 10) {
+                    pageName = "type1";
+                    this.props.Payment.state.paymentDatas[1] = source;
+                  };
+                  if (source.showMethod === 11) {
+                    pageName = "type2";
+                    this.props.Payment.state.paymentDatas[2] = source;
+                  };
+
+                  this.props.Payment.props.history.push(
+                    createLocation(pageName)
+                  )
+                } else {
+                  RG.jssdk.Ordering(source).then((OrderRes: OrderRes) => {
+                    if (OrderRes.code === 200) {
+                      if (source.showMethod === 9) {
+                        this.props.Payment.orderCompleted(OrderRes, source)
+                      }
+                    } else {
+                      console.error(OrderRes.error_msg)
                     }
-                  } else {
-                    console.error(OrderRes.error_msg)
-                  }
-                })
+                  })
+                }
               }}
             >
               {RG.jssdk.config.i18n.Purchase}
@@ -55,39 +72,4 @@ export default class Type3 extends React.Component<paymentProps, {}, any>  {
   }
 
 }
-
-// <ul className="item">
-
-//         <div className="type3-product-desc">
-//           <div className="type3-product-img">
-//             <img src={source.codeImg.replace(/http\:\/{0,2}/, 'https://').replace(/:[0-9]+/, '')} />
-//           </div>
-//           <div className="right">
-//             <div className="left" dangerouslySetInnerHTML={{ __html: source.selectedProduct.productDesc }}>
-//               {/* {source.selectedProduct.productDesc} */}
-//               {/* {source.selectedProduct.gameCurrency} *{source.selectedProduct.gameCoin} */}
-//               </div>
-//               <div className="right">
-//                 {source.selectedProduct.shortCurrency + ' ' + source.selectedProduct.amount}
-//               </div>
-//               <div className="item-buy-btn"
-//                 onClick={() => {
-//                   RG.jssdk.Ordering(source).then((OrderRes: OrderRes) => {
-//                     if (OrderRes.code !== 200) {
-//                       console.error(OrderRes.error_msg)
-//                     }
-//                   })
-//                 }}
-//               >
-//                 {RG.jssdk.config.i18n.Purchase}
-//               </div>
-//             </div>
-//           </div>
-//           <div className="type3-product-price">{}</div>
-//           <div className="down">
-//             <div className="left">
-//               {source.description}
-//             </div>
-//           </div>
-//         </ul>
 

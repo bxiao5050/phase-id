@@ -8,8 +8,10 @@
     "jsx": "react",
     "lib": ["es6", "es7", "dom"],
     "esModuleInterop": true,
+    "types": ["jest", "react", "react-dom", "react-router-dom", "facebook-js-sdk", "facebook-instant-games", "history", "node", "swiper"],
     "paths": {
-      "Src/*": ["./src/jssdk/*"],
+      "Src/*": ["./src/*"],
+      "SDK/*": ["./src/jssdk/*"],
       "DOM/*": ["./src/jssdk/DOM/*"],
       "Base/*": ["./src/jssdk/Base/*"]
     }
@@ -17,7 +19,8 @@
   "include": [
     "./index.d.ts",
     "./src/**/*.tsx",
-    "./src/**/*.ts"
+    "./src/**/*.ts",
+    "./test/**/*.ts"
   ],
   "exclude": [
     "./src/**/*.psd",

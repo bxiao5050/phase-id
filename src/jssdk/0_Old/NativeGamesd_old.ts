@@ -1,8 +1,8 @@
-import Http from 'Src/Base/Http';
-import Utils from 'Base/Utils';
+import Http from 'Base/Http';
+import { getUrlParam, signed, getAccountType, formatDate } from '../utils';
 import * as CryptoJS from 'crypto-js'
 import { Ins } from 'DOM/index'
-import { DOT } from './Base/Constant';
+import { DOT } from 'Src/jssdk/config/Constant';
 export default class NativeGames {
 
   NativeGames = true
@@ -22,7 +22,7 @@ export default class NativeGames {
           console.log('jpwork.jpwork', OrderingData.showMethod, orderRes)
           if (orderRes.code === 200) { // 下单完成
             if (OrderingData.showMethod === 3) {
-              var jpParams = { // 获取Native的交易凭据 
+              var jpParams = { // 获取Native的交易凭据
                 productName: OrderingData.selectedProduct.productName,
                 transactionId: orderRes.data.transactionId,
                 channel: OrderingData.channel,
@@ -43,13 +43,13 @@ export default class NativeGames {
 
   Login() { // 调启登录
     var LoginModule = Ins.showLogin()
-    var user = Utils.getUrlParam('user')
+    var user = getUrlParam('user')
 
     var uu = RG.CurUserInfo()
     if (user) {
       var { userType, accountType } = RG.CurUserInfo()
 
-      var isGuest = Utils.getAccountType(userType, accountType) === 'guest' ? true : false;
+      var isGuest = getAccountType(userType as UserType, accountType as AccountType) === 'guest' ? true : false;
       Ins.hideLogin()
       Ins.showHover(isGuest)
 
@@ -71,7 +71,7 @@ export default class NativeGames {
         }
       }
     } else {
-      if (Utils.getUrlParam('code')) {
+      if (getUrlParam('code')) {
         RG.jssdk.Login({ isFacebook: true }).then(() => {
           LoginModule.loginComplete()
         })
@@ -99,7 +99,7 @@ export default class NativeGames {
   }
 
   ExposeApis() {
-    window.RG = <any>{}
+    window.RG = <any> {}
     var exposeApis = [
       "server",
       "version",
@@ -217,13 +217,14 @@ export default class NativeGames {
         device: device,
         version: version,
         sdkVersion: RG.jssdk.version,
-        clientTime: new Date().format("yyyy-MM-dd hh:mm:ss"),
+        clientTime: formatDate(),
         firstInstall: 0,
-        sign: Utils.signed({
-          appId: RG.jssdk.config.appId,
-          source: source,
-          advChannel: RG.jssdk.config.advChannel,
-        })
+        sign: signed([
+          RG.jssdk.config.appId,
+          source,
+          RG.jssdk.config.advChannel,
+          RG.jssdk.config.app_key
+        ])
       }
 
       console.log('initSDKParams', initSDKParam)

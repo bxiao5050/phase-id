@@ -1,6 +1,6 @@
 import "./Type2.scss";
 import * as React from "react";
-import Payment from "DOM/components/payment";
+import Payment from "./index";
 import { Ins } from "DOM/index";
 
 type paymentProps = {
@@ -79,13 +79,13 @@ export default class Type2 extends React.Component<paymentProps, {}, any> {
                 this.setState(this.state);
               }}
             >
-              Exchange rate
+              {RG.jssdk.config.i18n.dom011}
             </span>
           ) : null}
         </h2>
 
         <img className="card-head" src={
-          source.code.replace(/http\:\/{0,2}/, 'https://').replace(/:[0-9]+/, '')
+          source.codeImg.replace(/http\:\/{0,2}/, 'https://').replace(/:[0-9]+/, '')
         } />
         <div className="card-inputs PIN" id="pin">
           <span>PIN: </span>
@@ -106,7 +106,7 @@ export default class Type2 extends React.Component<paymentProps, {}, any> {
         {isShowExchangeRate ? (
           <div className="exchange-rate-list">
             <h2 className="exchange-name">
-              Exchange rate
+            {RG.jssdk.config.i18n.dom011}
               <a
                 className="close"
                 onClick={() => {

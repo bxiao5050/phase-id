@@ -22,6 +22,7 @@ export function checkJsToNative(appId: string, advChannel: string) {
       },
       getDeviceMsgAsync: function () {
         return new Promise(resolve => {
+          console.log("adapter")
           resolve(JSON.parse(window.JsToNative.getDeviceMsg()))
         })
       },
@@ -31,5 +32,6 @@ export function checkJsToNative(appId: string, advChannel: string) {
       consumeOrder: Fn,
       exitApp: Fn,
     }
+
   }
 }

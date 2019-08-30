@@ -1,7 +1,7 @@
 
 import './TypeList.scss'
 import * as React from 'react'
-import Payment from 'DOM/components/payment'
+import Payment from './index'
 import { createLocation } from 'history'
 
 type paymentProps = {

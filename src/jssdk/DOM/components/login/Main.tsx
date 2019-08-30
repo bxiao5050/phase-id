@@ -3,8 +3,8 @@ import "./Main.scss"
 import * as React from 'react'
 import { Route } from 'react-router-dom'
 import { createLocation } from 'history'
-import Login from "DOM/components/login"
-import Choose from "DOM/components/login/Choose"
+import Login from "./index"
+import Choose from "./Choose"
 import { Ins } from 'DOM/index'
 
 export default class Main extends React.Component<{
@@ -44,6 +44,7 @@ export default class Main extends React.Component<{
 
   render() {
     return <div className={"content win-login win-choose"}>
+      {/* 在css中文字不能显示,做优化 */}
       <h2 className="logo block">POCKET GAMES</h2>
       <div className="wrapper">
 

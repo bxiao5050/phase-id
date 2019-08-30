@@ -1,41 +1,51 @@
-import Utils from "./Utils";
-
 export default class Http {
   static _ins: Http
   static get instance(): Http {
     return this._ins || new Http;
   }
+  // private serverAddress = IS_TEST || IS_DEV ? RG.jssdk.config.server.test : RG.jssdk.config.server.formal;
+  private serverAddress: string;
   constructor() {
-    Http._ins = this
+    Http._ins = this;
+    this.init();
   }
-
-  private serverAddress = IS_TEST || IS_DEV ? RG.jssdk.config.server.test :RG.jssdk.config.server.formal;
+  init(region?: Region) {
+    const regions = {
+      sg: 'https://sdk-sg.pocketgamesol.com',
+      de: 'https://sdk-de.pocketgamesol.com',
+      vn: 'https://sdk-vn.pocketgamesol.com',
+      test: 'https://sdk-test.changic.net.cn'
+    }
+    const key = region || window._RG_REGION || window.RG.jssdk.config.region || "test";
+    this.serverAddress = regions[key] + "/pocketgames/client";
+  }
 
   private request(param: requestParam): Promise<ServerRes> {
 
     let data: any
     if (param.data) {
+
       data = Object.keys(param.data).map(key => {
-        return `${key}=${param.data[key]}`
+        return `${encodeURIComponent(key)}=${encodeURIComponent(param.data[key])}`;
       }).join('&')
     }
     var xhr = new XMLHttpRequest();
-    xhr.open(param.method, this.serverAddress + param.route)
+    xhr.open(param.method, this.serverAddress + param.route);
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    xhr.send(data)
-    return new Promise((resolve, reject) => {
+    var result = new Promise<ServerRes>((resolve, reject) => {
       xhr.onreadystatechange = function () {
         if (xhr.readyState === 4) {
           if (xhr.status === 200) {
-            resolve(JSON.parse(xhr.responseText))
+            resolve(JSON.parse(xhr.responseText));
           } else {
-            // resolve(JSON.parse(xhr.responseText))
             reject("server res err");
           }
         }
       }
     })
+    xhr.send(data);
 
+    return result;
   }
 
   public post(param: requestParam): Promise<ServerRes> {
@@ -49,8 +59,5 @@ export default class Http {
       Object.assign({ method: 'GET' }, param)
     )
   }
-
-
-
 
 }

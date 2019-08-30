@@ -1,16 +1,17 @@
-import './index.scss'
-import * as React from 'react'
-import { Switch, Route } from 'react-router-dom'
-import { History, createLocation } from 'history'
-import TypeList from "Src/DOM/components/payment/TypeList";
-import Type2 from "Src/DOM/components/payment/Type2";
-import Type0 from "DOM/components/payment/Type0";
-import Type1 from "DOM/components/payment/Type1";
-import Type3 from "DOM/components/payment/Type3";
-import Type4 from "DOM/components/payment/Type4";
-import Type5 from "DOM/components/payment/Type5";
-import WinOpen from "DOM/components/payment/WinOpen"
-import { Ins } from 'DOM/index'
+import './index.scss';
+import * as React from 'react';
+import { Switch, Route } from 'react-router-dom';
+import { History, createLocation } from 'history';
+import { Ins } from 'DOM/index';
+import TypeList from "./TypeList";
+import Type2 from "./Type2";
+import Type0 from "./Type0";
+import Type1 from "./Type1";
+import Type3 from "./Type3";
+import Type4 from "./Type4";
+import Type5 from "./Type5";
+import WinOpen from "./WinOpen";
+
 
 type PaymentProps = {
   history: History
@@ -74,8 +75,14 @@ export default class Payment extends React.Component<PaymentProps, {}, any> {
           })
       }
       else {
-        pageName = 'type' + payments.showMethod
-        this.state.paymentDatas[payments.showMethod] = payments
+        if (payments.showMethod > 8) {
+          pageName = 'type3';
+          this.state.paymentDatas[3] = payments;
+        } else {
+          pageName = 'type' + payments.showMethod;
+          this.state.paymentDatas[payments.showMethod] = payments;
+        }
+
         this.props.history.push(
           createLocation(pageName)
         )
@@ -120,6 +127,7 @@ export default class Payment extends React.Component<PaymentProps, {}, any> {
               <Route exact path='/type2' render={() => <Type2 Payment={this} />} />
               <Route exact path='/type3' render={() => <Type3 Payment={this} />} />
               <Route exact path='/type4' render={() => <Type4 Payment={this} />} />
+              {/* 现在只使用了0-5,9-11 */}
               <Route exact path='/type5' render={() => <Type5 Payment={this} />} />
               <Route path="/main" render={() => <ul className="payment-nav">
                 {
@@ -132,7 +140,7 @@ export default class Payment extends React.Component<PaymentProps, {}, any> {
                       {node.discountImg && (<div className="pay-channel-discount">
                         <img className="pay-channel-discount-img"
                           src={node.discountImg.replace(/http\:\/{0,2}/, 'https://').replace(/:[0-9]+/, '')}
-                          alt="discount image"
+                          alt=""
                         /></div>)}
 
                       <span className="pay-main-icon"></span>

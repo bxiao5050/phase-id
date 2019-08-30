@@ -1,7 +1,6 @@
-import Utils from "Base/Utils";
-import Http from "Src/Base/Http";
-import * as Const from "Src/Base/Constant";
-
+import { signed } from "../utils";
+import Http from "./Http";
+import * as Const from "../config/Constant";
 export default class Account {
   static _ins: Account;
   static get instance(): Account {
@@ -94,12 +93,13 @@ export default class Account {
       sign: null
     };
 
-    data.sign = Utils.signed({
-      appId: RG.jssdk.config.appId,
-      userId: this.user.userId,
-      password: oldpass,
-      newPassword: newpass
-    });
+    data.sign = signed([
+      RG.jssdk.config.appId,
+      this.user.userId,
+      oldpass,
+      newpass,
+      RG.jssdk.config.app_key
+    ]);
 
     return Http.instance.post({
       route: Const.RouteChangePassword,

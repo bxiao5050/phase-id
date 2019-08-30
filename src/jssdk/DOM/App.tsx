@@ -1,12 +1,12 @@
 import * as React from 'react'
 import { Route, MemoryRouter } from 'react-router-dom'
-import Notice from "DOM/components/notice";
-import Hover from "DOM/components/hover";
-import Account from "DOM/components/account";
-import Login from "DOM/components/login";
-import Payment from "DOM/components/payment"
+import Notice from "./components/notice";
+import Hover from "./components/hover";
+import Account from "./components/account";
+import Login from "./components/login";
+import Payment from "./components/payment"
 
-class App extends React.Component {
+export class App extends React.Component {
 
   public refs: {
     notice: Notice
@@ -112,7 +112,7 @@ class App extends React.Component {
 
       {/* 提示模块 */}
       {this.state.noticeList.map((noticeMsg, index) => {
-        return <Notice key={index} msg={noticeMsg} />
+        return <Notice key={index} msg={noticeMsg} Ins={this} />
       })}
 
       {/* 悬浮球 */}

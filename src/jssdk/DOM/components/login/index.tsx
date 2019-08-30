@@ -2,10 +2,10 @@ import './index.scss'
 import * as React from 'react'
 import { Switch, Route, MemoryRouter } from 'react-router-dom'
 import { History, createLocation } from 'history'
-import Main from 'DOM/components/login/Main'
-import Loading from 'DOM/components/login/Loading'
-import Entry from 'DOM/components/login/Entry'
-import Register from 'DOM/components/login/Register'
+import Main from './Main'
+import Loading from './Loading'
+import Entry from './Entry'
+import Register from './Register'
 
 export default class Login extends React.Component {
 

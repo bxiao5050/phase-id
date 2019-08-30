@@ -3,24 +3,12 @@ import Payment from "Base/Payment";
 import Login from "Base/Login";
 import Api from "Base/Api";
 import Account from "Base/Account";
-import Utils from "Base/Utils";
+import { getUrlParam } from "Src/jssdk/utils";
 // import Mark from "Src/Base/Mark_old";
 
 export default class Base {
 
   Account = Account.instance
-
-  Mark(markName: string, markParams: any) {
-    // Mark.instance.Mark(markName, markParams);
-    const index_origin = IS_DEV || IS_TEST ? window.$rg_main.config.page.index.test : window.$rg_main.config.page.index.formal;
-    window.$postMessage(JSON.stringify({
-      action: 'mark',
-      data: {
-        name: markName,
-        param: markParams
-      }
-    }), /(http|https):\/\/(www.)?([A-Za-z0-9-_]+(\.)?)+/.exec(index_origin)[0])
-  }
 
   Login(loginParam: LoginParam): Promise<LoginRes> {
     let promise: Promise<LoginRes>
@@ -42,7 +30,7 @@ export default class Base {
   }
 
   CurUserInfo = (): JSSDK.CurUserInfo => {
-    return RG.jssdk.Account.user || Utils.getUrlParam('user')
+    return RG.jssdk.Account.user || getUrlParam('user')
   }
 
   Share(shareUrl: string) {

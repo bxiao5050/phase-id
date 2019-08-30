@@ -3,9 +3,9 @@
 import './Choose.scss'
 import * as React from 'react'
 import { Route } from 'react-router-dom'
-import Login from 'DOM/components/login'
+import Login from './index'
 import { Ins } from 'DOM/index'
-import Utils from 'Base/Utils';
+import { getAccountType } from 'Src/jssdk/utils';
 
 type ChooseProps = {
   Login: Login
@@ -170,7 +170,7 @@ export default class Choose extends React.Component<ChooseProps, {}, any>  {
                   <p
                     onClick={() => { this.autoLogin(userInfo); this.showAccounts(); }}
                   >
-                    {Utils.getAccountType(userInfo.userType, userInfo.accountType) + ' : ' + userInfo.userName}
+                    {getAccountType(userInfo.userType as UserType, userInfo.accountType as AccountType) + ' : ' + userInfo.userName}
                   </p>
                   <div className="icon-close"
                     onClick={this.deleteUser.bind(this, userInfo.userId)}

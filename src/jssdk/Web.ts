@@ -1,5 +1,5 @@
-import Utils from 'Base/Utils';
-import Base from 'Src/Base'
+import { getUrlParam } from './utils';
+import Base from './base'
 
 export default class Web extends Base {
 
@@ -17,6 +17,17 @@ export default class Web extends Base {
 
     window.RG = new RG
     this.ExposeApis()
+  }
+  Mark(markName: string, markParams: any) {
+    // Mark.instance.Mark(markName, markParams);
+    const index_origin = IS_DEV || IS_TEST ? window.$rg_main.config.page.index.test : window.$rg_main.config.page.index.formal;
+    window.$postMessage(JSON.stringify({
+      action: 'mark',
+      data: {
+        name: markName,
+        param: markParams
+      }
+    }), /(http|https):\/\/(www.)?([A-Za-z0-9-_]+(\.)?)+/.exec(index_origin)[0])
   }
 
   loadScript(src) {
@@ -106,14 +117,14 @@ export default class Web extends Base {
         if (RG.jssdk.config.download.ios) {
           url = RG.jssdk.config.download.ios;
         } else {
-          url = `${SERVER}/jssdk/${Utils.getUrlParam('sdkVersion')}/add-shortcut.html?language=${RG.jssdk.config.language}&system=ios&appId=${RG.jssdk.config.appId}&link=${index_origin}`;
+          url = `${SERVER}/jssdk/${getUrlParam('sdkVersion')}/add-shortcut.html?language=${RG.jssdk.config.language}&system=ios&appId=${RG.jssdk.config.appId}&link=${index_origin}`;
         }
 
       } else if (/(Android)/i.test(navigator.userAgent)) {
         if (RG.jssdk.config.download.android) {
           url = RG.jssdk.config.download.android;
         } else {
-          url = `${SERVER}/jssdk/${Utils.getUrlParam('sdkVersion')}/add-shortcut.html?language=${RG.jssdk.config.language}&system=android&appId=${RG.jssdk.config.appId}&link=${index_origin}`;
+          url = `${SERVER}/jssdk/${getUrlParam('sdkVersion')}/add-shortcut.html?language=${RG.jssdk.config.language}&system=android&appId=${RG.jssdk.config.appId}&link=${index_origin}`;
         }
       } else {
         url = `${SERVER}/platform/shortcut.jsp?link=${encodeURIComponent(index_origin + '?shortcut=true')}&fileName=${RG.jssdk.config.name}&t=${Date.now()}`;

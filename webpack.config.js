@@ -71,6 +71,7 @@ var definePlugin = {
 var webpackConfig = {
 
   entry: {
+    dev: path.join(__dirname, './src/jssdk/dev/index.ts'),
     sdk: path.join(__dirname, 'src/jssdk/main.ts'),
     shortcut: path.join(__dirname, 'src/add-shortcut/main.ts'),
     // index: path.join(__dirname, 'src/index/main.ts'),
@@ -83,7 +84,8 @@ var webpackConfig = {
     alias: {
       Base: path.join(__dirname, 'src/jssdk/Base'),
       DOM: path.join(__dirname, 'src/jssdk/DOM'),
-      Src: path.join(__dirname, 'src/jssdk'),
+      Src: path.join(__dirname, 'src'),
+      SDK: path.join(__dirname, 'src/jssdk')
     }
   },
   output: output,
@@ -157,7 +159,7 @@ var webpackConfig = {
     new HtmlWebpackPlugin({
       filename: 'index.html',
       template: './src/index.html',
-      chunks: ['sdk'],
+      chunks: isDev ? ['sdk', 'dev'] : ['sdk'],
       inject: 'body',
       minify: isDev ? false : {
         collapseWhitespace: true,

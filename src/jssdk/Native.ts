@@ -1,8 +1,8 @@
-import Http from 'Src/Base/Http';
-import Utils from 'Base/Utils';
+import Http from 'Base/Http';
+import { getUrlParam, signed, formatDate, getAccountType } from './utils';
 import * as CryptoJS from 'crypto-js'
-import { DOT } from './Base/Constant';
-import Base from './Base';
+import { DOT } from 'Src/jssdk/config/Constant';
+import Base from './base';
 
 export default class Native extends Base {
 
@@ -35,18 +35,16 @@ export default class Native extends Base {
         return Ordering(OrderingData).then(orderRes => {
           console.log('jpwork.jpwork', OrderingData.showMethod, orderRes)
           if (orderRes.code === 200) { // 下单完成
-            if (OrderingData.code === -1) {
-              let jpParams = { // 获取Native的交易凭据
-                productName: OrderingData.selectedProduct.productName,
-                transactionId: orderRes.data.transactionId,
-                channel: OrderingData.channel,
-                currency: OrderingData.selectedProduct.currency,
-                money: OrderingData.selectedProduct.amount
-              }
-              let jpParamsStr = JSON.stringify(jpParams)
-              console.log('jpParamsStr', jpParams, jpParamsStr)
-              JsToNative.jpwork(jpParamsStr)
+            let jpParams = { // 获取Native的交易凭据
+              productName: OrderingData.selectedProduct.productName,
+              transactionId: orderRes.data.transactionId,
+              channel: OrderingData.channel,
+              currency: OrderingData.selectedProduct.currency,
+              money: OrderingData.selectedProduct.amount
             }
+            let jpParamsStr = JSON.stringify(jpParams)
+            console.log('jpParamsStr', jpParams, jpParamsStr)
+            JsToNative.jpwork(jpParamsStr)
           }
           return orderRes
         })
@@ -178,7 +176,7 @@ export default class Native extends Base {
     let user = RG.jssdk.Account.user
     let autoLogin = false
     let LoginModule = window.RG.jssdk.App.showLogin()
-    let code = Utils.getUrlParam('code');
+    let code = getUrlParam('code');
 
     if (code) {
       await RG.jssdk.Login({ isFacebook: true })
@@ -211,7 +209,7 @@ export default class Native extends Base {
 
     // if (user) {
     //   let { userType, accountType } = user
-    //   let isGuest = Utils.getAccountType(userType, accountType) === 'guest' ? true : false;
+    //   let isGuest = getAccountType(userType, accountType) === 'guest' ? true : false;
     //   window.RG.jssdk.App.hideLogin()
     //   window.RG.jssdk.App.showHover(isGuest)
     //   if (window.rgAsyncInit) {
@@ -264,13 +262,14 @@ export default class Native extends Base {
         device: device,
         version: version,
         sdkVersion: RG.jssdk.version,
-        clientTime: new Date().format("yyyy-MM-dd hh:mm:ss"),
+        clientTime: formatDate(),
         firstInstall: 0,
-        sign: Utils.signed({
-          appId: RG.jssdk.config.appId,
-          source: source,
-          advChannel: RG.jssdk.config.advChannel,
-        })
+        sign: signed([
+          RG.jssdk.config.appId,
+          source,
+          RG.jssdk.config.advChannel,
+          RG.jssdk.config.app_key
+        ])
       }
 
       console.log('initSDKParams', initSDKParam)
@@ -415,7 +414,7 @@ export default class Native extends Base {
   Mark(markName: string, extraParam?: any) {
     let eventName: string = markName;
     // 从配置中获取点名的配置
-    if (RG.jssdk.config.mark_id.markName[eventName]) {
+    if (RG.jssdk.config.mark_id.markName && RG.jssdk.config.mark_id.markName[eventName]) {
       eventName = RG.jssdk.config.mark_id.markName[eventName];
     }
     // 传递给原生的参数
@@ -423,7 +422,7 @@ export default class Native extends Base {
       eventName
     }
     // 获取adjust Token
-    if (RG.jssdk.config.mark_id.adjust[eventName]) {
+    if (RG.jssdk.config.mark_id.adjust && RG.jssdk.config.mark_id.adjust[eventName]) {
       markParmas.eventToken = RG.jssdk.config.mark_id.adjust[eventName];
     }
     // sdk_purchased_done，原生端根据此字符串来做是否支付的判断,adjust只需要token，不要调整代码的顺序，最后匹配购买的点名
@@ -432,7 +431,7 @@ export default class Native extends Base {
       markParmas.eventName = "sdk_purchased_done";
     }
     // 匹配唯一点
-    if (RG.jssdk.config.mark_id.adjust[eventName + '_unique']) {
+    if (RG.jssdk.config.mark_id.adjust && RG.jssdk.config.mark_id.adjust[eventName + '_unique']) {
       window.JsToNative.gameEvent(JSON.stringify({ eventName: eventName + '_unique', eventToken: RG.jssdk.config.mark_id.adjust[eventName + '_unique'] }));
       console.info(`"${eventName + '_unique'}" has marked - native`, { eventName: eventName + '_unique', eventToken: RG.jssdk.config.mark_id.adjust[eventName + '_unique'] })
     }

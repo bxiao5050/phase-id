@@ -1,11 +1,11 @@
 /* 此文件已经废弃，下一次更新时删除 */
-import Utils from "Base/Utils";
-import { DOT, GET, ERROR } from "Base/Constant";
-import { checkJsToNative } from "Src/adapter";
-import Polyfill from "Base/Polyfill";
-import Mark from "Src/Base/Mark_old";
-import Web from "./Web";
-import Native from "./Native";
+import { getUrlParam } from "Src/jssdk/utils";
+import { DOT, GET } from "Src/jssdk/config/Constant";
+import { checkJsToNative } from "SDK/adapter";
+import Polyfill from "Src/jssdk/0_Old/Polyfill_old";
+import Mark from "Src/jssdk/0_Old/Mark_old";
+import Web from "../Web";
+import Native from "../Native";
 
 export default class Main {
   fb_sdk_loaded: boolean;
@@ -59,7 +59,7 @@ export default class Main {
   async init() {
     return new Promise(async (resolve, reject) => {
       try {
-        (Utils.getUrlParam(GET.DEV) || window[GET.DEV]) && (await this.init_debugger());
+        (getUrlParam(GET.DEV) || window[GET.DEV]) && (await this.init_debugger());
         await this.get_game_config;
 
         this.get_sdk_instance();
@@ -78,20 +78,20 @@ export default class Main {
 
   /** 获取游戏配置 */
   get_game_config = new Promise((resolve, reject) => {
-    let appId = Utils.getUrlParam(GET.APP_ID) || window[GET.APP_ID];
-    let advChannel = Utils.getUrlParam(GET.ADV_CHANNEL) || window[GET.ADV_CHANNEL];
+    let appId = getUrlParam(GET.APP_ID) || window[GET.APP_ID];
+    let advChannel = getUrlParam(GET.ADV_CHANNEL) || window[GET.ADV_CHANNEL];
     if (!appId || !advChannel) {
-      reject(ERROR.E_001);
+      reject('appId or advChannel is not defined');
     } else {
       let config, translation;
       Promise.all([
         new Promise(async function (resolve) {
-          config = (await import("Src/config")).default[appId];
+          config = (await import("Src/jssdk/config")).default[appId];
           config = config[advChannel] || config.default;
           resolve();
         }),
         new Promise(async resolve => {
-          translation = (await import("DOM/i18n")).default;
+          translation = (await import("DOM/i18n/index"));
           resolve();
         })
       ])
@@ -140,13 +140,13 @@ export default class Main {
 
     if (this.config.advChannel > 30000 && this.config.advChannel < 31000) {
       this.config.type = 1;
-      import("Src/Web").then(module => {
+      import("SDK/Web").then(module => {
         this.sdkInstance = new module.default(this.config, this.fb_sdk_loaded);
         get_sdk_instance_resolve();
       })
     } else if (this.config.advChannel < 30000) {
       this.config.type = 2;
-      import("Src/Native").then(module => {
+      import("SDK/Native").then(module => {
         this.sdkInstance = new module.default(this.config, this.fb_sdk_loaded);
         get_sdk_instance_resolve();
       })
@@ -155,10 +155,10 @@ export default class Main {
       this.config.advChannel < 32000
     ) {
       this.config.type = 3;
-      return import("Src/FacebookWebGames");
+      return import("Src/jssdk/FacebookWebGames");
     } else if (this.config.advChannel > 32000 && this.config.advChannel < 33000) {
       this.config.type = 4;
-      return import("Src/FacebookInstantGames");
+      return import("Src/jssdk/FacebookInstantGames");
     }
   }
 

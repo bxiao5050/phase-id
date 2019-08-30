@@ -27,5 +27,4 @@ window.$postMessage = function (paramsStr: string) {
     console.info(`markName: ${param.data.name}`);
   }
 };
-
-export { };
+export { }
