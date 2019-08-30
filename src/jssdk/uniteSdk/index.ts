@@ -90,7 +90,7 @@ export default class UniteSdk {
             this.showNotice(this.config.i18n.UnknownErr);
           }
         } else {
-          console.log('GameDemo:QuickSDK登录失败:' + callbackData);
+          console.log('GameDemo:QuickSDK登录失败:' + JSON.stringify(callbackData));
           if (callbackData.data.message === "cancel") {
             that.quickLogin();
           }
