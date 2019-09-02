@@ -23,7 +23,7 @@ pipeline {
                                 echo "---------------------------------------------------------"
                                 echo ""
                             done
-                            sh '/bin/sh ansible/notify.sh "npm build success" "${JOB_NAME}" "${BUILD_NUMBER}"'
+                            /bin/sh ansible/notify.sh "npm build success" "${JOB_NAME}" "${BUILD_NUMBER}"
                         '''
                     } catch(err) {
                         echo 'npm build error'
@@ -39,6 +39,7 @@ pipeline {
                 script {
                     try {
                         sh '''
+                            current_path=$(pwd)
                             cd /data/jenkins/packages/prod-build/frontend/jssdk
                             package_path=$(date '+%Y%m%d')
                             mkdir -p ${package_path}
@@ -50,6 +51,7 @@ pipeline {
                                 mv ${file_name} ../../${package_path}
                                 cd ../..
                                 package_url="http://jenkins.royale.com/packages/prod-build/frontend/jssdk/${package_path}/${file_name}"
+                                cd ${current_path}
                                 /bin/sh ansible/notify.sh "build-${region} ${version} success &&PACKAGES: ${package_url}" "${JOB_NAME}" "${BUILD_NUMBER}"                            
                             done
                             rm -rf build
