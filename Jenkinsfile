@@ -39,20 +39,20 @@ pipeline {
                     try {
                         sh '''
                             current_path=$(pwd)
-                            cd /data/jenkins/packages/prod-build/frontend/jssdk
                             package_path=$(date '+%Y%m%d')
                             mkdir -p ${package_path}
                             for region in sg vn de; do
+                                cd /data/jenkins/packages/prod-build/frontend/jssdk
                                 dt=$(date '+%Y%m%d%H%M%S')
                                 file_name=jssdk-${region}-${version}-${dt}.zip
                                 cd build/${region}-${version}
                                 zip -qr ${file_name} *
                                 mv ${file_name} ../../${package_path}
-                                cd ../..
                                 package_url="http://jenkins.royale.com/packages/prod-build/frontend/jssdk/${package_path}/${file_name}"
                                 cd ${current_path}
                                 /bin/sh ansible/notify.sh "build-${region} ${version} success &&PACKAGES: ${package_url}" "${JOB_NAME}" "${BUILD_NUMBER}"                            
                             done
+                            cd /data/jenkins/packages/prod-build/frontend/jssdk
                             rm -rf build
                         '''
                     } catch(err) {
