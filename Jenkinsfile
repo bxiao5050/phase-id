@@ -12,11 +12,13 @@ pipeline {
                         sh 'rm -rf node_modules dist build'
                         sh 'npm install'
                         sh '''
+                            echo "---------------------------------------------------------"
                             package_path=$(date '+%Y%m%d')
                             mkdir -p /data/app/${package_path}
 
                             for region in sg vn de; do
                                 [[ -d build/${version} ]] && rm -rf build/${version}
+                                echo "npm run build-${region} ${version}"
                                 npm run build-${region} ${version}
                                 dt=$(date '+%Y%m%d%H%M%S')
                                 file_name=jssdk-${region}-${version}-${dt}.zip
@@ -27,6 +29,8 @@ pipeline {
                                 cd ../..
                                 package_url="http://jenkins.royale.com/packages/prod-build/frontend/jssdk/${package_path}/${file_name}"
                                 /bin/sh ansible/notify.sh "build-${region} ${version} succcess &&PACKAGES: ${package_url}" "${JOB_NAME}" "${BUILD_NUMBER}"
+                                echo "---------------------------------------------------------"
+                                echo ""
                             done
                         '''
                     } catch(err) {
