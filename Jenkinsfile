@@ -40,7 +40,7 @@ pipeline {
                         sh '''
                             current_path=$(pwd)
                             package_path=$(date '+%Y%m%d')
-                            mkdir -p ${package_path}
+                            mkdir -p /data/jenkins/packages/prod-build/frontend/jssdk/${package_path}
                             for region in sg vn de; do
                                 cd /data/jenkins/packages/prod-build/frontend/jssdk
                                 dt=$(date '+%Y%m%d%H%M%S')
