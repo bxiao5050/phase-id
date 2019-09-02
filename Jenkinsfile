@@ -40,20 +40,22 @@ pipeline {
             steps {
                 script {
                     try {
-                        cd /data/jenkins/packages/prod-build/frontend/jssdk
-                        package_path=$(date '+%Y%m%d')
-                        mkdir -p ${package_path}
-                        for region in sg vn de; do
-                            dt=$(date '+%Y%m%d%H%M%S')
-                            file_name=jssdk-${region}-${version}-${dt}.zip
-                            cd build/${version}
-                            zip -qr ${file_name} *
-                            mv ${file_name} ../../${package_path}
-                            cd ../..
-                            package_url="http://jenkins.royale.com/packages/prod-build/frontend/jssdk/${package_path}/${file_name}"
-                            /bin/sh ansible/notify.sh "build-${region} ${version} success &&PACKAGES: ${package_url}" "${JOB_NAME}" "${BUILD_NUMBER}"                            
-                        done
-                        rm -rf build
+                        sh '''
+                            cd /data/jenkins/packages/prod-build/frontend/jssdk
+                            package_path=$(date '+%Y%m%d')
+                            mkdir -p ${package_path}
+                            for region in sg vn de; do
+                                dt=$(date '+%Y%m%d%H%M%S')
+                                file_name=jssdk-${region}-${version}-${dt}.zip
+                                cd build/${version}
+                                zip -qr ${file_name} *
+                                mv ${file_name} ../../${package_path}
+                                cd ../..
+                                package_url="http://jenkins.royale.com/packages/prod-build/frontend/jssdk/${package_path}/${file_name}"
+                                /bin/sh ansible/notify.sh "build-${region} ${version} success &&PACKAGES: ${package_url}" "${JOB_NAME}" "${BUILD_NUMBER}"                            
+                            done
+                            rm -rf build
+                        '''
                     } catch(err) {
                         echo 'npm package error'
                         sh '/bin/sh ansible/notify.sh "npm package error" "${JOB_NAME}" "${BUILD_NUMBER}"'
