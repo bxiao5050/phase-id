@@ -5,10 +5,10 @@
   "license": "MIT",
   "scripts": {
     "dev": "webpack-dev-server --mode development --action dev --sdkVersion",
-    "build-sg": "node node_modules/webpack/bin/webpack.js webpack --mode production --action sg --sdkVersion",
-    "build-vn": "node node_modules/webpack/bin/webpack.js webpack --mode production --action vn --sdkVersion",
-    "build-de": "node node_modules/webpack/bin/webpack.js webpack --mode production --action de --sdkVersion",
-    "build-test": "node node_modules/webpack/bin/webpack.js --mode development --action test --sdkVersion",
+    "build-sg": "webpack webpack --mode production --action sg --sdkVersion",
+    "build-vn": "webpack webpack --mode production --action vn --sdkVersion",
+    "build-de": "webpack webpack --mode production --action de --sdkVersion",
+    "build-test": "webpack --mode development --action test --sdkVersion",
     "test": "jest",
     "test-config": "jest --coverage"
   },
