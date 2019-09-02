@@ -50,7 +50,7 @@ pipeline {
                                 mv ${file_name} ../../${package_path}
                                 package_url="http://jenkins.royale.com/packages/prod-build/frontend/jssdk/${package_path}/${file_name}"
                                 cd ${current_path}
-                                /bin/sh ansible/notify.sh "build-${region} ${version} success &&PACKAGES: ${package_url}" "${JOB_NAME}" "${BUILD_NUMBER}"                            
+                                /bin/sh ansible/notify.sh "build-${region} ${version} success &PACKAGES: ${package_url}" "${JOB_NAME}" "${BUILD_NUMBER}"                            
                             done
                             cd /data/jenkins/packages/prod-build/frontend/jssdk
                             rm -rf build
