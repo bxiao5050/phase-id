@@ -1,9 +1,9 @@
 pipeline {
-    agent any
+    agent none
     stages {
         stage('BUILD') {
             agent { docker {
-                image 'reg.royale.com/ops/xynode:8-alpine'
+                image 'reg.royale.com/ops/xynode:10-alpine'
                 args '-v /data/jenkins/packages/prod-build/frontend/jssdk:/data/app'
             }}
             steps {
