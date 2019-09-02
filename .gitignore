@@ -12,3 +12,6 @@
 /doc/site
 /static
 /src/jssdk/DOM/i18n
+
+Jenkinsfile
+/ansible
