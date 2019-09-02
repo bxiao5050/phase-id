@@ -1,6 +1,6 @@
 {
-  "name": "webpack-spritesmith",
-  "version": "1.0.0",
+  "name": "jssdk",
+  "version": "2.4.1",
   "main": "index.js",
   "license": "MIT",
   "scripts": {
