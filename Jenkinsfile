@@ -23,7 +23,6 @@ pipeline {
                                 echo "---------------------------------------------------------"
                                 echo ""
                             done
-                            /bin/sh ansible/notify.sh "npm build success" "${JOB_NAME}" "${BUILD_NUMBER}"
                         '''
                     } catch(err) {
                         echo 'npm build error'
