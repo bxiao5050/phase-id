@@ -40,7 +40,6 @@ pipeline {
             steps {
                 script {
                     try {
-                        
                         cd /data/jenkins/packages/prod-build/frontend/jssdk
                         package_path=$(date '+%Y%m%d')
                         mkdir -p ${package_path}
