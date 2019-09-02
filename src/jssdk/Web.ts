@@ -1,5 +1,5 @@
 import { getUrlParam } from './utils';
-import Base from './base'
+import Base from './Base'
 
 export default class Web extends Base {
 

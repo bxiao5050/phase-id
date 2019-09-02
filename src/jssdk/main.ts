@@ -4,7 +4,7 @@ import Http from "Base/Http";
 // import Web from "./Web";
 // import Native from "./Native";
 // import Config from "./config";
-import Languages from "DOM/i18n";
+import Languages from "DOM/i18n/index.ts";
 
 init(window);
 
