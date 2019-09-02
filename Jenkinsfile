@@ -19,9 +19,7 @@ pipeline {
                                 [[ -d build/${version} ]] && rm -rf build/${version}
                                 echo "npm run build-${region} ${version}"
                                 npm run build-${region} ${version}
-
-                                cp -rf  build/${version} /data/app/build/
-                                cd ../..
+                                cp -rf  build/${version} /data/app/build/${region}-${version}
                                 echo "---------------------------------------------------------"
                                 echo ""
                             done
@@ -47,7 +45,7 @@ pipeline {
                             for region in sg vn de; do
                                 dt=$(date '+%Y%m%d%H%M%S')
                                 file_name=jssdk-${region}-${version}-${dt}.zip
-                                cd build/${version}
+                                cd build/${region}-${version}
                                 zip -qr ${file_name} *
                                 mv ${file_name} ../../${package_path}
                                 cd ../..
