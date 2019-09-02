@@ -8,7 +8,7 @@
     "build-sg": "webpack --mode production --action sg --sdkVersion",
     "build-vn": "webpack --mode production --action vn --sdkVersion",
     "build-de": "webpack --mode production --action de --sdkVersion",
-    "build-test": "npm run test && webpack --mode development --action test --sdkVersion",
+    "build-test": "webpack --mode development --action test --sdkVersion",
     "test": "jest",
     "test-config": "jest --coverage"
   },
