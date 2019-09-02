@@ -93,7 +93,7 @@ function init(window: Window) {
   }
   async function getConfig(appId: string, advChannel: string) {
     if (!appId || !advChannel) throw "appId or advChannel is not defined";
-    const gameConfig = await import(`./config/${appId}_${advChannel}.ts`).then(module => module.default);
+    const gameConfig = await import(`./config/${appId}-${advChannel}.ts`).then(module => module.default);
     return Object.assign(gameConfig, { appId, advChannel, i18n: Languages[gameConfig.language] });
   }
   function getSdkType(advChannelStr: string) {
