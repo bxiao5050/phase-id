@@ -38,7 +38,15 @@ class ShowXRDPatterns(WaferCanvas):
     def on_BExpPiechart(self):
         threading.Thread(target=self.plotPiechart).start()
 
-
+    def on_enter(self,e, pos):
+        self.l2.configure(text= pos)
+        self.canvas_ax.clear()
+        try:
+            self.canvas_ax.plot(self.data.iloc[:,0], self.data.iloc[:,pos])
+            self.canvas.draw()
+        except IndexError:
+            pass
+            
     #plot pie chart
     def plotPiechart(self):
         for pos in range(1, len(self.data.columns)):
@@ -53,14 +61,7 @@ class ShowXRDPatterns(WaferCanvas):
             fig.subplots_adjust( wspace=0, hspace=0)
             time.sleep(0.01)
 
-    def on_enter(self,e, pos):
-        self.l2.configure(text= pos)
-        self.canvas_ax.clear()
-        try:
-            self.canvas_ax.plot(self.data.iloc[:,0], self.data.iloc[:,pos])
-            self.canvas.draw()
-        except IndexError:
-            pass
+
 
 
 
