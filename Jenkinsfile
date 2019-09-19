@@ -60,7 +60,6 @@ pipeline {
                         echo 'deploy error'
                         sh '/bin/sh ansible/notify.sh "deploy error" "${JOB_NAME}" "${BUILD_NUMBER}"'
                         throw err
-                        sh 'exit 1'
                     }
                 }
             }
