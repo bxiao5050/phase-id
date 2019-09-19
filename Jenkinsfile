@@ -49,7 +49,7 @@ pipeline {
                             rm -rf build
 
                             cd ${workspace}/ansible
-                            src_file="${rpath}/${project}/${date '+%Y%m%d'}/${filename}"
+                            src_file="${rpath}/${project}/$(date '+%Y%m%d')/${filename}"
                             dest_file="/data/server_new/${filename}"
                             arch_file="${project}-${version}-$(date '+%Y%m%d%H%M%S').zip"
                             ansible-playbook -i hosts deploy.yml -- extra-var "src_file=${src_file} dest_file=${dest_file} version=${version} project=${project} arch_file=${arch_file}"
