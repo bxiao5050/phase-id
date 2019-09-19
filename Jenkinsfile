@@ -28,7 +28,6 @@ pipeline {
                         echo 'npm build error'
                         sh '/bin/sh ansible/notify.sh "npm install error" "${JOB_NAME}" "${BUILD_NUMBER}"'
                         throw err
-                        sh 'exit 1'
                     }
                 }
             }
