@@ -54,7 +54,7 @@ pipeline {
                             arch_file="${project}-${version}-$(date '+%Y%m%d%H%M%S').zip"
                             ansible-playbook -i hosts deploy.yml --extra-var "src_file=${src_file} dest_file=${dest_file} version=${version} project=${project} arch_file=${arch_file}"
                             rm -f *.retry
-                            /bin/sh ansible/notify.sh "deploy success" "${JOB_NAME}" "${BUILD_NUMBER}"                            
+                            /bin/sh notify.sh "deploy success" "${JOB_NAME}" "${BUILD_NUMBER}"                            
                         '''
                     } catch(err) {
                         echo 'deploy error'
