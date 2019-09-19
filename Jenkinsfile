@@ -1,5 +1,5 @@
 pipeline {
-    agent { label 'jenkins-slave' }
+    agent none
     environment {
         project = "jssdk"
         ppath = "/data/packages/test/frontend"
@@ -33,6 +33,7 @@ pipeline {
             }
         }
         stage('DEPLOY') {
+            agent { label 'ansible' }
             steps {
                 script {
                     try {
