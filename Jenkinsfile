@@ -3,7 +3,6 @@ pipeline {
     environment {
         project = "jssdk"
         ppath = "/data/packages/test/frontend"
-        filedt = "$(date '+%Y%m%d%H%M%S').zip"
     }
     stages {
         stage('BUILD') {
@@ -33,47 +32,33 @@ pipeline {
                 }
             }
         }
-        stage('PACKAGE') {
+        stage('DEPLOY') {
             steps {
                 script {
                     try {
                         sh '''
+                            workspace=$(pwd)
                             cd ${ppath}/${project}/$(date '+%Y%m%d')
                             cd build/${version}
-                            filename="${project}-${version}-${filedt}"
                             zip -qr ${filename} *
                             mv ${filename} ../../
                             cd ../../
                             rm -rf build
-                        '''
-                    } catch(err) {
-                        echo 'package error'
-                        sh '/bin/sh ansible/notify.sh "package error" "${JOB_NAME}" "${BUILD_NUMBER}"'
-                        throw err
-                        sh 'exit 1'
-                    }
-                }
-            }
-        }
-        stage('DEPLOY') {
-            agent { label 'ansible' }
-            steps {
-                script {
-                    try {
-                        sh '''
-                            cd ansible
+
+                            cd ${workspace}/ansible
                             filename="${project}-${version}-${filedt}"
                             src_file="${ppath}/${project}/${date '+%Y%m%d'}/${filename}"
                             dest_file="/data/server_new/${filename}"
                             arch_file="${project}-${version}-$(date '+%Y%m%d%H%M%S').zip"
                             ansible-playbook -i hosts deploy.yml -- extra-var "src_file=${src_file} dest_file=${dest_file} version=${version} project=${project} arch_file=${arch_file}"
                             rm -f *.retry
-                            /bin/sh ansible/notify.sh "deploy success" "${JOB_NAME}" "${BUILD_NUMBER}"
+                            /bin/sh ansible/notify.sh "deploy success" "${JOB_NAME}" "${BUILD_NUMBER}"                            
                         '''
                     } catch(err) {
                         echo 'deploy error'
                         sh '/bin/sh ansible/notify.sh "deploy error" "${JOB_NAME}" "${BUILD_NUMBER}"'
                         throw err
+                        sh 'exit 1'
                     }
                 }
             }
