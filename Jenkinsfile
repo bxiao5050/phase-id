@@ -20,13 +20,12 @@ pipeline {
                         sh 'npm install'
                         sh '''
                             [[ -z ${version} ]] && echo "not input version" && exit 1
+                            dt=$(date '+%Y%m%d')
+                            mkdir -p /data/app/${project}/${dt}/build
                             for region in sg vn de; do
                                 npm run build-${region} ${version}
+                                cp -rf build/${version} /data/app/${project}/${dt}/build/${region}-${version}
                             done
-                            dt=$(date '+%Y%m%d')
-                            mkdir -p /data/app/${project}/${dt}
-                            rm -rf /data/app/${project}/${dt}/build
-                            cp -rf build /data/app/${project}/${dt}/
                         '''
                     } catch(err) {
                         echo 'npm build error'
