@@ -1,9 +1,9 @@
 pipeline {
     agent { label 'jenkins-slave' }
     environment {
-        project="jssdk"
-        ppath="/data/packages/test/frontend"
-        filedt="$(date '+%Y%m%d%H%M%S').zip"
+        project = "jssdk"
+        ppath = "/data/packages/test/frontend"
+        filedt = "$(date '+%Y%m%d%H%M%S').zip"
     }
     stages {
         stage('BUILD') {
