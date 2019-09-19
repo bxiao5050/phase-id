@@ -9,8 +9,8 @@ pipeline {
             steps {
                 script {
                     try {
-                        sh '[[ "x${URL}" == "x" ]] && echo "please input the package file url && exit 1'
                         sh '''
+                            [[ "x${URL}" == "x" ]] && echo "please input the package file url && exit 1
                             filename=$(echo ${URL} | awk -F'/' '{print $NF}')
                             pj=$(echo ${filename} | awk -F'-' '{print $1}')
                             region=$(echo ${filename} | awk -F'-' '{print $2}')
