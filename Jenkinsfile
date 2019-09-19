@@ -22,6 +22,7 @@ pipeline {
                             npm run build-test ${version}
                             dt=$(date '+%Y%m%d')
                             mkdir -p /data/app/${project}/${dt}
+                            rm -rf /data/app/${project}/${dt}/build
                             cp -rf build /data/app/${project}/${dt}/
                         '''
                     } catch(err) {
