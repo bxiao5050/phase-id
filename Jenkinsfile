@@ -3,7 +3,7 @@ pipeline {
     environment {
         project="jssdk"
         ppath="/data/packages/test/frontend"
-        filename="${project}-${version}-$(date '+%Y%m%d%H%M%S').zip"
+        filedt="$(date '+%Y%m%d%H%M%S').zip"
     }
     stages {
         stage('BUILD') {
@@ -20,7 +20,6 @@ pipeline {
                         sh '''
                             [[ -z ${version} ]] && echo "not input version" && exit 1
                             npm run build-test ${version}
-
                             dt=$(date '+%Y%m%d')
                             mkdir -p /data/app/${project}/${dt}
                             cp -rf build /data/app/${project}/${dt}/
@@ -41,6 +40,7 @@ pipeline {
                         sh '''
                             cd ${ppath}/${project}/$(date '+%Y%m%d')
                             cd build/${version}
+                            filename="${project}-${version}-${filedt}"
                             zip -qr ${filename} *
                             mv ${filename} ../../
                             cd ../../
@@ -62,8 +62,9 @@ pipeline {
                     try {
                         sh '''
                             cd ansible
+                            filename="${project}-${version}-${filedt}"
                             src_file="${ppath}/${project}/${date '+%Y%m%d'}/${filename}"
-                            dest_file="/data/server_new/${file_name}"
+                            dest_file="/data/server_new/${filename}"
                             arch_file="${project}-${version}-$(date '+%Y%m%d%H%M%S').zip"
                             ansible-playbook -i hosts deploy.yml -- extra-var "src_file=${src_file} dest_file=${dest_file} version=${version} project=${project} arch_file=${arch_file}"
                             rm -f *.retry
