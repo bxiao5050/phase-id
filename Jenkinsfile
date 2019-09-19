@@ -27,7 +27,7 @@ pipeline {
                         '''
                     } catch(err) {
                         echo 'npm build error'
-                        sh '/bin/sh ansible/notify.sh "npm install error" "${JOB_NAME}" "${BUILD_NUMBER}"'
+                        sh '/bin/sh ansible/notify.sh "npm build error" "${JOB_NAME}" "${BUILD_NUMBER}"'
                         throw err
                     }
                 }
