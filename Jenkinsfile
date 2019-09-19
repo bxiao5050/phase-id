@@ -1,10 +1,17 @@
 pipeline {
-    agent any
+    agent { label 'jenkins-slave' }
+    environment {
+        project = "jssdk"
+        ppath = "/data/packages/prod/frontend"
+        rpath = "/data/k8s/packages/prod/frontend"
+        purl = "http://packages.royale.com/prod/frontend/"
+    }
     stages {
         stage('BUILD') {
             agent { docker {
                 image 'reg.royale.com/ops/xynode:10-alpine'
-                args '-v /data/jenkins/packages/prod-build/frontend/jssdk:/data/app'
+                label 'jenkins-slave'
+                args "-v ${ppath}:/data/app"
             }}
             steps {
                 script {
@@ -12,23 +19,19 @@ pipeline {
                         sh 'rm -rf node_modules dist build'
                         sh 'npm install'
                         sh '''
-                            echo "---------------------------------------------------------"
-                            mkdir -p /data/app/build
-
+                            [[ -z ${version} ]] && echo "not input version" && exit 1
                             for region in sg vn de; do
-                                [[ -d build/${version} ]] && rm -rf build/${version}
-                                echo "npm run build-${region} ${version}"
                                 npm run build-${region} ${version}
-                                cp -rf  build/${version} /data/app/build/${region}-${version}
-                                echo "---------------------------------------------------------"
-                                echo ""
                             done
+                            dt=$(date '+%Y%m%d')
+                            mkdir -p /data/app/${project}/${dt}
+                            rm -rf /data/app/${project}/${dt}/build
+                            cp -rf build /data/app/${project}/${dt}/
                         '''
                     } catch(err) {
                         echo 'npm build error'
                         sh '/bin/sh ansible/notify.sh "npm build error" "${JOB_NAME}" "${BUILD_NUMBER}"'
                         throw err
-                        sh 'exit 1'
                     }
                 }
             }
@@ -38,28 +41,23 @@ pipeline {
                 script {
                     try {
                         sh '''
-                            current_path=$(pwd)
-                            package_path=$(date '+%Y%m%d')
-                            mkdir -p /data/jenkins/packages/prod-build/frontend/jssdk/${package_path}
+                            workspace=$(pwd)
+                            dt=$(date '+%Y%m%d')
                             for region in sg vn de; do
-                                cd /data/jenkins/packages/prod-build/frontend/jssdk
-                                dt=$(date '+%Y%m%d%H%M%S')
-                                file_name=jssdk-${region}-${version}-${dt}.zip
-                                cd build/${region}-${version}
-                                zip -qr ${file_name} *
-                                mv ${file_name} ../../${package_path}
-                                package_url="http://jenkins.royale.com/packages/prod-build/frontend/jssdk/${package_path}/${file_name}"
-                                cd ${current_path}
-                                /bin/sh ansible/notify.sh "build-${region} ${version} success &PACKAGES: ${package_url}" "${JOB_NAME}" "${BUILD_NUMBER}"                            
+                                cd ${rpath}/${project}/${dt}/build/${region}-${version}
+                                filename="${project}-${region}-${version}-$(date '+%Y%m%d%H%M%S').zip"
+                                zip -qr ${filename} *
+                                mv ${filename} ../../
+                                cd ${workspace}/ansible
+                                packageurl=${purl}/${project}/${dt}/${filename}
+                                /bin/sh notify.sh "kk test build-${region} ${version} success &PACKAGES: ${packageurl}" "${JOB_NAME}" "${BUILD_NUMBER}"
                             done
-                            cd /data/jenkins/packages/prod-build/frontend/jssdk
-                            rm -rf build
+                            rm -rf ${rpath}/${project}/${dt}/build
                         '''
                     } catch(err) {
-                        echo 'npm package error'
-                        sh '/bin/sh ansible/notify.sh "npm package error" "${JOB_NAME}" "${BUILD_NUMBER}"'
+                        echo 'package error'
+                        sh '/bin/sh ansible/notify.sh "package error" "${JOB_NAME}" "${BUILD_NUMBER}"'
                         throw err
-                        sh 'exit 1'
                     }
                 }
             }
