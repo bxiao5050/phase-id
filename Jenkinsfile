@@ -3,6 +3,7 @@ pipeline {
     environment {
         project = "jssdk"
         ppath = "/data/packages/test/frontend"
+        rpath = "/data/k8s/packages/test/frontend"
     }
     stages {
         stage('BUILD') {
@@ -39,7 +40,7 @@ pipeline {
                     try {
                         sh '''
                             workspace=$(pwd)
-                            cd ${ppath}/${project}/$(date '+%Y%m%d')
+                            cd ${rpath}/${project}/$(date '+%Y%m%d')
                             cd build/${version}
                             zip -qr ${filename} *
                             mv ${filename} ../../
@@ -48,7 +49,7 @@ pipeline {
 
                             cd ${workspace}/ansible
                             filename="${project}-${version}-${filedt}"
-                            src_file="${ppath}/${project}/${date '+%Y%m%d'}/${filename}"
+                            src_file="${rpath}/${project}/${date '+%Y%m%d'}/${filename}"
                             dest_file="/data/server_new/${filename}"
                             arch_file="${project}-${version}-$(date '+%Y%m%d%H%M%S').zip"
                             ansible-playbook -i hosts deploy.yml -- extra-var "src_file=${src_file} dest_file=${dest_file} version=${version} project=${project} arch_file=${arch_file}"
