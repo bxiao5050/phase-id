@@ -16,6 +16,6 @@ project=$(echo $job | awk -F'/' '{print $1}')
 name=$(echo $job | awk -F'/' '{print $2}')
 view=$(echo $project | awk -F'-' '{print $1"-"$2"}')
 
-content="STATUS: $status&PROJECT: ${job}&BUILD: ${build}&URL: http://jenkins2.royale.com/view/${view}/job/${project}/job/${name}"
+content="STATUS: $status&PROJECT: ${job}&BUILD: ${build}&URL: http://jenkins2.royale.com/view/${view}/job/${project}/job/${name}${build}/"
 
 curl -d "tos=$tos&content=$(echo $content | sed 's/&/\n/g')" $url 2>/dev/null
