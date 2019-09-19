@@ -1,11 +1,16 @@
 pipeline {
     agent { label 'jenkins-slave' }
+    environment {
+        project="jssdk"
+        ppath="/data/packages/test/frontend"
+        filename="${project}-${version}-$(date '+%Y%m%d%H%M%S').zip"
+    }
     stages {
         stage('BUILD') {
             agent { docker {
                 image 'reg.royale.com/ops/xynode:10-alpine'
                 label 'jenkins-slave'
-                args '-v /data/packages/test/frontend:/data/app'
+                args "-v ${ppath}:/data/app"
             }}
             steps {
                 script {
@@ -17,8 +22,8 @@ pipeline {
                             npm run build-test ${version}
 
                             dt=$(date '+%Y%m%d')
-                            mkdir -p /data/app/jssdk/${dt}
-                            cp -rf build /data/app/jssdk/${dt}/
+                            mkdir -p /data/app/${project}/${dt}
+                            cp -rf build /data/app/${project}/${dt}/
                         '''
                     } catch(err) {
                         echo 'npm build error'
@@ -34,8 +39,7 @@ pipeline {
                 script {
                     try {
                         sh '''
-                            cd /data/packages/test/frontend/jssdk/$(date '+%Y%m%d')
-                            filename=jssdk-${version}-$(date '+%Y%m%d%H%M%S').zip
+                            cd ${ppath}/${project}/$(date '+%Y%m%d')
                             cd build/${version}
                             zip -qr ${filename} *
                             mv ${filename} ../../
@@ -51,16 +55,22 @@ pipeline {
                 }
             }
         }
-        stage('ANSIBLE') {
+        stage('DEPLOY') {
             agent { label 'ansible' }
             steps {
                 script {
                     try {
                         sh '''
-                            /sbin/ifconfig
+                            cd ansible
+                            src_file="${ppath}/${project}/${date '+%Y%m%d'}/${filename}"
+                            dest_file="/data/server_new/${file_name}"
+                            arch_file="${project}-${version}-$(date '+%Y%m%d%H%M%S').zip"
+                            ansible-playbook -i hosts deploy.yml -- extra-var "src_file=${src_file} dest_file=${dest_file} version=${version} project=${project} arch_file=${arch_file}"
+                            rm -f *.retry
                         '''
                     } catch(err) {
-                        echo 'error'
+                        echo 'deploy error'
+                        sh '/bin/sh ansible/notify.sh "deploy error" "${JOB_NAME}" "${BUILD_NUMBER}"'
                         throw err
                     }
                 }

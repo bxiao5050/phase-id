@@ -1,0 +1,2 @@
+[test]
+cnsdktest01 ansible_ssh_host=113.107.160.108  ansible_ssh_port=16888
