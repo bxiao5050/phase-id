@@ -3,7 +3,6 @@ pipeline {
     environment {
         project = "jssdk"
         ppath = "/data/packages/prod/frontend"
-        rpath = "/data/k8s/packages/prod/frontend"
         purl = "http://packages.royale.com/prod/frontend/"
     }
     stages {
@@ -43,7 +42,7 @@ pipeline {
                             workspace=$(pwd)
                             dt=$(date '+%Y%m%d')
                             for region in sg vn de; do
-                                cd ${rpath}/${project}/${dt}/build/${region}-${version}
+                                cd ${ppath}/${project}/${dt}/build/${region}-${version}
                                 filename="${project}-${region}-${version}-$(date '+%Y%m%d%H%M%S').zip"
                                 zip -qr ${filename} *
                                 mv ${filename} ../../
@@ -51,7 +50,7 @@ pipeline {
                                 packageurl=${purl}/${project}/${dt}/${filename}
                                 /bin/sh notify.sh "kk test build-${region} ${version} success &PACKAGES: ${packageurl}" "${JOB_NAME}" "${BUILD_NUMBER}"
                             done
-                            rm -rf ${rpath}/${project}/${dt}/build
+                            rm -rf ${ppath}/${project}/${dt}/build
                         '''
                     } catch(err) {
                         echo 'package error'
