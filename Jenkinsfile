@@ -42,13 +42,13 @@ pipeline {
                             workspace=$(pwd)
                             cd ${rpath}/${project}/$(date '+%Y%m%d')
                             cd build/${version}
+                            filename="${project}-${version}-$(date '+%Y%m%d%H%M%S').zip"
                             zip -qr ${filename} *
                             mv ${filename} ../../
                             cd ../../
                             rm -rf build
 
                             cd ${workspace}/ansible
-                            filename="${project}-${version}-${filedt}"
                             src_file="${rpath}/${project}/${date '+%Y%m%d'}/${filename}"
                             dest_file="/data/server_new/${filename}"
                             arch_file="${project}-${version}-$(date '+%Y%m%d%H%M%S').zip"
