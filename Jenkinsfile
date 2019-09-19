@@ -3,7 +3,7 @@ pipeline {
     environment {
         project = "jssdk"
         ppath = "/data/packages/prod/frontend"
-        purl = "http://packages.royale.com/prod/frontend/"
+        purl = "http://packages.royale.com/prod/frontend"
     }
     stages {
         stage('BUILD') {
@@ -17,8 +17,8 @@ pipeline {
                     try {
                         sh 'rm -rf node_modules dist build'
                         sh 'npm install'
+                        sh '[[ -z ${version} ]] && echo "not input version" && exit 1'
                         sh '''
-                            [[ -z ${version} ]] && echo "not input version" && exit 1
                             dt=$(date '+%Y%m%d')
                             mkdir -p /data/app/${project}/${dt}/build
                             for region in sg vn de; do
@@ -48,7 +48,7 @@ pipeline {
                                 mv ${filename} ../../
                                 cd ${workspace}/ansible
                                 packageurl=${purl}/${project}/${dt}/${filename}
-                                /bin/sh notify.sh "kk test build-${region} ${version} success &PACKAGES: ${packageurl}" "${JOB_NAME}" "${BUILD_NUMBER}"
+                                /bin/sh notify.sh "build-${region} ${version} success &PACKAGES: ${packageurl}" "${JOB_NAME}" "${BUILD_NUMBER}"
                             done
                             rm -rf ${ppath}/${project}/${dt}/build
                         '''

@@ -1,0 +1,62 @@
+pipeline {
+    agent { label 'ansible' }
+    environment {
+        project = "jssdk"
+        ppath = "/data/k8s/packages"
+    }
+    stages {
+        stage('DEPLOY') {
+            steps {
+                script {
+                    try {
+                        sh '[[ "x${URL}" == "x" ]] && echo "please input the package file url && exit 1'
+                        sh '''
+                            filename=$(echo ${URL} | awk -F'/' '{print $NF}')
+                            pj=$(echo ${filename} | awk -F'-' '{print $1}')
+                            region=$(echo ${filename} | awk -F'-' '{print $2}')
+                            version=$(echo ${filename} | awk -F'-' '{print $3}')
+                            if [[ "${Platform}" != "${region}" ]];then
+                                echo "the url package is not ${Platform}"
+                                exit 1
+                            fi
+                            if [[ "${pj}" != "${project}" ]];then
+                                echo "the url package is not ${project}"
+                                exit 1
+                            fi
+                            if [[ ! "${filename}" =~ ^${project}-${region}-${version}-.*zip$ ]];then
+                                echo "${filename} is not ${project}-${region}-${version} zip"
+                                exit 1
+                            fi                            
+
+                            src_file=${ppath}/${URL#http://packages.royale.com/}
+                            dest_file=/data/server_new/${filename}
+                            dt=$(date '+%Y%m%d%H%M%S')
+                            cd ansible
+                            case ${Platform} in
+                                sg)
+                                    remote_hosts=sg_platsdk_web_0002;;
+                                vn)
+                                    remote_hosts=vn_platsdk_web_0001;;
+                                de)
+                                    remote_hosts=de_platsdk_web_0001:de_platsdk_web_0002;;
+                                *)
+                                    echo "Platform: ${Platform} is wrong"
+                                    exit 1;;
+                            esac                            
+                            ansible-playbook -i hosts deploy.yml --extra-var "src_file=${src_file} dest_file=${dest_file} version=${version} project=${project} arch_file=${project}-${version}-${dt}.zip remote_hosts=${remote_hosts}"
+                        '''
+                    } catch(err) {
+                        echo 'deploy error'
+                        sh '/bin/sh ansible/notify.sh "deploy error" "${JOB_NAME}" "${BUILD_NUMBER}"'
+                        throw err
+                    }
+                }
+            }
+        }
+    }
+    post {
+        success {
+            sh '/bin/sh ansible/notify.sh "deploy success" "${JOB_NAME}" "${BUILD_NUMBER}"'
+        }
+    }
+}
