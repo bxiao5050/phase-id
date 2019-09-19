@@ -41,6 +41,9 @@
       shell: zip -qr {{ archive_file }} {{ version }} && echo "{{ archive_file }} archive file success" || echo "archive file failed"
       args:
           chdir: "{{ backup_root_path }}"
+          
+    - name: update program
+      unarchive: src={{ dest_file }} dest={{ program_path }} copy=no
 
     - name: rm update file
       file: path={{ dest_file }} state=absent

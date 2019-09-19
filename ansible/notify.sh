@@ -5,7 +5,7 @@
 
 url="http://172.16.3.205:10000/sender/wechat?"
 #tos="user1,user2"
-tos="kk"
+tos="zongjiang.ge,tao.wang,shindousaigo"
 
 #"PROJECT: ${JOB_NAME}&BUILD: ${BUILD_NUMBER}&URL: http://jenkins2.royale.com/blue/organizations/jenkins/${JOB_NAME}/detail/${JOB_NAME}/${BUILD_NUMBER}/pipeline/"
 
