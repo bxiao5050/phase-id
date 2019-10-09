@@ -1,0 +1,53 @@
+---
+
+- hosts: "{{ remote_hosts }}"
+  remote_user: chadmin
+  gather_facts: False
+  vars:
+      program_path: "/data/platform/platform-sdk-v2/{{ project }}/{{ version }}"
+      backup_root_path: "/data/server_bak/platform/platform-sdk-v2/{{ project }}"
+      archive_path: "/data/server_bak/archive_file/{{ project }}"
+      archive_file: "{{ archive_path }}/{{ arch_file }}"
+  tasks:
+    #- name: "test {{ program_path }}/{{ version }} is exist"
+    #  shell: ls -l "{{ program_path }}/{{ version }}" >/dev/null 2>&1  && echo "success" || echo "failed"
+    #  register: result
+
+    #- name: if stdout check success, interrupt execution
+    #  fail: msg="{{ program_path }}/{{ version }} is already exist"
+    #  when: result.stdout == "success"
+
+    - name: create /data/server_new if it's not exist
+      file: dest=/data/server_new  mode=755 owner=chadmin group=chadmin state=directory
+
+    - name: create program_path if it's not exist
+      file: dest={{ program_path }} mode=755 owner=chadmin group=chadmin state=directory
+
+    - name: create back_root_path if it's not exist
+      file: dest={{ backup_root_path }} mode=755 owner=chadmin group=chadmin state=directory
+
+    - name: create archive_path if it's not exist
+      file: dest={{ archive_path }} mode=755 owner=chadmin group=chadmin state=directory
+
+    - name: copy file
+      copy: src={{ src_file }} dest={{ dest_file }}
+
+    - name: backup file
+      shell: rsync -arv --delete {{ program_path }} . && echo "backup success"  || echo "backup failed" 
+      args:
+          chdir: "{{ backup_root_path }}"
+
+    - name: archive file
+      shell: zip -qr {{ archive_file }} {{ version }} && echo "{{ archive_file }} archive file success" || echo "archive file failed"
+      args:
+          chdir: "{{ backup_root_path }}"
+
+    - name: update program
+      unarchive: src={{ dest_file }} dest={{ program_path }} copy=no
+
+    - name: rm update file
+      file: path={{ dest_file }} state=absent
+
+    - name: nginx reload
+      shell: sleep 1 && sudo /usr/local/nginx/sbin/nginx -s reload
+
