@@ -1,10 +1,16 @@
 pipeline {
     agent none
+    environment {
+        project = "jssdk"
+        ppath = "/data/packages/test/frontend"
+        rpath = "/data/k8s/packages/test/frontend"
+    }
     stages {
         stage('BUILD') {
             agent { docker {
                 image 'reg.royale.com/ops/xynode:10-alpine'
-                args '-v /data/jenkins/packages/prod-build/frontend/jssdk:/data/app'
+                label 'jenkins-slave'
+                args "-v ${ppath}:/data/app"
             }}
             steps {
                 script {
@@ -12,32 +18,48 @@ pipeline {
                         sh 'rm -rf node_modules dist build'
                         sh 'npm install'
                         sh '''
-                            echo "---------------------------------------------------------"
-                            package_path=$(date '+%Y%m%d')
-                            mkdir -p /data/app/${package_path}
-
-                            for region in sg vn de; do
-                                [[ -d build/${version} ]] && rm -rf build/${version}
-                                echo "npm run build-${region} ${version}"
-                                npm run build-${region} ${version}
-                                dt=$(date '+%Y%m%d%H%M%S')
-                                file_name=jssdk-${region}-${version}-${dt}.zip
-                                cd build/${version}
-                                [[ -s ${file_name} ]] && rm -f ${file_name}
-                                zip -qr ${file_name} *
-                                mv ${file_name} /data/app/${package_path}/
-                                cd ../..
-                                package_url="http://jenkins.royale.com/packages/prod-build/frontend/jssdk/${package_path}/${file_name}"
-                                /bin/sh ansible/notify.sh "build-${region} ${version} succcess &&PACKAGES: ${package_url}" "${JOB_NAME}" "${BUILD_NUMBER}"
-                                echo "---------------------------------------------------------"
-                                echo ""
-                            done
+                            [[ -z ${version} ]] && echo "not input version" && exit 1
+                            npm run build-test ${version}
+                            dt=$(date '+%Y%m%d')
+                            mkdir -p /data/app/${project}/${dt}
+                            rm -rf /data/app/${project}/${dt}/build
+                            cp -rf build /data/app/${project}/${dt}/
                         '''
                     } catch(err) {
                         echo 'npm build error'
                         sh '/bin/sh ansible/notify.sh "npm build error" "${JOB_NAME}" "${BUILD_NUMBER}"'
                         throw err
-                        sh 'exit 1'
+                    }
+                }
+            }
+        }
+        stage('DEPLOY') {
+            agent { label 'ansible' }
+            steps {
+                script {
+                    try {
+                        sh '''
+                            workspace=$(pwd)
+                            cd ${rpath}/${project}/$(date '+%Y%m%d')
+                            cd build/${version}
+                            filename="${project}-${version}-$(date '+%Y%m%d%H%M%S').zip"
+                            zip -qr ${filename} *
+                            mv ${filename} ../../
+                            cd ../../
+                            rm -rf build
+
+                            cd ${workspace}/ansible
+                            src_file="${rpath}/${project}/$(date '+%Y%m%d')/${filename}"
+                            dest_file="/data/server_new/${filename}"
+                            arch_file="${project}-${version}-$(date '+%Y%m%d%H%M%S').zip"
+                            ansible-playbook -i hosts deploy.yml --extra-var "src_file=${src_file} dest_file=${dest_file} version=${version} project=${project} arch_file=${arch_file}"
+                            rm -f *.retry
+                            /bin/sh notify.sh "deploy success" "${JOB_NAME}" "${BUILD_NUMBER}"
+                        '''
+                    } catch(err) {
+                        echo 'deploy error'
+                        sh '/bin/sh ansible/notify.sh "deploy error" "${JOB_NAME}" "${BUILD_NUMBER}"'
+                        throw err
                     }
                 }
             }
