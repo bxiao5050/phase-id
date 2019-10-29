@@ -21,7 +21,7 @@ export const TW = {
 
   PayCenter: '支付中心', //txt_title_pay
   Purchase: '購買商品', //cg_txt_consume_buy
-  tuichu: 'คุณแน่ใจว่าต้องการออกจากเกมส์?',//txt_exit_tip
+  tuichu: '妳確定要退出遊戲嗎？',//txt_exit_tip
   winopen: '請跳轉前往儲值頁面',
   jump: '跳轉',
   loadException: '加載異常',

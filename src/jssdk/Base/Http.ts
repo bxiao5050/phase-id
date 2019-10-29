@@ -15,7 +15,7 @@ export default class Http {
       vn: 'https://sdk-vn.pocketgamesol.com',
       test: 'https://sdk-test.changic.net.cn'
     }
-    const key = IS_TEST ? "test" : (region || window._RG_REGION || window.RG.jssdk.config.region);
+    const key = IS_TEST ? "test" : (region || window.RG.jssdk.config.region);
     this.serverAddress = regions[key] + "/pocketgames/client";
   }
 
