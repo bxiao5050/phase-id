@@ -1,5 +1,4 @@
 export default {
-  name: '火影忍者H5',
   app_key: '249ad8e87d704756be67e53c5ea8e571',
   fb_app_id: '1304983986332151',
   language: 'TH',
@@ -41,10 +40,6 @@ export default {
   //   formal: 'https://sdk-sg.pocketgamesol.com/pocketgames/client'
   // },
   page: {
-    index: {
-      test: 'https://www.narutoh5game.com/test_hyrz/index.html',
-      formal: 'https://www.narutoh5game.com/h5-plays/index.html',
-    },
     facebook: {
       messenger: {
         pc: 'https://www.facebook.com/messages/t/NarutoGame.H5',

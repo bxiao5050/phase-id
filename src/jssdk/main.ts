@@ -113,6 +113,7 @@ function init(window: Window) {
       // facebook instantgame的sdk
       type = 4;
     } else if (advChannel > 33000 && advChannel < 35000) {
+      //  联运sdk
       type = 5;
     } else {
       throw "unknow advChannel";
