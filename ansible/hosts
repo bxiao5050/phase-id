@@ -1,2 +1,16 @@
+<<<<<<< HEAD
 [test]
 cnsdktest01 ansible_ssh_host=113.107.160.108  ansible_ssh_port=16888
+=======
+[vn_platsdk]
+vn_platsdk_web_0001  hostname=vn-platsdk-web-0001  idc=viettel  region=vn  ansible_ssh_host=125.212.214.233  ansible_ssh_port=16888
+
+[sg_platsdk]
+sg_platsdk_web_0001  hostname=sg-platsdk-web-0001  idc=aws  region=sg  ansible_ssh_host=54.179.145.166  ansible_ssh_port=16888
+sg_platsdk_web_0002  hostname=sg-platsdk-web-0002  idc=aws  region=sg  ansible_ssh_host=3.0.76.237  ansible_ssh_port=16888
+sg_platsdk_charge_0001  hostname=sg-platsdk-charge-0001  idc=aws  region=sg  ansible_ssh_host=54.169.56.140  ansible_ssh_port=16888
+
+[de_platsdk]
+de_platsdk_web_0001  hostname=de-platsdk-web-0001  idc=aws  region=de  ansible_ssh_host=35.157.36.151  ansible_ssh_port=16888
+de_platsdk_web_0002  hostname=de-platsdk-web-0002  idc=aws  region=de  ansible_ssh_host=35.156.252.40  ansible_ssh_port=16888
+>>>>>>> master

@@ -16,17 +16,18 @@
       var payParams = {
         gameOrderId: Math.floor(Math.random() * 100000000), // 假设的订单id
         gameZoneId: 1,
-        roleId: 17179869202,
+        roleId: 34359738718,
         roleName: "test-pay",
-        level: 80,
-        gameCoin: 50
+        level: 101,
+        gameCoin: 1
       }
-      RG.BindZone({
-        userId: 67750133, gameZoneId: 1,
-        createRole: 0, roleId: 17179869202, level: 80
-      }).then(res => {
-        RG.Pay(payParams)
-      })
+      // RG.BindZone({
+      //   userId: 67750133, gameZoneId: 1,
+      //   createRole: 0, roleId: 17179869202, level: 80
+      // }).then(res => {
+
+      // })
+      RG.Pay(payParams)
 
     }
   </script>

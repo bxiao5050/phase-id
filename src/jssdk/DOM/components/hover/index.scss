@@ -1,12 +1,12 @@
 .floatBall {
   // visibility: hidden;
-  width: 2.4rem;
-  height: 2.4rem;
-  top: 40%;
-  opacity: 0.6; // display: none;
-  transform: translate(0, 0);
-  position: absolute;
-  z-index: 100;
+  width        : 2.4rem;
+  height       : 2.4rem;
+  top          : 40%;
+  opacity      : 0.6; // display: none;
+  transform    : translate(0, 0);
+  position     : absolute;
+  z-index      : 100;
 }
 
 .floatBall.active {
@@ -15,55 +15,56 @@
 }
 
 .ball {
-  width: 2.4rem;
-  height: 2.4rem;
-  z-index: 2;
-  position: absolute;
-  background: url(../../assets/float_button.png) center no-repeat;
+  width          : 2.4rem;
+  height         : 2.4rem;
+  z-index        : 2;
+  position       : absolute;
+  background     : url(../../assets/float_button.png) center no-repeat;
   background-size: contain;
 }
 
 .menu {
-  height: 2.5rem;
-  width: 10rem;
-  display: none;
+  height            : 2.5rem;
+  width             : 11rem;
+  display           : none;
   -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  position: absolute;
-  border-radius: 1.602rem;
-  padding: 0 0 0 1rem;
-  right: 0;
-  background: white;
-  transform-origin: 8.4rem 50%;
+  -moz-box-sizing   : border-box;
+  position          : absolute;
+  border-radius     : 1.602rem;
+  padding           : 0 0 0 1rem;
+  right             : -3rem;
+  background        : white;
+  transform-origin  : 8.4rem 50%;
 
   .item {
-    width: 3rem;
-    display: flex;
-    align-items: center;
+    width          : 4rem;
+    display        : flex;
+    align-items    : center;
     justify-content: center;
 
     .icon {
-      transform-origin: 50% 50%;
-      display: block;
-      font-size: .7rem;
-      line-height: 5rem;
-      text-align: center;
-      width: 2.4rem;
-      margin-top: .1rem;
-      height: 3.5rem;
-      color: #0a6482;
+      transform-origin           : 50% 50%;
+      display                    : block;
+      font-size                  : .7rem;
+      padding-top                : 4rem;
+      line-height                : 1;
+      text-align                 : center;
+      width                      : 4rem;
+      margin-top                 : .1rem;
+      height                     : 3.5rem;
+      color                      : #0a6482;
       // -webkit-text-size-adjust: 100%;
 
       &.contact {
-        background: url(../../assets/fb_cs_0.png) center no-repeat;
-        background-size: contain;
+        background        : url(../../assets/fb_cs_0.png) center center/2.6rem auto no-repeat;
+        // background-size: contain;
       }
 
       &.account {
-        width: 3rem;
-        background: url(../../assets/fb_user_center_0.png) center no-repeat;
-        // background-size: 2.4rem;
-        background-size: contain;
+        width                : 4rem;
+        background           : url(../../assets/fb_user_center_0.png) center center/3rem auto no-repeat;
+        // background-size   : 2.4rem;
+        // background-size   : contain;
       }
     }
   }
@@ -83,11 +84,11 @@
 
 .icon-cs p,
 .icon-account p {
-  width: 1.08*2.47+rem;
-  bottom: .12*2.47+rem;
+  width      : 1.08*2.47+rem;
+  bottom     : .12*2.47+rem;
   line-height: .36*2.47+rem;
-  font-size: .264*2.47+rem;
-  color: #1eafe5;
-  text-align: center;
-  position: absolute;
+  font-size  : .264*2.47+rem;
+  color      : #1eafe5;
+  text-align : center;
+  position   : absolute;
 }

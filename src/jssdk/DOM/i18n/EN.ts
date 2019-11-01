@@ -14,9 +14,8 @@ export const EN = {
   dom008: 'Visitor login',
   dom009: 'View password',
   dom010: 'Modify password',
-  dom011: "兌換比例", //txt_exchange_rate
+  dom011: "Exchange rate", //txt_exchange_rate
   dom012: "Payment",
-  dom013: "支付中",
   dom014: "Serial:",
 
   PayCenter: 'Payment',

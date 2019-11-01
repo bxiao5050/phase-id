@@ -114,7 +114,7 @@ interface forgetPwdParams {
   // MD5(appId+userName+appKey)
   // sign:string;
 }
-interface forgetPwdRes extends ServerRes {
+interface forgetPwdRes extends Res {
   data: {
     // 用户id
     userId: number;
@@ -146,7 +146,7 @@ interface opeartorEmailParams {
   // sign: string
 
 }
-interface opeartorEmailRes extends ServerRes {
+interface opeartorEmailRes extends Res {
   data: {
     // 用户id
     userId: number;

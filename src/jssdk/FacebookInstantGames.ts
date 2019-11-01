@@ -41,7 +41,7 @@ export default class FacebookInstantGames {
   * 支付接口
   * @param paymentConfig
   */
-  async Pay(payParams: RG.PayParams): Promise<ServerRes> {
+  async Pay(payParams: RG.PayParams): Promise<Res> {
     var paymentConfig = await RG.jssdk.PaymentConfig(payParams)
     if (paymentConfig.code === 200) {
       var orderingData = paymentConfig.payments.find(payment => {
@@ -60,7 +60,7 @@ export default class FacebookInstantGames {
    * @param data
    * @param purchaseToken
    */
-  serverFinishOrderCompleted(data: ServerRes, purchaseToken: string): Promise<ServerRes> {
+  serverFinishOrderCompleted(data: Res, purchaseToken: string): Promise<Res> {
     return FacebookInstantGames.instance.consumePurchaseAsync(purchaseToken)
   }
 
@@ -68,7 +68,7 @@ export default class FacebookInstantGames {
    * facebook 消单
    * @param purchaseToken
    */
-  consumePurchaseAsync(purchaseToken: string): Promise<ServerRes> {
+  consumePurchaseAsync(purchaseToken: string): Promise<Res> {
     return new Promise((resolve, reject) => {
       FBInstant.payments.consumePurchaseAsync(purchaseToken).then(function () {
         RG.Mark(DOT.SDK_PURCHASED_DONE)
@@ -117,7 +117,7 @@ export default class FacebookInstantGames {
    * @param orderingData
    * @param orderRes
    */
-  purchaseAsync(orderingData, orderRes): Promise<ServerRes> {
+  purchaseAsync(orderingData, orderRes): Promise<Res> {
     return new Promise(resolve => {
       var fbinstantPurchaseAsyncOption = {
         productID: orderingData.selectedProduct.productName,

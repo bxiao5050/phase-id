@@ -19,7 +19,7 @@ export default class Account {
   private _users: UsersInfo = {};
 
   initResolve;
-  _initPromise
+  _initPromise;
   initPromise() {
     if (RG.jssdk.config.type === 2) {
       this.init({
@@ -27,7 +27,7 @@ export default class Account {
         users: JSON.parse(localStorage.getItem('users'))
       })
     }
-    return this._initPromise
+    return this._initPromise;
   }
 
   init(data) {

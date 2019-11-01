@@ -216,7 +216,7 @@ export default class Login {
 // }
 // // 注册的参数
 // type RegisterParams = LoginParam & RegisterRemainingParams;
-// interface LoginAndRegisterRes extends ServerRes {
+// interface LoginAndRegisterRes extends Res {
 //   data: {
 //     // 用户id
 //     userId: number;

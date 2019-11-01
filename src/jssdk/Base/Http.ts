@@ -15,11 +15,11 @@ export default class Http {
       vn: 'https://sdk-vn.pocketgamesol.com',
       test: 'https://sdk-test.changic.net.cn'
     }
-    const key = IS_TEST ? "test" : (region || window._RG_REGION || window.RG.jssdk.config.region);
+    const key = IS_TEST ? "test" : (region || window.RG.jssdk.config.region);
     this.serverAddress = regions[key] + "/pocketgames/client";
   }
 
-  private request(param: requestParam): Promise<ServerRes> {
+  private request(param: requestParam): Promise<Res> {
 
     let data: any
     if (param.data) {
@@ -31,7 +31,7 @@ export default class Http {
     var xhr = new XMLHttpRequest();
     xhr.open(param.method, this.serverAddress + param.route);
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    var result = new Promise<ServerRes>((resolve, reject) => {
+    var result = new Promise<Res>((resolve, reject) => {
       xhr.onreadystatechange = function () {
         if (xhr.readyState === 4) {
           if (xhr.status === 200) {
@@ -47,7 +47,7 @@ export default class Http {
     return result;
   }
 
-  public post(param: requestParam): Promise<ServerRes> {
+  public post(param: requestParam): Promise<any> {
     return this.request(
       Object.assign({ method: 'POST' }, param)
     )
