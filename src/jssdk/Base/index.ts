@@ -39,8 +39,7 @@ export default class Base {
 
   Messenger() {
     if (RG.jssdk.config.type === 1) {
-      if (isMobile()) window.open(RG.jssdk.config.page.facebook.index);
-      else window.open(RG.jssdk.config.page.facebook.messenger.pc);
+      window.open(RG.jssdk.config.page.facebook.index);
     } else {
       window.open(RG.jssdk.config.page.facebook.messenger.mobile);
     }
@@ -90,7 +89,7 @@ export default class Base {
     })
   }
 
-  FinishOrder(finishOrderParams: FinishOrderParams): Promise<ServerRes> {
+  FinishOrder(finishOrderParams: FinishOrderParams): Promise<Res> {
     return Payment.instance.finishOrder({
       transactionId: finishOrderParams.transactionId,
       channel: finishOrderParams.channel,

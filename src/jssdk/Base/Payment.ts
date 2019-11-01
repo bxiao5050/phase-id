@@ -173,7 +173,7 @@ export default class Payment {
 
       ])
     }
-    return Http.instance.post({ route: this.route.finish, data: finishOrderPostData }).then((serverRes: ServerRes) => {
+    return Http.instance.post({ route: this.route.finish, data: finishOrderPostData }).then((serverRes: Res) => {
       if (serverRes.code !== 200) {
         console.error('​Payment -> finishOrder -> serverRes', serverRes);
       }

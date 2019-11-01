@@ -28,8 +28,9 @@ function init(window: Window) {
     if (+urlParams.advChannel < 33000) {
       // 现阶段兼容
       window.$postMessage = window.parent.postMessage.bind(window.parent);
-      const indexUrl = (IS_DEV || IS_TEST) ? config.page.index.test : config.page.index.formal;
-      if (config.type !== 2) {
+
+      if (config.type === 1) {
+        const indexUrl = (IS_DEV || IS_TEST) ? config.page.index.test : config.page.index.formal;
         window.$postMessage(JSON.stringify({ action: "get" }), /(http|https):\/\/(www.)?([A-Za-z0-9-_]+(\.)?)+/.exec(indexUrl)[0]);
       }
 

@@ -133,7 +133,7 @@ interface RG {
   Share(shareUrl: string);
 
   /** 绑定区服 */
-  BindZone(bindZoneParam: BindZoneParam): Promise<ServerRes>;
+  BindZone(bindZoneParam: BindZoneParam): Promise<Res>;
 
   Mark(markName: string, extraParam?: any): void;
 
@@ -422,7 +422,7 @@ interface Base0 {
   Share(shareUrl: string);
 
   /** 绑定区服 */
-  BindZone(bindZoneParam: BindZoneParam): Promise<ServerRes>;
+  BindZone(bindZoneParam: BindZoneParam): Promise<Res>;
 
   Account: any;
 
@@ -442,19 +442,19 @@ interface Base0 {
   // GetRedirectUrl()
 
   /** 修改当前账户密码 */
-  ChangePassword(oldpass: string, newpass: string): Promise<ServerRes>;
+  ChangePassword(oldpass: string, newpass: string): Promise<Res>;
 
-  VisitorUpgrade(username: string, pass: string): Promise<ServerRes>;
+  VisitorUpgrade(username: string, pass: string): Promise<Res>;
 
   /** 获取订单列表 */
-  GetPaymentHistory(): Promise<ServerRes>;
+  GetPaymentHistory(): Promise<Res>;
 
   /** 获取支付数据 */
   PaymentConfig(PaymentConfig: PaymentConfig): Promise<PaymentConfigRes>;
 
   Ordering(OrderingData: OrderingData, extraInfo?: any): Promise<OrderRes>;
 
-  FinishOrder(finishOrderParams: FinishOrderParams): Promise<ServerRes>;
+  FinishOrder(finishOrderParams: FinishOrderParams): Promise<Res>;
 }
 
 type Base = Base0;
@@ -527,7 +527,7 @@ interface PaymentConfig {
   gameCoin: number;
 }
 
-interface OrderRes extends ServerRes {
+interface OrderRes extends Res {
   data: {
     currency: string;
     money: number;
@@ -715,12 +715,12 @@ interface BindZoneParam {
   level: number;
 }
 
-interface ServerRes {
+interface Res {
   code: number;
   error_msg: string;
 }
 
-interface PaymentConfigRes extends ServerRes {
+interface PaymentConfigRes extends Res {
   payments: PaymentChannel[];
 }
 
@@ -763,7 +763,7 @@ interface LoginData {
   password?: string;
 }
 
-interface LoginRes extends ServerRes {
+interface LoginRes extends Res {
   data: LoginData;
   firstLogin: boolean;
   token: string;

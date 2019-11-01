@@ -194,9 +194,7 @@ Res: {
 **使用方法：**
 ```
 RG.Share('https://some-gaming-address-to-share.com').then(function(data) {
-  if(data.code === 200) { // 分享成功
-    ...
-  }
+   // 分享成功,facebook的分享因facebook的平台的原因,不能判断分享弹窗调起后用户是否真实的分享,只能在弹窗关闭后默认分享成功
 })
 ```
 
