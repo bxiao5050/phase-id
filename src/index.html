@@ -13,13 +13,21 @@
   <script>
     window.rgAsyncInit = function () {
 
+      // var payParams = {
+      //   gameOrderId: Math.floor(Math.random() * 100000000), // 假设的订单id
+      //   gameZoneId: 1,
+      //   roleId: 34359738718,
+      //   roleName: "test-pay",
+      //   level: 101,
+      //   gameCoin: 1
+      // }
       var payParams = {
-        gameOrderId: Math.floor(Math.random() * 100000000), // 假设的订单id
+        gameOrderId: Math.floor(Math.random() * 100000000),
         gameZoneId: 1,
-        roleId: 34359738718,
+        roleId: "",
         roleName: "test-pay",
-        level: 101,
-        gameCoin: 1
+        level: "",
+        gameCoin: 9
       }
       // RG.BindZone({
       //   userId: 67750133, gameZoneId: 1,

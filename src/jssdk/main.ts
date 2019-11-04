@@ -87,6 +87,8 @@ function init(window: Window) {
       const indexUrl = IS_DEV ? config.page.index.test : config.page.index.formal
       window.addEventListener("message", onMessage(indexUrl), false);
     }
+    /* 支付的关闭 */
+    window.addEventListener("message", (event) => { if (event.data === "rgclose") { RG.jssdk.App.hidePayment() } });
     config.urlParams = urlParams;
     config.type = type;
     await loadSdkWithType(config.type, config);

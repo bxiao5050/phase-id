@@ -35,13 +35,12 @@ export default class Payment {
       gameCoin: PaymentConfig.gameCoin,
       sign: null
     }
-
     data.sign = signed([
       data.appId,
       data.advChannel,
       data.userId,
       data.gameCoin,
-      data.level,
+      data.level || "null",
       data.source,
       data.network,
       RG.jssdk.config.app_key
