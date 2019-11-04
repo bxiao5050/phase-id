@@ -1,11 +1,14 @@
 /*
-  http://ip:port/pocketgames/client/config/v3.1/initSDK
-  请求方式 post
+  初始化的接口
 */
 import Http from "../Base/Http";
 import { RouteInitSDK } from "./Routes";
 
-interface InitConfigParams {
+export function reqConfig(initConfigParams: InitConfigParams): Promise<InitConfigRes> {
+  return Http.instance.post({ route: RouteInitSDK, data: initConfigParams });
+}
+
+export interface InitConfigParams {
   /* 平台分配给游戏的 appId */
   appId: number;
   /* 平台分配的渠道 advChannel*/
@@ -34,7 +37,7 @@ interface InitConfigParams {
   sign: string;
 }
 
-interface InitConfigRes extends Res {
+export interface InitConfigRes extends Res {
   /* 消息列表 josn 字符串
   { loginMessageUrl: string; isHasLogin: string;
     isHasPause: string; pauseMessageUrl: string } */
@@ -153,9 +156,3 @@ interface InitConfigRes extends Res {
     } */
   publics: string;
 }
-
-export function reqConfig(initConfigParams: InitConfigParams): Promise<InitConfigRes> {
-  return Http.instance.post({ route: RouteInitSDK, data: initConfigParams });
-}
-
-

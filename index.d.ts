@@ -149,9 +149,6 @@ declare interface Window {
   FBInstant: any;
   getLoginStatus: Promise<any>;
   rgAsyncInit: Function;
-  fbq: Function;
-  _fbq: Function;
-  dataLayer: any[];
   JsToNative: JsToNative;
   NativeToJs: NativeToJs;
   rgChangeAccount: Function;

@@ -140,7 +140,7 @@ RG.BindZone(data).then(function(data) {
 * **roleId**: 角色id
 * **roleName**: 角色名
 * **level**: 角色等级
-* **gameCoin**: 游戏币的数量
+* **gameCoin**: 游戏币的数量或商品表中的商品的序号
 <!-- * **product_id ?(not required)**: 购买的商品ID; 目前只有facebook支付需要用到， 具体的商品id由平台方提供 -->
 
 使用方法：

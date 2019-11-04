@@ -53,7 +53,7 @@ export default class Http {
     )
   }
 
-  public get(param: requestParam = {}) {
+  public get(param: requestParam = {}): Promise<any> {
     return this.request(
       Object.assign({ method: 'GET' }, param)
     )
