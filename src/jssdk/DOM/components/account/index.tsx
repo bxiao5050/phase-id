@@ -54,7 +54,7 @@ class Main extends React.Component<accountProps, any, any> {
             </span>
             {/* <span className="copy">Copy</span> */}
           </p>
-          <a className="pay-his" onClick={() => {
+          {/* <a className="pay-his" onClick={() => {
             RG.jssdk.GetPaymentHistory().then((data: any) => {
               if (data.data.length) {
                 props.history.push(createLocation('/payment-history', {
@@ -64,7 +64,7 @@ class Main extends React.Component<accountProps, any, any> {
                 Ins.showNotice(RG.jssdk.config.i18n.p2refresh_end_no_records)
               }
             })
-          }}>{RG.jssdk.config.i18n.txt_check_charge}</a>
+          }}>{RG.jssdk.config.i18n.txt_check_charge}</a> */}
         </div>
       </div>
       <div className="others">
@@ -83,6 +83,21 @@ class Main extends React.Component<accountProps, any, any> {
         <a className="item-other" onClick={this.changeAccount}>
           <img src={require("DOM/assets/ui_switch_account.png")} />
           <p>{RG.jssdk.config.i18n.dom003}</p>
+          <img src={require("DOM/assets/ui_right_arrow.png")} className="right" />
+        </a>
+        <a className="item-other" onClick={() => {
+          RG.jssdk.GetPaymentHistory().then((data: any) => {
+            if (data.data.length) {
+              props.history.push(createLocation('/payment-history', {
+                data
+              }))
+            } else {
+              Ins.showNotice(RG.jssdk.config.i18n.p2refresh_end_no_records)
+            }
+          })
+        }}>
+          <img src={require("DOM/assets/fb_user_center_0.png")} className="pay-his-icon" />
+          <p>{RG.jssdk.config.i18n.txt_check_charge}</p>
           <img src={require("DOM/assets/ui_right_arrow.png")} className="right" />
         </a>
       </div>

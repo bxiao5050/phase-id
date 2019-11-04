@@ -160,7 +160,7 @@ export default class Register extends React.Component<RegisterProp, {}, any>  {
         </a>
       </div>
       <div className="box-input">
-        <div className="line-input username"
+        <div className="line-input rg-username"
         /*  onBlur={() => this.blurInput("userName")}
          onFocus={() => this.focusInput("userName")} */
         >
@@ -178,7 +178,7 @@ export default class Register extends React.Component<RegisterProp, {}, any>  {
             onClick={this.clearUser}
           ></div>
         </div>
-        <div className="line-input password one" >
+        <div className="line-input rg-password one" >
           <div className="icon"></div>
           <input
             placeholder={RG.jssdk.config.i18n.dom002 + '(6-20)'}
@@ -195,7 +195,7 @@ export default class Register extends React.Component<RegisterProp, {}, any>  {
             onClick={() => this.clearPass1()}
           ></div>
         </div>
-        <div className="line-input password" >
+        <div className="line-input rg-password" >
           <div className="icon"></div>
           <input
             placeholder={RG.jssdk.config.i18n.dom002}

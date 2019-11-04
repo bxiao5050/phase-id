@@ -114,15 +114,19 @@
   border-radius: 0.03*2.67+rem;
 }
 
-.pay-his {
-  padding        : 0.0801rem 0.2937rem;
-  right          : .2rem;
-  text-decoration: none;
-  bottom         : 1.2rem;
-  position       : absolute;
-  color          : #42aae6;
-  border         : solid 1px #42aae6;
-  border-radius  : 0.0801rem;
+// .pay-his {
+//   padding        : 0.0801rem 0.2937rem;
+//   right          : .2rem;
+//   text-decoration: none;
+//   bottom         : 1.2rem;
+//   position       : absolute;
+//   color          : #42aae6;
+//   border         : solid 1px #42aae6;
+//   border-radius  : 0.0801rem;
+// }
+.pay-his-icon {
+  width      : 1rem;
+  margin-left: 0rem;
 }
 
 .others {

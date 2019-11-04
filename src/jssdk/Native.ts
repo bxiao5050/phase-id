@@ -65,11 +65,11 @@ export default class Native extends Base {
     })
   }
 
-  rgAsyncInit() {
-    window.rgAsyncInit()
-    const index_origin = IS_DEV ? window.$rg_main.config.page.index.test : window.$rg_main.config.page.index.formal;
-    window.parent.postMessage({ action: 'rgAsyncInit' }, /(http|https):\/\/(www.)?([A-Za-z0-9-_]+(\.)?)+/.exec(index_origin)[0])
-  }
+  // rgAsyncInit() {
+  //   window.rgAsyncInit()
+  //   const index_origin = IS_DEV ? window.$rg_main.config.page.index.test : window.$rg_main.config.page.index.formal;
+  //   window.parent.postMessage({ action: 'rgAsyncInit' }, /(http|https):\/\/(www.)?([A-Za-z0-9-_]+(\.)?)+/.exec(index_origin)[0])
+  // }
 
   ExposeApis() {
     let exposeApis = [

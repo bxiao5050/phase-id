@@ -141,7 +141,7 @@ export default class Choose extends React.Component<ChooseProps, {}, any>  {
   render() {
     var usersKeys = Object.keys(this.state.users)
     return <div className="box-input choose">
-      <div className="line-input username">
+      <div className="line-input rg-username">
         <div className="icon"></div>
         <input
           type="text"
@@ -181,7 +181,7 @@ export default class Choose extends React.Component<ChooseProps, {}, any>  {
           </ul>
         </div>
       </div>
-      <Route exact path={'/entry'} render={() => <div className="line-input password">
+      <Route exact path={'/entry'} render={() => <div className="line-input rg-password">
         <div className="icon"></div>
         <input type="password" placeholder={RG.jssdk.config.i18n.dom002}
           value={this.state.password}

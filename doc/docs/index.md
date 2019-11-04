@@ -10,12 +10,6 @@ JavaScript 版 SDK 无需下载和安装任何独立文件，您只需在 HTML �
 
 ```js
 
-// 游戏方实现的函数，在登录完成后会调用，请在加载sdk之前实现
-window.rgAsyncInit = function () {
-  // 获取用户信息
-  var user = RG.CurUserInfo()
-}
-
 /** 加载jsssdk */
 (function (d, s, id) {
   // 提供获取地址栏查询参数的一个函数
@@ -30,7 +24,7 @@ window.rgAsyncInit = function () {
     },{});
     return (k) => p.hasOwnProperty(k) ? p[k] : null;
   })();
-  if(!u('region') || !u('sdkVersion')) return throw "region or sdkVersion is not find."
+  if(!u('region') || !u('sdkVersion')) throw "region or sdkVersion is not find."
   // 根据region来加载 对应地区的sdk,jssdk静态文件地址: ${HOST}/jssdk/${GET.sdkVersion}/sdk.js
   var hosts = {
     sg: 'https://sdk-sg.pocketgamesol.com',
@@ -42,9 +36,14 @@ window.rgAsyncInit = function () {
   if (d.getElementById(id)) return;
   var js = d.createElement(s), fjs = d.getElementsByTagName(s)[0];
   js.id = id;
-  js.src = hosts[u('region')] + '/jssdk' + u('sdkVersion') + '/sdk.js?t='+ Date.now();
+  js.src = hosts[u('region')] + '/jssdk/' + u('sdkVersion') + '/sdk.js?t='+ Date.now();
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'rg-jssdk'));
+// 游戏方实现的函数，在登录完成后会调用
+window.rgAsyncInit = function () {
+  // 获取用户信息
+  var user = RG.CurUserInfo()
+}
 
 ```
 

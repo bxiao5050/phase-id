@@ -15,16 +15,17 @@
 }
 
 .ball {
-  width          : 2.4rem;
-  height         : 2.4rem;
+  width          : 2.6rem;
+  height         : 2.6rem;
   z-index        : 2;
   position       : absolute;
+  top            : 0.3rem;
   background     : url(../../assets/float_button.png) center no-repeat;
   background-size: contain;
 }
 
 .menu {
-  height            : 2.5rem;
+  height            : 3.3rem;
   width             : 11rem;
   display           : none;
   -webkit-box-sizing: border-box;
@@ -43,26 +44,27 @@
     justify-content: center;
 
     .icon {
+      box-sizing                 : border-box;
       transform-origin           : 50% 50%;
       display                    : block;
-      font-size                  : .7rem;
-      padding-top                : 4rem;
+      font-size                  : .6rem;
+      padding-top                : 1.5rem;
       line-height                : 1;
       text-align                 : center;
       width                      : 4rem;
       margin-top                 : .1rem;
-      height                     : 3.5rem;
+      height                     : auto;
       color                      : #0a6482;
       // -webkit-text-size-adjust: 100%;
 
       &.contact {
-        background        : url(../../assets/fb_cs_0.png) center center/2.6rem auto no-repeat;
+        background        : url(../../assets/fb_cs_0.png) center -0.4rem/2.6rem auto no-repeat;
         // background-size: contain;
       }
 
       &.account {
         width                : 4rem;
-        background           : url(../../assets/fb_user_center_0.png) center center/3rem auto no-repeat;
+        background           : url(../../assets/fb_user_center_0.png) center -0.4rem/3rem auto no-repeat;
         // background-size   : 2.4rem;
         // background-size   : contain;
       }

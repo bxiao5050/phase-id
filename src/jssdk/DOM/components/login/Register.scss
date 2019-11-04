@@ -52,7 +52,7 @@
     margin: 0 0.24*2.67+rem;
   }
 
-  .username .icon {
+  .rg-username .icon {
     background: url(../../assets/ui_account.png) center no-repeat;
     background-size: contain;
   }
@@ -63,7 +63,7 @@
   }
 
   .win-register {
-    .username {
+    .rg-username {
       border-bottom: solid 1px #b3b3b3;
     }
   }
