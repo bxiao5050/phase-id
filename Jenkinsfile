@@ -33,7 +33,6 @@ pipeline {
                 }
             }
         }
-<<<<<<< HEAD
         stage('DEPLOY') {
             agent { label 'ansible' }
             steps {
