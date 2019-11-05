@@ -1,5 +1,5 @@
 export function checkJsToNative(appId: string, advChannel: string) {
-  if (!window.JsToNative) {
+  if (!(window.JsToNative || window['webkit'])) {
     let Fn = function () { console.log('adapter------'); console.log(arguments) }
     window.JsToNative = {
       getDeviceMsg: function () {

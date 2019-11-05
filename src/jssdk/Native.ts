@@ -162,8 +162,8 @@ export default class Native extends Base {
       'RG.jssdk.nativeInit() before'
     )
 
-    RG.jssdk.nativeInit()
-
+    RG.jssdk.nativeInit();
+    RG.Mark(DOT.SDK_LOADED);
 
     await this.loadScript(reactSrc)
     await Promise.all([reactDomSrc, reactRouterDomSrc].map((src) => {
@@ -246,6 +246,11 @@ export default class Native extends Base {
 
   nativeIsInit = false
 
+  nativeInitResolve = null
+  nativeInitPromise = new Promise(resolve => {
+    this.nativeInitResolve = resolve
+  })
+
   async nativeInit() {
 
     if (!RG.jssdk.nativeIsInit) {
@@ -320,6 +325,7 @@ export default class Native extends Base {
         }
       }) => {
         if (data.code === 200) {
+
           RG.jssdk.nativeIsInit = true
           let verifys = JSON.parse(RG.jssdk.AESdecode(data.verifys))
           let initParam = {
@@ -327,7 +333,8 @@ export default class Native extends Base {
             gpVerify: verifys.gpVerify
           }
           console.log('调用 window.JsToNative.init')
-          window.JsToNative.init(JSON.stringify(initParam))
+          window.JsToNative.init(JSON.stringify(initParam));
+          this.nativeInitResolve()
           console.log('init completed', initParam)
         } else {
           console.log('初始化失败')
@@ -411,7 +418,8 @@ export default class Native extends Base {
     })
   }
 
-  Mark(markName: string, extraParam?: any) {
+  async Mark(markName: string, extraParam?: any) {
+    await this.nativeInitPromise
     let eventName: string = markName;
     // 从配置中获取点名的配置
     if (RG.jssdk.config.mark_id.markName && RG.jssdk.config.mark_id.markName[eventName]) {
@@ -440,6 +448,3 @@ export default class Native extends Base {
     console.info(`"${markParmas.eventName}" has marked - native`, markParmas);
   }
 }
-
-
-
