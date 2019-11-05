@@ -56,7 +56,7 @@ pipeline {
     }
     post {
         success {
-            sh '/bin/sh ansible/notify.sh "deploy success" "${JOB_NAME}" "${BUILD_NUMBER}"'
+            sh '/bin/sh ansible/notify.sh "${Platform} jssdk deploy success" "${JOB_NAME}" "${BUILD_NUMBER}"'
         }
     }
 }
