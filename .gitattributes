@@ -1,0 +1,5 @@
+Jenkinsfile merge=ours
+/ansible/deploy.yml merge=ours
+/ansible/hosts merge=ours
+/ansible/JenkinsDeploy merge=ours
+/ansible/notify.sh merge=ours
