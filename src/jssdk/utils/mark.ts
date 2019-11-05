@@ -1,4 +1,4 @@
-import './adjust.min.js';
+import '../plugins/adjust.min.js';
 interface AdjustEventToken {
   [key: string]: string;
 }
@@ -17,7 +17,7 @@ export function markInit(markIds: { ga?: string, fb?: string, adjust?: { id: str
   markIds.fb && loadFBPixel(markIds.fb);
   markIds.ga && loadGaPixel(markIds.ga);
   if (markIds.adjust && markIds.adjust.id) {
-    adjustMark = (function (_adjust: any, eventToken: AdjustEventToken) { 
+    adjustMark = (function (_adjust: any, eventToken: AdjustEventToken) {
       return function (markName: string, params?: any) {
         adjust(_adjust, eventToken, markName, params);
       }
