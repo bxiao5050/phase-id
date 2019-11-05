@@ -17,8 +17,8 @@ pipeline {
                     try {
                         sh 'rm -rf node_modules dist build'
                         sh 'npm install'
-                        sh '[[ -z ${version} ]] && echo "not input version" && exit 1'
                         sh '''
+                            [[ -z ${version} ]] && echo "not input version" && exit 1
                             dt=$(date '+%Y%m%d')
                             mkdir -p /data/app/${project}/${dt}/build
                             for region in sg vn de; do
