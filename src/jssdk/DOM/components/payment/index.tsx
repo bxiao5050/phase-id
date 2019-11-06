@@ -34,7 +34,8 @@ export default class Payment extends React.Component<PaymentProps, {}, any> {
     if (orderRes.code === 200) {
       this.state.paymentDatas[0] = orderRes.data
       var nn = String.prototype.toLocaleLowerCase.call(payments.name.replace(/\s/g, ''))
-      if (nn === 'paypal' || nn === 'mycard') {
+      const paymentNames = ['paypal', 'mycard', 'visa'];
+      if (paymentNames.indexOf(nn) !== -1) {
         this.state.url = orderRes.data.returnInfo.url.replace(/http\:\/{0,2}/, 'https://').replace(/\:\d{1,10}/, '');
         this.state.winOpen = true
         this.setState(this.state)
