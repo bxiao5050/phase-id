@@ -136,3 +136,12 @@ export const getUrlParam = (function () {
   }
 })()
 
+export function wrapObj(obj: any) {
+  return function (name: string) {
+    if (typeof name !== "string") {
+      console.log("name is not string!!!")
+      return null;
+    }
+    return obj[name]
+  }
+}

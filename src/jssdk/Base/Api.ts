@@ -72,7 +72,7 @@ export default class Api {
     const { appId, userName } = params;
     // MD5(appId+userName+appKey)
     const sign = signed([appId, userName]);
-    return Http.instance.get({ route: this.route.forgetPwd + `/${appId}/${userName}/${sign}` }) as Promise<forgetPwdRes>;
+    return Http.instance.get({ route: this.route.forgetPwd + `/${appId}/${userName}/${sign}` });
   }
   /* 添加邮箱 */
   operatorEmail(params: opeartorEmailParams): Promise<opeartorEmailRes> {
@@ -97,8 +97,8 @@ export default class Api {
         userInfo.emailValid = res.data.emailValid;
         RG.jssdk.Account.user = userInfo
       }
-      return data
-    }) as Promise<opeartorEmailRes>;
+      return res
+    });
   }
   getGameRoleInfo({ appId, userId, gameZoneId, appSecret }: { appId: string, userId: number, gameZoneId: number, appSecret: string }) {
     // userId+gameZoneId+timestamp+appSecret

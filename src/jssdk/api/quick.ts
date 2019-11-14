@@ -1,7 +1,7 @@
 /*
   所有的和 quick 联运需要的接口
 */
-import Http from "../Base/Http";
+import Http from "./http";
 import { RouteGetRoleInfo, RouteQuickVerifyToken } from "./Routes";
 /* 绑定区服需要的参数 */
 export function reqGameRokeInfo({ appId, userId, gameZoneId, timestamp, sign }: GameRoleInfoParams): Promise<GameRoleInfoRes> {
