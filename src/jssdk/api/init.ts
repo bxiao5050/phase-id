@@ -1,7 +1,7 @@
 /*
   初始化的接口
 */
-import Http from "../Base/Http";
+import Http from "./http";
 import { RouteInitSDK } from "./Routes";
 
 export function reqConfig(initConfigParams: InitConfigParams): Promise<InitConfigRes> {
