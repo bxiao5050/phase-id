@@ -65,7 +65,7 @@ export default class Account {
 
   set user(user) {
     this._user = user;
-    if (user.accountType !== 2) {
+    if (user && user.accountType !== 2) {
       this._users[user.userId] = user;
     }
     this.asyncData();

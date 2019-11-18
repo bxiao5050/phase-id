@@ -175,22 +175,7 @@ export default class Login {
       }
     })
   }
-  // // 平台登录
-  // login(userName: string, password: string, exInfo: string = "", loginBaseParams: LoginBaseParams) {
-  //   const data = Object.assign({ userName, password, exInfo: exInfo }, loginBaseParams);
-  //   return Http.instance.post({ route: this.route.login, data }).then((res: LoginAndRegisterRes) => {
-  //     if (res.code === 200) {
-  //       Account.instance.user = Object.assign(res.data, { password: data.password, token: res.token });
-  //     }
-  //     return res;
-  //   });
-  // }
-  // // 平台注册，第三方登录全部走平台注册
-  // register(userName: string, password: string, loginBaseParams: LoginBaseParams, params: RegisterRemainingParams, exInfo: string = "") {
 
-  //   const data: RegisterParams = Object.assign({ userName, password, exInfo: exInfo }, loginBaseParams, params);
-  //   // return this.api.register(data);
-  // }
 }
 // interface LoginBaseParams {
 //   appId: number;
