@@ -16,29 +16,88 @@
 │   │   
 │   ├── index # 游戏首页，已经废弃，全部加载在sspa中
 │   │   └── main
-│   ├── jssdk # sdk目录
-│   │   ├── Base #
-│   │   │   ├── Account.ts
-│   │   │   ├── Api.ts
-│   │   │   ├── Http.ts
-│   │   │   ├── Login.ts
-│   │   │   ├── Payment.ts
-│   │   │   └── Share.ts
-│   │   ├── config #配置文件和一些常量
-│   │   ├── dev #本地环境下测试使用的代码，webpack加载在index.html中
-│   │   ├── DOM #dom组件的内容 
-│   │   ├── plugins #第三方库 
-│   │   ├── utils #公用的方法
-│   │   ├── adapter.ts #添加JsToNative
-│   │   ├── Base.ts #web和native的父类
-│   │   ├── FacebookInstantGame.ts 
-│   │   ├── FacebookWebGame.ts 
-│   │   ├── Web.ts 
-│   │   ├── Native.ts 
-│   │   └── main.ts # 主入口
-│   │  
-│   ├── add-shortcut.html # 引导页的html文件
-│   └── index.html # 测试启动的页面
+|   ├─ jssdk
+|       ├─ 0_Old #以前的代码
+|       ├─ Base 
+|       |   ├─ Account.ts
+|       |   ├─ Api.ts
+|       |   ├─ Constant.ts
+|       |   ├─ Http.ts
+|       |   ├─ Login.ts
+|       |   ├─ Payment.ts
+|       |   ├─ Share.ts
+|       |   └── index.ts
+|       ├─ DOM
+|       |   ├─ App.tsx
+|       |   ├─ BTgame.tsx
+|       |   ├─ assets #图片资源
+|       |   ├─ base.scss
+|       |   ├─ components
+|       |   |   ├─ account
+|       |   |   |   ├─ index.scss
+|       |   |   |   ├─ index.tsx
+|       |   |   ├─ hover
+|       |   |   |   ├─ index.scss
+|       |   |   |   ├─ index.tsx
+|       |   |   ├─ login
+|       |   |   |   ├─ Choose.scss
+|       |   |   |   ├─ Choose.tsx
+|       |   |   |   ├─ Entry.scss
+|       |   |   |   ├─ Entry.tsx
+|       |   |   |   ├─ Loading.scss
+|       |   |   |   ├─ Loading.tsx
+|       |   |   |   ├─ Main.scss
+|       |   |   |   ├─ Main.tsx
+|       |   |   |   ├─ Register.scss
+|       |   |   |   ├─ Register.tsx
+|       |   |   |   ├─ index.scss
+|       |   |   |   ├─ index.tsx
+|       |   |   ├─ notice
+|       |   |   |   ├─ index.scss
+|       |   |   |   ├─ index.tsx
+|       |   |   ├─ payment
+|       |   |       ├─ Type0.scss
+|       |   |       ├─ Type0.tsx
+|       |   |       ├─ Type1.scss
+|       |   |       ├─ Type1.tsx
+|       |   |       ├─ Type2.scss
+|       |   |       ├─ Type2.tsx
+|       |   |       ├─ Type3.scss
+|       |   |       ├─ Type3.tsx
+|       |   |       ├─ Type4.scss
+|       |   |       ├─ Type4.tsx
+|       |   |       ├─ Type5.scss
+|       |   |       ├─ Type5.tsx
+|       |   |       ├─ TypeList.scss
+|       |   |       ├─ TypeList.tsx
+|       |   |       ├─ WinOpen.scss
+|       |   |       ├─ WinOpen.tsx
+|       |   |       ├─ index.scss
+|       |   |       ├─ index.tsx
+|       |   ├─ i18n #本地化
+|       |   ├─ index.tsx
+|       ├─ FacebookInstantGames.ts
+|       ├─ FacebookWebGames.ts
+|       ├─ Native.ts
+|       ├─ Web.ts
+|       ├─ adapter.ts
+|       ├─ api #暂时没有用到
+|       ├─ config #所有的配置
+|       |   ├─ 10183-0.ts
+|       |   ├─ 10183-1.ts
+|       |   ├─ 10183-30001.ts
+|       |   ├─ 10183-33001.ts
+|       |   ├─ 10203-0.ts
+|       |   ├─ 10203-1.ts
+|       |   ├─ 10203-30001.ts
+|       |   ├─ 10213-0.ts
+|       |   ├─ index.ts
+|       ├─ dev 测试代码
+|       ├─ main.ts
+|       ├─ plugins 第三方插件
+|       ├─ uniteSdk #联运的sdk quick
+|       |   ├─ index.ts
+|       └── utils #工具函数
 ├── test # 测试代码目录
 ├── .editorconfig #格式化样式配置文件
 ├── .gitignore #git版本控制忽略文件

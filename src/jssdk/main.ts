@@ -84,6 +84,7 @@ function init(window: Window) {
     let config = await getConfig(appId, advChannel);
     // 只用于web端的sdk，暂时先写在这里
     if (type === 1) {
+      // 测试的基本上域名是一样的,因此没有做区分
       const indexUrl = IS_DEV ? config.page.index.test : config.page.index.formal
       window.addEventListener("message", onMessage(indexUrl), false);
     }

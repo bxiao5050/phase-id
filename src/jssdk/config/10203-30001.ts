@@ -19,15 +19,15 @@ export default {
   },
   page: {
     index: {
-      test: 'https://www.narutoh5game.com/test_hyrz/index.html',
-      formal: 'https://www.narutoh5game.com/h5-plays/index.html',
+      test: 'https://ninja-th.narutoh5game.com/test_hyrz/index.html',
+      formal: 'https://ninja-th.narutoh5game.com/h5-plays/index.html',
     },
     facebook: {
       messenger: {
-        pc: '',
-        mobile: '',
+        pc: 'https://www.facebook.com/messages/t/NinjaBattleH5',
+        mobile: 'https://www.facebook.com/NinjaBattleH5/',
       },
-      index: ''
+      index: 'https://www.facebook.com/NinjaBattleH5/'
     }
   }
 }

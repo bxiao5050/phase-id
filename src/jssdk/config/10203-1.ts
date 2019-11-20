@@ -42,10 +42,10 @@ export default {
   page: {
     facebook: {
       messenger: {
-        pc: 'https://www.facebook.com/NarutoGame.H5',
-        mobile: 'https://www.facebook.com/NarutoGame.H5',
+        pc: 'https://www.facebook.com/messages/t/NinjaBattleH5',
+        mobile: 'https://www.facebook.com/NinjaBattleH5/',
       },
-      index: 'https://www.facebook.com/NarutoGame.H5'
+      index: 'https://www.facebook.com/NinjaBattleH5/'
     }
   }
 }
