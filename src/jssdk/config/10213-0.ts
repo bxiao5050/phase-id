@@ -1,6 +1,6 @@
 export default {
   name: 'Ninja Battle',
-  app_key: 'b02a9db144944b8bafbd92af569b509f',
+  app_key: '249ad8e87d704756be67e53c5ea8e571',
   fb_app_id: '1304983986332151',
   language: 'EN',
   region: 'de',

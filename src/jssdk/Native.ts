@@ -163,7 +163,6 @@ export default class Native extends Base {
     )
 
     RG.jssdk.nativeInit();
-    RG.Mark(DOT.SDK_LOADED);
 
     await this.loadScript(reactSrc)
     await Promise.all([reactDomSrc, reactRouterDomSrc].map((src) => {
@@ -173,14 +172,17 @@ export default class Native extends Base {
     let [{ Ins }] = await Promise.all([import('DOM/index'), RG.jssdk.Account.initPromise()])
 
     window.RG.jssdk.App = Ins
-    let user = RG.jssdk.Account.user
+    let user = RG.jssdk.Account.user;
     let autoLogin = false
-    let LoginModule = window.RG.jssdk.App.showLogin()
+    let LoginModule = window.RG.jssdk.App.showLogin();
     let code = getUrlParam('code');
-
     if (code) {
-      await RG.jssdk.Login({ isFacebook: true })
-      LoginModule.loginComplete()
+      if (window.name === 'redirect') {
+        window.name = ''
+      } else {
+        await RG.jssdk.Login({ isFacebook: true })
+        LoginModule.loginComplete()
+      }
     } else {
       if (user) {
         autoLogin = true
