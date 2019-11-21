@@ -2,7 +2,7 @@ pipeline {
     agent { label 'jenkins-slave' }
     environment {
         project = "jssdk"
-        ppath = "/data/packages/prod/frontend"
+        ppath = "/data/k8s/packages/prod/frontend"
         purl = "http://packages.royale.com/prod/frontend"
     }
     stages {
