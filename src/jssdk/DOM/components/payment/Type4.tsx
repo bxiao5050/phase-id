@@ -24,7 +24,7 @@ export default class Type4 extends React.Component<paymentProps, {}, any>  {
           this.props.Payment.state.paymentDatas[this.index].nodes.map((node, i) => (
             <li key={i} data-id={i}
               onClick={() => {
-                if (this.props.Payment.state.paymentDatas[this.index].nodes[i].showMethod === 2) {
+                if (this.props.Payment.state.paymentDatas[this.index].nodes[i].showMethod) {
                   this.props.Payment.intoPay(this.props.Payment.state.paymentDatas[this.index].nodes[i])
                 } else {
                   RG.jssdk.Ordering(node).then((OrderRes: OrderRes) => {
