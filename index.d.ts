@@ -232,7 +232,7 @@ interface initSDKParams {
 }
 
 interface JsToNativeDeviceMsg {
-  gaid: string;
+  gaid?: string;
   device: string;
   deviceNo: string;
   version: string;

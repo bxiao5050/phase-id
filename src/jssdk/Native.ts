@@ -237,7 +237,13 @@ export default class Native extends Base {
   deviceMsgResolve
 
   gotDeviceMsg(deviceMsg: string) {
-    let data = JSON.parse(deviceMsg)
+    // let data = JSON.parse(deviceMsg)
+    let data;
+    try {
+      data = JSON.parse(deviceMsg);
+    } catch (error) {
+      data = deviceMsg;
+    }
     data = Object.assign(data, {
       advChannel: RG.jssdk.config.advChannel,
       appId: RG.jssdk.config.appId

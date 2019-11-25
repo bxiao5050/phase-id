@@ -209,7 +209,6 @@ RG.Share('https://some-gaming-address-to-share.com').then(function(data) {
 * **adjust**: adjust的打点的参数，可以不传
 * **currency**: 只在购买打点是传
 * **money**: 只在购买打点时传
-* **eventToken**: adjust打点时传
 
 ```
 使用方法 
