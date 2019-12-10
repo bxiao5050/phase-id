@@ -26,10 +26,7 @@ export default class Base {
 
   Redirect() {
     window.name = 'redirect';
-    let index = location.href.indexOf('&code=')
-    let url = index === -1 ? location.href : location.href.substr(0, index);
-    location.href = url;
-    // location.reload();
+    location.reload();
   }
 
   CurUserInfo = (): JSSDK.CurUserInfo => {

@@ -6,14 +6,32 @@
     "target": "es5",
     "baseUrl": ".",
     "jsx": "react",
-    "lib": ["es6", "es7", "dom"],
+    // "lib": ["es6", "es7", "dom"],
     "esModuleInterop": true,
-    "types": ["jest", "react", "react-dom", "react-router-dom", "facebook-js-sdk", "facebook-instant-games", "history", "node", "swiper"],
+    "types": [
+      "jest",
+      "react",
+      "react-dom",
+      "react-router-dom",
+      "facebook-js-sdk",
+      "facebook-instant-games",
+      "history",
+      "node",
+      "swiper"
+    ],
     "paths": {
-      "Src/*": ["./src/*"],
-      "SDK/*": ["./src/jssdk/*"],
-      "DOM/*": ["./src/jssdk/DOM/*"],
-      "Base/*": ["./src/jssdk/Base/*"]
+      "Src/*": [
+        "./src/*"
+      ],
+      "SDK/*": [
+        "./src/jssdk/*"
+      ],
+      "DOM/*": [
+        "./src/jssdk/DOM/*"
+      ],
+      "Base/*": [
+        "./src/jssdk/Base/*"
+      ]
     }
   },
   "include": [

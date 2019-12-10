@@ -180,6 +180,7 @@ function init(window: Window) {
   function onMessage(indexUrl: string) {
     return function (event: MessageEvent) {
       if (event.origin !== /(http|https):\/\/(www.)?([A-Za-z0-9-_]+(\.)?)+/.exec(indexUrl)[0]) return;
+      if (event.data === "rgclose") return;
       RG.jssdk.Account.init(JSON.parse(event.data));
     }
   }

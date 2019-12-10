@@ -1,5 +1,6 @@
 import * as React from 'react'
-import './WinOpen.scss'
+import './WinOpen.scss';
+import { Ins } from 'DOM/index';
 export default class WinOpen extends React.Component<any, any, any>  {
 
   render() {
@@ -20,6 +21,7 @@ export default class WinOpen extends React.Component<any, any, any>  {
             this.props.parent.setState({
               winOpen: false
             })
+            Ins.hidePayment();
           }}>
             {RG.jssdk.config.i18n.jump}
           </div>
