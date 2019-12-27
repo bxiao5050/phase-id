@@ -1,7 +1,7 @@
 # sdk-demo
 ## v2.3 
 
-```sh
+```txt
 ├── build # 打包目录
 │   └── vxxxx #对应版本
 ├── doc # jssdk的文档

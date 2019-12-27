@@ -36,13 +36,15 @@ export default class Native extends Base {
           console.log('jpwork.jpwork', OrderingData.showMethod, orderRes)
           if (orderRes.code === 200) { // 下单完成
             if (OrderingData.showMethod === 3) {
-              let jpParams = { // 获取Native的交易凭据
+              let jpParams = {
+                // 获取Native的交易凭据
                 productName: OrderingData.selectedProduct.productName,
                 transactionId: orderRes.data.transactionId,
                 channel: OrderingData.channel,
                 currency: OrderingData.selectedProduct.currency,
-                money: OrderingData.selectedProduct.amount
-              }
+                money: OrderingData.selectedProduct.amount,
+                userId: window.RG.CurUserInfo().userId
+              };
               let jpParamsStr = JSON.stringify(jpParams)
               console.log('jpParamsStr', jpParams, jpParamsStr)
               JsToNative.jpwork(jpParamsStr);
