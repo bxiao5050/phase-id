@@ -18,7 +18,7 @@ export function checkJsToNative(appId: string, advChannel: string) {
           deviceNo: '0',
           device: '0',
           version: '0',
-          sdkVersion: '0',
+          sdkVersion: '0'
         })
       },
       getDeviceMsgAsync: function () {

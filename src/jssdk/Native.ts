@@ -382,7 +382,6 @@ export default class Native extends Base {
         currency: result.currency,
       });
     }
-    window.RG.jssdk.App.hidePayment();
   }
 
   consumeOrder(params: string) {
@@ -416,11 +415,12 @@ export default class Native extends Base {
           exInfo: paramParse.exInfo
         }
         window.RG.jssdk.App.showNotice(RG.jssdk.config.i18n.UnknownErr)
-        window.RG.jssdk.App.hidePayment()
+        // window.RG.jssdk.App.hidePayment()
       }
       console.log('JsToNative.consumeOrder2: code (' + data.code + ')', consumeParams)
-      JsToNative.consumeOrder(JSON.stringify(consumeParams))
-    })
+      JsToNative.consumeOrder(JSON.stringify(consumeParams));
+      window.RG.jssdk.App.hidePayment();
+    });
   }
 
   Pay(paymentConfig: PaymentConfig) {
