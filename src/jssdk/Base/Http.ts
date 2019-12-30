@@ -25,7 +25,7 @@ export default class Http {
     if (param.data) {
 
       data = Object.keys(param.data).map(key => {
-        return `${encodeURIComponent(key)}=${encodeURIComponent(param.data[key])}`;
+        return `${key}=${param.data[key]}`;
       }).join('&')
     }
     var xhr = new XMLHttpRequest();
