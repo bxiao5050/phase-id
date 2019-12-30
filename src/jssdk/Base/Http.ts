@@ -13,7 +13,8 @@ export default class Http {
       sg: 'https://sdk-sg.pocketgamesol.com',
       de: 'https://sdk-de.pocketgamesol.com',
       vn: 'https://sdk-vn.pocketgamesol.com',
-      test: 'https://sdk-test.changic.net.cn'
+      test: 'https://sdk-test.changic.net.cn',
+      dev: '/api'
     }
     const key = IS_TEST ? "test" : (region || window.RG.jssdk.config.region);
     this.serverAddress = regions[key] + "/pocketgames/client";
@@ -58,5 +59,4 @@ export default class Http {
       Object.assign({ method: 'GET' }, param)
     )
   }
-
 }

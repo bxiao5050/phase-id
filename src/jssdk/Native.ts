@@ -382,6 +382,7 @@ export default class Native extends Base {
         currency: result.currency,
       });
     }
+    // window.RG.jssdk.App.hidePayment();
   }
 
   consumeOrder(params: string) {
