@@ -35,16 +35,16 @@ export enum RegisterType {
 }
 // 保存在localStorage中的信息的 key
 export enum localStorageKeys {
-  user = "rg_user",
-  users = "rg_users"
+  user = 'rg_user',
+  users = 'rg_users'
 }
 // 所有的域名,后面使用打包时写死
 export const serverOrigins = {
-  sg: "https://sdk-sg.pocketgamesol.com",
-  de: "https://sdk-de.pocketgamesol.com",
-  vn: "https://sdk-vn.pocketgamesol.com",
-  test: "https://sdk-test.changic.net.cn",
-  dev: "/api"
+  sg: 'https://sdk-sg.pocketgamesol.com',
+  de: 'https://sdk-de.pocketgamesol.com',
+  vn: 'https://sdk-vn.pocketgamesol.com',
+  test: 'https://sdk-test.changic.net.cn',
+  dev: '/api'
 };
 
 export enum ErrorCode {

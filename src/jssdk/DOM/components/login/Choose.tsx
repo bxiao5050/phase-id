@@ -5,7 +5,7 @@ import * as React from 'react'
 import { Route } from 'react-router-dom'
 import Login from './index'
 import { Ins } from 'DOM/index'
-import { getAccountType } from 'Src/jssdk/utils';
+import { getAccountType } from 'Src/jssdk/common/utils';
 
 type ChooseProps = {
   Login: Login

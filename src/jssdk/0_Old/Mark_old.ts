@@ -1,4 +1,4 @@
-import { getUrlParam, CookieManager, getDeviceType, generateGpsAdid } from "../utils";
+import { getUrlParam, CookieManager, getDeviceType, generateGpsAdid } from "../common/utils";
 // 打点代码整体拿到了sspa中，有需要可以自行修改
 export default class Mark {
 

@@ -1,5 +1,5 @@
 import Mock from "mockjs";
-import { getUrlParam } from "../../utils"
+import { getUrlParam } from "../../common/utils"
 
 const Random = Mock.Random;
 

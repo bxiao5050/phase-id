@@ -1,4 +1,4 @@
-import { getUrlParam, signed } from "../utils";
+import { getUrlParam, signed } from "../common/utils";
 import Http from "./Http";
 import Account from "./Account";
 

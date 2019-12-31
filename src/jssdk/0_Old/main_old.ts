@@ -1,5 +1,5 @@
 /* 此文件已经废弃，下一次更新时删除 */
-import { getUrlParam } from "Src/jssdk/utils";
+import { getUrlParam } from "Src/jssdk/common/utils";
 import { checkJsToNative } from "SDK/adapter";
 import Polyfill from "Src/jssdk/0_Old/Polyfill_old";
 import Mark from "Src/jssdk/0_Old/Mark_old";

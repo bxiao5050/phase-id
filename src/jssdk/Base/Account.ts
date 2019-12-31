@@ -1,5 +1,5 @@
 import Http from './Http';
-import {signed} from '../utils';
+import {signed} from '../common/utils';
 
 export default class Account {
   static _ins: Account;

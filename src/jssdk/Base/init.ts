@@ -1,139 +1,10 @@
-import {signed} from '../common/utils';
-import Http from './Http';
+/*
+  初始化的接口
+*/
+import Http from "./Http";
 
-export class Api {
-  static _ins: Api;
-  static get instance(): Api {
-    return this._ins || new Api();
-  }
-  constructor() {
-    Api._ins = this;
-  }
-
-  private route = {
-    bind: "/user/v3/bindZone",
-    bindVisitor: "/user/bindVisitor"
-  };
-
-  /** 绑定区服 */
-  public async Bind(BindZoneParam: BindZoneParam) {
-    var deviceMsg = await JsToNative.getDeviceMsgAsync();
-
-    var data = Object.assign(deviceMsg, BindZoneParam, {
-      sign: signed([
-        BindZoneParam.userId,
-        RG.jssdk.config.appId,
-        BindZoneParam.gameZoneId,
-        deviceMsg.source,
-        RG.jssdk.config.app_key
-      ])
-    });
-    return Http.ins.post({route: this.route.bind, data}).then(data => {
-      return data;
-    });
-  }
-  /*  绑定游客 */
-  public BindVisitor(account: string, password: string) {
-    var data = {
-      appId: RG.jssdk.config.appId,
-      userId: RG.CurUserInfo().userId,
-      userName: account,
-      password: password,
-      email: '',
-      sign: signed([
-        RG.jssdk.config.appId,
-        RG.CurUserInfo().userId,
-        account,
-        password,
-        RG.jssdk.config.app_key
-      ])
-    };
-    return Http.ins.post({route: this.route.bindVisitor, data}).then(data => {
-      if (data.code === 200) {
-        var userInfo = RG.jssdk.Account.user;
-
-        userInfo.userName = account;
-        RG.jssdk.Account.user = userInfo;
-      }
-      return data;
-    });
-  }
-}
-
-interface getRoleParams {
-  appId: string;
-  userId: number;
-  gameZoneId: number;
-  appSecret: string;
-}
-interface getRoleInfoRes extends ServerRes {
-  data: {
-    roleId: string;
-    roleName: string;
-    roleLevel: string;
-    state: number;
-    createTime: string;
-    lastLoginTime: string;
-    vipLevel: string;
-    gameCoinTotal: string;
-  }[];
-}
-export function getRoleInfo({appId, userId, gameZoneId, appSecret}: getRoleParams) {
-  // userId+gameZoneId+timestamp+appSecret
-  const timestamp = Date.now();
-  const sign = signed([userId, gameZoneId, timestamp, appSecret]);
-  const route = `/user/role?appId=${appId}&userId=${userId}&gameZoneId=${gameZoneId}&timestamp=${timestamp}&sign=${sign}`;
-  return Http.ins.get<getRoleInfoRes>({route});
-}
-
-interface VerifyTokenParams {
-  /* 平台分配的appId */
-  appId: string;
-  /* 平台分配的游戏渠道 */
-  advChannel: string;
-  /* quick用户id */
-  uid: string;
-  /* quick 登录的 token */
-  token: string;
-  // md5(appId,uid,token,appSecret) appSecret 平台分配的加密参数
-  sign: string;
-}
-/* quick 登录校验 */
-export function verifyToken({appId, advChannel, uid, token, sign}: VerifyTokenParams) {
-  const route = `/quick/verifyToken/${appId}/${advChannel}/${encodeURIComponent(
-    uid
-  )}/${encodeURIComponent(token)}/${encodeURIComponent(sign)}`;
-  return Http.ins.get({route});
-}
-
-// facebook 登录
-export function fbShare(shareUrl: string) {
-  console.info('facebook share' + shareUrl);
-  if (!shareUrl) return Promise.reject('url is not find.');
-  return new Promise((resolve, reject) => {
-    FB.ui({method: 'share', href: shareUrl, display: 'popup'}, function(shareDialogResponse) {
-      if (shareDialogResponse) {
-        if (shareDialogResponse.error_message) {
-          resolve({
-            code: 0,
-            error_msg: shareDialogResponse.error_message
-          });
-        } else {
-          resolve({
-            code: 200
-          });
-        }
-      } else {
-        resolve({
-          code: 0
-        });
-      }
-    });
-  });
-}
-
-export function reqConfigApi(initConfigParams: InitConfigParams){
-  return Http.ins.post<InitConfigRes>({ route: "/config/v3.1/initSDK", data: initConfigParams });
+export function reqConfigApi(initConfigParams: InitConfigParams): Promise<InitConfigRes> {
+  return Http.ins.post({ route: "/config/v3.1/initSDK", data: initConfigParams });
 }
 
 export interface InitConfigParams {
@@ -159,7 +30,7 @@ export interface InitConfigParams {
   sdkVersion: string;
   /* 客户端时间 (yyyy-MM-dd HH:mm:ss),长度最长为19的字符串 */
   clientTime: string;
-  /* 0=非首次安装 1=首次安装 */
+  /* 0=非首次安装 1=首次安装  直接传 0 就好*/
   firstInstall: number;
   /* MD5(appId+source+advChannel+appKey) 长度最长为32的字符串 */
   sign: string;

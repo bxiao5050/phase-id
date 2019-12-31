@@ -1,9 +1,8 @@
 // import { Ins } from 'DOM/BTgame';
 import Http from "Base/Http";
-import Share from 'Base/Share';
 import {getRoleInfo,Api} from "Base/Api";
 
-import { signed, formatDate } from "../utils";
+import { signed, formatDate } from "../common/utils";
 
 
 export default class UniteSdk {
@@ -245,7 +244,34 @@ export default class UniteSdk {
   }
   /* RG.Share */
   Share(shareUrl: string) {
-    return Share.instance.share(shareUrl)
+    console.info('facebook share' + shareUrl);
+    return new Promise((resolve, reject) => {
+      FB.ui(
+        {
+          method: 'share',
+          href: shareUrl,
+          display: 'popup'
+        },
+        function(shareDialogResponse) {
+          if (shareDialogResponse) {
+            if (shareDialogResponse.error_message) {
+              resolve({
+                code: 0,
+                error_msg: shareDialogResponse.error_message
+              });
+            } else {
+              resolve({
+                code: 200
+              });
+            }
+          } else {
+            resolve({
+              code: 0
+            });
+          }
+        }
+      );
+    });
   }
   Mark(markName) {
     console.log(markName);

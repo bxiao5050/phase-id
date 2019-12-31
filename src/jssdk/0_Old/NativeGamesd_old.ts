@@ -1,5 +1,5 @@
 import Http from 'Base/Http';
-import { getUrlParam, signed, getAccountType, formatDate } from '../utils';
+import { getUrlParam, signed, getAccountType, formatDate } from '../common/utils';
 import * as CryptoJS from 'crypto-js'
 import { Ins } from 'DOM/index'
 import { DOT } from 'Src/jssdk/0_Old/Constant_old';

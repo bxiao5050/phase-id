@@ -1,6 +1,6 @@
 
 import Http from "./Http";
-import { signed, formatDate } from "../utils";
+import { signed, formatDate } from "../common/utils";
 
 export default class Payment {
   static _ins: Payment
