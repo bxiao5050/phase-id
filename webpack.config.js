@@ -48,7 +48,8 @@ switch (action) {
     output.publicPath = SERVER + '/jssdk/';
     break;
   case 'de':
-    SERVER = '//desdk-cdn.pkmonquest.com';
+  // https://sdk-de.pocketgamesol.com/jssdk/v2.4.1/sdk.js?t=1577760832367
+    SERVER = '//sdk-de.pocketgamesol.com';
     output.publicPath = SERVER + '/jssdk/';
     break;
   case 'test':
