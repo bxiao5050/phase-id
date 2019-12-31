@@ -91,21 +91,9 @@ export default class Account {
       userId: this.user.userId,
       password: oldpass,
       newPassword: newpass,
-      sign: null
+      appKey: RG.jssdk.config.app_key
     };
-
-    data.sign = signed([
-      RG.jssdk.config.appId,
-      this.user.userId,
-      oldpass,
-      newpass,
-      RG.jssdk.config.app_key
-    ]);
-
-    return Http.ins.post({
-      route: '/user/changePwd',
-      data: data
-    });
+    return changePassword(data);
   }
 }
 
@@ -125,10 +113,7 @@ interface BindZoneParams {
   advChannel: number;
   appKey: string;
 }
-export async function bindZone(
-  params: BindZoneParams,
-  deviceMsg: JsToNativeDeviceMsg
-): Promise<ServerRes> {
+export async function bindZone(params: BindZoneParams, deviceMsg: JsToNativeDeviceMsg) {
   const {source, network, model, operatorOs, device, deviceNo, version} = deviceMsg;
   const {gameZoneId, createRole, roleId, level, userId, appId, advChannel, appKey} = params;
   const sign = signed([userId, appId, gameZoneId, source, appKey]);
@@ -229,8 +214,8 @@ export function operatorEmail({appId, userId, email, operatorType, appKey}: opea
   return Http.ins.post<opeartorEmailRes>({route: '/user/operatorEmail', data});
 }
 
-export interface ChangePasswordParams {
-  oldPassword: string;
+export interface ChangePwdParams {
+  password: string;
   newPassword: string;
   userId: number;
   appId: number;
@@ -238,15 +223,9 @@ export interface ChangePasswordParams {
 }
 
 // 修改密码，第三方登录不允许修改密码
-export function changePassword({
-  oldPassword,
-  newPassword,
-  userId,
-  appId,
-  appKey
-}: ChangePasswordParams) {
-  const sign = signed([appId, userId, oldPassword, newPassword, appKey]);
-  const data = {appId, userId, password: oldPassword, newpass: newPassword, sign};
+export function changePassword({password, newPassword, userId, appId, appKey}: ChangePwdParams) {
+  const sign = signed([appId, userId, password, newPassword, appKey]);
+  const data = {appId, userId, password, newPassword, sign};
   return Http.ins.post({route: '/user/changePwd', data});
 }
 
@@ -260,5 +239,3 @@ export interface UserInfo {
   password: string;
   token: string;
 }
-
-

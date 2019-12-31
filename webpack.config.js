@@ -56,7 +56,8 @@ switch (action) {
     output.publicPath = SERVER + '/jssdk/';
     break;
   default:
-    SERVER = '/api';
+    // SERVER = '/api';
+    SERVER = '//sdk-test.changic.net.cn';
     output.publicPath = '';
     break;
 }

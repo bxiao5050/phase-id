@@ -1,4 +1,3 @@
-import * as Const from './Constant';
 import {signed} from '../utils';
 import Http from './Http';
 
@@ -12,8 +11,8 @@ export class Api {
   }
 
   private route = {
-    bind: Const.RouteBindZone,
-    bindVisitor: Const.RouteBindVisitor
+    bind: "/user/v3/bindZone",
+    bindVisitor: "/user/bindVisitor"
   };
 
   /** 绑定区服 */

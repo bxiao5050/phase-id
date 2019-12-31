@@ -1,6 +1,5 @@
 import Mark from 'Src/jssdk/0_Old/Mark_old'
 import { Ins } from 'DOM/index'
-import { DOT } from 'Src/jssdk/Base/Constant';
 
 export default class FacebookInstantGames {
 
@@ -71,7 +70,7 @@ export default class FacebookInstantGames {
   consumePurchaseAsync(purchaseToken: string): Promise<ServerRes> {
     return new Promise((resolve, reject) => {
       FBInstant.payments.consumePurchaseAsync(purchaseToken).then(function () {
-        RG.Mark(DOT.SDK_PURCHASED_DONE)
+        RG.Mark("sdk_purchased_done")
         Ins.showNotice(RG.jssdk.config.i18n.net_error_30200)
         resolve({
           code: 200,

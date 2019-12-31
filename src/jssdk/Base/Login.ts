@@ -1,6 +1,5 @@
 import { getUrlParam, signed } from "../utils";
 import Http from "./Http";
-import { DOT, RouteLogin, RouteRegister, GET } from "./Constant";
 import Account from "./Account";
 
 export default class Login {
@@ -13,8 +12,8 @@ export default class Login {
   }
 
   private route = {
-    register: RouteRegister,
-    login: RouteLogin,
+    register: "/user/v3/register",
+    login: "/user/v3/login",
   }
 
   public platformLogin(loginParam: LoginParam): Promise<LoginRes> {
@@ -41,7 +40,7 @@ export default class Login {
               token: res.token
             })
             if (res.data.firstLogin) {
-              RG.Mark(DOT.SDK_REGISTER)
+              RG.Mark("sdk_register")
             }
             resolve(res)
             break;
@@ -78,7 +77,7 @@ export default class Login {
       ])
       loginParam.source = deviceMsg.source;
       if (RG.jssdk.config.type === 1 && isRegister) {
-        loginParam.thirdPartyId = getUrlParam(GET.ADVERTISE_Id) ? getUrlParam(GET.ADVERTISE_Id) : '';
+        loginParam.thirdPartyId = getUrlParam("advertiseId") ? getUrlParam("advertiseId") : '';
       }
       resolve(Object.assign(
         deviceMsg,

@@ -1,4 +1,3 @@
-import { DOT } from "Src/jssdk/Base/Constant";
 import { checkJsToNative } from "./adapter";
 // import Http from "Base/Http";
 // import Web from "./Web";
@@ -32,7 +31,7 @@ function init(window: Window) {
         window.$postMessage(JSON.stringify({ action: "get" }), /(http|https):\/\/(www.)?([A-Za-z0-9-_]+(\.)?)+/.exec(indexUrl)[0]);
       }
 
-      RG.Mark(DOT.SDK_LOADED);
+      RG.Mark("sdk_loaded");
     }
     RG.jssdk.init();
   }

@@ -1,6 +1,5 @@
 // import Mark from 'Src/Base/Mark_old'
-import { Ins } from 'DOM/index'
-import { DOT } from 'Src/jssdk/Base/Constant';
+import { Ins } from 'DOM/index';
 
 /**
  * facebook web games javascript SDK
@@ -100,7 +99,7 @@ export default class FacebookWebGames {
         },
         ({ success }) => {
           if (success) { // facebook 消单成功
-            RG.Mark(DOT.SDK_PURCHASED_DONE)
+            RG.Mark("sdk_purchased_done")
             Ins.showNotice(RG.jssdk.config.i18n.net_error_30200)
             resolve({
               code: 200,

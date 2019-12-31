@@ -1,11 +1,11 @@
 /* 此文件已经废弃，下一次更新时删除 */
 import { getUrlParam } from "Src/jssdk/utils";
-import { DOT, GET } from "Src/jssdk/Base/Constant";
 import { checkJsToNative } from "SDK/adapter";
 import Polyfill from "Src/jssdk/0_Old/Polyfill_old";
 import Mark from "Src/jssdk/0_Old/Mark_old";
 import Web from "../Web";
 import Native from "../Native";
+import { DOT ,GET} from 'Src/jssdk/0_Old/Constant_old';
 
 export default class Main {
   fb_sdk_loaded: boolean;
