@@ -1,7 +1,8 @@
 // import { Ins } from 'DOM/BTgame';
-import Share from 'Base/Share';
-import Api from "Base/Api";
 import Http from "Base/Http";
+import Share from 'Base/Share';
+import {getRoleInfo,Api} from "Base/Api";
+
 import { signed, formatDate } from "../utils";
 
 
@@ -158,7 +159,7 @@ export default class UniteSdk {
     const sign = signed([appId, uid, token, this.config.appSecret])
     // const route = `/pocketgames/client/quick/verifyToken/{appId}/{advChannel}/{uid}/{token}/{sign}`;
     const route = `/quick/verifyToken/${appId}/${advChannel}/${encodeURIComponent(uid)}/${encodeURIComponent(token)}/${encodeURIComponent(sign)}`;
-    const result = await Http.instance.get({ route }).then((res: LoginRes) => {
+    const result = await Http.ins.get({ route }).then((res: LoginRes) => {
       if (res.code === 200) {
         return true;
       }
@@ -213,7 +214,7 @@ export default class UniteSdk {
       /* appId+userName+password+source+appKey */
       sign: signed([appId, userName, password, source, this.config.app_key])
     };
-    await Http.instance.post({ route: "/user/v3/register", data }).then((res: LoginRes) => {
+    await Http.ins.post({ route: "/user/v3/register", data }).then((res: LoginRes) => {
       if (res.code === 200) {
         this._user = Object.assign(res.data, {
           password: data.password,
@@ -235,7 +236,7 @@ export default class UniteSdk {
   /* RG.BindZone */
   BindZone(BindZoneParam: BindZoneParam) {
     const { userId, gameZoneId } = BindZoneParam;
-    Api.instance.getGameRoleInfo({ appId: this.config.urlParams.appId, userId, gameZoneId, appSecret: this.config.appSecret }).then((res: { code: number, error_msg: string, data: GameRoleInfo[] }) => {
+    getRoleInfo({ appId: this.config.urlParams.appId, userId, gameZoneId, appSecret: this.config.appSecret }).then((res: { code: number, error_msg: string, data: GameRoleInfo[] }) => {
       if (res.code === 200) {
         this.quickBindZone(BindZoneParam, new Date(res.data[0].createTime).getTime());
       }
@@ -286,7 +287,7 @@ export default class UniteSdk {
       sign: signed([appId, advChannel, RG.jssdk.CurUserInfo().userId, roleId, gameOrderId, gameZoneId, code, source, channel, "null", "null", "null", exInfo, this.config.app_key])
     };
     console.log('createOrder', data)
-    Http.instance.post({ route: '/order/create/v4.0', data }).then((orderRes: { code: number, error_msg: string, data: PayRes }) => {
+    Http.ins.post({ route: '/order/create/v4.0', data }).then((orderRes: { code: number, error_msg: string, data: PayRes }) => {
       if (orderRes.code !== 200) {
         console.error('​Payment -> createOrder -> orderRes', orderRes);
       } else {

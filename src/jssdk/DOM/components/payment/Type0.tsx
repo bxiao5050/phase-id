@@ -34,7 +34,7 @@ export default class Type0 extends React.Component<paymentProps, {}, any>  {
   async componentDidMount() {
     if (getUrlParam('pay')) {
       console.log('发货请求中', this.props.Payment.state.paymentDatas[0])
-      Http.instance.get({
+      Http.ins.get({
         route: '/order/sendGoods?OrderId=' + this.props.Payment.state.paymentDatas[0].transactionId
       }).then(res => {
         if (res.code === 200) {

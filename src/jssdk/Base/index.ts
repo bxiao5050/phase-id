@@ -1,14 +1,14 @@
 import Share from "Base/Share";
 import Payment from "Base/Payment";
 import Login from "Base/Login";
-import Api from "Base/Api";
+import {Api} from "Base/Api";
 import Account from "Base/Account";
 import { getUrlParam } from "Src/jssdk/utils";
 // import Mark from "Src/Base/Mark_old";
 
 export default class Base {
 
-  Account = Account.instance
+  Account = Account.ins
 
   Login(loginParam: LoginParam): Promise<LoginRes> {
     let promise: Promise<LoginRes>
@@ -89,7 +89,7 @@ export default class Base {
     })
   }
 
-  FinishOrder(finishOrderParams: FinishOrderParams): Promise<Res> {
+  FinishOrder(finishOrderParams: FinishOrderParams): Promise<ServerRes> {
     return Payment.instance.finishOrder({
       transactionId: finishOrderParams.transactionId,
       channel: finishOrderParams.channel,
@@ -104,7 +104,7 @@ export default class Base {
   }
 
   ChangePassword(oldpass, newpass) {
-    return Account.instance.changePass(oldpass, newpass)
+    return Account.ins.changePass(oldpass, newpass)
   }
 
   VisitorUpgrade(account: string, pass: string) {

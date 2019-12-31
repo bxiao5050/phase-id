@@ -46,7 +46,7 @@ export default class Payment {
       RG.jssdk.config.app_key
     ])
 
-    return Http.instance.post({
+    return Http.ins.post({
       route: this.route.config,
       data
     }).then((paymentConfigRes: PaymentConfigRes) => {
@@ -69,7 +69,7 @@ export default class Payment {
       ])
     }
 
-    return Http.instance.get({ route: this.route.history + '/' + Object.keys(data).map(key => data[key]).join('/') }).then((history) => {
+    return Http.ins.get({ route: this.route.history + '/' + Object.keys(data).map(key => data[key]).join('/') }).then((history) => {
       return history
     })
   }
@@ -132,7 +132,7 @@ export default class Payment {
       RG.jssdk.config.app_key
     ])
 
-    return Http.instance.post({ route: this.route.createOrder, data }).then((orderRes: OrderRes) => {
+    return Http.ins.post({ route: this.route.createOrder, data }).then((orderRes: OrderRes) => {
       if (orderRes.code !== 200) {
         console.error('​Payment -> createOrder -> orderRes', orderRes);
       }
@@ -172,7 +172,7 @@ export default class Payment {
 
       ])
     }
-    return Http.instance.post({ route: this.route.finish, data: finishOrderPostData }).then((serverRes: Res) => {
+    return Http.ins.post({ route: this.route.finish, data: finishOrderPostData }).then((serverRes: ServerRes) => {
       if (serverRes.code !== 200) {
         console.error('​Payment -> finishOrder -> serverRes', serverRes);
       }

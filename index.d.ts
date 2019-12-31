@@ -1,4 +1,3 @@
-
 /** jssdk 版本 */
 declare const VERSION: JSSDK.Version;
 declare const VConsole: any;
@@ -12,7 +11,7 @@ declare const Kakao: any;
 6.vk账号 */
 type AccountType = 0 | 1 | 2 | 3 | 4 | 5 | 6;
 type UserType = 0 | 1;
-type Region = "test" | "sg" | "de" | "vn";
+type Region = "sg" | "de" | "vn" | "test" | "dev";
 // 平台来源 0 = ios 1 = android 2 = 网页支付 3 = PC web登录
 type SourceType = 0 | 1 | 2 | 3;
 // 网络 0=wifi 1 = 3g 2=其他
@@ -52,30 +51,30 @@ declare namespace JSSDK {
     // 控制首次请求的地址，将来放在urlParams中有sg、de、vn,或者test三个值
     region: string;
     // 悬浮球距离顶边的距离rem
-    hoverTop: number
+    hoverTop: number;
     // 悬浮球是在左边还是右边
-    hoverFromLeft: boolean
+    hoverFromLeft: boolean;
     // 如果游戏会进行支付打点，此值是false，反之则是true
-    isPurchasedMark: boolean,
+    isPurchasedMark: boolean;
     mark_id: {
       fb: string;
       ga: string;
       // 需要改变的打点的名称
       markName: {
-        [key: string]: string
-      }
+        [key: string]: string;
+      };
       adjust: {
-        [key: string]: string
-      }
+        [key: string]: string;
+      };
     };
     server: {
       test: string;
       formal: string;
     };
     download: {
-      android: string
-      ios: string
-    }
+      android: string;
+      ios: string;
+    };
     page: {
       index: {
         test: string;
@@ -89,8 +88,8 @@ declare namespace JSSDK {
         messenger: {
           pc: string;
           mobile: string;
-        },
-        index: string
+        };
+        index: string;
       };
     };
     urlParams: UrlParams;
@@ -134,7 +133,7 @@ interface RG {
   Share(shareUrl: string);
 
   /** 绑定区服 */
-  BindZone(bindZoneParam: BindZoneParam): Promise<Res>;
+  BindZone(bindZoneParam: BindZoneParam): Promise<ServerRes>;
 
   Mark(markName: string, extraParam?: any): void;
 
@@ -171,7 +170,7 @@ declare interface Window {
   // 测试使用
   _RG_REGION: string;
   changePostmessageAndRegion: Function;
-  QuickSDK: any
+  QuickSDK: any;
 }
 
 declare var FBVersion: string;
@@ -244,7 +243,6 @@ interface JsToNativeDeviceMsg {
 }
 
 interface JsToNative {
-
   //获取设备参数 ios是解析后的对象不是JSON字符串
   getDeviceMsg(): string;
   getDeviceMsgAsync(): Promise<JsToNativeDeviceMsg>;
@@ -373,20 +371,19 @@ interface Base0 {
 
   fb_sdk_loaded: boolean;
 
-  key
-  iv
-  deviceMsgPromise
-  deviceMsgResolve
-  nativeInit
-  nativeIsInit
-  AESdecode
-  consumeOrder
-  jpworkResult
-  goBack
-  gotDeviceMsg
+  key;
+  iv;
+  deviceMsgPromise;
+  deviceMsgResolve;
+  nativeInit;
+  nativeIsInit;
+  AESdecode;
+  consumeOrder;
+  jpworkResult;
+  goBack;
+  gotDeviceMsg;
 
-
-  init
+  init;
   polyfilled();
 
   App: any;
@@ -420,7 +417,7 @@ interface Base0 {
   Share(shareUrl: string);
 
   /** 绑定区服 */
-  BindZone(bindZoneParam: BindZoneParam): Promise<Res>;
+  BindZone(bindZoneParam: BindZoneParam): Promise<ServerRes>;
 
   Account: any;
 
@@ -440,19 +437,19 @@ interface Base0 {
   // GetRedirectUrl()
 
   /** 修改当前账户密码 */
-  ChangePassword(oldpass: string, newpass: string): Promise<Res>;
+  ChangePassword(oldpass: string, newpass: string): Promise<ServerRes>;
 
-  VisitorUpgrade(username: string, pass: string): Promise<Res>;
+  VisitorUpgrade(username: string, pass: string): Promise<ServerRes>;
 
   /** 获取订单列表 */
-  GetPaymentHistory(): Promise<Res>;
+  GetPaymentHistory(): Promise<ServerRes>;
 
   /** 获取支付数据 */
   PaymentConfig(PaymentConfig: PaymentConfig): Promise<PaymentConfigRes>;
 
   Ordering(OrderingData: OrderingData, extraInfo?: any): Promise<OrderRes>;
 
-  FinishOrder(finishOrderParams: FinishOrderParams): Promise<Res>;
+  FinishOrder(finishOrderParams: FinishOrderParams): Promise<ServerRes>;
 }
 
 type Base = Base0;
@@ -525,7 +522,7 @@ interface PaymentConfig {
   gameCoin: number;
 }
 
-interface OrderRes extends Res {
+interface OrderRes extends ServerRes {
   data: {
     currency: string;
     money: number;
@@ -713,12 +710,12 @@ interface BindZoneParam {
   level: number;
 }
 
-interface Res {
+interface ServerRes {
   code: number;
   error_msg: string;
 }
 
-interface PaymentConfigRes extends Res {
+interface PaymentConfigRes extends ServerRes {
   payments: PaymentChannel[];
 }
 
@@ -761,7 +758,7 @@ interface LoginData {
   password?: string;
 }
 
-interface LoginRes extends Res {
+interface LoginRes extends ServerRes {
   data: LoginData;
   firstLogin: boolean;
   token: string;
@@ -788,21 +785,14 @@ interface LoginParam {
   userId?: number;
 }
 
-interface PaymentItem { }
-
-interface requestParam {
-  route?: string;
-  method?: Methods;
-  data?: object;
-  url?: string;
-}
+interface PaymentItem {}
 
 // interface IntrinsicElements {
 //   [elemName: string]: any;
 // }
 
 type PlatformLoginParam = LoginParam & DeviceMsg;
-type Methods = "POST" | "GET";
+
 interface UrlParams {
   appId: string;
   region: Region;
@@ -813,4 +803,3 @@ interface UrlParams {
   advertiseId?: string;
 }
 /* 以下为新的类型 */
-

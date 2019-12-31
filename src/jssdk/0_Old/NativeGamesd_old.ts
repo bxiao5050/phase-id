@@ -229,7 +229,7 @@ export default class NativeGames {
 
       console.log('initSDKParams', initSDKParam)
 
-      Http.instance.post({
+      Http.ins.post({
         route: '/config/v3.1/initSDK',
         data: initSDKParam
       }).then((data: {

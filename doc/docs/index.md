@@ -94,9 +94,9 @@ var curUser = RG.CurUserInfo()
 **返回参数说明：**
 
 ```
-RG.BindZone(data): Promise<Res>
+RG.BindZone(data): Promise<ServerRes>
 
-Res: {
+ServerRes: {
   code: number  // 200 为绑定成功
   error_msg: string
 }
@@ -183,9 +183,9 @@ RG.Pay(data)
 * 调起FB分享
 
 ```
-RG.Share(ShareUrl): Promise<Res>
+RG.Share(ShareUrl): Promise<ServerRes>
 
-Res: {
+ServerRes: {
   code: number  // 200 为分享成功
   error_msg?: string
 }

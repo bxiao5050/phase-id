@@ -62,7 +62,7 @@ export default class FacebookWebGames {
    * 支付接口
    * @param paymentConfig
    */
-  async Pay(payParams: RG.PayParams): Promise<Res> {
+  async Pay(payParams: RG.PayParams): Promise<ServerRes> {
     // if ('product_id' in payParams) {
     var paymentConfig = await RG.jssdk.PaymentConfig(payParams)
     if (paymentConfig.code === 200) {
@@ -82,7 +82,7 @@ export default class FacebookWebGames {
    * @param data
    * @param purchaseToken
    */
-  serverFinishOrderCompleted(data: Res, purchaseToken: string): Promise<Res> {
+  serverFinishOrderCompleted(data: ServerRes, purchaseToken: string): Promise<ServerRes> {
     return FacebookWebGames.instance.consumePurchaseAsync(purchaseToken)
   }
 
@@ -90,7 +90,7 @@ export default class FacebookWebGames {
    * facebook 消单
    * @param purchaseToken
    */
-  consumePurchaseAsync(purchaseToken: string): Promise<Res> {
+  consumePurchaseAsync(purchaseToken: string): Promise<ServerRes> {
     return new Promise((resolve, reject) => {
       FB.api(
         '/' + purchaseToken + '/consume',    // Replace the PURCHASE_TOKEN
@@ -172,7 +172,7 @@ export default class FacebookWebGames {
    * @param orderingData
    * @param orderRes
    */
-  purchaseAsync(orderingData, orderRes): Promise<Res> {
+  purchaseAsync(orderingData, orderRes): Promise<ServerRes> {
     return new Promise(resolve => {
       FB.ui({
         method: 'pay',

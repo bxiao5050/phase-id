@@ -291,7 +291,7 @@ export default class Native extends Base {
 
       console.log('initSDKParams', initSDKParam)
 
-      Http.instance.post({
+      Http.ins.post({
         route: '/config/v3.1/initSDK',
         data: initSDKParam
       }).then((data: {
