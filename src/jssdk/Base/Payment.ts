@@ -1,297 +1,296 @@
+import Http from './Http';
+import {signed, formatDate} from '../common/utils';
 
-import Http from "./Http";
-import { signed, formatDate } from "../common/utils";
+export async function getPaymentConfig(PaymentConfig: PaymentConfig) {
+  var deviceMsg = await JsToNative.getDeviceMsgAsync();
 
-export default class Payment {
-  static _ins: Payment
-  static get instance(): Payment {
-    return this._ins || new Payment;
-  }
-  constructor() {
-    Payment._ins = this
-  }
+  var data: PaymentConfigParams = {
+    appId: RG.jssdk.config.appId,
+    advChannel: RG.jssdk.config.advChannel,
+    userId: RG.jssdk.CurUserInfo().userId,
+    roleId: PaymentConfig.roleId,
+    source: deviceMsg.source,
+    version: deviceMsg.version,
+    network: deviceMsg.network,
+    level: PaymentConfig.level,
+    gameCoin: PaymentConfig.gameCoin,
+    sign: null
+  };
+  data.sign = signed([
+    data.appId,
+    data.advChannel,
+    data.userId,
+    data.gameCoin,
+    data.level || 'null',
+    data.source,
+    data.network,
+    RG.jssdk.config.app_key
+  ]);
 
-  private route = {
-    config: "/config/paymentConfig/v4.0",
-    createOrder: "/order/create/v4.0",
-    history: "/order/getOrderList",
-    finish: "/official/order/finish/v4.0"
-  }
-
-  async getPaymentConfig(PaymentConfig: PaymentConfig) {
-
-    var deviceMsg = await JsToNative.getDeviceMsgAsync()
-
-    var data: PaymentConfigParams = {
-      appId: RG.jssdk.config.appId,
-      advChannel: RG.jssdk.config.advChannel,
-      userId: RG.jssdk.CurUserInfo().userId,
-      roleId: PaymentConfig.roleId,
-      source: deviceMsg.source,
-      version: deviceMsg.version,
-      network: deviceMsg.network,
-      level: PaymentConfig.level,
-      gameCoin: PaymentConfig.gameCoin,
-      sign: null
-    }
-    data.sign = signed([
-      data.appId,
-      data.advChannel,
-      data.userId,
-      data.gameCoin,
-      data.level || "null",
-      data.source,
-      data.network,
-      RG.jssdk.config.app_key
-    ])
-
-    return Http.ins.post({
-      route: this.route.config,
+  return Http.ins
+    .post({
+      route: '/config/paymentConfig/v4.0',
       data
-    }).then((paymentConfigRes: PaymentConfigRes) => {
+    })
+    .then((paymentConfigRes: PaymentConfigRes) => {
       if (paymentConfigRes.code !== 200) {
         console.error('​Payment -> getPaymentConfig -> paymentConfigRes', paymentConfigRes);
       }
-      return paymentConfigRes
-    })
-  }
+      return paymentConfigRes;
+    });
+}
 
-  public getPaymentHistory(): Promise<any> {
-    var data = {
-      appId: RG.jssdk.config.appId,
-      userId: RG.jssdk.CurUserInfo().userId,
-      lastTime: 1525771365401,
-      sign: signed([
-        RG.jssdk.config.appId,
-        RG.jssdk.CurUserInfo().userId,
-        RG.jssdk.config.app_key
-      ])
+export function getPaymentHistory(): Promise<any> {
+  var data = {
+    appId: RG.jssdk.config.appId,
+    userId: RG.jssdk.CurUserInfo().userId,
+    lastTime: 1525771365401,
+    sign: signed([RG.jssdk.config.appId, RG.jssdk.CurUserInfo().userId, RG.jssdk.config.app_key])
+  };
+  const route =
+    '/order/getOrderList/' +
+    Object.keys(data)
+      .map(key => data[key])
+      .join('/');
+
+  return Http.ins.get({route}).then(history => {
+    return history;
+  });
+}
+export interface OrderParams {
+  channel: number;
+  code: number;
+  amount: string;
+  currency: string;
+  productName: string;
+  itemType: number;
+  isOfficial: number;
+  exInfo?: string;
+}
+export async function createOrder(paymentConfig: PaymentConfig, createOrderParams: OrderParams) {
+  var deviceMsg = await JsToNative.getDeviceMsgAsync();
+  console.log('createOrder', paymentConfig, createOrderParams);
+  var data: CreateOrderParams = {
+    channel: createOrderParams.channel,
+    code: createOrderParams.code,
+    amount: createOrderParams.amount,
+    currency: createOrderParams.currency,
+    productName: createOrderParams.productName,
+    itemType: createOrderParams.itemType,
+    isOfficial: createOrderParams.isOfficial,
+    exInfo: createOrderParams.exInfo ? createOrderParams.exInfo : '0',
+    appId: RG.jssdk.config.appId,
+    advChannel: RG.jssdk.config.advChannel,
+    userId: RG.jssdk.CurUserInfo().userId,
+    gameOrderId: paymentConfig.gameOrderId + '',
+    gameZoneId: paymentConfig.gameZoneId + '',
+    roleId: paymentConfig.roleId + '',
+    roleName: paymentConfig.roleName,
+    level: paymentConfig.level + '',
+    source: deviceMsg.source,
+    deviceNo: deviceMsg.deviceNo,
+    device: deviceMsg.device,
+    network: deviceMsg.network,
+    model: deviceMsg.model,
+    operatorOs: deviceMsg.operatorOs,
+    version: deviceMsg.version,
+    sdkVersion: RG.jssdk.version,
+    clientTime: formatDate(),
+    sign: null
+  };
+
+  data.sign = signed([
+    data.appId,
+    data.advChannel,
+    data.userId,
+    data.roleId,
+    data.gameOrderId,
+    data.gameZoneId,
+    data.code,
+    data.source,
+    data.channel,
+    data.amount,
+    data.currency,
+    data.productName,
+    data.exInfo,
+    RG.jssdk.config.app_key
+  ]);
+
+  return Http.ins.post<OrderRes>({route: '/order/create/v4.0', data}).then((orderRes: OrderRes) => {
+    if (orderRes.code !== 200) {
+      console.error('​Payment -> createOrder -> orderRes', orderRes);
     }
+    return orderRes;
+  });
+}
+export async function finishOrder(finishOrderParams: FinishOrderParams) {
+  var deviceMsg = await JsToNative.getDeviceMsgAsync();
+  var {version, deviceNo, device, network, model, operatorOs} = deviceMsg;
+  var finishOrderPostData: FinishOrderPostData = {
+    transactionId: finishOrderParams.transactionId,
+    channel: finishOrderParams.channel,
+    exInfo: finishOrderParams.exInfo || '',
+    receipt: finishOrderParams.receipt,
+    signature: finishOrderParams.signature,
 
-    return Http.ins.get({ route: this.route.history + '/' + Object.keys(data).map(key => data[key]).join('/') }).then((history) => {
-      return history
-    })
-  }
+    advChannel: RG.jssdk.config.advChannel,
+    sdkVersion: RG.jssdk.version,
+    clientTime: formatDate(),
 
-  async createOrder(paymentConfig: PaymentConfig, createOrderParams: {
-    channel: number
-    code: number
-    amount: string
-    currency: string
-    productName: string
-    itemType: number
-    isOfficial: number
-    exInfo?: string
-  }): Promise<OrderRes> {
-    var deviceMsg = await JsToNative.getDeviceMsgAsync()
-    console.log('createOrder', paymentConfig, createOrderParams)
-    var data: CreateOrderParams = {
-      channel: createOrderParams.channel,
-      code: createOrderParams.code,
-      amount: createOrderParams.amount,
-      currency: createOrderParams.currency,
-      productName: createOrderParams.productName,
-      itemType: createOrderParams.itemType,
-      isOfficial: createOrderParams.isOfficial,
-      exInfo: createOrderParams.exInfo ? createOrderParams.exInfo : "0",
-      appId: RG.jssdk.config.appId,
-      advChannel: RG.jssdk.config.advChannel,
-      userId: RG.jssdk.CurUserInfo().userId,
-      gameOrderId: paymentConfig.gameOrderId + '',
-      gameZoneId: paymentConfig.gameZoneId + '',
-      roleId: paymentConfig.roleId + '',
-      roleName: paymentConfig.roleName,
-      level: paymentConfig.level + '',
-      source: deviceMsg.source,
-      deviceNo: deviceMsg.deviceNo,
-      device: deviceMsg.device,
-      network: deviceMsg.network,
-      model: deviceMsg.model,
-      operatorOs: deviceMsg.operatorOs,
-      version: deviceMsg.version,
-      sdkVersion: RG.jssdk.version,
-      clientTime: formatDate(),
-      sign: null
-    }
+    version: version,
+    deviceNo: deviceNo,
+    device: device,
+    network: network,
+    model: model,
+    operatorOs: operatorOs,
 
-    data.sign = signed([
-      data.appId,
-      data.advChannel,
-      data.userId,
-      data.roleId,
-      data.gameOrderId,
-      data.gameZoneId,
-      data.code,
-      data.source,
-      data.channel,
-      data.amount,
-      data.currency,
-      data.productName,
-      data.exInfo,
+    sign: signed([
+      finishOrderParams.transactionId,
+      finishOrderParams.receipt,
+      finishOrderParams.signature,
+      finishOrderParams.channel,
+      RG.jssdk.config.advChannel,
       RG.jssdk.config.app_key
     ])
-
-    return Http.ins.post({ route: this.route.createOrder, data }).then((orderRes: OrderRes) => {
-      if (orderRes.code !== 200) {
-        console.error('​Payment -> createOrder -> orderRes', orderRes);
-      }
-      return orderRes
-    })
-  }
-
-  /** 官方充值完成订单（消单接口） */
-  public async finishOrder(finishOrderParams: FinishOrderParams) {
-    var deviceMsg = await JsToNative.getDeviceMsgAsync()
-    var { version, deviceNo, device, network, model, operatorOs } = deviceMsg
-    var finishOrderPostData: FinishOrderPostData = {
-      transactionId: finishOrderParams.transactionId,
-      channel: finishOrderParams.channel,
-      exInfo: finishOrderParams.exInfo || '',
-      receipt: finishOrderParams.receipt,
-      signature: finishOrderParams.signature,
-
-      advChannel: RG.jssdk.config.advChannel,
-      sdkVersion: RG.jssdk.version,
-      clientTime: formatDate(),
-
-      version: version,
-      deviceNo: deviceNo,
-      device: device,
-      network: network,
-      model: model,
-      operatorOs: operatorOs,
-
-      sign: signed([
-        finishOrderParams.transactionId,
-        finishOrderParams.receipt,
-        finishOrderParams.signature,
-        finishOrderParams.channel,
-        RG.jssdk.config.advChannel,
-        RG.jssdk.config.app_key
-
-      ])
-    }
-    return Http.ins.post({ route: this.route.finish, data: finishOrderPostData }).then((serverRes: ServerRes) => {
+  };
+  return Http.ins
+    .post({route: '/official/order/finish/v4.0', data: finishOrderPostData})
+    .then((serverRes: ServerRes) => {
       if (serverRes.code !== 200) {
         console.error('​Payment -> finishOrder -> serverRes', serverRes);
       }
-      return serverRes
-    })
-  }
-
+      return serverRes;
+    });
 }
-
-interface FinishOrderPostData {
+export interface FinishOrderPostData {
   /** 交易流水 */
-  transactionId: string
+  transactionId: string;
   /** APPSTORE单据或者Google play signatureData */
-  receipt: string
+  receipt: string;
   /** Google play signature */
-  signature: String
+  signature: String;
   /** 支付方式 0=appstore 1=google play 2=vnpt 3=1pay 4=mol 28=facebook */
-  channel: number
+  channel: number;
   /** 包ID */
-  advChannel: number
+  advChannel: number;
   /** SDK版本 */
-  sdkVersion: string
+  sdkVersion: string;
   /** 客户端提交时间 "yyyy-MM-dd hh:mm:ss" */
-  clientTime: string
+  clientTime: string;
   /** 参数签名结果 MD5(transactionId + receipt + signature + channel + advChannel + app_key) */
-  sign: string
+  sign: string;
   /** 设备号 */
-  deviceNo: string
+  deviceNo: string;
   /** Android: MAC地址 IOS: IDFA */
-  device: string
+  device: string;
   /** 网络 0 = wifi 1 = 3g 2 = 其他 */
-  network: number
+  network: number;
   /** 机型 */
-  model: string
+  model: string;
   /** 操作系统，例如Android4.4 */
-  operatorOs: string
+  operatorOs: string;
   /** 游戏版本 */
-  version: string
+  version: string;
   /** 额外的信息 */
-  exInfo?: string
+  exInfo?: string;
 }
 
-interface PaymentConfigParams {
+export interface PaymentConfigParams {
   /** 平台方分配给游戏的appId */
-  appId: number
+  appId: number;
   /** 0=appstore 1=google play 具体查看包常量表 */
-  advChannel: number
+  advChannel: number;
   /** 平台用户ID */
-  userId: number
+  userId: number;
   /** 游戏内角色id */
-  roleId: number
+  roleId: number;
   /** 0=ios 1=android */
-  source: number
+  source: number;
   // 网络 0=wifi 1 = 3g 2=其他
-  network: number
+  network: number;
   /** 角色等级 */
-  level: number
+  level: number;
   /** 游戏版本 控制每种支付方式的开关 */
-  version: string
+  version: string;
   /** 游戏币数量 */
-  gameCoin: number
+  gameCoin: number;
   /** 额外参数 */
-  exInfo?: string
+  exInfo?: string;
   /** 验证参数MD5(appId+ advChannel+userId+gameCoin+level +source+ network +app_key) */
-  sign: string
+  sign: string;
 }
 
-interface CreateOrderParams {
+export interface CreateOrderParams {
   /** 平台方分配给游戏的appId */
-  appId: number
+  appId: number;
   /** 0=appstore 1=google play 具体查看包常量表 */
-  advChannel: number
+  advChannel: number;
   /** 平台用户ID */
-  userId: number
+  userId: number;
   /** 游戏订单ID */
-  gameOrderId: string
+  gameOrderId: string;
   /** 游戏区服ID */
-  gameZoneId: string
+  gameZoneId: string;
   /** 角色ID */
-  roleId: string
+  roleId: string;
   /** 角色ID */
-  roleName: string
+  roleName: string;
   /** 角色等级 */
-  level: string
+  level: string;
   /** 充值来源 0=ANDROID客户端 1=IOS客户端 2=网页 */
-  source: number
+  source: number;
   /** 支付渠道 0=appstore 1=google play 2=vnpt 3=1pay 4=mol,具体见渠道常量表 */
-  channel: number
+  channel: number;
   /** CODE值，具体见支付方式常量表 */
-  code: number
+  code: number;
   /** 金额 */
-  amount: string
+  amount: string;
   /** 货币 */
-  currency: string
+  currency: string;
   /** 商品名称 */
-  productName: string
+  productName: string;
   /** 商品类型：0=普通商品，1=月卡，2=年卡.... */
-  itemType: number
+  itemType: number;
   /** 0=第三方，1=官方 */
-  isOfficial: number
+  isOfficial: number;
   /** 设备号 */
-  deviceNo: string
+  deviceNo: string;
   /** Android:MAC地址 IOS:IDFA */
-  device: string
+  device: string;
   /** 网络 0=wifi 1 = 3g 2=其他 */
-  network: number
+  network: number;
   /** 机型 */
-  model: string
+  model: string;
   /** 操作系统，例如Android4.4 */
-  operatorOs: string
+  operatorOs: string;
   /** 游戏版本 */
-  version: string
+  version: string;
   /** SDK版本号 */
-  sdkVersion: string
+  sdkVersion: string;
   /** 客户端提交时间 "yyyy-MM-dd hh:mm:ss" */
-  clientTime: string
+  clientTime: string;
   /** 额外的信息，如果是刮刮卡,它的格式是{“serialNo”:””,”pin”:””}JSON字符串 */
-  exInfo: string
+  exInfo: string;
   /** 参数签名结果 MD5(appId+advChannel+userId+roleId+gameOrderId+gameZoneId+code+source+channel+amount+currency+productName + exInfo +app_key)
-  */
-  sign: string
+   */
+  sign: string;
 }
 
+// export default class Payment {
+//   static _ins: Payment;
+//   static get instance(): Payment {
+//     return this._ins || new Payment();
+//   }
+//   constructor() {
+//     Payment._ins = this;
+//   }
+
+//   getPaymentConfig = getPaymentConfig;
+
+//   getPaymentHistory = getPaymentHistory;
+
+//   createOrder = createOrder;
+
+//   /** 官方充值完成订单（消单接口） */
+//   finishOrder = finishOrder;
+// }

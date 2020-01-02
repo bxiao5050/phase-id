@@ -1,4 +1,4 @@
-import Payment from 'Base/Payment';
+import {getPaymentConfig,createOrder,finishOrder,getPaymentHistory } from 'Base/Payment';
 import Login from 'Base/Login';
 import {Api} from 'Base/Api';
 import Account from 'Base/Account';
@@ -89,11 +89,11 @@ export default class Base {
   static paymentConfig: PaymentConfig;
   PaymentConfig(PaymentConfig: PaymentConfig): Promise<PaymentConfigRes> {
     Base.paymentConfig = PaymentConfig;
-    return Payment.instance.getPaymentConfig(PaymentConfig);
+    return getPaymentConfig(PaymentConfig);
   }
 
   Ordering(OrderingData: PaymentChannel) {
-    return Payment.instance.createOrder(Base.paymentConfig, {
+    return createOrder(Base.paymentConfig, {
       channel: OrderingData.channel,
       code: OrderingData.code,
       amount: OrderingData.selectedProduct.amount + '',
@@ -112,7 +112,7 @@ export default class Base {
   };
 
   FinishOrder(finishOrderParams: FinishOrderParams): Promise<ServerRes> {
-    return Payment.instance.finishOrder({
+    return finishOrder({
       transactionId: finishOrderParams.transactionId,
       channel: finishOrderParams.channel,
       receipt: finishOrderParams.receipt,
@@ -122,7 +122,7 @@ export default class Base {
   }
 
   GetPaymentHistory() {
-    return Payment.instance.getPaymentHistory();
+    return getPaymentHistory();
   }
 
   ChangePassword(oldpass, newpass) {

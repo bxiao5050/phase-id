@@ -686,7 +686,7 @@ interface SDK {
 }
 
 interface Product {
-  amount: number;
+  amount: string;
   currency: string;
   discountDesc?: string;
   gameCoin: number;
