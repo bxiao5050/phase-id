@@ -54,17 +54,19 @@
         flex-shrink: 0;
         /* justify-content: space-around; */
         /*  height: 6rem; */
-
+        text-align: center;
         .price-item {
           color: #000;
           height: 2rem;
-          display: flex;
-          justify-content: center;
-          align-items: center;
+          // display: flex;
+          // justify-content: center;
+          // align-items: center;
+          line-height: 2rem;
           margin-top: -0.5rem;
         }
 
         .btn-item {
+          line-height: 1.2;
           cursor: pointer;
           /* line-height: 5vw; */
           background: #28abf0;
