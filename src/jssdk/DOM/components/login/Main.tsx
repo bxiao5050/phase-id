@@ -6,7 +6,7 @@ import { createLocation } from 'history'
 import Login from "./index"
 import Choose from "./Choose"
 import { Ins } from 'DOM/index'
-import Account from "../../../Base/Account";
+// import Account from "../../../Base/Account";
 
 export default class Main extends React.Component<{
   Login: Login

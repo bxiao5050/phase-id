@@ -1,8 +1,8 @@
-import {getPaymentConfig,createOrder,finishOrder,getPaymentHistory } from 'Base/Payment';
-import Login from 'Base/Login';
-import {Api} from 'Base/Api';
-import Account from 'Base/Account';
-import {getUrlParam} from 'Src/jssdk/common/utils';
+import {getPaymentConfig,createOrder,finishOrder,getPaymentHistory } from './Payment';
+import Login from './Login';
+import {Api} from './Api';
+import Account from './Account';
+import {getUrlParam} from '../common/utils';
 // import Mark from "Src/Base/Mark_old";
 
 export default class Base {
