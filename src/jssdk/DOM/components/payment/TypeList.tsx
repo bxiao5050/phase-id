@@ -32,10 +32,10 @@ export default class TypeList extends React.Component<paymentProps, {}, any>  {
                 {/* {product.productDesc} */}
               </div>
               <div className="item-price-btn">
-                <div className="price-item">
+                <div className="price-item noselect">
                   {product.shortCurrency + ' ' + product.amount}
                 </div>
-                <div className="btn-item"
+                <div className="btn-item noselect"
                   onClick={() => {
                     // console.log('typeList', product, source)
                     RG.jssdk.Ordering(Object.assign(source, {

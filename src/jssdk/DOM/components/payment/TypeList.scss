@@ -5,7 +5,7 @@
 
   .type-list {
     padding: 0;
-    margin: 1.9rem 0 .5rem 0;
+    margin: 1.9rem 0 0.5rem 0;
     overflow: auto;
 
     li {
@@ -15,16 +15,16 @@
       height: auto;
       background: #fff;
       display: flex;
-      margin-top: .8rem;
+      margin-top: 0.8rem;
       align-items: center;
-      padding-bottom: .5rem;
+      padding-bottom: 0.5rem;
 
       .item-name {
-        font-size: .5rem;
+        font-size: 0.5rem;
         line-height: 1.2;
         text-align: left;
         flex-grow: 1;
-        margin-right: .3rem;
+        margin-right: 0.3rem;
 
         .up,
         .down {
@@ -37,10 +37,17 @@
         //   // margin-top: .5rem;
         // }
         .down {
-          font-size: .5rem;
+          font-size: 0.5rem;
         }
       }
-
+      .noselect {
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
       .item-price-btn {
         display: flex;
         flex-direction: column;
@@ -54,7 +61,7 @@
           display: flex;
           justify-content: center;
           align-items: center;
-          margin-top: -.5rem;
+          margin-top: -0.5rem;
         }
 
         .btn-item {
@@ -62,8 +69,8 @@
           /* line-height: 5vw; */
           background: #28abf0;
           color: #fff;
-          border-radius: .3rem;
-          padding: 0 .8rem;
+          border-radius: 0.3rem;
+          padding: 0 0.8rem;
           // height: 6vw;
           display: flex;
           align-items: center;
