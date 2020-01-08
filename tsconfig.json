@@ -30,7 +30,7 @@
         "./src/jssdk/DOM/*"
       ],
       "Base/*": [
-        "./src/jssdk/Base/*"
+        "./src/jssdk/base/*"
       ]
     }
   },
