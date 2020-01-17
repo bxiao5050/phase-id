@@ -1,7 +1,7 @@
 // import { Ins } from 'DOM/BTgame';
 import Http from 'Base/Http';
 import {getRoleInfo, Api} from 'Base/Api';
-import {getPaymentConfig, createOrder} from '../Base/Payment';
+import {getPaymentConfig, createOrder} from 'Base/Payment';
 
 import {signed, formatDate} from '../common/utils';
 
