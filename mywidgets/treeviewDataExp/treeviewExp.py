@@ -52,6 +52,11 @@ treeview panel to import exp XRD data
     def on_readfiles(self):
         self.readfiles()
 
+
+    def normalization(self, df):
+        df_norm = (df - df.min()) / (df.max() - df.min())
+        return df_norm
+
     def readfiles(self):
         #2. get XRD from a csv file
         path = choosefiles.OpenCSV(self).getFilePath()
@@ -75,12 +80,6 @@ treeview panel to import exp XRD data
                         if k != 0:
                             self.insertItem(col)
                     return self.expData
-
-    def normalization(self, df):
-        df_norm = (df - df.min()) / (df.max() - df.min())
-        return df_norm
-
-
 
     def on_treeview_click(self, e):
         pass
