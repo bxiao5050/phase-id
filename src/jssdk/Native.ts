@@ -334,14 +334,25 @@ export default class Native extends Base {
           admobConversionID: string
           admobValue: string
         }
+        publics:{
+          gpPluginAction:string;
+          gpPluginGpUrl:string;
+          gpPluginType:string;
+          gpPluginName:string;
+        }
       }) => {
         if (data.code === 200) {
 
           RG.jssdk.nativeIsInit = true
-          let verifys = JSON.parse(RG.jssdk.AESdecode(data.verifys))
+          let verifys = JSON.parse(RG.jssdk.AESdecode(data.verifys));
+          const {gpPluginAction,gpPluginGpUrl,gpPluginType,gpPluginName} = data.publics;
           let initParam = {
             gpProduct: verifys.gpProduct,
-            gpVerify: verifys.gpVerify
+            gpVerify: verifys.gpVerify,
+            gpPluginAction,
+            gpPluginGpUrl,
+            gpPluginType,
+            gpPluginName
           }
           console.log('调用 window.JsToNative.init')
           window.JsToNative.init(JSON.stringify(initParam));
