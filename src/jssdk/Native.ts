@@ -1,39 +1,36 @@
 import Http from 'Base/Http';
-import { getUrlParam, signed, formatDate, getAccountType } from './common/utils';
-import * as CryptoJS from 'crypto-js'
+import {getUrlParam, signed, formatDate, getAccountType} from './common/utils';
+import * as CryptoJS from 'crypto-js';
 import Base from './Base';
 
 export default class Native extends Base {
+  config;
+  fb_sdk_loaded;
 
-  config
-  fb_sdk_loaded
-
-  static instance
+  static instance;
   constructor(config, fb_sdk_loaded) {
-    super()
+    super();
 
-    this.config = config
-    this.fb_sdk_loaded = fb_sdk_loaded
+    this.config = config;
+    this.fb_sdk_loaded = fb_sdk_loaded;
 
-    let RG = function () { }
-    RG.prototype.jssdk = this
-    window.RG = new RG
+    let RG = function() {};
+    RG.prototype.jssdk = this;
+    window.RG = new RG();
 
-    console.log(
-      'this.ExposeApis() before'
-    )
+    console.log('this.ExposeApis() before');
 
-    this.ExposeApis()
+    this.ExposeApis();
 
     /**
      * 下单方法重写
      */
-    window.RG.jssdk.Ordering = (function (Ordering) {
-
-      return function (OrderingData: PaymentChannel) {
+    window.RG.jssdk.Ordering = (function(Ordering) {
+      return function(OrderingData: PaymentChannel) {
         return Ordering(OrderingData).then(orderRes => {
-          console.log('jpwork.jpwork', OrderingData.showMethod, orderRes)
-          if (orderRes.code === 200) { // 下单完成
+          console.log('jpwork.jpwork', OrderingData.showMethod, orderRes);
+          if (orderRes.code === 200) {
+            // 下单完成
             if (OrderingData.showMethod === 3) {
               let jpParams = {
                 // 获取Native的交易凭据
@@ -44,28 +41,28 @@ export default class Native extends Base {
                 money: OrderingData.selectedProduct.amount,
                 userId: window.RG.CurUserInfo().userId
               };
-              let jpParamsStr = JSON.stringify(jpParams)
-              console.log('jpParamsStr', jpParams, jpParamsStr)
+              let jpParamsStr = JSON.stringify(jpParams);
+              console.log('jpParamsStr', jpParams, jpParamsStr);
               JsToNative.jpwork(jpParamsStr);
             }
           }
-          return orderRes
-        })
-      }
+          return orderRes;
+        });
+      };
     })(window.RG.jssdk.Ordering);
-
   }
 
   loadScript(src) {
-    let resolve, script = document.createElement('script')
-    script.src = src
-    script.onload = function () {
-      resolve()
-    }
-    document.head.appendChild(script)
-    return new Promise(function (_) {
-      resolve = _
-    })
+    let resolve,
+      script = document.createElement('script');
+    script.src = src;
+    script.onload = function() {
+      resolve();
+    };
+    document.head.appendChild(script);
+    return new Promise(function(_) {
+      resolve = _;
+    });
   }
 
   // rgAsyncInit() {
@@ -76,80 +73,83 @@ export default class Native extends Base {
 
   ExposeApis() {
     let exposeApis = [
-      "server",
-      "version",
-      "Redirect",
-      "Messenger",
-      "Fb",
-      "CurUserInfo",
-      "BindZone",
-      "Share",
-      "Mark",
-      "Pay",
-      "ChangeAccount"
-    ]
+      'server',
+      'version',
+      'Redirect',
+      'Messenger',
+      'Fb',
+      'CurUserInfo',
+      'BindZone',
+      'Share',
+      'Mark',
+      'Pay',
+      'ChangeAccount'
+    ];
     exposeApis.forEach(api => {
-      window.RG[api] = RG.jssdk[api]
-    })
+      window.RG[api] = RG.jssdk[api];
+    });
   }
 
-  key = CryptoJS.enc.Utf8.parse("flowerwordchangi");
+  key = CryptoJS.enc.Utf8.parse('flowerwordchangi');
   iv = CryptoJS.enc.Utf8.parse('0392039203920300');
 
   AESdecode(srcStr) {
-    return CryptoJS.AES.decrypt(srcStr, RG.jssdk.key, { iv: RG.jssdk.iv, mode: CryptoJS.mode.CBC, padding: CryptoJS.pad.Pkcs7 }).toString(CryptoJS.enc.Utf8)
+    return CryptoJS.AES.decrypt(srcStr, RG.jssdk.key, {
+      iv: RG.jssdk.iv,
+      mode: CryptoJS.mode.CBC,
+      padding: CryptoJS.pad.Pkcs7
+    }).toString(CryptoJS.enc.Utf8);
   }
 
   async init() {
-
-    const WK = window['webkit']
+    const WK = window['webkit'];
     if (WK) {
       window.JsToNative = {
-        getDeviceMsgAsync: function () {
+        getDeviceMsgAsync: function() {
           if (!RG.jssdk.deviceMsgPromise) {
             RG.jssdk.deviceMsgPromise = new Promise(resolve => {
-              RG.jssdk.deviceMsgResolve = resolve
-            })
-            WK.messageHandlers.getDeviceMsg.postMessage(null)
+              RG.jssdk.deviceMsgResolve = resolve;
+            });
+            WK.messageHandlers.getDeviceMsg.postMessage(null);
           }
-          return RG.jssdk.deviceMsgPromise
+          return RG.jssdk.deviceMsgPromise;
         },
-        init: function (param: string) {
-          WK.messageHandlers.init.postMessage(param)
+        init: function(param: string) {
+          WK.messageHandlers.init.postMessage(param);
         },
-        gameEvent: function (param: string) {
-          console.log('gameEvent', param)
-          WK.messageHandlers.gameEvent.postMessage(param)
+        gameEvent: function(param: string) {
+          console.log('gameEvent', param);
+          WK.messageHandlers.gameEvent.postMessage(param);
         },
-        jpwork: function (param: string) {
-          WK.messageHandlers.jpwork.postMessage(param)
+        jpwork: function(param: string) {
+          WK.messageHandlers.jpwork.postMessage(param);
         },
-        consumeOrder: function (param: string) {
-          WK.messageHandlers.consumeOrder.postMessage(param)
+        consumeOrder: function(param: string) {
+          WK.messageHandlers.consumeOrder.postMessage(param);
         },
-        exitApp: function () {
-          WK.messageHandlers.exitApp.postMessage(null)
+        exitApp: function() {
+          WK.messageHandlers.exitApp.postMessage(null);
         }
-      } as any
+      } as any;
     } else {
       window.JsToNative.getDeviceMsgAsync = () => {
         if (!RG.jssdk.deviceMsgPromise) {
           RG.jssdk.deviceMsgPromise = new Promise(resolve => {
-            RG.jssdk.deviceMsgResolve = resolve
-          })
-          setTimeout(function () {
-            let data = JSON.parse(window.JsToNative.getDeviceMsg())
+            RG.jssdk.deviceMsgResolve = resolve;
+          });
+          setTimeout(function() {
+            let data = JSON.parse(window.JsToNative.getDeviceMsg());
             data = Object.assign(data, {
               advChannel: RG.jssdk.config.advChannel,
               appId: RG.jssdk.config.appId
-            })
+            });
 
-            RG.jssdk.deviceMsgResolve(data)
-            RG.jssdk.deviceMsgPromise = null
-          })
+            RG.jssdk.deviceMsgResolve(data);
+            RG.jssdk.deviceMsgPromise = null;
+          });
         }
-        return RG.jssdk.deviceMsgPromise
-      }
+        return RG.jssdk.deviceMsgPromise;
+      };
     }
     /**
      * 全局变量初始化
@@ -159,58 +159,55 @@ export default class Native extends Base {
       jpworkResult: RG.jssdk.jpworkResult,
       goBack: RG.jssdk.goBack,
       deviceMsg: RG.jssdk.gotDeviceMsg
-    }
+    };
 
-    console.log(
-      'RG.jssdk.nativeInit() before'
-    )
+    console.log('RG.jssdk.nativeInit() before');
 
     RG.jssdk.nativeInit();
 
-    await this.loadScript(reactSrc)
-    await Promise.all([reactDomSrc, reactRouterDomSrc].map((src) => {
-      return this.loadScript(src)
-    }))
+    await this.loadScript(reactSrc);
+    await Promise.all(
+      [reactDomSrc, reactRouterDomSrc].map(src => {
+        return this.loadScript(src);
+      })
+    );
 
-    let [{ Ins }] = await Promise.all([import('DOM/index'), RG.jssdk.Account.initPromise()])
+    let [{Ins}] = await Promise.all([import('DOM/index'), RG.jssdk.Account.initPromise()]);
 
-    window.RG.jssdk.App = Ins
+    window.RG.jssdk.App = Ins;
     let user = RG.jssdk.Account.user;
-    let autoLogin = false
+    let autoLogin = false;
     let LoginModule = window.RG.jssdk.App.showLogin();
     let code = getUrlParam('code');
     if (code) {
       if (window.name === 'redirect') {
-        window.name = ''
+        window.name = '';
       } else {
-        await RG.jssdk.Login({ isFacebook: true })
-        LoginModule.loginComplete()
+        await RG.jssdk.Login({isFacebook: true});
+        LoginModule.loginComplete();
       }
     } else {
       if (user) {
-        autoLogin = true
+        autoLogin = true;
       } else {
         if (RG.jssdk.Account.users) {
-          let usersIdArr = Object.keys(RG.jssdk.Account.users)
+          let usersIdArr = Object.keys(RG.jssdk.Account.users);
           if (usersIdArr.length) {
-            user = RG.jssdk.Account.users[
-              usersIdArr[0]
-            ]
-            autoLogin = true
+            user = RG.jssdk.Account.users[usersIdArr[0]];
+            autoLogin = true;
           }
         }
       }
-      let LoginModule = window.RG.jssdk.App.showLogin()
+      let LoginModule = window.RG.jssdk.App.showLogin();
       if (window.name === 'redirect') {
-        window.name = ''
+        window.name = '';
       } else {
         if (autoLogin) {
-          await RG.jssdk.Login(user)
-          LoginModule.loginComplete()
+          await RG.jssdk.Login(user);
+          LoginModule.loginComplete();
         }
       }
     }
-
 
     // if (user) {
     //   let { userType, accountType } = user
@@ -232,12 +229,10 @@ export default class Native extends Base {
     //   }
     // } else {
     // }
-
-
   }
 
-  deviceMsgPromise
-  deviceMsgResolve
+  deviceMsgPromise;
+  deviceMsgResolve;
 
   gotDeviceMsg(deviceMsg: string) {
     // let data = JSON.parse(deviceMsg)
@@ -250,23 +245,22 @@ export default class Native extends Base {
     data = Object.assign(data, {
       advChannel: RG.jssdk.config.advChannel,
       appId: RG.jssdk.config.appId
-    })
-    RG.jssdk.deviceMsgResolve(data)
-    RG.jssdk.deviceMsgPromise = null
+    });
+    RG.jssdk.deviceMsgResolve(data);
+    RG.jssdk.deviceMsgPromise = null;
   }
 
-  nativeIsInit = false
+  nativeIsInit = false;
 
-  nativeInitResolve = null
+  nativeInitResolve = null;
   nativeInitPromise = new Promise(resolve => {
-    this.nativeInitResolve = resolve
-  })
+    this.nativeInitResolve = resolve;
+  });
 
   async nativeInit() {
-
     if (!RG.jssdk.nativeIsInit) {
-      let deviceMsg = await window.JsToNative.getDeviceMsgAsync()
-      let { source, network, model, operatorOs, deviceNo, device, version } = deviceMsg
+      let deviceMsg = await window.JsToNative.getDeviceMsgAsync();
+      let {source, network, model, operatorOs, deviceNo, device, version} = deviceMsg;
       let initSDKParam: initSDKParams = {
         appId: RG.jssdk.config.appId,
         source: source,
@@ -286,97 +280,112 @@ export default class Native extends Base {
           RG.jssdk.config.advChannel,
           RG.jssdk.config.app_key
         ])
-      }
+      };
 
-      console.log('initSDKParams', initSDKParam)
+      console.log('initSDKParams', initSDKParam);
 
-      Http.ins.post({
-        route: '/config/v3.1/initSDK',
-        data: initSDKParam
-      }).then((data: {
-        code: number
-        error_msg: string
-        messages: {
-          loginMessageUrl: string
-          isHasLogin: string
-          isHasPause: string
-          pauseMessageUrl: string
-        }
-        handlerBtns: {
-          btnName: string
-          btnNormalIcon: string
-          btnNormalPressIcon: string
-          btnRedIcon: string
-          btnRedPressIcon: string
-          btnUrl: string
-          showRedSpots: string
-        }[]
-        loginMethods: {
-          loginMethod: string
-          iconUrl: string
-          loginUrl: string
-          callBackUrl: string
-          index: string
-          rotate: number
-        }[]
-        verifys: { // AES加密的
-          gpVerify: string
-          gpProduct: string
-        }
-        advChannels: { // android
-          facebookAppId: string
-          appsFlyerDevKey: string
-          talkapp_key: string
-          charboostAppId: string
-          charboostAppSignature: string
-          ewayAppId: string
-          mobvistaSDKAppId: string
-          admobConversionID: string
-          admobValue: string
-        }
-        publics:{
-          gpPluginAction:string;
-          gpPluginGpUrl:string;
-          gpPluginType:string;
-          gpPluginName:string;
-        }
-      }) => {
-        if (data.code === 200) {
+      Http.ins
+        .post({
+          route: '/config/v3.1/initSDK',
+          data: initSDKParam
+        })
+        .then(
+          (data: {
+            code: number;
+            error_msg: string;
+            messages: {
+              loginMessageUrl: string;
+              isHasLogin: string;
+              isHasPause: string;
+              pauseMessageUrl: string;
+            };
+            handlerBtns: {
+              btnName: string;
+              btnNormalIcon: string;
+              btnNormalPressIcon: string;
+              btnRedIcon: string;
+              btnRedPressIcon: string;
+              btnUrl: string;
+              showRedSpots: string;
+            }[];
+            loginMethods: {
+              loginMethod: string;
+              iconUrl: string;
+              loginUrl: string;
+              callBackUrl: string;
+              index: string;
+              rotate: number;
+            }[];
+            verifys: {
+              // AES加密的
+              gpVerify: string;
+              gpProduct: string;
+            };
+            advChannels: {
+              // android
+              facebookAppId: string;
+              appsFlyerDevKey: string;
+              talkapp_key: string;
+              charboostAppId: string;
+              charboostAppSignature: string;
+              ewayAppId: string;
+              mobvistaSDKAppId: string;
+              admobConversionID: string;
+              admobValue: string;
+            };
+            publics: {
+              gpPluginAction: string;
+              gpPluginGpUrl: string;
+              gpPluginType: string;
+              gpPluginName: string;
+            };
+          }) => {
+            if (data.code === 200) {
+              RG.jssdk.nativeIsInit = true;
+              let verifys = JSON.parse(RG.jssdk.AESdecode(data.verifys));
+              let gpPluginAction = '',
+                gpPluginGpUrl = '',
+                gpPluginType = '',
+                gpPluginName = '';
+              if (data.publics) {
+                gpPluginAction = data.publics.gpPluginAction;
+                gpPluginGpUrl = data.publics.gpPluginGpUrl;
+                gpPluginType = data.publics.gpPluginType;
+                gpPluginName = data.publics.gpPluginName;
+              }
 
-          RG.jssdk.nativeIsInit = true
-          let verifys = JSON.parse(RG.jssdk.AESdecode(data.verifys));
-          const {gpPluginAction,gpPluginGpUrl,gpPluginType,gpPluginName} = data.publics;
-          let initParam = {
-            gpProduct: verifys.gpProduct,
-            gpVerify: verifys.gpVerify,
-            gpPluginAction,
-            gpPluginGpUrl,
-            gpPluginType,
-            gpPluginName
+              let initParam = {
+                gpProduct: verifys.gpProduct,
+                gpVerify: verifys.gpVerify,
+                gpPluginAction,
+                gpPluginGpUrl,
+                gpPluginType,
+                gpPluginName
+              };
+              console.log('调用 window.JsToNative.init');
+              window.JsToNative.init(JSON.stringify(initParam));
+              this.nativeInitResolve();
+              console.log('init completed', initParam);
+            } else {
+              console.log('初始化失败');
+              console.log(data);
+            }
           }
-          console.log('调用 window.JsToNative.init')
-          window.JsToNative.init(JSON.stringify(initParam));
-          this.nativeInitResolve()
-          console.log('init completed', initParam)
-        } else {
-          console.log('初始化失败')
-          console.log(data)
-        }
-
-      }).catch(err => {
-        console.log('init err', err)
-      })
+        )
+        .catch(err => {
+          console.log('init err', err);
+        });
     }
   }
 
   goBack() {
     if (confirm(RG.jssdk.config.i18n.tuichu)) {
-      JsToNative.exitApp()
+      JsToNative.exitApp();
     }
   }
 
   jpworkResult(params: string) {
-    console.log('jpworkResult', params)
+    console.log('jpworkResult', params);
     let result;
     try {
       result = JSON.parse(params);
@@ -386,10 +395,10 @@ export default class Native extends Base {
     // 打点判断游戏方是否打点，如果打点就不打这个点
     // let result = JSON.parse(params)
     if (RG.jssdk.config.isPurchasedMark && result.code === 200) {
-      RG.Mark("sdk_purchased_done", {
+      RG.Mark('sdk_purchased_done', {
         userId: RG.jssdk.CurUserInfo().userId,
         money: result.money,
-        currency: result.currency,
+        currency: result.currency
       });
     }
     // window.RG.jssdk.App.hidePayment();
@@ -397,52 +406,54 @@ export default class Native extends Base {
 
   consumeOrder(params: string) {
     // ios 的原生的调用会自动解析为对象，不需要我们进行解析
-    let paramParse
+    let paramParse;
     try {
-      paramParse = JSON.parse(params)
+      paramParse = JSON.parse(params);
     } catch (error) {
       console.log('ios params parse error', error);
       paramParse = params;
     }
-    console.log('native to js consumeOrder', paramParse)
-    RG.jssdk.FinishOrder({
-      transactionId: paramParse.transactionId,
-      channel: paramParse.channel,
-      receipt: paramParse.receipt,
-      signature: paramParse.signature,
-      exInfo: '',
-    }).then(data => {
-      console.log('JsToNative.consumeOrder1: code (' + data.code + ')')
-      let consumeParams
-      if (data.code === 200) {
-        consumeParams = {
-          code: data.code,
-          exInfo: paramParse.exInfo
+    console.log('native to js consumeOrder', paramParse);
+    RG.jssdk
+      .FinishOrder({
+        transactionId: paramParse.transactionId,
+        channel: paramParse.channel,
+        receipt: paramParse.receipt,
+        signature: paramParse.signature,
+        exInfo: ''
+      })
+      .then(data => {
+        console.log('JsToNative.consumeOrder1: code (' + data.code + ')');
+        let consumeParams;
+        if (data.code === 200) {
+          consumeParams = {
+            code: data.code,
+            exInfo: paramParse.exInfo
+          };
+        } else {
+          consumeParams = {
+            code: data.code,
+            error_msg: data.error_msg,
+            exInfo: paramParse.exInfo
+          };
+          window.RG.jssdk.App.showNotice(RG.jssdk.config.i18n.UnknownErr);
+          // window.RG.jssdk.App.hidePayment()
         }
-      } else {
-        consumeParams = {
-          code: data.code,
-          error_msg: data.error_msg,
-          exInfo: paramParse.exInfo
-        }
-        window.RG.jssdk.App.showNotice(RG.jssdk.config.i18n.UnknownErr)
-        // window.RG.jssdk.App.hidePayment()
-      }
-      console.log('JsToNative.consumeOrder2: code (' + data.code + ')', consumeParams)
-      JsToNative.consumeOrder(JSON.stringify(consumeParams));
-      window.RG.jssdk.App.hidePayment();
-    });
+        console.log('JsToNative.consumeOrder2: code (' + data.code + ')', consumeParams);
+        JsToNative.consumeOrder(JSON.stringify(consumeParams));
+        window.RG.jssdk.App.hidePayment();
+      });
   }
 
   Pay(paymentConfig: PaymentConfig) {
-    RG.jssdk.nativeInit()
+    RG.jssdk.nativeInit();
     return RG.jssdk.PaymentConfig(paymentConfig).then(paymentConfigRes => {
-      paymentConfigRes.payments.length && window.RG.jssdk.App.showPayment(paymentConfigRes)
-    })
+      paymentConfigRes.payments.length && window.RG.jssdk.App.showPayment(paymentConfigRes);
+    });
   }
 
   async Mark(markName: string, extraParam?: any) {
-    await this.nativeInitPromise
+    await this.nativeInitPromise;
     let eventName: string = markName;
     // 从配置中获取点名的配置
     if (RG.jssdk.config.mark_id.markName && RG.jssdk.config.mark_id.markName[eventName]) {
@@ -451,20 +462,28 @@ export default class Native extends Base {
     // 传递给原生的参数
     let markParmas: any = {
       eventName
-    }
+    };
     // 获取adjust Token
     if (RG.jssdk.config.mark_id.adjust && RG.jssdk.config.mark_id.adjust[eventName]) {
       markParmas.eventToken = RG.jssdk.config.mark_id.adjust[eventName];
     }
     // sdk_purchased_done，原生端根据此字符串来做是否支付的判断,adjust只需要token，不要调整代码的顺序，最后匹配购买的点名
-    if (eventName === "Purchased") {
+    if (eventName === 'Purchased') {
       markParmas = Object.assign(extraParam, markParmas);
-      markParmas.eventName = "sdk_purchased_done";
+      markParmas.eventName = 'sdk_purchased_done';
     }
     // 匹配唯一点
     if (RG.jssdk.config.mark_id.adjust && RG.jssdk.config.mark_id.adjust[eventName + '_unique']) {
-      window.JsToNative.gameEvent(JSON.stringify({ eventName: eventName + '_unique', eventToken: RG.jssdk.config.mark_id.adjust[eventName + '_unique'] }));
-      console.info(`"${eventName + '_unique'}" has marked - native`, { eventName: eventName + '_unique', eventToken: RG.jssdk.config.mark_id.adjust[eventName + '_unique'] })
+      window.JsToNative.gameEvent(
+        JSON.stringify({
+          eventName: eventName + '_unique',
+          eventToken: RG.jssdk.config.mark_id.adjust[eventName + '_unique']
+        })
+      );
+      console.info(`"${eventName + '_unique'}" has marked - native`, {
+        eventName: eventName + '_unique',
+        eventToken: RG.jssdk.config.mark_id.adjust[eventName + '_unique']
+      });
     }
     // 打点、输出日志
     window.JsToNative.gameEvent(JSON.stringify(markParmas));
