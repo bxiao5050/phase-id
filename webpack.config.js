@@ -63,7 +63,7 @@ switch (action) {
     break;
 }
 var definePlugin = {
-  FBVersion: JSON.stringify('v3.3'),
+  FBVersion: JSON.stringify('v6.0'),//v6.0
   PREFIX: JSON.stringify(md5('RoyalGame').slice(0, 4)),
   VERSION: JSON.stringify(sdkVersion),
   SERVER: JSON.stringify(SERVER),
