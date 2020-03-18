@@ -1,5 +1,29 @@
 # sdk-demo
+
 ## v2.3 
+
+### 打包
+
+#### 正式服打包
+
+打开 http://jenkins2.royale.com/view/prod-build/job/prod-build-frontend/job/jssdk/  传入版本 vx.x.x 打包,打包完成后部署
+
+#### 测试服打包
+
+1. 登录跳板机
+2. 输入cntest 找到国内测试服
+3. 5.cd /data/sdk-test/platform-sdk-test-v2.0/jssdk/vxxx
+4. rz -bey 
+
+#### 文档上传
+
+1. 服务器路径：1：公共资源，5： 香港跳板机， cd /data/document
+2. 现在共有三个版本： 
+   - http://document.pocketgamesol.com/sdk/v2.3.5/#_6
+   - http://document.pocketgamesol.com/sdk/v2.3/index.html
+   - http://document.pocketgamesol.com/sdk/index.html 
+
+#### 目录结构
 
 ```txt
 ├── build # 打包目录
@@ -117,10 +141,10 @@
 ### 注意事项：
 
   1. sdk_purchased_done 这个点的点名不能改变的，在微端根据这个点名来判断进行购买打点;
-  2. 本地开发测试文件利用webpack加载,更改window上的值.
-  3. 绑定游客和除登录之外返回用户信息的接口,都不会更新一些accountType这些值,需要自己去做操作
+  2. 绑定游客和除登录之外返回用户信息的接口,都不会更新一些accountType这些值,需要自己去做操作
 
 ### 需完成的点
 
   1. 登录添加忘记密码功能，点击后弹出输入账号发送邮件修改密码功能，忘记账号联系客服
   2. 添加邮箱功能，http://ip:port/pocketgames/client/user/operatorEmail   使用此接口添加 operatorType这个值暂时没有用可以直接传0;
+

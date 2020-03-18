@@ -338,6 +338,7 @@ export default class Native extends Base {
               gpPluginGpUrl: string;
               gpPluginType: string;
               gpPluginName: string;
+              gpPluginLoadingUrl: string;
             };
           }) => {
             if (data.code === 200) {
@@ -346,12 +347,14 @@ export default class Native extends Base {
               let gpPluginAction = '',
                 gpPluginGpUrl = '',
                 gpPluginType = '',
-                gpPluginName = '';
+                gpPluginName = '',
+                gpPluginLoadingUrl = '';
               if (data.publics) {
                 gpPluginAction = data.publics.gpPluginAction;
                 gpPluginGpUrl = data.publics.gpPluginGpUrl;
                 gpPluginType = data.publics.gpPluginType;
                 gpPluginName = data.publics.gpPluginName;
+                gpPluginLoadingUrl = data.publics.gpPluginLoadingUrl;
               }
 
               let initParam = {
@@ -360,7 +363,8 @@ export default class Native extends Base {
                 gpPluginAction,
                 gpPluginGpUrl,
                 gpPluginType,
-                gpPluginName
+                gpPluginName,
+                gpPluginLoadingUrl
               };
               console.log('调用 window.JsToNative.init');
               window.JsToNative.init(JSON.stringify(initParam));
