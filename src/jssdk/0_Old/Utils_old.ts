@@ -15,7 +15,7 @@ Date.prototype.format = function (fmt) { // author: meizz
 }
 
 // 操作cookie的类，共有setCookie,getCookie,delCookie三个方法
-class CookieManager {
+export class CookieManager {
   private static _ins: CookieManager;
   public static get instance(): CookieManager {
     return this._ins || new CookieManager();
@@ -221,7 +221,7 @@ export default class Utils {
     return uuid.join('');
   }
 
-  // static CookieManager: CookieManager = CookieManager.instance;
+  static CookieManager: CookieManager = CookieManager.instance;
 }
 
 

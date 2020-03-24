@@ -70,7 +70,22 @@ export default class Native extends Base {
   //   const index_origin = IS_DEV ? window.$rg_main.config.page.index.test : window.$rg_main.config.page.index.formal;
   //   window.parent.postMessage({ action: 'rgAsyncInit' }, /(http|https):\/\/(www.)?([A-Za-z0-9-_]+(\.)?)+/.exec(index_origin)[0])
   // }
-
+  Redirect() {
+    window.name = 'redirect';
+    FB.getLoginStatus(_res => {
+      if (_res.status === 'connected') {
+        FB.logout();
+      }
+      let index = location.href.indexOf('&code=');
+      let url = index === -1 ? location.href : location.href.substr(0, index);
+      location.href = url;
+      location.reload();
+    });
+    // let index = location.href.indexOf('&code=');
+    // let url = index === -1 ? location.href : location.href.substr(0, index);
+    // location.href = url;
+    // location.reload();
+  }
   ExposeApis() {
     let exposeApis = [
       'server',

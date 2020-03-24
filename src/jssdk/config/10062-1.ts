@@ -3,7 +3,7 @@
 export default {
   name: 'test',
   app_key: 'f43968a73df747aab4b9b1e506265050',
-  fb_app_id: '',
+  fb_app_id: '663857194035716',
   language: 'TW',
   region: 'sg',
   hoverTop: '.24',

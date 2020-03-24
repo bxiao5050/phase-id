@@ -61,7 +61,8 @@ export default class Loading extends React.Component<LoadingProp, {}, any> {
           className="change"
           onClick={() => {
             this.unclock();
-            this.props.Login.props.history.goBack();
+            window.RG.Redirect();
+            // this.props.Login.props.history.goBack();
           }}
         >
           <span className="switch" />

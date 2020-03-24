@@ -1,4 +1,4 @@
-import { getUrlParam, CookieManager, getDeviceType, generateGpsAdid } from "../common/utils";
+import Utils from "./Utils_old";
 // 打点代码整体拿到了sspa中，有需要可以自行修改
 export default class Mark {
 
@@ -6,7 +6,7 @@ export default class Mark {
   game_url: HTMLAnchorElement
   isIndex: boolean = false
   _adjust: any
-  deviceType = getDeviceType();
+  deviceType = Utils.deviceType;
   static _ins: Mark
   static get instance(): Mark {
     return this._ins || new Mark;
@@ -18,7 +18,7 @@ export default class Mark {
     this.index_url = document.createElement('a')
     this.game_url = document.createElement('a')
 
-    if (getUrlParam('debugger') || window['debugger']) {
+    if (Utils.getUrlParam('debugger') || window['debugger']) {
       this.index_url.href = config.page.index.test
       this.game_url.href = config.page.game.test
     } else {
@@ -91,13 +91,13 @@ export default class Mark {
           os_name = 'ios';
         }
         // 检测存在设备id吗，不存在就创建一个
-        CookieManager.instance.getCookie("gps_adid") || CookieManager.instance.setCookie("gps_adid", generateGpsAdid(), 365 * 10);
+        Utils.CookieManager.getCookie("gps_adid") || Utils.CookieManager.setCookie("gps_adid", Utils.generateGpsAdid(), 365 * 10);
         this._adjust = new Adjust({
           app_token: config.mark_id.adjust.id,
           environment: IS_DEV ? "sandbox" : "production", // or 'sandbox' in case you are testing SDK locally with your web app
           os_name: os_name,
           device_ids: {
-            gps_adid: CookieManager.instance.getCookie("gps_adid") // each web app user needs to have unique identifier
+            gps_adid: Utils.CookieManager.getCookie("gps_adid") // each web app user needs to have unique identifier
           }
         });
         // session会话，adjust只有在30分钟之后重新打开才算做一次会话，当一个小时内每10分钟重复打开时，这一个小时都会算作一次会话，并且发送的请求会报错返回500

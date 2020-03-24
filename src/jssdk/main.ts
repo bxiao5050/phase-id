@@ -169,7 +169,8 @@ function init(window: Window) {
           appId: fbAppId,
           status: true,
           xfbml: true,
-          version: FBVersion
+          version: FBVersion,
+          cookie:true
         });
         resolve();
       };
