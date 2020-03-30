@@ -79,12 +79,8 @@ export default class Native extends Base {
       let index = location.href.indexOf('&code=');
       let url = index === -1 ? location.href : location.href.substr(0, index);
       location.href = url;
-      location.reload();
+      //location.reload();
     });
-    // let index = location.href.indexOf('&code=');
-    // let url = index === -1 ? location.href : location.href.substr(0, index);
-    // location.href = url;
-    // location.reload();
   }
   ExposeApis() {
     let exposeApis = [

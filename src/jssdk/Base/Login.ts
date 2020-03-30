@@ -124,8 +124,11 @@ export default class Login {
   public facebookLogin(): Promise<LoginRes> {
     if (getItem(`fblo_${RG.jssdk.config.fb_app_id}`)) {
       document.cookie =
-      `fblo_${RG.jssdk.config.fb_app_id}` +
-      `=n;expires=${new Date(Date.now() + 1000000)};domain=.www.narutoh5game.com; path=/`;
+        `fblo_${RG.jssdk.config.fb_app_id}` +
+        `=n;expires=${new Date(Date.now() + 1000000)};domain=.${location.hostname}; path=/`;
+        document.cookie =
+        `fblo_${RG.jssdk.config.fb_app_id}` +
+        `=n;expires=${new Date(Date.now() + 1000000)};domain=${location.hostname}; path=/`;
     }
     return new Promise((resolve, reject) => {
       // 登录信息
@@ -155,7 +158,10 @@ export default class Login {
             if (getItem(`fblo_${RG.jssdk.config.fb_app_id}`)) {
               document.cookie =
                 `fblo_${RG.jssdk.config.fb_app_id}` +
-                `=y;expires=${new Date(Date.now() + 1000000)};domain=.www.narutoh5game.com; path=/`;
+                `=;expires=${new Date(Date.now() - 1000000)};domain=.${location.hostname}; path=/`;
+                document.cookie =
+                `fblo_${RG.jssdk.config.fb_app_id}` +
+                `=;expires=${new Date(Date.now() - 1000000)};domain=${location.hostname}; path=/`;
             }
             var userID = response.userID;
             FB.api('/me?fields=public_profile,email', response => {
