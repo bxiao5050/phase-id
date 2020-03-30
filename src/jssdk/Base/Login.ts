@@ -128,7 +128,7 @@ export default class Login {
         `=n;expires=${new Date(Date.now() + 1000000)};domain=.${location.hostname}; path=/`;
         document.cookie =
         `fblo_${RG.jssdk.config.fb_app_id}` +
-        `=n;expires=${new Date(Date.now() + 1000000)};domain=${location.hostname}; path=/`;
+        `=n;expires=${new Date(Date.now() + 1000000)};path=/`;
     }
     return new Promise((resolve, reject) => {
       // 登录信息
@@ -161,7 +161,7 @@ export default class Login {
                 `=;expires=${new Date(Date.now() - 1000000)};domain=.${location.hostname}; path=/`;
                 document.cookie =
                 `fblo_${RG.jssdk.config.fb_app_id}` +
-                `=;expires=${new Date(Date.now() - 1000000)};domain=${location.hostname}; path=/`;
+                `=;expires=${new Date(Date.now() - 1000000)};path=/`;
             }
             var userID = response.userID;
             FB.api('/me?fields=public_profile,email', response => {
