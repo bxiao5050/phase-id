@@ -1,6 +1,6 @@
-type Method = "POST" | "GET";
-type CommonParams = { route: string; data?: object };
-type RequestParams = CommonParams & { method: Method };
+type Method = 'POST' | 'GET';
+type CommonParams = {route: string; data?: object};
+type RequestParams = CommonParams & {method: Method};
 
 export default class Http {
   static _ins: Http;
@@ -10,25 +10,30 @@ export default class Http {
   constructor() {
     Http._ins = this;
   }
-  private serverAddress: string = SERVER + "/pocketgames/client";
+  private serverAddress: string = SERVER + '/pocketgames/client';
 
   private request(param: RequestParams): Promise<any> {
     let data: any;
     if (param.data) {
       data = Object.keys(param.data)
         .map(key => `${key}=${param.data[key]}`)
-        .join("&");
+        .join('&');
     }
-    var xhr = new XMLHttpRequest();
+    let xhr: XMLHttpRequest;
+    if (window.XMLHttpRequest) {
+      xhr = new XMLHttpRequest();
+    } else if (window.ActiveXObject) {
+      xhr = new ActiveXObject('Microsoft.XMLHTTP');
+    }
     xhr.open(param.method, this.serverAddress + param.route);
-    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     var result = new Promise((resolve, reject) => {
       xhr.onreadystatechange = function() {
         if (xhr.readyState === 4) {
           if (xhr.status === 200) {
             resolve(JSON.parse(xhr.responseText));
           } else {
-            reject("server res err");
+            reject('server res err');
           }
         }
       };
@@ -37,18 +42,18 @@ export default class Http {
     return result;
   }
 
-  public post<T extends ServerRes>(param: {route: string;data?: object;}): Promise<T> {
+  public post<T extends ServerRes>(param: {route: string; data?: object}): Promise<T> {
     const data: RequestParams = {
-      method: "POST",
+      method: 'POST',
       route: param.route,
       data: param.data
     };
     return this.request(data);
   }
 
-  public get<T extends ServerRes>(param:  {route: string;data?: object;}): Promise<T> {
+  public get<T extends ServerRes>(param: {route: string; data?: object}): Promise<T> {
     const data: RequestParams = {
-      method: "GET",
+      method: 'GET',
       route: param.route,
       data: param.data
     };

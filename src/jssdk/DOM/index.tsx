@@ -15,10 +15,3 @@ const Ins = App.instance
 export {
   Ins
 }
-
-
-
-
-
-
-

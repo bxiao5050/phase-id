@@ -1,5 +1,5 @@
 import {signed} from '../common/utils';
-import Http from './Http';
+import Http from './http';
 
 export class Api {
   static _ins: Api;

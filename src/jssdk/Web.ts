@@ -1,5 +1,5 @@
 import { getUrlParam } from './common/utils';
-import Base from './Base'
+import Base from './base'
 
 export default class Web extends Base {
 
@@ -20,8 +20,8 @@ export default class Web extends Base {
   }
   Mark(markName: string, markParams: any) {
     // Mark.instance.Mark(markName, markParams);
-    const index_origin = IS_DEV || IS_TEST ? window.$rg_main.config.page.index.test : window.$rg_main.config.page.index.formal;
-    window.$postMessage(JSON.stringify({
+    const index_origin = IS_DEV || IS_TEST ? window.RG.jssdk.config.page.index.test : window.RG.jssdk.config.page.index.formal;
+    window.parent.postMessage(JSON.stringify({
       action: 'mark',
       data: {
         name: markName,
@@ -44,8 +44,8 @@ export default class Web extends Base {
 
   rgAsyncInit() {
     window.rgAsyncInit();
-    const index_origin = IS_DEV || IS_TEST ? window.$rg_main.config.page.index.test : window.$rg_main.config.page.index.formal;
-    window.$postMessage(JSON.stringify({ action: 'rgAsyncInit' }), /(http|https):\/\/(www.)?([A-Za-z0-9-_]+(\.)?)+/.exec(index_origin)[0]);
+    const index_origin = IS_DEV || IS_TEST ? window.RG.jssdk.config.page.index.test : window.RG.jssdk.config.page.index.formal;
+    window.parent.postMessage(JSON.stringify({ action: 'rgAsyncInit' }), /(http|https):\/\/(www.)?([A-Za-z0-9-_]+(\.)?)+/.exec(index_origin)[0]);
   }
 
   async init() {

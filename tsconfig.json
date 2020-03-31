@@ -30,15 +30,14 @@
         "./src/jssdk/DOM/*"
       ],
       "Base/*": [
-        "./src/jssdk/Base/*"
+        "src/jssdk/base/*"
       ]
     }
   },
   "include": [
     "./index.d.ts",
     "./src/**/*.tsx",
-    "./src/**/*.ts",
-    "./test/**/*.ts"
+    "./src/**/*.ts"
   ],
   "exclude": [
     "./src/**/*.psd",

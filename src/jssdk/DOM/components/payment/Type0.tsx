@@ -4,7 +4,7 @@ import * as React from 'react'
 import Payment from 'DOM/components/payment'
 import { History } from 'history'
 import { getUrlParam } from 'Src/jssdk/common/utils';
-import Http from 'Base/Http';
+import Http from 'Src/jssdk/base/Http';
 
 type paymentProps = {
   Payment: Payment

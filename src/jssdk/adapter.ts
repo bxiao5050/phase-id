@@ -1,8 +1,8 @@
 export function checkJsToNative(appId: string, advChannel: string) {
-  if (!(window.JsToNative || window['webkit'])) {
-    let Fn = function () { console.log('adapter------'); console.log(arguments) }
-    window.JsToNative = {
-      getDeviceMsg: function () {
+  if (!JsToNative) {
+    let Fn = function() {};
+    JsToNative = {
+      getDeviceMsg: function() {
         var u = navigator.userAgent;
         var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
         var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
@@ -19,20 +19,20 @@ export function checkJsToNative(appId: string, advChannel: string) {
           device: '0',
           version: '0',
           sdkVersion: '0'
-        })
+        });
       },
-      getDeviceMsgAsync: function () {
+      getDeviceMsgAsync: function() {
         return new Promise(resolve => {
-          console.log("adapter")
-          resolve(JSON.parse(window.JsToNative.getDeviceMsg()))
-        })
+          console.log('adapter');
+          resolve(JSON.parse(JsToNative.getDeviceMsg()));
+        });
       },
       init: Fn,
       gameEvent: Fn,
       jpwork: Fn,
       consumeOrder: Fn,
       exitApp: Fn,
-    }
-
+      fbLogin: Fn
+    };
   }
 }

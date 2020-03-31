@@ -1,4 +1,4 @@
-import Http from './Http';
+import Http from './http';
 import {signed} from '../common/utils';
 
 export default class Account {
@@ -49,9 +49,9 @@ export default class Account {
       localStorage.setItem('users', JSON.stringify(this._users));
     } else {
       const index_origin = IS_DEV
-        ? window.$rg_main.config.page.index.test
-        : window.$rg_main.config.page.index.formal;
-      window.$postMessage(
+        ? RG.jssdk.config.page.index.test
+        : RG.jssdk.config.page.index.formal;
+        window.parent.postMessage(
         JSON.stringify({
           action: 'set',
           data: {

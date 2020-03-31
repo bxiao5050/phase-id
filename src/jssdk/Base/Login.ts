@@ -1,6 +1,6 @@
 import {getUrlParam, signed} from '../common/utils';
-import Http from './Http';
-import Account from './Account';
+import Http from './http';
+import Account from './account';
 
 export default class Login {
   static _ins: Login;

@@ -1,7 +1,7 @@
 /*
   初始化的接口
 */
-import Http from "./Http";
+import Http from "./http";
 
 export function reqConfigApi(initConfigParams: InitConfigParams): Promise<InitConfigRes> {
   return Http.ins.post({ route: "/config/v3.1/initSDK", data: initConfigParams });

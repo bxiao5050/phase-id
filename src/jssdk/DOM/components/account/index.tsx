@@ -18,25 +18,21 @@ class Main extends React.Component<accountProps, any, any> {
 
   componentDidMount() {
     JsToNative.getDeviceMsgAsync().then(device => {
-      this.state.deviceNo = device.hasOwnProperty('device')
-        ? device.device
-        : device.hasOwnProperty('gaid')
-        ? device.gaid
-        : device.deviceNo;
+      this.state.deviceNo = device.hasOwnProperty('device') ? device.device : device.deviceNo;
       this.setState(this.state);
     });
   }
 
   changeAccount = async () => {
     await Promise.race([
-      window.RG.ChangeAccount(),
+      RG.ChangeAccount(),
       new Promise(function(resolve) {
         setTimeout(function() {
           resolve();
         }, 1000);
       })
     ]);
-    window.RG.Redirect();
+    RG.Redirect();
   };
 
   render() {

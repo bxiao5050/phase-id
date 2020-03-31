@@ -1,5 +1,6 @@
 /** jssdk 版本 */
 declare const VERSION: JSSDK.Version;
+declare const FBVersion: string;
 declare const VConsole: any;
 /** 是否为开发环境 */
 declare const IS_DEV: boolean;
@@ -11,9 +12,6 @@ declare const Kakao: any;
 6.vk账号 */
 type AccountType = 0 | 1 | 2 | 3 | 4 | 5 | 6;
 type UserType = 0 | 1;
-type Region = "sg" | "de" | "vn" | "test" | "dev";
-// 平台来源 0 = ios 1 = android 2 = 网页支付 3 = PC web登录
-type SourceType = 0 | 1 | 2 | 3;
 // 网络 0=wifi 1 = 3g 2=其他
 type NetWork = 0 | 1 | 2;
 // 性别 0=男 1=女
@@ -154,26 +152,13 @@ declare interface Window {
   rgChangeAccount: Function;
   RgPolyfilled: Function;
   debugger: boolean;
-  $rg_index: Function;
-  $rg_main: {
-    config: JSSDK.Config;
-    get_game_config: Promise<any>;
-    Mark: {
-      index_url: HTMLAnchorElement;
-      game_url: HTMLAnchorElement;
-      Mark: Function;
-    };
-  };
-  $postMessage: Function;
-  XMLHttpRequest: any;
+  // XMLHttpRequest: any;
   opera: any;
   // 测试使用
   _RG_REGION: string;
   changePostmessageAndRegion: Function;
   QuickSDK: any;
 }
-
-declare var FBVersion: string;
 declare var ACTION: string;
 declare var reactSrc: string;
 declare var reactDomSrc: string;
@@ -232,7 +217,7 @@ interface initSDKParams {
 }
 
 interface JsToNativeDeviceMsg {
-  gaid?: string;
+  //gaid?: string;
   device: string;
   deviceNo: string;
   version: string;
@@ -300,6 +285,7 @@ interface JsToNative {
   consumeOrder(param: string);
 
   exitApp();
+  fbLogin():any
 }
 
 declare var JsToNative: JsToNative;
@@ -720,7 +706,7 @@ interface PaymentConfigRes extends ServerRes {
 }
 
 interface DeviceMsg {
-  gaid?: string;
+  //gaid?: string;
   source: number;
   advChannel: number;
   network: number;
@@ -795,11 +781,9 @@ type PlatformLoginParam = LoginParam & DeviceMsg;
 
 interface UrlParams {
   appId: string;
-  region: Region;
   advChannel: string;
   sdkVersion: string;
-  t: string;
   debugger?: boolean;
+  /* web端的投放的广告参数 */
   advertiseId?: string;
 }
-/* 以下为新的类型 */

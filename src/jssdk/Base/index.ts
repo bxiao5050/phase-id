@@ -1,7 +1,7 @@
-import {getPaymentConfig,createOrder,finishOrder,getPaymentHistory } from './Payment';
-import Login from './Login';
-import {Api} from './Api';
-import Account from './Account';
+import {getPaymentConfig, createOrder, finishOrder, getPaymentHistory} from './payment';
+import Login from './login';
+import {Api} from './api';
+import Account from './account';
 import {getUrlParam} from '../common/utils';
 // import Mark from "Src/Base/Mark_old";
 
@@ -65,25 +65,7 @@ export default class Base {
   }
 
   Messenger() {
-    if (RG.jssdk.config.type === 1) {
-      window.open(RG.jssdk.config.page.facebook.index);
-    } else {
-      window.open(RG.jssdk.config.page.facebook.messenger.mobile);
-    }
-  }
-
-  Fb() {
     window.open(RG.jssdk.config.page.facebook.index);
-    // let useragent = navigator.userAgent;
-    // let iPhone = (useragent.match(/(iPad|iPhone|iPod)/g));
-    // let scheme;
-    // if (iPhone)
-    //   scheme = "fb://page/?id=" + RG.jssdk.config.FbPageId;
-    // else
-    //   scheme = "fb://page/" + RG.jssdk.config.FbPageId;
-    // if (!window.open(scheme)) {
-    //   window.open(RG.jssdk.config.page.facebook.index)
-    // }
   }
 
   static paymentConfig: PaymentConfig;

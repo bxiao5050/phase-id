@@ -1,4 +1,4 @@
-import Http from './Http';
+import Http from './http';
 import {signed, formatDate} from '../common/utils';
 
 export async function getPaymentConfig(PaymentConfig: PaymentConfig) {
@@ -275,22 +275,3 @@ export interface CreateOrderParams {
    */
   sign: string;
 }
-
-// export default class Payment {
-//   static _ins: Payment;
-//   static get instance(): Payment {
-//     return this._ins || new Payment();
-//   }
-//   constructor() {
-//     Payment._ins = this;
-//   }
-
-//   getPaymentConfig = getPaymentConfig;
-
-//   getPaymentHistory = getPaymentHistory;
-
-//   createOrder = createOrder;
-
-//   /** 官方充值完成订单（消单接口） */
-//   finishOrder = finishOrder;
-// }

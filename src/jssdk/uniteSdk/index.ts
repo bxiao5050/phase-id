@@ -1,7 +1,7 @@
 // import { Ins } from 'DOM/BTgame';
-import Http from 'Base/Http';
-import {getRoleInfo, Api} from 'Base/Api';
-import {getPaymentConfig, createOrder} from 'Base/Payment';
+import Http from 'Src/jssdk/base/Http';
+import {getRoleInfo, Api} from 'Src/jssdk/base/Api';
+import {getPaymentConfig, createOrder} from 'Src/jssdk/base/payment';
 
 import {signed, formatDate} from '../common/utils';
 
@@ -192,7 +192,7 @@ export default class UniteSdk {
   async showNotice(msg: string) {
     await this.reactPromise;
     await this.reactDomPromise;
-    window.RG.jssdk.App && window.RG.jssdk.App.showNotice(msg);
+    RG.jssdk.App && RG.jssdk.App.showNotice(msg);
   }
   CurUserInfo = (): JSSDK.CurUserInfo => {
     const {userId, userName, token} = this._user;
@@ -426,7 +426,7 @@ export default class UniteSdk {
   }
   /* 退出 */
   goBack() {
-    if (confirm(window.RG.jssdk.config.i18n.tuichu)) {
+    if (confirm(RG.jssdk.config.i18n.tuichu)) {
       JsToNative.exitApp();
     }
   }
@@ -440,8 +440,8 @@ export default class UniteSdk {
       data = {};
     }
 
-    window.RG.jssdk.deviceMsgResolve(data);
-    window.RG.jssdk.deviceMsgPromise = null;
+    RG.jssdk.deviceMsgResolve(data);
+    RG.jssdk.deviceMsgPromise = null;
   }
   /* 重新加载页面 */
   Redirect() {

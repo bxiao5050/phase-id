@@ -13,7 +13,7 @@ window.changePostmessageAndRegion = function changePostmessageAndRegion(w: Windo
       fn("aaaaaaaaaaaaaaaaaaaaa");
     }
   }
-  w.$postMessage = function (paramsStr: string) {
+  window.parent.postMessage = function (paramsStr: string) {
     const param = JSON.parse(paramsStr) as {
       action: string;
       data: {
