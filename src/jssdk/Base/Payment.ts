@@ -14,7 +14,7 @@ export async function getPaymentConfig(PaymentConfig: PaymentConfig) {
     network: deviceMsg.network,
     level: PaymentConfig.level,
     gameCoin: PaymentConfig.gameCoin,
-    sign: null
+    sign: ""
   };
   data.sign = signed([
     data.appId,
@@ -27,8 +27,7 @@ export async function getPaymentConfig(PaymentConfig: PaymentConfig) {
     RG.jssdk.config.app_key
   ]);
 
-  return Http.ins
-    .post({
+  return Http.ins.post({
       route: '/config/paymentConfig/v4.0',
       data
     })

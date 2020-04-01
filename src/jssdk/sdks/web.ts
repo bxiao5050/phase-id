@@ -1,3 +1,12 @@
+import Base from './base';
+export default class WebSdk extends Base {
+  type: 1;
+  constructor(config: JSSDK.Config) {
+    super();
+    this.initConfig(config);
+  }
+}
+
 // if (config.type === 1) {
 //   const indexUrl = IS_DEV || IS_TEST ? config.page.index.test : config.page.index.formal;
 //   w.parent.postMessage(
@@ -14,12 +23,11 @@
     }
 
 */
-  /* 从首页接收用户信息,当浏览器的保存到桌面生效后 */
-  function onMessage(indexUrl: string) {
-    return function(event: MessageEvent) {
-      if (event.origin !== /(http|https):\/\/(www.)?([A-Za-z0-9-_]+(\.)?)+/.exec(indexUrl)[0])
-        return;
-      if (event.data === 'rgclose') return;
-      RG.jssdk.Account.init(JSON.parse(event.data));
-    };
-  }
+/* 从首页接收用户信息,当浏览器的保存到桌面生效后 */
+function onMessage(indexUrl: string) {
+  return function(event: MessageEvent) {
+    if (event.origin !== /(http|https):\/\/(www.)?([A-Za-z0-9-_]+(\.)?)+/.exec(indexUrl)[0]) return;
+    if (event.data === 'rgclose') return;
+    RG.jssdk.Account.init(JSON.parse(event.data));
+  };
+}

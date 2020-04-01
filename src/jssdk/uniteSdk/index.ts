@@ -6,7 +6,7 @@ import {getPaymentConfig, createOrder} from 'Src/jssdk/base/payment';
 import {signed, formatDate} from '../common/utils';
 
 export default class UniteSdk {
-  private _user: UserInfo;
+  private _user: any;
   private quickUserInfo: {
     uid: string;
     username: string;

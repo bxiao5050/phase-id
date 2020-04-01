@@ -375,7 +375,9 @@ export default class Native extends Base {
                 gpPluginGpUrl,
                 gpPluginType,
                 gpPluginName,
-                gpPluginLoadingUrl
+                gpPluginLoadingUrl,
+                appId: this.config.appId,
+                advChannel: this.config.advChannel
               };
               console.log('调用 window.JsToNative.init');
               window.JsToNative.init(JSON.stringify(initParam));
@@ -415,8 +417,8 @@ export default class Native extends Base {
         money: result.money,
         currency: result.currency
       });
-    }
-    // window.RG.jssdk.App.hidePayment();
+    } 
+    //window.RG.jssdk.App.hidePayment();
   }
 
   consumeOrder(params: string) {
@@ -461,7 +463,7 @@ export default class Native extends Base {
   }
 
   Pay(paymentConfig: PaymentConfig) {
-    RG.jssdk.nativeInit();
+    //RG.jssdk.nativeInit();
     return RG.jssdk.PaymentConfig(paymentConfig).then(paymentConfigRes => {
       paymentConfigRes.payments.length && window.RG.jssdk.App.showPayment(paymentConfigRes);
     });

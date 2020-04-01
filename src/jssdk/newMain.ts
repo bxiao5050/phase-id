@@ -1,43 +1,33 @@
 import Languages from 'DOM/i18n/index.ts';
-import Native from './native';
-import Web from './web';
-import FacebookInstantGames from './facebookInstantGames';
-import FacebookWebGames from './facebookWebGames';
-import UniteSdk from './uniteSdk';
 
 function initRG(w: Window) {
   /* 获取所有的地址栏参数 */
   const urlParams: UrlParams = getUrlParam();
-  /* 挂载打补丁后执行的函数 */
-  w.RgPolyfilled = RgPolyfilled;
+
   /* 打补丁 */
-  polyfill();
-  /* 打补丁后执行的函数 */
-  async function RgPolyfilled() {
+  polyfill().then(async res => {
+    /* 是否加载 Vconsole */
     urlParams.debugger && (await initDebugger());
     const {appId, advChannel} = urlParams;
-    const type = getSdkType(urlParams.advChannel);
+    // 加载config
     let config = await getConfig(appId, advChannel);
     /* 第三方支付,关闭支付界面事件的注册 */
     w.addEventListener('message', function(event) {
       if (event.data === 'rgclose') RG.jssdk.App.hidePayment();
     });
     config.urlParams = urlParams;
-    config.type = type;
     // 如果facebook挪到了微端,则不加载facebokSdk
     const WK = window['webkit'];
     if (!window.JsToNative.fbLogin || !(WK && WK.messageHandlers.fbLogin)) {
       fbSdkLoad(config.fb_app_id).then(() => {
-       config.fb_sdk_loaded = true;
+        config.fb_sdk_loaded = true;
       });
+    } else {
+      config.fb_sdk_loaded = true;
     }
-    await loadSdkWithType(config);
-
-    /* sdk 加载完成的打点 */
-    RG.Mark('sdk_loaded');
-    /* 执行初始化函数 */
-    RG.jssdk.init();
-  }
+    /* 加载对应的 sdk */
+    await loadSdk(config);
+  });
   /* 打补丁 */
   function polyfill() {
     return new Promise(resolve => {
@@ -91,64 +81,44 @@ function initRG(w: Window) {
     });
     return Object.assign(gameConfig, {i18n: Languages[gameConfig.language]});
   }
-  /* 获取微端的sdk */
-  function getSdkType(advChannelStr: string) {
-    let type: number;
-    const advChannel = Number(advChannelStr);
-
+  /* 加载对应sdk */
+  function loadSdk(config: any) {
+    // let sdk: Web | Native | FacebookInstantGames | FacebookWebGames | UniteSdk = null;
+    const advChannel = +config.urlParams.advChannel;
     if (advChannel > 30000 && advChannel < 31000) {
       // web端的sdk
-      type = 1;
+      return import('Src/jssdk/web').then(module => {
+        return new module.default(config, false);
+      });
     } else if (advChannel < 30000) {
       // native端的sdk
-      type = 2;
+      return import('Src/jssdk/native').then(module => {
+        return new module.default(config, false);
+      });
     } else if (advChannel > 31000 && advChannel < 32000) {
       // facebook webgame的sdk
-      type = 3;
+      return import('Src/jssdk/facebookWebGames').then(module => {
+        return new module.default();
+      });
     } else if (advChannel > 32000 && advChannel < 33000) {
       // facebook instantgame的sdk
-      type = 4;
+      return import('Src/jssdk/facebookInstantGames').then(module => {
+        return new module.default();
+      });
     } else if (advChannel > 33000 && advChannel < 35000) {
       //  联运sdk
-      type = 5;
+      return import('Src/jssdk/uniteSdk').then(module => {
+        return new module.default(config);
+      });
     } else {
       throw 'unknow advChannel';
     }
-    return type;
-  }
-  /* 加载对应sdk */
-  async function loadSdkWithType(config: any) {
-    let sdk: Web | Native | FacebookInstantGames | FacebookWebGames | UniteSdk;
-    const sdkType = config.type;
-    switch (sdkType) {
-      case 1:
-        await import('Src/jssdk/web').then(module => {
-          sdk = new module.default(config, false) as Web;
-        });
-        break;
-      case 2:
-        await import('Src/jssdk/native').then(module => {
-          sdk = new module.default(config, false);
-        });
-        break;
-      case 3:
-        await import('Src/jssdk/facebookWebGames').then(module => {
-          sdk = new module.default();
-        });
-        break;
-      case 4:
-        await import('Src/jssdk/facebookInstantGames').then(module => {
-          sdk = new module.default();
-        });
-        break;
-      case 5:
-        await import('Src/jssdk/uniteSdk').then(module => {
-          sdk = new module.default(config);
-        });
-        break;
-    }
-    return sdk;
   }
 }
 
 initRG(window);
+
+// /* sdk 加载完成的打点 */
+// RG.Mark('sdk_loaded');
+// /* 执行初始化函数 */
+// RG.jssdk.init();

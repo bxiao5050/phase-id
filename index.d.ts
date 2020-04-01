@@ -37,6 +37,7 @@ declare namespace JSSDK {
     name: string;
     appId: number;
     app_key: string;
+    appKey: string;
     advChannel: number;
     scopeId?: string;
     fb_app_id: string;
@@ -125,7 +126,7 @@ interface RG {
   Fb();
 
   /** 获取当前用户数据2 */
-  CurUserInfo(): UserInfo;
+  CurUserInfo(): any;
 
   /** 分享接口 */
   Share(shareUrl: string);
@@ -285,7 +286,7 @@ interface JsToNative {
   consumeOrder(param: string);
 
   exitApp();
-  fbLogin():any
+  fbLogin(): any;
 }
 
 declare var JsToNative: JsToNative;
@@ -344,7 +345,7 @@ interface FinishOrderParams {
   channel: number;
   receipt: string;
   signature: string;
-  exInfo: string;
+  exInfo?: string;
 }
 
 interface Base0 {
@@ -687,13 +688,13 @@ interface BindZoneParam {
   // userId 用户id
   userId: number;
   // gameZoneId 区服id
-  gameZoneId: number;
+  gameZoneId: string;
   // createRole  是否创角 0=否 1=是
   createRole: number;
   // roleId  角色id
-  roleId: number;
+  roleId: string;
   // level 角色等级
-  level: number;
+  level: string;
 }
 
 interface ServerRes {
@@ -708,31 +709,31 @@ interface PaymentConfigRes extends ServerRes {
 interface DeviceMsg {
   //gaid?: string;
   source: number;
-  advChannel: number;
+  //advChannel: number;
   network: number;
   model: string;
   operatorOs: string;
   deviceNo: string;
   device: string;
   version: string;
-  sdkVersion: string;
-  appId: number;
+  //sdkVersion: string;
+  //appId: number;
 }
 
-interface UserInfo {
-  accountType: number;
-  emailValid: number;
-  firstLogin: number;
-  userId: number;
-  userName: string;
-  userType: number;
-  password: string;
-  token: string;
-}
+// interface UserInfo {
+//   accountType: number;
+//   emailValid: number;
+//   firstLogin: number;
+//   userId: number;
+//   userName: string;
+//   userType: number;
+//   password: string;
+//   //token: string;
+// }
 
-interface UsersInfo {
-  [key: string]: UserInfo;
-}
+// interface UsersInfo {
+//   [key: string]: UserInfo;
+// }
 
 interface LoginData {
   accountType: number;
@@ -783,7 +784,7 @@ interface UrlParams {
   appId: string;
   advChannel: string;
   sdkVersion: string;
-  debugger?: boolean;
+  debugger?: string;
   /* web端的投放的广告参数 */
   advertiseId?: string;
 }

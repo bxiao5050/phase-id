@@ -230,12 +230,15 @@ export function changePassword({password, newPassword, userId, appId, appKey}: C
 }
 
 export interface UserInfo {
-  accountType: number;
-  emailValid: number;
-  firstLogin: number;
   userId: number;
   userName: string;
   userType: UserType;
+  accountType: number;
+  emailValid: number;
   password: string;
-  token: string;
+  //token: string;
+  firstLogin: number;
+}
+interface UsersInfo {
+  [key: string]: UserInfo;
 }
