@@ -5,7 +5,7 @@ import { Route } from 'react-router-dom'
 import { createLocation } from 'history'
 import Login from "./index"
 import Choose from "./Choose"
-import { Ins } from 'DOM/index'
+import { Ins } from 'Src/jssdk/view/index'
 // import Account from "../../../Base/Account";
 
 export default class Main extends React.Component<{

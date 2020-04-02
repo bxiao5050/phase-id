@@ -2,7 +2,7 @@ import './index.scss';
 import * as React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import { History, createLocation } from 'history';
-import { Ins } from 'DOM/index';
+import { Ins } from 'Src/jssdk/view/index';
 import TypeList from "./TypeList";
 import Type0 from "./Type0";
 import Type1 from "./Type1";

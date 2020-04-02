@@ -1,5 +1,5 @@
 // import Mark from 'Src/jssdk/0_Old/Mark_old'
-import { Ins } from 'DOM/index'
+import { Ins } from 'Src/jssdk/view/index'
 
 export default class FacebookInstantGames {
 

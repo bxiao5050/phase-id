@@ -1,4 +1,4 @@
-import Languages from 'DOM/i18n/index.ts';
+import Languages from 'Src/jssdk/view/i18n';
 
 function initRG(w: Window) {
   /* 获取所有的地址栏参数 */

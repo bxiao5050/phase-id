@@ -28,7 +28,7 @@ export default class Payment {
   getPaymentHistory(appId: string, userId: number) {
     const sign = signed([appId, userId, this.appKey]);
     const route = `/order/getOrderList/${appId}/${userId}/${this.lastTime}/${sign}`;
-    Http.ins
+    return Http.ins
       .get<GetPaymentHistoryRes>({route})
       .then(res => {
         this.lastTime = res.lastTime;
@@ -244,13 +244,13 @@ export interface CreateOrderParams {
 export interface CreateOrderRes extends ServerRes {
   data: {
     // double	成功，则返回金额(实际支付的金额)
-    money: number;
+    money?: number;
     // String	成功，则返回货币（实际支付的货币）
-    currency: string;
+    currency?: string;
     // String	游戏订单ID(SDK订单交易ID)
     transactionId: string;
     // String	额外信息，如果返回url格式为："returnInfo" ：{ "url": "https://hao.360.cn/?z1002" }
-    returnInfo: string | {url: string};
+    returnInfo?: string | {url: string};
   };
 }
 export interface FinishedOrderParams {

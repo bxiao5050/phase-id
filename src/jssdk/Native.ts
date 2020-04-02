@@ -183,7 +183,7 @@ export default class Native extends Base {
       })
     );
 
-    let [{Ins}] = await Promise.all([import('DOM/index'), RG.jssdk.Account.initPromise()]);
+    let [{Ins}] = await Promise.all([import('Src/jssdk/view/index'), RG.jssdk.Account.initPromise()]);
 
     window.RG.jssdk.App = Ins;
     let user = RG.jssdk.Account.user;

@@ -30,7 +30,7 @@ export default class UniteSdk {
   constructor(config: any) {
     this.reactPromise = this.loadScript(reactSrc);
     this.reactDomPromise = this.loadScript(reactDomSrc).then(() => {
-      import('DOM/BTgame').then(res => {
+      import('Src/jssdk/view/BTgame').then(res => {
         window.RG.jssdk.App = res.Ins;
       });
     });

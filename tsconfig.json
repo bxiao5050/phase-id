@@ -27,7 +27,7 @@
         "./src/jssdk/*"
       ],
       "DOM/*": [
-        "./src/jssdk/DOM/*"
+        "src/jssdk/view/*"
       ],
       "Base/*": [
         "src/jssdk/base/*"

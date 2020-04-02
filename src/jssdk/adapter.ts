@@ -1,6 +1,6 @@
 export function checkJsToNative(appId: string, advChannel: string) {
   if (!JsToNative) {
-    let Fn = function() {};
+    let Fn:any = function() {};
     JsToNative = {
       getDeviceMsg: function() {
         var u = navigator.userAgent;
@@ -32,7 +32,8 @@ export function checkJsToNative(appId: string, advChannel: string) {
       jpwork: Fn,
       consumeOrder: Fn,
       exitApp: Fn,
-      fbLogin: Fn
+      fbLogin: Fn,
+      fbShare:Fn
     };
   }
 }

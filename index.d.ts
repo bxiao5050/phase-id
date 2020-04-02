@@ -41,6 +41,7 @@ declare namespace JSSDK {
     advChannel: number;
     scopeId?: string;
     fb_app_id: string;
+    fbAppId: string;
     FbPageId: string;
     test: string;
     // 语言
@@ -186,6 +187,8 @@ interface NativeToJs {
   goBack();
 
   deviceMsg(params: string);
+  fbShareHandle?: (params:string) => void;
+  fbLoginHandle?: (params:string) => void;
 }
 
 interface initSDKParams {
@@ -231,7 +234,7 @@ interface JsToNativeDeviceMsg {
 interface JsToNative {
   //获取设备参数 ios是解析后的对象不是JSON字符串
   getDeviceMsg(): string;
-  getDeviceMsgAsync(): Promise<JsToNativeDeviceMsg>;
+  getDeviceMsgAsync?: () => Promise<JsToNativeDeviceMsg>;
   /**
    * 初始化
    * @param params
@@ -286,7 +289,8 @@ interface JsToNative {
   consumeOrder(param: string);
 
   exitApp();
-  fbLogin(): any;
+  fbLogin?: () => string;
+  fbShare?: (param: string) => string;
 }
 
 declare var JsToNative: JsToNative;

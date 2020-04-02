@@ -1,5 +1,5 @@
 // import Mark from 'Src/Base/Mark_old'
-import { Ins } from 'DOM/index';
+import { Ins } from 'Src/jssdk/view/index';
 
 /**
  * facebook web games javascript SDK

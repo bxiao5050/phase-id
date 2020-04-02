@@ -1,7 +1,7 @@
 import './Register.scss'
 import * as React from 'react'
 import Login from './index'
-import { Ins } from 'DOM/index'
+import { Ins } from 'Src/jssdk/view/index'
 
 type RegisterProp = {
   Login: Login

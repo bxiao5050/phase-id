@@ -1,6 +1,6 @@
 import * as React from 'react'
 import './WinOpen.scss';
-import { Ins } from 'DOM/index';
+import { Ins } from 'Src/jssdk/view/index';
 export default class WinOpen extends React.Component<any, any, any>  {
 
   render() {

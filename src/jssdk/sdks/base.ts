@@ -29,7 +29,7 @@ export default class Base {
   }
   async platformLogin(userName: string, pwd: string) {
     const {appId, advChannel} = this.config.urlParams;
-    // 密码实现制长度的6-20位
+    // 密码限制长度的6-20位
     const password = pwd.length === 32 ? pwd : md5(pwd);
     const deviceMsg = await this.devicePromise;
     let data: LoginParam = {
@@ -57,7 +57,6 @@ export default class Base {
   }
   async platformRegister(params: RegisterInfo) {
     const {appId, advChannel} = this.config.urlParams;
-    // 密码实现制长度的6-20位
     const password = md5(params.password);
     const deviceMsg = await this.devicePromise;
     let data: RegisterParams = {
@@ -90,7 +89,11 @@ export default class Base {
       return res;
     });
   }
-  async getPaymentList() {
+  async vistorRegister() {
+    let password = Math.floor(Math.random() * Math.pow(10, 8)) + '';
+    return this.platformRegister({userName: '', password, accountType: 0, userChannel: 0});
+  }
+  async getPaymentHistoryList() {
     return this.payment.getPaymentHistory(this.config.urlParams.appId, this.account.user.userId);
   }
   gamePayInfo: GamePayParams;
@@ -194,7 +197,7 @@ export default class Base {
       sdkVersion: this.sdkVersion,
       sign: ''
     };
-    return this.accountApi.bindZone(data).then(res => {});
+    return this.accountApi.bindZone(data);
   }
   async bindVisitor(userName: string, password: string) {
     password = md5(password);
@@ -258,8 +261,13 @@ export default class Base {
     };
     return this.accountApi.operatorEmail(data);
   }
+  redirect() {
+    window.name = 'redirect';
+    location.reload();
+  }
+  install?: () => void;
 }
-interface GamePayParams {
+export interface GamePayParams {
   userId: number;
   gameZoneId: string;
   gameOrderId: string;
@@ -275,7 +283,7 @@ interface RegisterInfo {
   password: string;
   // 昵称
   nickName?: string;
-  // 账号类型
+  // 账号类型,游客注册不需要
   accountType: number;
   // web端使用来传递广告id
   thirdPartyId?: string;
@@ -287,7 +295,7 @@ interface RegisterInfo {
   email?: string;
   // 电话
   telephone?: string;
-  // 用户渠道
+  // 用户渠道,游客注册不需要
   userChannel: number;
   exInfo?: string;
 }

@@ -2,7 +2,7 @@
 import './Type1.scss'
 import * as React from 'react'
 import Payment from './index'
-import { Ins } from 'DOM/index'
+import { Ins } from 'Src/jssdk/view/index'
 
 type paymentProps = {
   Payment: Payment

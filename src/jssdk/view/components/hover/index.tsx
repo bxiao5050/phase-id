@@ -1,7 +1,7 @@
 import './index.scss'
 import * as React from 'react'
 import { History } from 'history'
-import { Ins } from 'DOM/index'
+import { Ins } from 'Src/jssdk/view/index'
 
 var canTouch = false
 var isMoving = false

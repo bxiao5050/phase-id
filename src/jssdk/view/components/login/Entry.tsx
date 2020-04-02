@@ -1,7 +1,7 @@
 import './Entry.scss'
 import * as React from 'react'
 import { createLocation } from 'history'
-import { Ins } from 'DOM/index'
+import { Ins } from 'Src/jssdk/view/index'
 import Login from "./index"
 import Choose from "./Choose"
 

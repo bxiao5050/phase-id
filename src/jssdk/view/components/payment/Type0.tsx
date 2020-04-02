@@ -1,7 +1,7 @@
 
 import './Type0.scss'
 import * as React from 'react'
-import Payment from 'DOM/components/payment'
+import Payment from 'Src/jssdk/view/components/payment'
 import { History } from 'history'
 import { getUrlParam } from 'Src/jssdk/common/utils';
 import Http from 'Src/jssdk/base/Http';
