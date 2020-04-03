@@ -76,9 +76,9 @@ class Main extends React.Component<accountProps, any, any> {
               !userTypeIsFB && props.history.push(createLocation('/change-password'));
             }}
           >
-            <img src={require('DOM/assets/ui_setting.png')} />
+            <img src={require('../../assets/ui_setting.png')} />
             <p>{RG.jssdk.config.i18n.dom010}</p>
-            <img src={require('DOM/assets/ui_right_arrow.png')} className='right' />
+            <img src={require('../..//assets/ui_right_arrow.png')} className='right' />
           </a>
           <a
             className='item-other setting'
@@ -86,14 +86,14 @@ class Main extends React.Component<accountProps, any, any> {
               // RG.Install && RG.Install('仙靈計', 'http://xianlingji.bilivfun.com/xlj')
             }}
           >
-            <img src={require('DOM/assets/ui_email.png')} />
+            <img src={require('../..//assets/ui_email.png')} />
             <p>{RG.jssdk.config.i18n.txt_safe_set}</p>
-            <img src={require('DOM/assets/ui_right_arrow.png')} className='right' />
+            <img src={require('../..//assets/ui_right_arrow.png')} className='right' />
           </a>
           <a className='item-other' onClick={this.changeAccount}>
-            <img src={require('DOM/assets/ui_switch_account.png')} />
+            <img src={require('../..//assets/ui_switch_account.png')} />
             <p>{RG.jssdk.config.i18n.dom003}</p>
-            <img src={require('DOM/assets/ui_right_arrow.png')} className='right' />
+            <img src={require('../..//assets/ui_right_arrow.png')} className='right' />
           </a>
           <a
             className='item-other'
@@ -111,9 +111,9 @@ class Main extends React.Component<accountProps, any, any> {
               });
             }}
           >
-            <img src={require('DOM/assets/fb_user_center_0.png')} className='pay-his-icon' />
+            <img src={require('../..//assets/fb_user_center_0.png')} className='pay-his-icon' />
             <p>{RG.jssdk.config.i18n.txt_check_charge}</p>
-            <img src={require('DOM/assets/ui_right_arrow.png')} className='right' />
+            <img src={require('../..//assets/ui_right_arrow.png')} className='right' />
           </a>
         </div>
       </div>

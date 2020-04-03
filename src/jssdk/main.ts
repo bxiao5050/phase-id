@@ -18,7 +18,7 @@ function initRG(w: Window) {
     config.urlParams = urlParams;
     // 如果facebook挪到了微端,则不加载facebokSdk
     const WK = window['webkit'];
-    if (!window.JsToNative.fbLogin || !(WK && WK.messageHandlers.fbLogin)) {
+    if (!(window.JsToNative && window.JsToNative.fbLogin) || !(WK && WK.messageHandlers.fbLogin)) {
       fbSdkLoad(config.fb_app_id).then(() => {
         config.fb_sdk_loaded = true;
       });
@@ -77,7 +77,7 @@ function initRG(w: Window) {
     if (!appId || !advChannel) throw 'appId or advChannel is not defined';
     const gameConfig = await import(`./config/${appId}.ts`).then(module => {
       const configs = module.default;
-      return configs[advChannel] ? configs[advChannel] : configs['1'];
+      return configs[advChannel] ? configs[advChannel] : configs.default;
     });
     return Object.assign(gameConfig, {i18n: Languages[gameConfig.language]});
   }

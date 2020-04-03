@@ -23,14 +23,20 @@ export default class Main extends React.Component<
     choose: Choose;
   };
   facebookLogin() {
-    RG.jssdk.fbLogin(true).then(res => {
-      if (res.code === 200) {
-        this.props.Login.loginComplete();
-      } else {
+    RG.jssdk
+      .fbLogin(true)
+      .then(res => {
+        if (res && res.code === 200) {
+          this.props.Login.loginComplete();
+        } else {
+          Ins.showNotice(RG.jssdk.config.i18n.UnknownErr);
+          console.log(res);
+        }
+      })
+      .catch(e => {
         Ins.showNotice(RG.jssdk.config.i18n.UnknownErr);
-        console.log(res);
-      }
-    });
+        console.log(e);
+      });
   }
   visitorRegister() {
     RG.jssdk.visitorRegister().then(res => {

@@ -276,7 +276,7 @@ export interface GamePayParams {
   gameOrderId: string;
   roleId: string;
   roleName: string;
-  level: string;
+  level: number;
   gameCoin: number;
 }
 interface RegisterInfo {

@@ -81,7 +81,7 @@ export default class IosApi {
     return this.fbSharePromise;
   }
 }
-
+/* ios ,模拟实现 */
 declare global {
   interface Window {
     webkit: {

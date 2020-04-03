@@ -9,13 +9,12 @@ export default class Payment {
   }
   /* 获取支付的信息 */
   getPaymentConfig(params: PaymentConfigParams) {
-    params.level = params.level || 'null';
     params.sign = signed([
       params.appId,
       params.advChannel,
       params.userId,
       params.gameCoin,
-      params.level,
+      params.level || 'null',
       params.source,
       params.network,
       this.appKey
@@ -23,7 +22,7 @@ export default class Payment {
     return Http.ins.post<PaymentConfigRes>({route: '/config/paymentConfig/v4.0', data: params});
   }
   /* 第一次为空,后续为服务端返回的 lastTime */
-  private lastTime: string = '';
+  private lastTime: string = '0';
   /* 获取支付的历史记录 */
   getPaymentHistory(appId: string, userId: number) {
     const sign = signed([appId, userId, this.appKey]);
@@ -84,7 +83,7 @@ export interface PaymentConfigParams {
   // 网络 0=wifi 1 = 3g 2=其他
   network: number;
   /** 角色等级 */
-  level: string;
+  level: number;
   /** 游戏版本 控制每种支付方式的开关 */
   version: string;
   /** 游戏币数量 */
@@ -202,7 +201,7 @@ export interface CreateOrderParams {
   /** 角色ID */
   roleName: string;
   /** 角色等级 */
-  level: string;
+  level: number;
   /** 充值来源 0=ANDROID客户端 1=IOS客户端 2=网页 */
   source: number;
   /** 支付渠道 0=appstore 1=google play 2=vnpt 3=1pay 4=mol,具体见渠道常量表 */

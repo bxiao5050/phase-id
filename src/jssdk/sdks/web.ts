@@ -20,6 +20,8 @@ export default class WebSdk extends Base {
     super();
     this.initConfig(config);
     initRG(this);
+    /* sdk 加载完成 */
+    RG.Mark('sdk_loaded');
     /* 从首页获取用户信息 */
     window.addEventListener('message', this.onMessage.bind(this), false);
     const userIdArr = Object.keys(this.account.users);
@@ -29,11 +31,12 @@ export default class WebSdk extends Base {
     } else {
       this.getUserPromise = Promise.resolve();
     }
+    this.init();
   }
 
   async init() {
     /* 加载 react-js  */
-    await loadJsRepeat({url: '', id: 'rg-react'});
+    await loadJsRepeat({url: reactSrc, id: 'rg-react'});
     await Promise.all([
       loadJsRepeat({url: reactDomSrc, id: 'rg-react-dom'}),
       loadJsRepeat({url: reactRouterDomSrc, id: 'rg-react-routerdom'})
@@ -54,7 +57,8 @@ export default class WebSdk extends Base {
         if (userIdArr.length > 0) user = this.account.users[userIdArr[0]];
       }
       await RG.jssdk.platformLogin(user.userName, user.password);
-      this.app.refs.loginRoute.refs.login.loginComplete();
+      const loginModule = this.app.showLogin();
+      loginModule.loginComplete();
     }
   }
   getUser() {
@@ -86,7 +90,7 @@ export default class WebSdk extends Base {
   }
   async fbLogin(isLogout: boolean) {
     return fbWebLogin().then((res: FbLoginRes) => {
-      this.platformRegister(res);
+      return this.platformRegister(res);
     });
   }
   fbShare = fbShare;

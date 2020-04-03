@@ -65,7 +65,7 @@ export function initRG(sdk: NativeSdk|WebSdk) {
     };
   }
   RgFunciton.prototype.jssdk = sdk;
-  RG = new RgFunciton();
+  window.RG = new RgFunciton();
 }
 
 export interface BindZoneParam {

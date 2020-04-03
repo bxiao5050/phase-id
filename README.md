@@ -37,10 +37,7 @@
 │   │   ├── main.ts # 入口
 │   │   ├── style.css # 引导页样式
 │   │   └── swiper.tsx # swiper组件
-│   │   
-│   ├── index # 游戏首页，已经废弃，全部加载在sspa中
-│   │   └── main
-|   ├─ jssdk
+|   └── jssdk
 |       ├─ 0_Old #以前的代码
 |       ├─ Base 
 |       |   ├─ Account.ts
@@ -135,16 +132,8 @@
 ├── webpack.config.js #webpack打包的配置文件
 └── yarn.lock # yarn下载包的版本控制文件
 ```
-
-
-
-### 注意事项：
-
-  1. sdk_purchased_done 这个点的点名不能改变的，在微端根据这个点名来判断进行购买打点;
-  2. 绑定游客和除登录之外返回用户信息的接口,都不会更新一些accountType这些值,需要自己去做操作
-
-### 需完成的点
-
-  1. 登录添加忘记密码功能，点击后弹出输入账号发送邮件修改密码功能，忘记账号联系客服
-  2. 添加邮箱功能，http://ip:port/pocketgames/client/user/operatorEmail   使用此接口添加 operatorType这个值暂时没有用可以直接传0;
-
+报错: 
+Http.ts:42 POST http://sdk-test.changic.net.cn/pocketgames/client/config/paymentConfig/v4.0 400 (Bad Request)
+index.html?appId=10203&advChannel=1&sdkVersion=v2.4.3:1 Access to XMLHttpRequest at 'http://sdk-test.changic.net.cn/pocketgames/client/config/paymentConfig/v4.0' from origin 'http://172.16.10.123:7001' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.
+index.html?appId=10203&advChannel=1&sdkVersion=v2.4.3:1 Uncaught (in promise) server res err
+一般是参数错误,某一个参数为空了

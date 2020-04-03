@@ -25,7 +25,7 @@ interface Config {
   /* sdk 语言 */
   language: string;
   // 悬浮球距离顶边的距离rem
-  hoverTop: number;
+  hoverTop: string;
   // 悬浮球是在左边还是右边
   hoverFromLeft: boolean;
   /* 是否官方支付打点 */
@@ -45,13 +45,13 @@ interface Config {
   /* 公司自己开发游戏的首页的地址 如: https://www.narutoh5game.com/h5-plays/index.html*/
   indexUrl?: string;
   /* adjust 打点,原生端有 */
-  adjustId: string;
+  adjustId?: string;
   /* adjust 打点的所有的 token */
-  adjustToken: {
+  adjustToken?: {
     [key: string]: string;
   };
   /* 对固定点点名的适配 */
-  markName: {
+  markName?: {
     /* sdk加载完成 */
     sdk_loaded: string;
     /* 购买点 */

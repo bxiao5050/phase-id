@@ -33,7 +33,7 @@ export default class Choose extends React.Component<ChooseProps, {}, any> {
     const {userName, password} = user;
     const i18n = RG.jssdk.config.i18n;
     RG.jssdk
-      .platformLogin(password, userName)
+      .platformLogin(userName, password)
       .then(res => {
         if (res.code === 200) {
           this.props.Login.loginComplete();

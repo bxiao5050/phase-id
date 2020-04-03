@@ -38,7 +38,7 @@ export default class NativeSdk extends Base {
     /* 微端初始化 */
     this.getNativeInitConfig();
     /* 加载 react-js  */
-    await loadJsRepeat({url: '', id: 'rg-react'});
+    await loadJsRepeat({url: reactSrc, id: 'rg-react'});
     await Promise.all([
       loadJsRepeat({url: reactDomSrc, id: 'rg-react-dom'}),
       loadJsRepeat({url: reactRouterDomSrc, id: 'rg-react-routerdom'})
@@ -62,13 +62,15 @@ export default class NativeSdk extends Base {
       /* 如果是 fb 登录就走fb登录 */
       await this.fbLogin(false);
       /* 加载 loading 界面 */
-      this.app.refs.loginRoute.refs.login.loginComplete();
+      const loginModule = this.app.showLogin();
+      loginModule.loginComplete();
     } else {
       /* 如果有用户,就自动登录 */
       if (user) {
         await this.platformLogin(user.userName, user.password);
         /* 加载 loading 界面 */
-        this.app.refs.loginRoute.refs.login.loginComplete();
+        const loginModule = this.app.showLogin();
+        loginModule.loginComplete();
       } else {
         /* 如果用户不存在,查看users中有用户信息吗,如果有使用第一个,如果没有显示登录页 */
         let userIdArr = Object.keys(this.account.users);
@@ -76,7 +78,8 @@ export default class NativeSdk extends Base {
           let user = this.account.users[userIdArr[0]];
           await this.platformLogin(user.userName, user.password);
           /* 加载 loading 界面 */
-          this.app.refs.loginRoute.refs.login.loginComplete();
+          const loginModule = this.app.showLogin();
+          loginModule.loginComplete();
         } else {
           // 显示登录界面
           this.app.showLogin();
@@ -136,9 +139,9 @@ export default class NativeSdk extends Base {
     }
     // 传递给原生的参数
     let markParmas: GameEventParam = {
-      eventName,
-      userId: this.account.user.userId
+      eventName
     };
+    if (this.account.user && this.account.user.userId) markParmas.userId = this.account.user.userId;
     // 获取adjust Token
     if (RG.jssdk.config.adjustToken && RG.jssdk.config.adjustToken[eventName]) {
       markParmas.eventToken = RG.jssdk.config.adjustToken[eventName];
@@ -194,6 +197,7 @@ export default class NativeSdk extends Base {
       return this.platformRegister(fbUserInfo);
     } else {
       console.error('fbLogin error');
+      return Promise.reject();
     }
   }
   /* facebook 分享 */
