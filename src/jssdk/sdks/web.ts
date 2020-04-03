@@ -1,4 +1,6 @@
 import Base from './base';
+
+/* 与首页postMessage 的通信, 添加到桌面 */
 export default class WebSdk extends Base {
   type: 1;
   constructor(config: Config) {

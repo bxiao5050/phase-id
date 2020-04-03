@@ -143,8 +143,8 @@ export interface FbShareRes {
   /* 取消只有code 为 401 */
 }
 export interface JsToNativeInitParams {
-  appId: string;
-  advChannel: string;
+  appId: number;
+  advChannel: number;
   gpProduct: string;
   gpVerify: string;
   gpPluginAction: string;
@@ -161,7 +161,7 @@ export interface GameEventParam {
   /* 支付点 */
   currency?: string;
   money?: string;
-  userId?: string;
+  userId?: number;
   gameOrderId?: string;
 }
 export interface JpworkParams {

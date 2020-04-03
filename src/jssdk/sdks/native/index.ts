@@ -1,11 +1,15 @@
-import Base, {GamePayParams} from '../base';
+import Base from '../base';
 import IosApi from './ios';
-import AndroidApi from './android';
-import {loadJsRepeat} from '../../utils';
+import AndroidApi, {GameEventParam} from './android';
+import Init from '../../api/init';
+import {loadJsRepeat, formatDate} from '../../utils';
 import {initRG} from '../rg';
 import {fbLogin, fbShare} from '../../utils/fb';
+
 /* 引入类型 */
 import {ConsumeOrderParams, FbLoginRes, FbShareRes} from './android';
+import {GamePayParams} from '../base';
+import {InitConfigParams} from '../../api/init';
 import {PaymentChannel} from '../../api/payment';
 import {DeviceMsg} from './android';
 import App from 'Src/jssdk/view/App';
@@ -14,12 +18,16 @@ export default class NativeSdk extends Base {
   type: 2;
   native: IosApi | AndroidApi;
   app: App;
+  initApi = new Init();
+
   constructor(config: Config) {
     super();
+    this.initApi.setAppKey(config.appKey);
     this.initConfig(config);
     this.initNative();
     this.initNativeToJs();
     initRG(this);
+    this.getNativeInitConfig();
   }
   get devicePromise() {
     return this.native.getDeviceMsg();
@@ -73,11 +81,88 @@ export default class NativeSdk extends Base {
     }
   }
   async pay(params: GamePayParams) {
+    this.getNativeInitConfig();
     return this.getPaymentInfo(params).then(res => {
       res.payments.length && RG.jssdk.app.showPayment(res);
     });
   }
-  async mark(name: string, params?: {userId?: number; money: string; currency: string}) {}
+  getConfigIsSuccess = false;
+  getConfigResolve = null;
+  getConfigPromise: Promise<void> = new Promise(resolve => {
+    this.getConfigResolve = resolve;
+  });
+  async getNativeInitConfig() {
+    if (!this.getConfigIsSuccess) {
+      const deviceMsg = await this.devicePromise;
+      const {appId, advChannel} = this.config.urlParams;
+      let data: InitConfigParams = {
+        appId: +appId,
+        advChannel: +advChannel,
+        source: deviceMsg.source,
+        network: deviceMsg.network,
+        model: deviceMsg.model,
+        operatorOs: deviceMsg.operatorOs,
+        deviceNo: deviceMsg.deviceNo,
+        device: deviceMsg.device,
+        version: deviceMsg.version,
+        sdkVersion: this.sdkVersion,
+        clientTime: formatDate(),
+        firstInstall: 0,
+        sign: ''
+      };
+      return this.initApi
+        .getConfig(data)
+        .then(res => {
+          this.native.init(res);
+          this.getConfigIsSuccess = true;
+          this.getConfigResolve();
+          console.log('init completed', res);
+        })
+        .catch(e => {
+          console.log('init err', e);
+        });
+    }
+  }
+  async mark(markName: string, params?: {userId?: number; money: string; currency: string}) {
+    await this.getConfigPromise;
+    let eventName: string = markName;
+    // 从配置中获取固定点,点名的配置
+    if (RG.jssdk.config.markName && RG.jssdk.config.markName[eventName]) {
+      eventName = RG.jssdk.config.markName[eventName];
+    }
+    // 传递给原生的参数
+    let markParmas: GameEventParam = {
+      eventName,
+      userId: this.account.user.userId
+    };
+    // 获取adjust Token
+    if (RG.jssdk.config.adjustToken && RG.jssdk.config.adjustToken[eventName]) {
+      markParmas.eventToken = RG.jssdk.config.adjustToken[eventName];
+    }
+    // sdk_purchased_done，原生端根据此字符串来做是否支付的判断,adjust只需要token，不要调整代码的顺序，最后匹配购买的点名
+    if (eventName === 'Purchased') {
+      markParmas.currency = (params && params.currency) || '';
+      markParmas.money = (params && params.money) || '';
+      markParmas.eventName = 'sdk_purchased_done';
+    }
+    // 匹配唯一点,有的话就打唯一点,facebook不打唯一点
+    if (RG.jssdk.config.adjustToken && RG.jssdk.config.adjustToken[eventName + '_unique']) {
+      const name = eventName + '_unique';
+      const eventToken = RG.jssdk.config.adjustToken[name];
+      let uniqueMarkParams = {
+        eventName: name,
+        eventToken,
+        money: markParmas.money,
+        currency: markParmas.currency,
+        userId: markParmas.userId
+      };
+      this.native.gameEvent(uniqueMarkParams);
+      console.log(`"${eventName + '_unique'}" has marked - native`, uniqueMarkParams);
+    }
+    // // 打点、输出日志
+    this.native.gameEvent(markParmas);
+    console.info(`"${markParmas.eventName}" has marked - native`, markParmas);
+  }
   async order(params: PaymentChannel) {
     return this.createOrder(params).then(res => {
       if (res.code === 200 && params.showMethod === 3) {
@@ -184,6 +269,7 @@ export default class NativeSdk extends Base {
         if (typeof params === 'string') {
           result = JSON.parse(params);
         }
+        if (!result) result = {} as any;
         (that.native as IosApi).deviceMsgResolve(result);
         (that.native as IosApi).deviceMsgPromise = null;
       },

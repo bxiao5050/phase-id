@@ -38,7 +38,22 @@ interface Config {
   hoverFromLeft: boolean;
   // 语言
   language: string;
-  
+  /* adjust 打点 */
+  adjustId: string;
+  adjustToken: {
+    [key: string]: string;
+  };
+  /* 对固定点点名的适配 */
+  markName: {
+    /* sdk加载完成 */
+    sdk_loaded: string;
+    /* 购买点 */
+    sdk_purchased_done: string;
+    /* 注册点 */
+    sdk_register: string;
+    /* 联系客服 */
+    sdk_contact_us: string;
+  };
 }
 
 interface Window {

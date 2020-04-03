@@ -8,7 +8,7 @@ export default class Init {
   setAppKey(appKey: string) {
     this.appKey = appKey;
   }
-  getConfig(params: InitConfigParams) {
+  async getConfig(params: InitConfigParams) {
     params.sign = signed([params.appId, params.source, params.advChannel, this.appKey]);
     return Http.ins
       .post<InitConfigRes>({route: '/config/v3.1/initSDK', data: params})
@@ -22,11 +22,11 @@ export default class Init {
             advChannel: params.advChannel,
             gpProduct: verifys.gpProduct,
             gpVerify: verifys.gpVerify,
-            gpPluginAction: res.publics.gpPluginAction,
-            gpPluginGpUrl: res.publics.gpPluginGpUrl,
-            gpPluginType: res.publics.gpPluginType,
-            gpPluginName: res.publics.gpPluginName,
-            gpPluginLoadingUrl: res.publics.gpPluginLoadingUrl
+            gpPluginAction: res.publics.gpPluginAction || "",
+            gpPluginGpUrl: res.publics.gpPluginGpUrl || "",
+            gpPluginType: res.publics.gpPluginType || "",
+            gpPluginName: res.publics.gpPluginName || "",
+            gpPluginLoadingUrl: res.publics.gpPluginLoadingUrl || ""
           };
         } else {
           return Promise.reject(res);
@@ -34,9 +34,9 @@ export default class Init {
       });
   }
   // 官方支付的加密参数
-  key = CryptoJS.enc.Utf8.parse('flowerwordchangi');
-  iv = CryptoJS.enc.Utf8.parse('0392039203920300');
-  AESdecode(srcStr: string) {
+  private key = CryptoJS.enc.Utf8.parse('flowerwordchangi');
+  private iv = CryptoJS.enc.Utf8.parse('0392039203920300');
+  private AESdecode(srcStr: string) {
     return CryptoJS.AES.decrypt(srcStr, this.key, {
       iv: this.iv,
       mode: CryptoJS.mode.CBC,
