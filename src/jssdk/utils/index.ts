@@ -86,7 +86,7 @@ export function getDeviceType() {
   };
 }
 // 获取选择用户时的用户类型
-export function getAccountType(userType: UserType, accountType: AccountType) {
+export function getAccountType(userType: number, accountType: number) {
   if (userType === 0) return "guest";
   if (accountType === 2) return "fb";
   return "sdk";
@@ -214,4 +214,29 @@ export function errorHandle(lang: any) {
         return;
     }
   }
+}
+export const getUrlParam = (function () {
+  var urlParamMap = {};
+  var interrogationIndex = location.href.indexOf("?") + 1;
+  var str = interrogationIndex === 0 ? "" : location.href.slice(interrogationIndex);
+  if (str) {
+    // 不匹配str.split(/&|%26/)，地址栏转义后的参数
+    var arr = str.split(/&/);
+    arr.forEach(item => {
+      const arr = item.split(/=/);
+      urlParamMap[decodeURIComponent(arr[0])] = decodeURIComponent(arr[1]);
+    })
+  }
+  return function (name) {
+    return urlParamMap.hasOwnProperty(name) ? urlParamMap[name] : null;
+  }
+})()
+//参数签名
+export function signed(params: (string | number)[]): string {
+  // 参数签名不能用对象，有顺序，使用数组
+  // var paramskeys = Object.keys(params)
+  // var data = params.map(key => {
+  //   return params[key]
+  // }).join('') + (RG.jssdk.config.app_key)
+  return md5(params.join(""));
 }

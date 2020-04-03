@@ -10,7 +10,7 @@ export default class Account {
     Account._ins = this;
     const user = JSON.parse(localStorage.getItem('user'));
     const users = JSON.parse(localStorage.getItem('users'));
-    this.init(user, users);
+    this.init({user, users});
   }
   /** 当前用户 */
   private _user: UserInfo;
@@ -43,7 +43,7 @@ export default class Account {
     localStorage.setItem(this.userKey, JSON.stringify(this._user));
     localStorage.setItem(this.usersKey, JSON.stringify(this._users));
   }
-  init(user: UserInfo, users: UsersInfo) {
+  init({user, users}: {user: UserInfo; users: UsersInfo}) {
     if (user) {
       this._user = user;
     }
@@ -54,13 +54,25 @@ export default class Account {
 }
 
 export interface UserInfo {
+  // 用户id
   userId: number;
+  // 用户名
   userName: string;
-  userType: UserType;
-  accountType: number;
-  emailValid: number;
+  // 密码
   password: string;
-  firstLogin: number;
+  // 1.正式账号 0.游客账号
+  userType: number;
+  // 账号类型 0.普通用户 1.Email 用户 2.fb 账号 3.其他 11.kakao
+  accountType: number;
+  // 邮箱
+  email: string;
+  // 邮箱是否验证，0=未设置 1=未验证 2=已验证
+  emailValid: 0 | 1 | 2;
+  // 电话号
+  telephone: string;
+  // 0=登陆  1 = 注册
+  firstLogin: 0 | 1;
+  // 平台token
   token: string;
 }
 export interface UsersInfo {

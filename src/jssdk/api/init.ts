@@ -1,6 +1,6 @@
 import * as CryptoJS from 'crypto-js';
-import {signed} from '../common/utils';
-import Http from '../base/Http';
+import {signed} from '../utils';
+import Http from '../api/Http';
 
 export default class Init {
   private appKey: string = '';
@@ -37,8 +37,8 @@ export default class Init {
   key = CryptoJS.enc.Utf8.parse('flowerwordchangi');
   iv = CryptoJS.enc.Utf8.parse('0392039203920300');
   AESdecode(srcStr: string) {
-    return CryptoJS.AES.decrypt(srcStr, RG.jssdk.key, {
-      iv: RG.jssdk.iv,
+    return CryptoJS.AES.decrypt(srcStr, this.key, {
+      iv: this.iv,
       mode: CryptoJS.mode.CBC,
       padding: CryptoJS.pad.Pkcs7
     }).toString(CryptoJS.enc.Utf8);
@@ -111,11 +111,12 @@ export interface InitConfigRes extends ServerRes {
     facebookAppId: string;
   };
   publics: {
-    NganluongUrl: string;
-    gpPluginGpUrl: string;
-    gpPluginAction: string;
-    gpPluginLoadingUrl: string;
-    gpPluginType: string;
-    gpPluginName: string;
+    /* android 的支付插件 */
+    NganluongUrl?: string;
+    gpPluginGpUrl?: string;
+    gpPluginAction?: string;
+    gpPluginLoadingUrl?: string;
+    gpPluginType?: string;
+    gpPluginName?: string;
   };
 }

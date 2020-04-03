@@ -61,4 +61,10 @@ export default class Http {
   }
 }
 
+declare global {
+  interface ServerRes {
+    code: number;
+    error_msg: string;
+  }
+}
 // http://127.0.0.1:7001/index.html?appId=10062&advChannel=1&sdkVersion=v3.0.0&region=test

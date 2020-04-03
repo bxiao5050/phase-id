@@ -95,6 +95,31 @@ function checkJsToNative() {
     //fbShare: Fn
   };
 }
+/* 在 微端 window上挂载的方法 */
+declare global {
+  interface Window {
+    JsToNative: {
+      init(params: string): void;
+      gameEvent(params: string): void;
+      consumeOrder(params: string): void;
+      exitApp(): void;
+      jpwork(params: string): void;
+      fbLogin?: () => void;
+      fbShare?: (url: string) => void;
+      getDeviceMsg(): string;
+    };
+  }
+}
+export interface DeviceMsg {
+  gaid?: string;
+  source: number;
+  network: number;
+  model: string;
+  operatorOs: string;
+  deviceNo: string;
+  device: string;
+  version: string;
+}
 export interface FbLoginRes {
   userId: string;
   userName: string;
@@ -103,8 +128,8 @@ export interface FbLoginRes {
   email: string;
   /* 微端参数传入 exInfo 中 */
   mapping?: string;
-  accountType:number;
-  userChannel:number;
+  accountType: number;
+  userChannel: number;
 }
 export interface FbShareRes {
   code: number;
@@ -144,7 +169,7 @@ export interface JpworkParams {
   transactionId: string;
   channel: number;
   currency: string;
-  money: string;
+  money: number;
   userId: number;
 }
 export interface ConsumeOrderParams {
@@ -152,17 +177,3 @@ export interface ConsumeOrderParams {
   exInfo: string;
   error_msg?: string;
 }
-// declare global {
-//   interface Window {
-//     JsToNative: {
-//       fbLogin(): void;
-//       fbShare(): void;
-//       getDeviceMsg(): string;
-//       exitApp(): void;
-//       consumeOrder(params: string): void;
-//       jpwork(params: string): void;
-//       gameEvent(params: string): void;
-//       init(params: string): void;
-//     };
-//   }
-// }

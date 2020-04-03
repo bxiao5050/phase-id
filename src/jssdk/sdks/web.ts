@@ -1,7 +1,7 @@
 import Base from './base';
 export default class WebSdk extends Base {
   type: 1;
-  constructor(config: JSSDK.Config) {
+  constructor(config: Config) {
     super();
     this.initConfig(config);
   }
@@ -28,6 +28,6 @@ function onMessage(indexUrl: string) {
   return function(event: MessageEvent) {
     if (event.origin !== /(http|https):\/\/(www.)?([A-Za-z0-9-_]+(\.)?)+/.exec(indexUrl)[0]) return;
     if (event.data === 'rgclose') return;
-    RG.jssdk.Account.init(JSON.parse(event.data));
+    RG.jssdk.account.init(JSON.parse(event.data));
   };
 }

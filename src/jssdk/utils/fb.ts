@@ -56,6 +56,7 @@ function getFBUserInfo() {
 }
 /* 跳转去facebook页面登录 */
 function toFbLogin(facebookId: string) {
+  localStorage.setItem('rg_isFaceLogin', 'true');
   let index = location.href.indexOf('&code=');
   let url = index === -1 ? location.href : location.href.substr(0, index);
   location.href = `https://www.facebook.com/${FBVersion}/dialog/oauth?client_id=${facebookId}&redirect_uri=${encodeURIComponent(
@@ -77,7 +78,7 @@ function fbLogout(facebookId: string) {
   });
 }
 /* 分享 */
-export function fbShare(url: string):Promise<{code:number,error_msg?:string}> {
+export function fbShare(url: string): Promise<{code: number; error_msg?: string}> {
   console.info('facebook share' + url);
   return new Promise((resolve, reject) => {
     FB.ui(

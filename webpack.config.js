@@ -64,7 +64,6 @@ switch (action) {
 }
 var definePlugin = {
   FBVersion: JSON.stringify('v6.0'),//v6.0
-  PREFIX: JSON.stringify(md5('RoyalGame').slice(0, 4)),
   VERSION: JSON.stringify(sdkVersion),
   SERVER: JSON.stringify(SERVER),
   IS_DEV: isDev,
@@ -76,7 +75,7 @@ var definePlugin = {
 var webpackConfig = {
 
   entry: {
-    dev: path.join(__dirname, './src/jssdk/dev/index.ts'),
+    //dev: path.join(__dirname, './src/jssdk/dev/index.ts'),
     sdk: path.join(__dirname, 'src/jssdk/main.ts'),
     shortcut: path.join(__dirname, 'src/add-shortcut/main.ts'),
     // index: path.join(__dirname, 'src/index/main.ts'),
@@ -84,10 +83,10 @@ var webpackConfig = {
   resolve: {
     extensions: [".ts", ".tsx", ".js"],
     alias: {
-      Base: path.join(__dirname, 'src/jssdk/Base'),
-      DOM: path.join(__dirname, 'src/jssdk/DOM'),
+      //Base: path.join(__dirname, 'src/jssdk/Base'),
+      //DOM: path.join(__dirname, 'src/jssdk/DOM'),
       Src: path.join(__dirname, 'src'),
-      SDK: path.join(__dirname, 'src/jssdk')
+      //SDK: path.join(__dirname, 'src/jssdk')
     }
   },
   output: output,

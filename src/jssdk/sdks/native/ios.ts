@@ -4,7 +4,8 @@ import {
   JpworkParams,
   ConsumeOrderParams,
   FbLoginRes,
-  FbShareRes
+  FbShareRes,
+  DeviceMsg
 } from './android';
 
 export default class IosApi {
@@ -103,10 +104,10 @@ declare global {
         exitApp:{
           postMessage:PostMessage
         }
-        fbLogin:{
+        fbLogin?:{
           postMessage:PostMessage
         }
-        fbShare:{
+        fbShare?:{
           postMessage:PostMessage
         }
       };

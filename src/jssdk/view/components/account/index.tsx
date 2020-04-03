@@ -4,7 +4,7 @@ import {Switch, Route, Link} from 'react-router-dom';
 import {History, createLocation} from 'history';
 import {Ins} from 'Src/jssdk/view/index';
 import {match} from 'react-router-dom';
-import {getAccountType} from 'Src/jssdk/common/utils';
+import {getAccountType} from 'Src/jssdk/utils';
 
 type accountProps = {
   match?: match<{curPath: string}>;
@@ -17,7 +17,7 @@ class Main extends React.Component<accountProps, any, any> {
   };
 
   componentDidMount() {
-    JsToNative.getDeviceMsgAsync().then(device => {
+    RG.jssdk.devicePromise.then(device => {
       this.state.deviceNo = device.hasOwnProperty('device') ? device.device : device.deviceNo;
       this.setState(this.state);
     });
@@ -37,7 +37,7 @@ class Main extends React.Component<accountProps, any, any> {
 
   render() {
     var props = this.props;
-    var {userType, accountType} = RG.jssdk.Account.user;
+    var {userType, accountType} = RG.jssdk.account.user;
     const userTypeIsFB = getAccountType(userType, accountType) === 'fb';
 
     return (
@@ -98,7 +98,7 @@ class Main extends React.Component<accountProps, any, any> {
           <a
             className='item-other'
             onClick={() => {
-              RG.jssdk.GetPaymentHistory().then((data: any) => {
+              RG.jssdk.getPaymentHistoryList().then((data: any) => {
                 if (data.data.length) {
                   props.history.push(
                     createLocation('/payment-history', {
@@ -174,14 +174,14 @@ class VisitorUpgrade extends React.Component<accountProps, {}, {}> {
               Ins.showNotice(RG.jssdk.config.i18n.errMsg001);
             } else {
               var password = md5(pass1);
-              RG.jssdk.VisitorUpgrade(account, password).then(res => {
+              RG.jssdk.bindVisitor(account, password).then(res => {
                 if (res.code === 200) {
-                  var user = RG.CurUserInfo();
+                  // var user = RG.CurUserInfo();
 
-                  user.password = password;
-                  user.userName = account;
-                  user.userType = 1;
-                  RG.jssdk.Account.user = user;
+                  // user.password = password;
+                  // user.userName = account;
+                  // user.userType = 1;
+                  // RG.jssdk.Account.user = user;
 
                   Ins.showNotice(RG.jssdk.config.i18n.msg001);
                   Ins.showHover(false);
@@ -262,11 +262,11 @@ class Changepass extends React.Component<accountProps, {}, {}> {
             } else {
               var oldpass = md5(old);
               var password = md5(pass1);
-              RG.jssdk.ChangePassword(oldpass, password).then(res => {
+              RG.jssdk.changePassword(oldpass, password).then(res => {
                 if (res.code === 200) {
-                  var user = RG.CurUserInfo();
-                  user.password = password;
-                  RG.jssdk.Account.user = user;
+                  // var user = RG.CurUserInfo();
+                  // user.password = password;
+                  // RG.jssdk.Account.user = user;
                   Ins.showNotice(RG.jssdk.config.i18n.msg001);
                   Ins.hideAccount();
                 } else if (res.code === 107) {

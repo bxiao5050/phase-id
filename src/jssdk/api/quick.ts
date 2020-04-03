@@ -1,5 +1,5 @@
-import Http from '../base/Http';
-import {signed} from '../common/utils';
+import Http from '../api/Http';
+import {signed} from '../utils';
 
 export default class Quick {
   appSecret: string = '';

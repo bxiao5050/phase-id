@@ -1,8 +1,8 @@
-import "./Loading.scss";
-import * as React from "react";
-import Login from "./index";
-import { Ins } from "Src/jssdk/view/index";
-import { getAccountType } from "Src/jssdk/common/utils";
+import './Loading.scss';
+import * as React from 'react';
+import Login from './index';
+import {Ins} from 'Src/jssdk/view/index';
+import {getAccountType} from 'Src/jssdk/utils';
 
 type LoadingProp = {
   Login: Login;
@@ -20,9 +20,9 @@ export default class Loading extends React.Component<LoadingProp, {}, any> {
   componentDidMount() {
     this.setState({
       clock: setTimeout(() => {
-        var { userType, accountType } = RG.jssdk.Account.user;
+        var {userType, accountType} = RG.jssdk.account.user;
         Ins.hideLogin();
-        var isGuest = getAccountType(userType, accountType) === "guest" ? true : false;
+        var isGuest = getAccountType(userType, accountType) === 'guest' ? true : false;
         Ins.showHover(isGuest);
         if (window.rgAsyncInit) {
           window.rgAsyncInit();
@@ -40,32 +40,30 @@ export default class Loading extends React.Component<LoadingProp, {}, any> {
   }
 
   render() {
-    var user: UserInfo = RG.jssdk.Account.user;
+    var user: any = RG.jssdk.account.user;
     var password: string = user.password;
     return (
-      <div className="content win-loading">
-        <h2 className="logo block">IPOCKET GAMES</h2>
-        <div className="info">
+      <div className='content win-loading'>
+        <h2 className='logo block'>IPOCKET GAMES</h2>
+        <div className='info'>
           <p>
-            {RG.jssdk.config.i18n.txt_account_name}{" "}
-            <span>{user.userName}</span>
+            {RG.jssdk.config.i18n.txt_account_name} <span>{user.userName}</span>
           </p>
           <p>
-            {RG.jssdk.config.i18n.dom007}:{" "}
-            <span>{(password ? password.substring(0, 10) : "") + "..."}</span>
+            {RG.jssdk.config.i18n.dom007}:{' '}
+            <span>{(password ? password.substring(0, 10) : '') + '...'}</span>
           </p>
         </div>
-        <div className="loading">{RG.jssdk.config.i18n.dom005}</div>
-        <div className="line" />
+        <div className='loading'>{RG.jssdk.config.i18n.dom005}</div>
+        <div className='line' />
         <a
-          className="change"
+          className='change'
           onClick={() => {
             this.unclock();
-            window.RG.Redirect();
-            // this.props.Login.props.history.goBack();
+            this.props.Login.props.history.goBack();
           }}
         >
-          <span className="switch" />
+          <span className='switch' />
           <span>{RG.jssdk.config.i18n.dom003}</span>
         </a>
       </div>

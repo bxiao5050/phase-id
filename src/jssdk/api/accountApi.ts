@@ -1,5 +1,5 @@
-import {signed} from '../common/utils';
-import Http from '../base/Http';
+import {signed} from '../utils';
+import Http from '../api/Http';
 
 export default class AccountApi {
   private appKey: string = '';

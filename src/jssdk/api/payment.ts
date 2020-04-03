@@ -1,5 +1,5 @@
-import {signed, formatDate} from '../common/utils';
-import Http from '../base/Http';
+import {signed, formatDate} from '../utils';
+import Http from '../api/Http';
 
 export default class Payment {
   private appKey: string = '';
@@ -210,7 +210,7 @@ export interface CreateOrderParams {
   /** CODE值，具体见支付方式常量表 */
   code: number;
   /** 金额 */
-  amount: string;
+  amount: number;
   /** 货币 */
   currency: string;
   /** 商品名称 */

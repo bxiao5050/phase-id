@@ -1,11 +1,11 @@
 import Mock from "mockjs";
-import { getUrlParam } from "../../common/utils"
+import { getUrlParams } from "../../utils"
 
 const Random = Mock.Random;
 
 export function getloginRes(options) {
   console.log(JSON.stringify({ url: options.url, type: options.type, body: options.body }));
-  let body = getUrlParam('?' + options.body);
+  let body = getUrlParams('?' + options.body);
   const result = {
     code: 200,
     error_msg: 'success',
@@ -25,7 +25,7 @@ export function getloginRes(options) {
 }
 export function getregisterRes(options) {
   console.log(JSON.stringify({ url: options.url, type: options.type, body: options.body }));
-  let userName = getUrlParam('?' + options.body).userName;
+  let userName = getUrlParams('?' + options.body).userName;
   let result;
   if (userName) {
     result = {

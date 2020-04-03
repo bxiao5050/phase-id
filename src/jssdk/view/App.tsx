@@ -5,13 +5,14 @@ import Hover from "./components/hover";
 import Account from "./components/account";
 import Login from "./components/login";
 import Payment from "./components/payment"
+import { PaymentConfigRes } from '../api/payment';
 
 export class App extends React.Component {
 
   public refs: {
     notice: Notice
     hover: Hover
-    loginRoute: any
+    loginRoute: any;
   }
 
   constructor(props: any) {

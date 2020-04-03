@@ -5,21 +5,29 @@ import NativeSdk from './native';
 // import QuickSdk from "./uniteSdk/quick";
 import {GamePayParams} from './base';
 
-interface RG {
-  type: number;
-  // jssdk: NativeSdk;
-  CurUserInfo(): any;
-  BindZone(params: BindZoneParam): Promise<ServerRes>;
-  Pay(params: GamePayParams): void;
-  Share(): Promise<ServerRes>;
-  Mark(): void;
-  Install(): void;
-  Redirect(): void;
-  ChangeAccount(): Promise<any>;
+declare global {
+  let RG: RGType;
+  interface Window {
+    RG: RGType;
+  }
+  interface RGType {
+    type: number;
+    jssdk: NativeSdk;
+    CurUserInfo(): any;
+    BindZone(params: BindZoneParam): Promise<ServerRes>;
+    Pay(params: GamePayParams): void;
+    Share(url: string): Promise<{code: number; error_msg?: string}>;
+    Mark(name: string, params?: {userId?: number; money: string; currency: string}): void;
+    Install(): void;
+    Redirect(): void;
+    ChangeAccount(): Promise<any>;
+    /* 打开粉丝页 */
+    Messenger():void
+  }
 }
 
 export function initRG(sdk: NativeSdk) {
-  function RgFunciton(this: RG) {
+  function RgFunciton(this: RGType) {
     this.type = sdk.type;
     this.CurUserInfo = function() {
       const {userId, userName, token} = sdk.account.user;
@@ -29,10 +37,18 @@ export function initRG(sdk: NativeSdk) {
       return sdk.bindZone(params);
     };
     this.Pay = function(params: GamePayParams) {
-      sdk.getPaymentInfo(params);
+      sdk.pay(params);
     };
-    // this.Share = function() {};
-    this.Mark = function() {};
+    this.Share = function(url: string) {
+      return sdk.fbShare(url);
+    };
+    this.Mark = function(
+      name: string,
+      params?: {userId?: number; money: string; currency: string}
+    ) {
+      sdk.mark(name, params);
+    };
+    /* 微端 */
     if (sdk.install) {
       this.Install = function() {
         sdk.install();
@@ -41,10 +57,26 @@ export function initRG(sdk: NativeSdk) {
     this.Redirect = function() {
       sdk.redirect();
     };
+    this.Messenger = function () {
+      sdk.openFansPage();
+    }
     this.ChangeAccount = function() {
       return Promise.resolve();
     };
   }
   RgFunciton.prototype.jssdk = sdk;
-  window.RG = new RgFunciton();
+  RG = new RgFunciton();
+}
+
+export interface BindZoneParam {
+  // userId 用户id
+  userId: number;
+  // gameZoneId 区服id
+  gameZoneId: string;
+  // createRole  是否创角 0=否 1=是
+  createRole: number;
+  // roleId  角色id
+  roleId: string;
+  // level 角色等级
+  level: string;
 }

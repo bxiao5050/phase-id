@@ -1,21 +1,28 @@
-import Base from '../base';
+import Base, {GamePayParams} from '../base';
 import IosApi from './ios';
 import AndroidApi from './android';
-import {loadJsRepeat} from '../../utlis';
+import {loadJsRepeat} from '../../utils';
 import {initRG} from '../rg';
-import {fbLogin, fbShare} from '../../utlis/fb';
+import {fbLogin, fbShare} from '../../utils/fb';
 /* 引入类型 */
 import {ConsumeOrderParams, FbLoginRes, FbShareRes} from './android';
+import {PaymentChannel} from '../../api/payment';
+import {DeviceMsg} from './android';
+import App from 'Src/jssdk/view/App';
 
 export default class NativeSdk extends Base {
   type: 2;
   native: IosApi | AndroidApi;
-  constructor(config: JSSDK.Config) {
+  app: App;
+  constructor(config: Config) {
     super();
     this.initConfig(config);
     this.initNative();
     this.initNativeToJs();
     initRG(this);
+  }
+  get devicePromise() {
+    return this.native.getDeviceMsg();
   }
   async init() {
     /* 加载 react-js  */
@@ -24,10 +31,53 @@ export default class NativeSdk extends Base {
       loadJsRepeat({url: reactDomSrc, id: 'rg-react-dom'}),
       loadJsRepeat({url: reactRouterDomSrc, id: 'rg-react-routerdom'})
     ]);
-    // const {Ins} = await import("../../")
+    /* 加载 dom */
+    const {Ins} = await import('../../view/index');
+    // 挂载 dom
+    this.app = Ins;
+    /* 判断是否自动登录,切换账号, 还是 fbLogin*/
+    const user = this.account.user;
+    /* facebook 跳出登录重定向后的参数 */
+    const code = this.config.urlParams.code;
+    /* 在跳出登录时设置,在登录完成保存 user 时删除 */
+    let isFbLogin = localStorage.getItem('rg_isFaceLogin');
+    /* 如果是切换账号,就什么都不做 */
+    if (window.name === 'redirect') {
+      window.name = '';
+      // 显示登录界面
+      this.app.showLogin();
+    } else if (code && isFbLogin) {
+      /* 如果是 fb 登录就走fb登录 */
+      await this.fbLogin(false);
+      /* 加载 loading 界面 */
+      this.app.refs.loginRoute.refs.login.loginComplete();
+    } else {
+      /* 如果有用户,就自动登录 */
+      if (user) {
+        await this.platformLogin(user.userName, user.password);
+        /* 加载 loading 界面 */
+        this.app.refs.loginRoute.refs.login.loginComplete();
+      } else {
+        /* 如果用户不存在,查看users中有用户信息吗,如果有使用第一个,如果没有显示登录页 */
+        let userIdArr = Object.keys(this.account.users);
+        if (userIdArr.length) {
+          let user = this.account.users[userIdArr[0]];
+          await this.platformLogin(user.userName, user.password);
+          /* 加载 loading 界面 */
+          this.app.refs.loginRoute.refs.login.loginComplete();
+        } else {
+          // 显示登录界面
+          this.app.showLogin();
+        }
+      }
+    }
   }
-  async pay() {}
-  async mark() {}
+  async pay(params: GamePayParams) {
+    return this.getPaymentInfo(params).then(res => {
+      res.payments.length && RG.jssdk.app.showPayment(res);
+    });
+  }
+  async mark(name: string, params?: {userId?: number; money: string; currency: string}) {}
   async order(params: PaymentChannel) {
     return this.createOrder(params).then(res => {
       if (res.code === 200 && params.showMethod === 3) {
@@ -43,9 +93,7 @@ export default class NativeSdk extends Base {
       return res;
     });
   }
-  get devicePromise() {
-    return this.native.getDeviceMsg();
-  }
+
   async fbLogin(isLogout: boolean) {
     let fbUserInfo: FbLoginRes = null;
     if (this.native.hasFbLogin) {
@@ -59,17 +107,19 @@ export default class NativeSdk extends Base {
       console.error('fbLogin error');
     }
   }
-  async fbShare(url: string) {
+  /* facebook 分享 */
+  fbShare(url: string) {
     if (this.native.hasFbShare) {
       return this.native.fbShare(url);
     } else {
       return fbShare(url);
     }
   }
-
-  openFanPage() {
-    window.open(this.config.page.facebook.index);
+  /* 打开粉丝页 */
+  openFansPage() {
+    window.open(this.config.fans);
   }
+  /* 初始化 对应的手机平台,可以做成工厂函数 */
   initNative() {
     if (window.webkit) {
       this.native = new IosApi();
@@ -77,6 +127,7 @@ export default class NativeSdk extends Base {
       this.native = new AndroidApi();
     }
   }
+  /* 挂载方法到 window.NativeToJs 上 ios传的参数都是对象,android 传的参数是 json*/
   initNativeToJs() {
     const that = this;
     window.NativeToJs = {
@@ -106,10 +157,10 @@ export default class NativeSdk extends Base {
                 error_msg: res.error_msg,
                 exInfo: data.exInfo
               };
-              window.RG.jssdk.App.showNotice(RG.jssdk.config.i18n.UnknownErr);
+              that.app.showNotice(RG.jssdk.config.i18n.UnknownErr);
             }
             that.native.consumeOrder(result);
-            window.RG.jssdk.App.hidePayment();
+            that.app.hidePayment();
           });
       },
       jpworkResult: function(params: string | JpworkResultParams) {
@@ -126,7 +177,7 @@ export default class NativeSdk extends Base {
         }
       },
       goBack: function() {
-        if (confirm(RG.jssdk.config.i18n.tuichu)) JsToNative.exitApp();
+        if (confirm(RG.jssdk.config.i18n.tuichu)) window.JsToNative.exitApp();
       },
       deviceMsg: function(params: string | DeviceMsg) {
         let result: DeviceMsg = params as DeviceMsg;
@@ -137,9 +188,17 @@ export default class NativeSdk extends Base {
         (that.native as IosApi).deviceMsgPromise = null;
       },
       fbShareHandle: function(params: string | FbShareRes) {
-        let result: FbShareRes = params as FbShareRes;
+        let data: FbShareRes = params as FbShareRes;
         if (typeof params === 'string') {
-          result = JSON.parse(params);
+          data = JSON.parse(params);
+        }
+        let result: {code: number; error_msg?: string};
+        if (data.code === 200) {
+          result = {code: 200, error_msg: 'success'};
+        } else if (data.code === 400) {
+          result = data;
+        } else {
+          result = {code: 401, error_msg: 'user cancle'};
         }
         that.native.fbLoginResolve(result);
         that.native.fbSharePromise = null;
@@ -159,6 +218,19 @@ export default class NativeSdk extends Base {
     };
   }
 }
+/* 在 initNativeToJs 中向 window上挂载方法,以供微端调用 */
+declare global {
+  interface Window {
+    NativeToJs: {
+      consumeOrder: (params: string | FinishOrderParams) => void;
+      jpworkResult: (params: string | JpworkResultParams) => void;
+      goBack: () => void;
+      deviceMsg: (params: any) => void;
+      fbShareHandle: (params: string | FbShareRes) => void;
+      fbLoginHandle: (params: string | FbLoginRes) => void;
+    };
+  }
+}
 interface JpworkResultParams {
   code: number;
   money: string;
@@ -171,14 +243,3 @@ interface FinishOrderParams {
   signature: string;
   exInfo: string;
 }
-/*  let resJson = window.JsToNative.fbShare(JSON.stringify({url}));
-    let data: fbShareRes = JSON.parse(resJson);
-    let result: {code: number; error_msg: string};
-    if (data.code === 200) {
-      result = {code: 200, error_msg: 'success'};
-    } else if (data.code === 400) {
-      result = data;
-    } else {
-      result = {code: 401, error_msg: 'user cancle'};
-    }
-    return Promise.resolve(result); */

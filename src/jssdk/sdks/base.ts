@@ -1,7 +1,7 @@
 import AccountApi from '../api/accountApi';
 import Login from '../api/login';
 import Account from '../api/account';
-import Payment from '../api/payment';
+import Payment, {PaymentChannel} from '../api/payment';
 /* 引入参数类型 */
 import {LoginParam, RegisterParams} from '../api/login';
 import {PaymentConfigParams, FinishedOrderParams, CreateOrderParams} from '../api/payment';
@@ -11,6 +11,8 @@ import {
   ChangePwdParams,
   OpeartorEmailParams
 } from '../api/accountApi';
+import {DeviceMsg} from './native/android';
+import { BindZoneParam } from './rg';
 
 export default class Base {
   sdkVersion: string = VERSION;
@@ -19,8 +21,8 @@ export default class Base {
   account = new Account();
   payment = new Payment();
   devicePromise: Promise<DeviceMsg>;
-  config: JSSDK.Config;
-  initConfig(config: JSSDK.Config) {
+  config: Config;
+  initConfig(config: Config) {
     this.config = config;
     const appKey = config.appKey;
     this.accountApi.setAppKey(appKey);
@@ -85,6 +87,7 @@ export default class Base {
     return this.login.register(data).then(res => {
       if (res.code === 200) {
         this.account.user = Object.assign(res.data, {password, token: res.token});
+        localStorage.removeItem('rg_isFaceLogin');
       }
       return res;
     });
@@ -287,8 +290,8 @@ interface RegisterInfo {
   accountType: number;
   // web端使用来传递广告id
   thirdPartyId?: string;
-  // 性别
-  sex?: Sex;
+  // 性别 0=男 1=女
+  sex?: 0 | 1;
   // 生日
   birthday?: string;
   // 邮箱
@@ -297,5 +300,12 @@ interface RegisterInfo {
   telephone?: string;
   // 用户渠道,游客注册不需要
   userChannel: number;
+  exInfo?: string;
+}
+interface FinishOrderParams {
+  transactionId: string;
+  channel: number;
+  receipt: string;
+  signature: string;
   exInfo?: string;
 }

@@ -23,19 +23,11 @@
       "Src/*": [
         "./src/*"
       ],
-      "SDK/*": [
-        "./src/jssdk/*"
-      ],
-      "DOM/*": [
-        "src/jssdk/view/*"
-      ],
-      "Base/*": [
-        "src/jssdk/base/*"
-      ]
     }
   },
   "include": [
     "./index.d.ts",
+    "./webpack.config.d.ts",
     "./src/**/*.tsx",
     "./src/**/*.ts"
   ],

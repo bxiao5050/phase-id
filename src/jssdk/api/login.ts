@@ -1,5 +1,5 @@
-import {signed, formatDate} from '../common/utils';
-import Http from '../base/Http';
+import {signed, formatDate} from '../utils';
+import Http from '../api/Http';
 
 export default class Login {
   private appKey: string = '';

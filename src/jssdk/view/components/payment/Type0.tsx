@@ -3,8 +3,8 @@ import './Type0.scss'
 import * as React from 'react'
 import Payment from 'Src/jssdk/view/components/payment'
 import { History } from 'history'
-import { getUrlParam } from 'Src/jssdk/common/utils';
-import Http from 'Src/jssdk/base/Http';
+import { getUrlParam } from 'Src/jssdk/utils';
+import Http from 'Src/jssdk/api/Http';
 
 type paymentProps = {
   Payment: Payment
@@ -32,17 +32,17 @@ export default class Type0 extends React.Component<paymentProps, {}, any>  {
   // }
 
   async componentDidMount() {
-    if (getUrlParam('pay')) {
-      console.log('发货请求中', this.props.Payment.state.paymentDatas[0])
-      Http.ins.get({
-        route: '/order/sendGoods?OrderId=' + this.props.Payment.state.paymentDatas[0].transactionId
-      }).then(res => {
-        if (res.code === 200) {
-          RG.jssdk.App.hidePayment()
-          RG.jssdk.App.showNotice('send success~~~')
-        }
-      })
-    }
+    // if (getUrlParam('pay')) {
+    //   console.log('发货请求中', this.props.Payment.state.paymentDatas[0])
+    //   Http.ins.get({
+    //     route: '/order/sendGoods?OrderId=' + this.props.Payment.state.paymentDatas[0].transactionId
+    //   }).then(res => {
+    //     if (res.code === 200) {
+    //       RG.jssdk.App.hidePayment()
+    //       RG.jssdk.App.showNotice('send success~~~')
+    //     }
+    //   })
+    // }
   }
 
   render() {

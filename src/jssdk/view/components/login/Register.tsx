@@ -33,11 +33,9 @@ export default class Register extends React.Component<RegisterProp, {}, any>  {
     } else if (password1.length < 6 || password1.length > 20) {
       Ins.showNotice(RG.jssdk.config.i18n.errMsg002);
     } else {
-      var password = password1
       try {
-        await RG.jssdk.Login({
-          isReg: true,
-          password,
+        await RG.jssdk.platformRegister({
+          password:password1,
           userName,
           accountType: 1,
           thirdPartyId: '',

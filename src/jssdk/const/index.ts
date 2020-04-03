@@ -8,7 +8,7 @@ export enum SdkType {
 }
 export enum AccountType {
   visitor = 0,
-  email,
+  email  =1,
   fb = 2,
   BTgame = 3,
   kakao = 11
@@ -25,27 +25,6 @@ export enum UserType {
   visitor,
   formal
 }
-// 注册类型,fb,kakoa BTgame 的登录就是注册
-export enum RegisterType {
-  default,
-  fb,
-  kakao,
-  BTgame,
-  vistor
-}
-// 保存在localStorage中的信息的 key
-export enum localStorageKeys {
-  user = 'rg_user',
-  users = 'rg_users'
-}
-// 所有的域名,后面使用打包时写死
-export const serverOrigins = {
-  sg: 'https://sdk-sg.pocketgamesol.com',
-  de: 'https://sdk-de.pocketgamesol.com',
-  vn: 'https://sdk-vn.pocketgamesol.com',
-  test: 'https://sdk-test.changic.net.cn',
-  dev: '/api'
-};
 
 export enum ErrorCode {
   // 注册时用户不存在
