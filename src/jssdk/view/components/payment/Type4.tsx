@@ -1,6 +1,7 @@
 import './Type4.scss';
 import * as React from 'react';
 import Payment from './index';
+import {replaceUrlToHttps} from 'Src/jssdk/utils';
 // import {createLocation} from 'history';
 
 type paymentProps = {
@@ -25,7 +26,7 @@ export default class Type4 extends React.Component<paymentProps, {}, any> {
                 );
               }}
             >
-              <img src={node.codeImg.replace(/http\:\/{0,2}/, 'https://').replace(/:[0-9]+/, '')} />
+              <img src={replaceUrlToHttps(node.codeImg)} />
             </li>
           ))}
         </ul>

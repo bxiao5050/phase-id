@@ -1,5 +1,5 @@
 import Languages from './view/i18n';
- 
+
 function initRG(w: Window) {
   /* 获取所有的地址栏参数 */
   const urlParams: UrlParams = getUrlParam();
@@ -60,7 +60,7 @@ function initRG(w: Window) {
     }
     return result;
   }
-/* 初始化VConsole,用作微端的查看日志 */
+  /* 初始化VConsole,用作微端的查看日志 */
   function initDebugger() {
     return new Promise(resolve => {
       var js = document.createElement('script');

@@ -92,7 +92,7 @@ export default class Base {
       return res;
     });
   }
-  async vistorRegister() {
+  async visitorRegister() {
     let password = Math.floor(Math.random() * Math.pow(10, 8)) + '';
     return this.platformRegister({userName: '', password, accountType: 0, userChannel: 0});
   }

@@ -13,15 +13,15 @@ export const TW = {
   dom005: '登錄',
   dom007: '密碼',
   dom008: '遊客登錄',
-  dom009: '顯示密碼',//txt_show_pwd
+  dom009: '顯示密碼', //txt_show_pwd
   dom010: '修改密碼', //txt_change_psw
-  dom011: "兌換比例", //txt_exchange_rate
-  dom012: "支付",
-  dom014: "卡号:",
+  dom011: '兌換比例', //txt_exchange_rate
+  dom012: '支付',
+  dom014: '卡号:',
 
   PayCenter: '支付中心', //txt_title_pay
   Purchase: '購買商品', //cg_txt_consume_buy
-  tuichu: '妳確定要退出遊戲嗎？',//txt_exit_tip
+  tuichu: '妳確定要退出遊戲嗎？', //txt_exit_tip
   winopen: '請跳轉前往儲值頁面',
   jump: '跳轉',
   loadException: '加載異常',

@@ -1,8 +1,8 @@
-import { EN } from "./EN";
-import { TW } from "./TW";
-import { VN } from "./VN";
-import { ID } from "./ID";
-import { TH } from "./TH";
+import {EN} from './EN';
+import {TW} from './TW';
+import {VN} from './VN';
+import {ID} from './ID';
+import {TH} from './TH';
 
 export default {
   EN,
@@ -10,4 +10,4 @@ export default {
   VN,
   ID,
   TH
-}
+};

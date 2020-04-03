@@ -2,7 +2,7 @@
   position: fixed;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, .5);
+  background: rgba(0, 0, 0, 0.5);
   top: 0;
   left: 0;
   z-index: 9999999;
@@ -18,7 +18,7 @@
     align-items: center;
     background: url(../../assets/icon-logo.png) center 15% no-repeat;
     background-color: #fff;
-    border-radius: .2rem;
+    border-radius: 0.2rem;
     background-size: 9rem 3rem;
 
     .close {
@@ -28,8 +28,8 @@
       background: url(../../assets/ui_close.png) center no-repeat;
       background-size: contain;
       position: absolute;
-      right: .9rem;
-      top: .9rem;
+      right: 0.9rem;
+      top: 0.9rem;
     }
 
     .upper {
@@ -43,9 +43,9 @@
     .btn-jump {
       background: #33a4e6;
       color: #fff;
-      border-radius: .2rem;
-      font-size: .9rem;
-      padding: 0.5rem .8rem;
+      border-radius: 0.2rem;
+      font-size: 0.9rem;
+      padding: 0.5rem 0.8rem;
       margin: 0.2rem 0 1.5rem 0;
     }
   }

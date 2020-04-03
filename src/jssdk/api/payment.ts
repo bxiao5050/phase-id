@@ -250,7 +250,7 @@ export interface CreateOrderRes extends ServerRes {
     // String	游戏订单ID(SDK订单交易ID)
     transactionId: string;
     // String	额外信息，如果返回url格式为："returnInfo" ：{ "url": "https://hao.360.cn/?z1002" }
-    returnInfo?: string | {url: string};
+    returnInfo?: {url: string};
   };
 }
 export interface FinishedOrderParams {

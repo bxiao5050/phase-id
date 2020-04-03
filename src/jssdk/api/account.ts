@@ -27,6 +27,7 @@ export default class Account {
     if (user && user.accountType != 2) {
       this._users[user.userId] = user;
     }
+    this.save();
   }
   get users() {
     return this._users;
@@ -37,6 +38,8 @@ export default class Account {
     }
     if (this.user.userId === userId) {
       this._user = null;
+    } else {
+      this.save();
     }
   }
   save() {

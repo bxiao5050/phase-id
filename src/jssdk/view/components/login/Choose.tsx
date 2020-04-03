@@ -4,6 +4,7 @@ import {Route} from 'react-router-dom';
 import Login from './index';
 import {Ins} from 'Src/jssdk/view/index';
 import {getAccountType} from 'Src/jssdk/utils';
+/* 类型 */
 import {UserInfo} from 'Src/jssdk/api/account';
 
 type ChooseProps = {
@@ -28,35 +29,27 @@ export default class Choose extends React.Component<ChooseProps, {}, any> {
     this.state.showList = !this.state.showList;
     this.setState(this.state);
   };
-
-  autoLogin = async account => {
-    var loginParam: LoginParam;
-    var userName = account.userName;
-    var password = account.password;
-    switch (account.accountType) {
-      case 2:
-        loginParam = {
-          isFacebook: true
-        };
-        break;
-      default:
-        loginParam = {
-          userName,
-          password
-        };
-        break;
-    }
-    try {
-      await RG.jssdk.Login(loginParam);
-      this.props.Login.loginComplete();
-    } catch (err) {
-      if (err === RG.jssdk.config.i18n.code102) {
-        this.deleteUser(account.userId);
-      }
-      Ins.showNotice(err);
-    }
-  };
-
+  login(user: UserInfo) {
+    const {userName, password} = user;
+    const i18n = RG.jssdk.config.i18n;
+    RG.jssdk
+      .platformLogin(password, userName)
+      .then(res => {
+        if (res.code === 200) {
+          this.props.Login.loginComplete();
+        } else if (res.code === 102) {
+          Ins.showNotice(i18n.code102);
+        } else if (res.code === 101) {
+          Ins.showNotice(i18n.code101);
+        } else {
+          Ins.showNotice(res.error_msg);
+        }
+      })
+      .catch(err => {
+        Ins.showNotice(i18n.UnknownErr);
+        console.log(err);
+      });
+  }
   willUnmount = false;
 
   componentWillUnmount() {
@@ -159,18 +152,20 @@ export default class Choose extends React.Component<ChooseProps, {}, any> {
           <div className='accounts'>
             <ul className={'list-account' + (this.state.showList ? ' active' : '')}>
               {usersKeys.map(userId => {
-                var userInfo: UserInfo = this.state.users[userId];
+                const userInfo: UserInfo = this.state.users[userId];
                 return (
                   <li key={userInfo.userId}>
                     <p
                       onClick={() => {
-                        this.autoLogin(userInfo);
+                        this.login(userInfo);
                         this.showAccounts();
                       }}
                     >
-                      {getAccountType(userInfo.userType, userInfo.accountType) +
-                        ' : ' +
-                        userInfo.userName}
+                      {
+                        /* getAccountType(userInfo.userType, userInfo.accountType) +
+                        ' : ' + */
+                        userInfo.userName
+                      }
                     </p>
                     <div
                       className='icon-close'

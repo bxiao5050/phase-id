@@ -1,31 +1,30 @@
-import * as React from 'react'
-import { Route, MemoryRouter } from 'react-router-dom'
-import Notice from "./components/notice";
-import Hover from "./components/hover";
-import Account from "./components/account";
-import Login from "./components/login";
-import Payment from "./components/payment"
-import { PaymentConfigRes } from '../api/payment';
+import * as React from 'react';
+import {Route, MemoryRouter} from 'react-router-dom';
+import Notice from './components/notice';
+import Hover from './components/hover';
+import Account from './components/account';
+import Login from './components/login';
+import Payment from './components/payment';
+import {PaymentConfigRes} from '../api/payment';
 
 export class App extends React.Component {
-
   public refs: {
-    notice: Notice
-    hover: Hover
+    notice: Notice;
+    hover: Hover;
     loginRoute: any;
-  }
+  };
 
   constructor(props: any) {
-    super(props)
-    App._ins = this
+    super(props);
+    App._ins = this;
   }
 
-  private static _ins: App
+  private static _ins: App;
   static get instance(): App {
-    return this._ins
+    return this._ins;
   }
 
-  hasNotice = 0
+  hasNotice = 0;
 
   state = {
     showAccount: false,
@@ -35,91 +34,102 @@ export class App extends React.Component {
     noticeList: [],
     showLogin: false,
     showPayment: false,
-    paymentConfig: null,
-  }
+    paymentConfig: null
+  };
 
   showAccount = () => {
-    this.state.showAccount = true
+    this.state.showAccount = true;
     if (this.state.hoverIsGuest) {
-      this.state.accountEntry = ['/visitor-upgrade']
+      this.state.accountEntry = ['/visitor-upgrade'];
     } else {
-      this.state.accountEntry = ['/main']
+      this.state.accountEntry = ['/main'];
     }
-    this.setState(this.state)
-  }
+    this.setState(this.state);
+  };
 
   hideAccount = () => {
     this.setState({
       showAccount: false
-    })
-  }
+    });
+  };
 
   showHover = (isGuest: boolean) => {
     this.setState({
       hasAccount: true,
       hoverIsGuest: isGuest
-    })
-  }
+    });
+  };
 
   showNotice = (msg: string) => {
-    this.hasNotice++
-    this.state.noticeList.push(msg)
-    this.setState(this.state)
-  }
+    this.hasNotice++;
+    this.state.noticeList.push(msg);
+    this.setState(this.state);
+  };
 
   showLogin = (): Login => {
     this.setState({
       showLogin: true
-    })
-    return this.refs.loginRoute.refs.login
-  }
+    });
+    return this.refs.loginRoute.refs.login;
+  };
 
   hideLogin = () => {
     this.setState({
       showLogin: false
-    })
-  }
+    });
+  };
 
   showPayment = (paymentConfig: PaymentConfigRes) => {
     this.setState({
       showPayment: true,
       paymentConfig: paymentConfig
-    })
-  }
+    });
+  };
 
   hidePayment = () => {
     this.setState({
       showPayment: false
-    })
-  }
+    });
+  };
 
   render() {
-    var defaultModule = ['/main']
-    return <div>
-      {/* 支付模块 */}
-      {this.state.showPayment && <MemoryRouter initialEntries={defaultModule}>
-        <Route render={({ history }) => <Payment history={history} />} />
-      </MemoryRouter>}
+    var defaultModule = ['/main'];
+    return (
+      <div>
+        {/* 支付模块 */}
+        {this.state.showPayment && (
+          <MemoryRouter initialEntries={defaultModule}>
+            <Route render={({history}) => <Payment history={history} />} />
+          </MemoryRouter>
+        )}
 
-      {/* 登录模块 */}
-      {this.state.showLogin && <MemoryRouter initialEntries={defaultModule}>
-        <Route ref="loginRoute" render={({ history }) => <Login ref="login" history={history} />} />
-      </MemoryRouter>}
+        {/* 登录模块 */}
+        {this.state.showLogin && (
+          <MemoryRouter initialEntries={defaultModule}>
+            <Route
+              ref='loginRoute'
+              render={({history}) => <Login ref='login' history={history} />}
+            />
+          </MemoryRouter>
+        )}
 
-      {/* 账户管理中心 */}
-      {this.state.showAccount && <MemoryRouter initialEntries={this.state.accountEntry}>
-        <Route render={({ history }) => <Account history={history} />} />
-      </MemoryRouter>}
+        {/* 账户管理中心 */}
+        {this.state.showAccount && (
+          <MemoryRouter initialEntries={this.state.accountEntry}>
+            <Route render={({history}) => <Account history={history} />} />
+          </MemoryRouter>
+        )}
 
-      {/* 提示模块 */}
-      {this.state.noticeList.map((noticeMsg, index) => {
-        return <Notice key={index} msg={noticeMsg} Ins={this} />
-      })}
+        {/* 提示模块 */}
+        {this.state.noticeList.map((noticeMsg, index) => {
+          return <Notice key={index} msg={noticeMsg} Ins={this} />;
+        })}
 
-      {/* 悬浮球 */}
-      {this.state.hasAccount && <Hover ref="hover" isGuest={this.state.hoverIsGuest} />}
-    </div>
+        {/* 悬浮球 */}
+        {this.state.hasAccount && <Hover ref='hover' isGuest={this.state.hoverIsGuest} />}
+      </div>
+    );
   }
 }
 
-export default App
+export default App;

@@ -1,7 +1,9 @@
-import "./Type2.scss";
-import * as React from "react";
-import Payment from "./index";
-import { Ins } from "Src/jssdk/view/index";
+import './Type2.scss';
+import * as React from 'react';
+import Payment from './index';
+import {Ins} from 'Src/jssdk/view/index';
+import {CreateOrderRes} from 'Src/jssdk/api/payment';
+import {replaceUrlToHttps} from 'Src/jssdk/utils';
 
 type paymentProps = {
   Payment: Payment;
@@ -10,18 +12,18 @@ export default class Type2 extends React.Component<paymentProps, {}, any> {
   setInterval = undefined;
   state = {
     isQuerying: false,
-    isQueryingTxt: ".",
+    isQueryingTxt: '.',
     isShowExchangeRate: false
   };
 
   setState(state) {
-    if (state.hasOwnProperty("isQuerying")) {
+    if (state.hasOwnProperty('isQuerying')) {
       if (state.isQuerying === true) {
         if (this.setInterval === undefined) {
           var isQueryingTxt = this.state.isQueryingTxt;
           this.setInterval = setInterval(() => {
-            isQueryingTxt += ".";
-            if (isQueryingTxt.length === 4) isQueryingTxt = ".";
+            isQueryingTxt += '.';
+            if (isQueryingTxt.length === 4) isQueryingTxt = '.';
             super.setState({
               isQueryingTxt: isQueryingTxt
             });
@@ -29,7 +31,7 @@ export default class Type2 extends React.Component<paymentProps, {}, any> {
         }
       } else {
         if (this.setInterval) {
-          state.isQueryingTxt = ".";
+          state.isQueryingTxt = '.';
           clearInterval(this.setInterval);
           this.setInterval = undefined;
         }
@@ -47,16 +49,14 @@ export default class Type2 extends React.Component<paymentProps, {}, any> {
   pay = () => {
     var source = this.props.Payment.state.paymentDatas[this.index];
     source.exInfo = JSON.stringify({
-      serialNo: "",
+      serialNo: '',
       pin: this.refs.pin.value
     });
 
-    RG.jssdk.Ordering(source).then((orderRes: OrderRes) => {
+    RG.jssdk.order(source).then((orderRes: CreateOrderRes) => {
       Ins.showNotice(orderRes.error_msg);
-
       this.state.isQuerying = false;
       this.setState(this.state);
-
       Ins.hidePayment();
     });
     this.state.isQuerying = true;
@@ -68,12 +68,12 @@ export default class Type2 extends React.Component<paymentProps, {}, any> {
 
     var isShowExchangeRate = this.state.isShowExchangeRate;
     return (
-      <div className="Type2 payment-nav">
-        <h2 className="name">
+      <div className='Type2 payment-nav'>
+        <h2 className='name'>
           {source.name}
           {source.products && source.products[0] ? (
             <span
-              className="exchange"
+              className='exchange'
               onClick={() => {
                 this.state.isShowExchangeRate = true;
                 this.setState(this.state);
@@ -84,31 +84,33 @@ export default class Type2 extends React.Component<paymentProps, {}, any> {
           ) : null}
         </h2>
 
-        <img className="card-head" src={
-          source.codeImg.replace(/http\:\/{0,2}/, 'https://').replace(/:[0-9]+/, '')
-        } />
-        <div className="card-inputs PIN" id="pin">
+        <img className='card-head' src={replaceUrlToHttps(source.codeImg)} />
+        <div className='card-inputs PIN' id='pin'>
           <span>PIN: </span>
-          <input placeholder="Please enter PIN" ref="pin"
-            onBlur={() => { document.body.scrollTop = document.documentElement.scrollTop = 0 }}
+          <input
+            placeholder='Please enter PIN'
+            ref='pin'
+            onBlur={() => {
+              document.body.scrollTop = document.documentElement.scrollTop = 0;
+            }}
           />
         </div>
         {this.state.isQuerying ? (
-          <a href="javascript:void(0);" className="btn-pay">
+          <a href='javascript:void(0);' className='btn-pay'>
             {RG.jssdk.config.i18n.loading} {this.state.isQueryingTxt}
           </a>
         ) : (
-            <a href="javascript:void(0);" className="btn-pay" onClick={this.pay}>
-              {RG.jssdk.config.i18n.PayCenter}
-            </a>
-          )}
-        {isShowExchangeRate ? <div className="exchange-wrap" /> : null}
+          <a href='javascript:void(0);' className='btn-pay' onClick={this.pay}>
+            {RG.jssdk.config.i18n.PayCenter}
+          </a>
+        )}
+        {isShowExchangeRate ? <div className='exchange-wrap' /> : null}
         {isShowExchangeRate ? (
-          <div className="exchange-rate-list">
-            <h2 className="exchange-name">
-            {RG.jssdk.config.i18n.dom011}
+          <div className='exchange-rate-list'>
+            <h2 className='exchange-name'>
+              {RG.jssdk.config.i18n.dom011}
               <a
-                className="close"
+                className='close'
                 onClick={() => {
                   this.state.isShowExchangeRate = false;
                   this.setState(this.state);
@@ -116,16 +118,11 @@ export default class Type2 extends React.Component<paymentProps, {}, any> {
               />
             </h2>
 
-            <ul className="exchange-list">
+            <ul className='exchange-list'>
               {source.products.map((product, i) => (
                 <li key={i} data-id={i}>
-                  <div className="item-price">
-                    {product.amount + " " + product.currency}
-                  </div>
-                  =
-                  <div className="item-goods">
-                    {product.gameCoin + " " + product.gameCurrency}
-                  </div>
+                  <div className='item-price'>{product.amount + ' ' + product.currency}</div>=
+                  <div className='item-goods'>{product.gameCoin + ' ' + product.gameCurrency}</div>
                 </li>
               ))}
             </ul>

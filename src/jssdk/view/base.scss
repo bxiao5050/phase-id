@@ -7,7 +7,7 @@ body {
   margin: 0;
   padding: 0;
   background: #000;
-  -webkit-overflow-scrolling: touch
+  -webkit-overflow-scrolling: touch;
 }
 
 p {
@@ -21,7 +21,7 @@ p {
   width: 100%;
   height: 100%;
   background: #000;
-  opacity: .6;
+  opacity: 0.6;
 }
 
 html {
@@ -56,12 +56,12 @@ html {
   }
 
   .input-root {
-    div[class^=MuiSelect-root-] {
+    div[class^='MuiSelect-root-'] {
       display: flex;
       align-items: center;
     }
 
-    svg[class^=MuiSvgIcon-root-] {
+    svg[class^='MuiSvgIcon-root-'] {
       position: static;
       top: 0;
       left: 0;
@@ -69,7 +69,7 @@ html {
       height: 2rem;
     }
 
-    div[class^=MuiSelect-select-] {
+    div[class^='MuiSelect-select-'] {
       text-align: center;
     }
   }

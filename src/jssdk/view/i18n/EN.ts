@@ -14,9 +14,9 @@ export const EN = {
   dom008: 'Visitor login',
   dom009: 'View password',
   dom010: 'Modify password',
-  dom011: "Exchange rate", //txt_exchange_rate
-  dom012: "Payment",
-  dom014: "Serial:",
+  dom011: 'Exchange rate', //txt_exchange_rate
+  dom012: 'Payment',
+  dom014: 'Serial:',
 
   PayCenter: 'Payment',
   Purchase: 'buy',
@@ -43,5 +43,5 @@ export const EN = {
   float_button_service: 'Service',
   float_button_bind_account: 'Upgrade account',
   txt_change_psw: 'Change Password',
-  net_error_30200: 'Charging Success',
-}
+  net_error_30200: 'Charging Success'
+};

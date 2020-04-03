@@ -15,9 +15,9 @@ export const VN = {
   dom008: 'Đăng nhập Khách (Guest)',
   dom009: 'Xem mật khẩu',
   dom010: 'Thay đổi mật khẩu',
-  dom011: "Tỉ lệ đổi", //txt_exchange_rate
-  dom012: "Thanh toán ",
-  dom014: "Mã thẻ:",
+  dom011: 'Tỉ lệ đổi', //txt_exchange_rate
+  dom012: 'Thanh toán ',
+  dom014: 'Mã thẻ:',
 
   PayCenter: 'Trung tâm thanh toán',
   Purchase: 'Mua hàng',
@@ -44,5 +44,5 @@ export const VN = {
   float_button_service: 'Hỗ trợ',
   float_button_bind_account: 'Nâng cấp tài khoản',
   txt_change_psw: 'Đổi mật mã',
-  net_error_30200: 'Thanh toan thanh cong',
+  net_error_30200: 'Thanh toan thanh cong'
 };

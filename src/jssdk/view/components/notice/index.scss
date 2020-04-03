@@ -1,25 +1,32 @@
 .box-alert {
-  min-width: 88vw;
-  box-sizing: border-box;
-  border: solid 1px #dedede;
+  z-index: 99;
   position: fixed;
-  left: 50%;
-  top: 76%;
-  transform: translateX(-50%);
-  padding: 6px 12px 8px 12px;
+  /* width       : 100%; */
+  height: auto;
+  background: rgba(80, 89, 93, 0.96);
+  color: #fff;
+  border-radius: 10rem;
+  /* visibility  : hidden; */
+  // height      : 1.34rem;
+  /* width       : 1rem; */
   display: flex;
   justify-content: center;
   align-items: center;
   flex-wrap: nowrap;
-  background: rgba(80, 89, 93, 0.96);
-  color: #fff;
-  border-radius: 10rem;
+  padding: 0 0.8rem 0.05rem 0.8rem;
   font-size: 0.7rem;
+  left: 50%;
+  top: 80%;
+  transform: translate(-50%, -50%);
   opacity: 0;
-  z-index: 99;
   transition: opacity 0.75s;
-  line-height: 1.2;
-    
+
+  p {
+    line-height: 1.5em;
+    text-align: center;
+    display: block;
+    padding: 0.2rem 0;
+  }
 
   &.show {
     opacity: 1;
@@ -40,6 +47,7 @@
   -moz-box-shadow: 0 0 0.4 * 2.67 + rem rgba(255, 255, 255, 0.3);
   box-shadow: 0 0 0.4 * 2.67 + rem white;
   background: rgba(255, 255, 255, 0.3);
+
   .btns {
     display: flex;
     width: 100%;
@@ -53,6 +61,7 @@
   text-align: center;
   display: block;
   margin: 0.2 * 2.67 + rem auto 0;
+  padding: 0.2rem 0;
 }
 
 .alert button {

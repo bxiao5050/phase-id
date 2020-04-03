@@ -22,6 +22,8 @@ interface Config {
   urlParams: UrlParams;
   /* 语言包 */
   i18n: I18n;
+  /* facebook jssdk 是否加载完成 */
+  fb_sdk_loaded: boolean;
   /* facebook appId */
   fbAppId: string;
   /* 后端加密参数 */
@@ -36,6 +38,7 @@ interface Config {
   hoverFromLeft: boolean;
   // 语言
   language: string;
+  
 }
 
 interface Window {
