@@ -20,19 +20,23 @@ export default class NativeSdk extends Base {
   app: App;
   initApi = new Init();
 
-  constructor(config: Config) {
+  constructor(config: ExtendedConfig) {
     super();
     this.initApi.setAppKey(config.appKey);
     this.initConfig(config);
     this.initNative();
     this.initNativeToJs();
     initRG(this);
-    this.getNativeInitConfig();
+    /* sdk 加载完成 */
+    RG.Mark('sdk_loaded');
+    this.init();
   }
   get devicePromise() {
     return this.native.getDeviceMsg();
   }
   async init() {
+    /* 微端初始化 */
+    this.getNativeInitConfig();
     /* 加载 react-js  */
     await loadJsRepeat({url: '', id: 'rg-react'});
     await Promise.all([
@@ -204,7 +208,7 @@ export default class NativeSdk extends Base {
   openFansPage() {
     window.open(this.config.fans);
   }
-  /* 初始化 对应的手机平台,可以做成工厂函数 */
+  /* 初始化 对应的手机平台 */
   initNative() {
     if (window.webkit) {
       this.native = new IosApi();

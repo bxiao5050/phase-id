@@ -123,3 +123,47 @@ function getItem(sKey: string) {
     ) || null
   );
 }
+/* web 端的 facebook 登录 */
+
+export async function fbWebLogin() {
+  return new Promise<any>((resolve) => {
+    FB.getLoginStatus(async function(response) {
+      if (response.status === 'connected') {
+        let fbUserInfo = await getFBUserInfo();
+        fbUserInfo.userID = response.authResponse.userID;
+        const userFbRegisterInfo = {
+          userId: fbUserInfo.userID,
+          userName: 'fb-' + fbUserInfo.userID,
+          password: '',
+          accountType: 2,
+          email: fbUserInfo.email,
+          userChannel: 0,
+          nickName: fbUserInfo.name
+        };
+        resolve(userFbRegisterInfo);
+      } else {
+        FB.login(
+          async res => {
+            if (res.status === 'connected') {
+              let fbUserInfo = await getFBUserInfo();
+              fbUserInfo.userID = res.authResponse.userID;
+              const userFbRegisterInfo = {
+                userId: fbUserInfo.userID,
+                userName: 'fb-' + fbUserInfo.userID,
+                password: '',
+                accountType: 2,
+                email: fbUserInfo.email,
+                userChannel: 0,
+                nickName: fbUserInfo.name
+              };
+              resolve(userFbRegisterInfo);
+            } else {
+              console.error(res);
+            }
+          },
+          {scope: 'public_profile,email'}
+        );
+      }
+    });
+  });
+}

@@ -21,8 +21,8 @@ export default class Base {
   account = new Account();
   payment = new Payment();
   devicePromise: Promise<DeviceMsg>;
-  config: Config;
-  initConfig(config: Config) {
+  config: ExtendedConfig;
+  initConfig(config: ExtendedConfig) {
     this.config = config;
     const appKey = config.appKey;
     this.accountApi.setAppKey(appKey);

@@ -87,9 +87,9 @@ function initRG(w: Window) {
     const advChannel = +config.urlParams.advChannel;
     if (advChannel > 30000 && advChannel < 31000) {
       // web端的sdk
-      // return import('Src/jssdk/web').then(module => {
-      //   return new module.default(config, false);
-      // });
+      return import('./sdks/web').then(module => {
+        return new module.default(config);
+      });
     } else if (advChannel < 30000) {
       // native端的sdk
       return import('./sdks/native').then(module => {

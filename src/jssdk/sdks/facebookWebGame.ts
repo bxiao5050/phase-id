@@ -1,7 +1,7 @@
 import Base from "./base"
-export default class FbInstantGameSdk extends Base{
+export default class FbWebGameSdk extends Base{
   type: 3
-  constructor(config: Config) {
+  constructor(config: ExtendedConfig) {
     super();
     this.initConfig(config);
   }

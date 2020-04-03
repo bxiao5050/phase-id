@@ -1,7 +1,7 @@
-// import WebSdk from "./web";
 import NativeSdk from './native';
-// import WebSdk from "./facebookInstantGame";
-// import WebSdk from "./facebookWebGame";
+import WebSdk from "./web";
+// import FbWebGameSdk from "./facebookWebGame";
+// import FbInstantGameSdk from "./facebookInstantGame";
 // import QuickSdk from "./uniteSdk/quick";
 import {GamePayParams} from './base';
 
@@ -12,7 +12,7 @@ declare global {
   }
   interface RGType {
     type: number;
-    jssdk: NativeSdk;
+    jssdk: NativeSdk|WebSdk
     CurUserInfo(): any;
     BindZone(params: BindZoneParam): Promise<ServerRes>;
     Pay(params: GamePayParams): void;
@@ -26,7 +26,7 @@ declare global {
   }
 }
 
-export function initRG(sdk: NativeSdk) {
+export function initRG(sdk: NativeSdk|WebSdk) {
   function RgFunciton(this: RGType) {
     this.type = sdk.type;
     this.CurUserInfo = function() {

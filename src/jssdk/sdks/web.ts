@@ -1,35 +1,121 @@
 import Base from './base';
+import {loadJsRepeat, formatDate, getUrlOrigin} from '../utils';
+import {initRG} from './rg';
+import {fbWebLogin, fbShare} from '../utils/fb';
 
+/* 引入类型 */
+import {GamePayParams} from './base';
+import {PaymentChannel} from '../api/payment';
+import App from 'Src/jssdk/view/App';
+import {FbLoginRes} from './native/android';
+// import {UserInfo, UsersInfo} from '../api/account';
 /* 与首页postMessage 的通信, 添加到桌面 */
 export default class WebSdk extends Base {
   type: 1;
-  constructor(config: Config) {
+  app: App;
+  getUserResolve = null;
+  getUserPromise: Promise<any>;
+
+  constructor(config: ExtendedConfig) {
     super();
     this.initConfig(config);
-  }
-}
-
-// if (config.type === 1) {
-//   const indexUrl = IS_DEV || IS_TEST ? config.page.index.test : config.page.index.formal;
-//   w.parent.postMessage(
-//     JSON.stringify({action: 'get'}),
-//     /(http|https):\/\/(www.)?([A-Za-z0-9-_]+(\.)?)+/.exec(indexUrl)[0]
-//   );
-// }
-/* 
-    // 只用于web端的sdk，暂时先写在这里
-    if (type === 1) {
-      // 测试的基本上域名是一样的,因此没有做区分
-      const indexUrl = IS_DEV ? config.page.index.test : config.page.index.formal;
-      w.addEventListener('message', onMessage(indexUrl), false);
+    initRG(this);
+    /* 从首页获取用户信息 */
+    window.addEventListener('message', this.onMessage.bind(this), false);
+    const userIdArr = Object.keys(this.account.users);
+    let hasUser = this.account.users || userIdArr.length > 0 ? true : false;
+    if (!hasUser) {
+      this.getUserPromise = this.getUser();
+    } else {
+      this.getUserPromise = Promise.resolve();
     }
+  }
 
-*/
-/* 从首页接收用户信息,当浏览器的保存到桌面生效后 */
-function onMessage(indexUrl: string) {
-  return function(event: MessageEvent) {
-    if (event.origin !== /(http|https):\/\/(www.)?([A-Za-z0-9-_]+(\.)?)+/.exec(indexUrl)[0]) return;
-    if (event.data === 'rgclose') return;
+  async init() {
+    /* 加载 react-js  */
+    await loadJsRepeat({url: '', id: 'rg-react'});
+    await Promise.all([
+      loadJsRepeat({url: reactDomSrc, id: 'rg-react-dom'}),
+      loadJsRepeat({url: reactRouterDomSrc, id: 'rg-react-routerdom'})
+    ]);
+    /* 加载 dom */
+    const {Ins} = await import('../view/index');
+    // 挂载 dom
+    this.app = Ins;
+    /* 判断是否自动登录,切换账号, 还是 fbLogin*/
+    await this.getUserPromise;
+    if (window.name === 'redirect') {
+      window.name = '';
+      this.app.showLogin();
+    } else {
+      let user = this.account.user;
+      if (!user) {
+        const userIdArr = Object.keys(this.account.users);
+        if (userIdArr.length > 0) user = this.account.users[userIdArr[0]];
+      }
+      await RG.jssdk.platformLogin(user.userName, user.password);
+      this.app.refs.loginRoute.refs.login.loginComplete();
+    }
+  }
+  getUser() {
+    return new Promise((resolve, reject) => {
+      this.getUserResolve = resolve;
+      window.parent.postMessage(
+        JSON.stringify({action: 'get'}),
+        getUrlOrigin(RG.jssdk.config.indexUrl)
+      );
+    });
+  }
+  onMessage(event: MessageEvent) {
+    let origin = getUrlOrigin(RG.jssdk.config.indexUrl);
+    if (event.origin !== origin || event.data === 'rgclose') return;
     RG.jssdk.account.init(JSON.parse(event.data));
+    this.getUserResolve();
+  }
+  async pay(params: GamePayParams) {
+    return this.getPaymentInfo(params).then(res => {
+      res.payments.length && this.app.showPayment(res);
+    });
+  }
+  mark(markName: string, params?: {userId?: number; money: string; currency: string}) {
+    const data = {action: 'mark', data: {name: markName, param: params}};
+    window.parent.postMessage(JSON.stringify(data), getUrlOrigin(RG.jssdk.config.indexUrl));
+  }
+  order(params: PaymentChannel) {
+    return this.createOrder(params);
+  }
+  async fbLogin(isLogout: boolean) {
+    return fbWebLogin().then((res: FbLoginRes) => {
+      this.platformRegister(res);
+    });
+  }
+  fbShare = fbShare;
+  openFansPage() {
+    window.open(this.config.fans);
+  }
+  install = () => {
+    let link = RG.jssdk.config.indexUrl;
+    const {language, name, iosDonloadUrl, androidDonloadUrl} = RG.jssdk.config;
+    const {appId, sdkVerison} = RG.jssdk.config.urlParams;
+    let url: string;
+    if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) {
+      if (iosDonloadUrl) {
+        url = iosDonloadUrl;
+      } else {
+        url = `${SERVER}/jssdk/${sdkVerison}/add-shortcut.html?language=${language}&system=ios&appId=${appId}&link=${link}`;
+      }
+    } else if (/(Android)/i.test(navigator.userAgent)) {
+      if (androidDonloadUrl) {
+        url = androidDonloadUrl;
+      } else {
+        url = `${SERVER}/jssdk/${sdkVerison}/add-shortcut.html?language=${language}&system=android&appId=${appId}&link=${link}`;
+      }
+    } else {
+      url = `${SERVER}/platform/shortcut.jsp?link=${encodeURIComponent(
+        link + '?shortcut=true'
+      )}&fileName=${name}&t=${Date.now()}`;
+    }
+    console.info(url);
+    window.open(url);
   };
 }

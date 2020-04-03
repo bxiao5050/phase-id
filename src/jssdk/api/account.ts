@@ -1,3 +1,5 @@
+import { getUrlOrigin } from "../utils";
+
 /* 
   操作所有用户信息的类
 */
@@ -43,6 +45,11 @@ export default class Account {
     }
   }
   save() {
+    /* web 端将用户信息保存在游戏首页中 */
+    if (RG.jssdk.type === 1) {
+      let data = {action: 'set', data: {user: this._user, users: this._users}};
+      window.parent.postMessage(JSON.stringify(data), getUrlOrigin(RG.jssdk.config.indexUrl));
+    }
     localStorage.setItem(this.userKey, JSON.stringify(this._user));
     localStorage.setItem(this.usersKey, JSON.stringify(this._users));
   }
