@@ -8,6 +8,7 @@ import {GamePayParams} from './base';
 import {PaymentChannel} from '../api/payment';
 import App from 'Src/jssdk/view/App';
 import {FbLoginRes} from './native/android';
+import {promises} from 'dns';
 // import {UserInfo, UsersInfo} from '../api/account';
 /* 与首页postMessage 的通信, 添加到桌面 */
 export default class WebSdk extends Base {
@@ -15,6 +16,15 @@ export default class WebSdk extends Base {
   app: App;
   getUserResolve = null;
   getUserPromise: Promise<any>;
+  devicePromise = Promise.resolve({
+    source: 3,
+    network: 0,
+    model: '0',
+    operatorOs: '0',
+    deviceNo: '0',
+    device: '0',
+    version: '0'
+  });
 
   constructor(config: ExtendedConfig) {
     super();

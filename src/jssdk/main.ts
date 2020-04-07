@@ -1,4 +1,4 @@
-import Languages from './view/i18n';
+//import Languages from './view/i18n';
 
 function initRG(w: Window) {
   /* 获取所有的地址栏参数 */
@@ -75,10 +75,14 @@ function initRG(w: Window) {
   /* 获取游戏的配置 */
   async function getConfig(appId: string, advChannel: string) {
     if (!appId || !advChannel) throw 'appId or advChannel is not defined';
+    const LanguagesPromise = import('./view/i18n/index').then(module => {
+      return module.default;
+    });
     const gameConfig = await import(`./config/${appId}.ts`).then(module => {
       const configs = module.default;
       return configs[advChannel] ? configs[advChannel] : configs.default;
     });
+    const Languages = await LanguagesPromise;
     return Object.assign(gameConfig, {i18n: Languages[gameConfig.language]});
   }
   /* 加载对应sdk */

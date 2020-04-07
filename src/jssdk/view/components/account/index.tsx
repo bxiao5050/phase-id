@@ -16,11 +16,12 @@ class Main extends React.Component<accountProps, any, any> {
     deviceNo: ''
   };
 
-  componentDidMount() {
-    RG.jssdk.devicePromise.then(device => {
-      this.state.deviceNo = device.hasOwnProperty('device') ? device.device : device.deviceNo;
-      this.setState(this.state);
-    });
+  async componentDidMount() {
+    const deviceMsg = await RG.jssdk.devicePromise;
+    this.state.deviceNo = deviceMsg.hasOwnProperty('device')
+      ? deviceMsg.device
+      : deviceMsg.deviceNo;
+    this.setState(this.state);
   }
 
   changeAccount = async () => {
