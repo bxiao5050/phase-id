@@ -14,7 +14,10 @@ export default class IosApi {
     return window.webkit.messageHandlers.fbLogin ? true : false;
   }
   get hasFbShare() {
-    return  window.webkit.messageHandlers.fbShare ? true : false;
+    return window.webkit.messageHandlers.fbShare ? true : false;
+  }
+  constructor() {
+    if (!window.JsToNative) checkWK();
   }
   /* 初始化官方支付,或者支付插件 */
   init(params: JsToNativeInitParams) {
@@ -86,32 +89,87 @@ declare global {
   interface Window {
     webkit: {
       messageHandlers: {
-        getDeviceMsg:{
-          postMessage:PostMessage
-        }
-        init:{
-          postMessage:PostMessage
-        }
-        gameEvent:{
-          postMessage:PostMessage
-        }
-        jpwork:{
-          postMessage:PostMessage
-        }
-        consumeOrder:{
-          postMessage:PostMessage
-        }
-        exitApp:{
-          postMessage:PostMessage
-        }
-        fbLogin?:{
-          postMessage:PostMessage
-        }
-        fbShare?:{
-          postMessage:PostMessage
-        }
+        getDeviceMsg: {
+          postMessage: PostMessage;
+        };
+        init: {
+          postMessage: PostMessage;
+        };
+        gameEvent: {
+          postMessage: PostMessage;
+        };
+        jpwork: {
+          postMessage: PostMessage;
+        };
+        consumeOrder: {
+          postMessage: PostMessage;
+        };
+        exitApp: {
+          postMessage: PostMessage;
+        };
+        fbLogin?: {
+          postMessage: PostMessage;
+        };
+        fbShare?: {
+          postMessage: PostMessage;
+        };
       };
     };
   }
 }
 type PostMessage = (params: null | string) => void;
+
+function checkWK() {
+  window.webkit = {
+    messageHandlers: {
+      getDeviceMsg: {
+        postMessage: function() {
+          window.NativeToJs.deviceMsg({
+            source: 3,
+            network: 0,
+            model: '0',
+            operatorOs: '0',
+            deviceNo: '0',
+            device: '0',
+            version: '0'
+          });
+        }
+      },
+      init: {
+        postMessage: function(params: string) {
+          console.log(params);
+        }
+      },
+      gameEvent: {
+        postMessage: function(params: string) {
+          console.log(params);
+        }
+      },
+      jpwork: {
+        postMessage: function(params: string) {
+          console.log(params);
+        }
+      },
+      consumeOrder: {
+        postMessage: function(params: string) {
+          console.log(params);
+        }
+      },
+      exitApp: {
+        postMessage: function(params: string) {
+          console.log(params);
+        }
+      }
+      // fbLogin?:{
+      //   postMessage: function (params:string) {
+      //     console.log(params);
+      //   }
+      // },
+      // fbShare?:{
+      //   postMessage:function (params:string) {
+      //     console.log(params);
+      //   }
+      // }
+    }
+  };
+}
