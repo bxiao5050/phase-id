@@ -315,7 +315,7 @@ export default class NativeSdk extends Base {
 /* 在 initNativeToJs 中向 window上挂载方法,以供微端调用 */
 declare global {
   interface Window {
-    NativeToJs: {
+    NativeToJs?: {
       consumeOrder: (params: string | FinishOrderParams) => void;
       jpworkResult: (params: string | JpworkResultParams) => void;
       goBack: () => void;

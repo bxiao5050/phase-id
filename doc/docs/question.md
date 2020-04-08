@@ -9,10 +9,10 @@
 
 1. 首先提供一个sdk登录完成后拉起游戏的全局函数
 ```js
-// CP方需要实现的函数，在登录完成后会调用，请在加载sdk之前实现
+// CP方需要实现的函数，在登录完成后会调用
 window.rgAsyncInit = function () {
   // 获取用户信息
-  var user = RG.CurUserInfo();
+  //var user = RG.CurUserInfo();
   // 游戏登录
   ..........
 }
@@ -30,7 +30,7 @@ var src = 'https://sdk-test.changic.net.cn/jssdk/' + sdkVersion + '/sdk.js';
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'rg-jssdk'));
 ```
-3. 测试sdk和正式sdk的区分，现有区分是根据查询参数：debugger来进行区分，后续会根据region来进行区分
+1. 测试sdk和正式sdk的区分，现有区分是根据查询参数：debugger来进行区分
   - 港台的游戏加载新加坡服务器域名
   - 越南加载越南服务器域名
   - 欧洲地区加载德国服务器域名

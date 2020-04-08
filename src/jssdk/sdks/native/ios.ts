@@ -84,10 +84,10 @@ export default class IosApi {
     return this.fbSharePromise;
   }
 }
-/* ios ,模拟实现 */
+
 declare global {
   interface Window {
-    webkit: {
+    webkit?: {
       messageHandlers: {
         getDeviceMsg: {
           postMessage: PostMessage;
@@ -118,7 +118,7 @@ declare global {
   }
 }
 type PostMessage = (params: null | string) => void;
-
+/* ios ,模拟实现 */
 function checkWK() {
   window.webkit = {
     messageHandlers: {

@@ -1,5 +1,5 @@
 import Base from './base';
-import {loadJsRepeat, formatDate, getUrlOrigin} from '../utils';
+import {loadJsRepeat, getUrlOrigin} from '../utils';
 import {initRG} from './rg';
 import {fbWebLogin, fbShare} from '../utils/fb';
 
@@ -8,8 +8,7 @@ import {GamePayParams} from './base';
 import {PaymentChannel} from '../api/payment';
 import App from 'Src/jssdk/view/App';
 import {FbLoginRes} from './native/android';
-import {promises} from 'dns';
-// import {UserInfo, UsersInfo} from '../api/account';
+
 /* 与首页postMessage 的通信, 添加到桌面 */
 export default class WebSdk extends Base {
   type: 1;
@@ -107,7 +106,7 @@ export default class WebSdk extends Base {
   openFansPage() {
     window.open(this.config.fans);
   }
-  install = () => {
+  install(){
     let link = RG.jssdk.config.indexUrl;
     const {language, name, iosDonloadUrl, androidDonloadUrl} = RG.jssdk.config;
     const {appId, sdkVerison} = RG.jssdk.config.urlParams;

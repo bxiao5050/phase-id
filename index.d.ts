@@ -75,7 +75,7 @@ interface ExtendedConfig extends Config {
 
 interface Window {
   /* facebook 初始化函数 */
-  fbAsyncInit?: () => void;
+  fbAsyncInit?(): void;
   /* 登录完成通知游戏的回调 */
   rgAsyncInit: Function;
 }

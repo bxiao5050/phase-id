@@ -12,15 +12,15 @@ import {
   OpeartorEmailParams
 } from '../api/accountApi';
 import {DeviceMsg} from './native/android';
-import { BindZoneParam } from './rg';
+import {BindZoneParam} from './rg';
 
 export default class Base {
   sdkVersion: string = VERSION;
   accountApi = new AccountApi();
   login = new Login();
-  account = new Account();
   payment = new Payment();
-  devicePromise: Promise<DeviceMsg>;
+  account = new Account();
+  readonly devicePromise: Promise<DeviceMsg>;
   config: ExtendedConfig;
   initConfig(config: ExtendedConfig) {
     this.config = config;
@@ -268,8 +268,9 @@ export default class Base {
     window.name = 'redirect';
     location.reload();
   }
-  install?: () => void;
+  install?(): void;
 }
+/* 实现一个切换账号的功能,切换后通知游戏再用新的用户信息去选择区服,我们的平台点击切换后重定向到初始登录页 */
 export interface GamePayParams {
   userId: number;
   gameZoneId: string;

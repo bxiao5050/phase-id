@@ -98,14 +98,14 @@ function checkJsToNative() {
 /* 在 微端 window上挂载的方法 */
 declare global {
   interface Window {
-    JsToNative: {
+    JsToNative?: {
       init(params: string): void;
       gameEvent(params: string): void;
       consumeOrder(params: string): void;
       exitApp(): void;
       jpwork(params: string): void;
-      fbLogin?: () => void;
-      fbShare?: (url: string) => void;
+      fbLogin?(): void;
+      fbShare?(url: string): void;
       getDeviceMsg(): string;
     };
   }

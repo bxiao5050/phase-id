@@ -18,7 +18,7 @@ declare global {
     Pay(params: GamePayParams): void;
     Share(url: string): Promise<{code: number; error_msg?: string}>;
     Mark(name: string, params?: {userId?: number; money: string; currency: string}): void;
-    Install(): void;
+    Install?(): void;
     Redirect(): void;
     ChangeAccount(): Promise<any>;
     /* 打开粉丝页 */
