@@ -4,6 +4,7 @@ import {loadJsRepeat, formatDate, getUrlOrigin} from '../../utils';
 
 export default class QuickSdk extends Base {
   type: 5;
+  quickApi = new QuickApi();
   devicePromise = Promise.resolve({
     source: 3,
     network: 0,
@@ -16,6 +17,7 @@ export default class QuickSdk extends Base {
   constructor(config: ExtendedConfig) {
     super();
     this.initConfig(config);
+    this.quickApi.setAppSecret(config.appSecret);
   }
   init() {}
 }
@@ -27,7 +29,7 @@ class Quick {
       id: 'rg_quick'
     });
   }
-  async init(productCode: string, productKey: string) {
+  async init(productCode: string, productKey: string): Promise<void> {
     await this.initQuickJsSdk();
     return new Promise(resolve => {
       QuickSDK.init(productCode, productKey, true, function() {
@@ -36,7 +38,7 @@ class Quick {
       });
     });
   }
-  login() {
+  login(): Promise<QuickLoginRes['data']> {
     return new Promise((resolve, reject) => {
       QuickSDK.login(function(callbackData) {
         if (callbackData.status) {
@@ -47,35 +49,48 @@ class Quick {
       });
     });
   }
-  logout() {
+  logout(): Promise<any> {
     return new Promise(resolve => {
-      QuickSDK.logout(function() {
+      QuickSDK.logout(function(res) {
         console.log('退出游戏');
-        resolve();
+        resolve(res);
       });
     });
   }
-  pay(params: QuickPayParams) {
+  pay(params: QuickPayParams): Promise<any> {
     const payJson = JSON.stringify(params);
     return new Promise(resolve => {
-      QuickSDK.pay(payJson, function(response) {
-        resolve();
-        console.log(response);
+      QuickSDK.pay(payJson, function(res) {
+        resolve(res);
+        console.log(res);
       });
     });
   }
-  uploadGameRoleInfo(params: QuickUploadGameRoleInfoParams) {
+  uploadGameRoleInfo(params: QuickUploadGameRoleInfoParams): Promise<any> {
     const roleInfoJson = JSON.stringify(params);
     return new Promise(resolve => {
-      QuickSDK.uploadGameRoleInfo(roleInfoJson, function(response) {
-        resolve();
-        console.log(response);
+      QuickSDK.uploadGameRoleInfo(roleInfoJson, function(res) {
+        resolve(res);
+        console.log(res);
       });
     });
   }
   /* 一些渠道的切换账户的需求,在此回调内无需调用登录接口 */
-  setSwitchAccountNotification() { }
-  setLogoutNotification(){}
+  setSwitchAccountNotification(): Promise<QuickLoginRes> {
+    return new Promise(resolve => {
+      QuickSDK.setSwitchAccountNotification(function(res) {
+        resolve(res);
+      });
+    });
+  }
+  setLogoutNotification(): Promise<any> {
+    return new Promise(resolve => {
+      QuickSDK.setLogoutNotification(function(res: any) {
+        console.log('Game:玩家点击注销帐号', res);
+        resolve(res);
+      });
+    });
+  }
 }
 /* 文档 https://www.quicksdk.com/doc-762.html */
 declare global {

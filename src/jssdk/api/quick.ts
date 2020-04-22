@@ -2,7 +2,7 @@ import Http from '../api/Http';
 import {signed} from '../utils';
 
 export default class QuickApi {
-  appSecret: string = '';
+  private appSecret: string = '';
   setAppSecret(appSecret: string) {
     this.appSecret = appSecret;
   }
