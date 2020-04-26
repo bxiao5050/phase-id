@@ -4,8 +4,6 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <script type="text/javascript" src="<%= reactSrc %>"></script>
-    <script type="text/javascript" src="<%= reactDomSrc %>"></script>
   </head>
 
   <body>
@@ -22,7 +20,7 @@
         //   gameCoin: 1
         // }
         var payParams = {
-          userId:RG.CurUserInfo().userId,
+          userId: RG.CurUserInfo().userId,
           gameOrderId: Math.floor(Math.random() * 100000000),
           gameZoneId: 1,
           roleId: "12870502",

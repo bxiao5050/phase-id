@@ -261,9 +261,9 @@ class Changepass extends React.Component<accountProps, {}, {}> {
             } else if (!old || !pass1) {
               Ins.showNotice(RG.jssdk.config.i18n.dom002);
             } else {
-              var oldpass = md5(old);
-              var password = md5(pass1);
-              RG.jssdk.changePassword(oldpass, password).then(res => {
+              //var oldpass = md5(old);
+              //var password = md5(pass1);
+              RG.jssdk.changePassword(old, pass1).then(res => {
                 if (res.code === 200) {
                   // var user = RG.CurUserInfo();
                   // user.password = password;
