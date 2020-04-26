@@ -126,7 +126,7 @@ export default class NativeSdk extends Base {
         });
     }
   }
-  async mark(markName: string, params?: {userId?: number; money: string; currency: string}) {
+  async mark(markName: string, params?: { money: string; currency: string}) {
     await this.getConfigPromise;
     let eventName: string = markName;
     // 从配置中获取固定点,点名的配置

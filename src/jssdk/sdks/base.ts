@@ -125,13 +125,13 @@ export default class Base {
   async createOrder(params: PaymentChannel) {
     const {appId, advChannel} = this.config.urlParams;
     const deviceMsg = await this.devicePromise;
-    const {userId, gameOrderId, gameZoneId, roleId, roleName, level} = this.gamePayInfo;
+    const {gameOrderId, gameZoneId, roleId, roleName, level} = this.gamePayInfo;
     const {channel, code, isOfficial, exInfo} = params;
     const {amount, currency, productName, itemType} = params.selectedProduct;
     let data: CreateOrderParams = {
       appId: +appId,
       advChannel: +advChannel,
-      userId,
+      userId: this.account.user.userId,
       gameOrderId,
       gameZoneId,
       roleId,
@@ -181,11 +181,11 @@ export default class Base {
     return this.payment.finishOrder(data);
   }
   async bindZone(params: BindZoneParam) {
-    const {userId, gameZoneId, createRole, roleId, level} = params;
+    const {gameZoneId, createRole, roleId, level} = params;
     const {appId, advChannel} = this.config.urlParams;
     const deviceMsg = await this.devicePromise;
     let data: BindZoneParams = {
-      userId,
+      userId: this.account.user.userId,
       appId: +appId,
       gameZoneId,
       createRole,
@@ -274,7 +274,7 @@ export default class Base {
 }
 /* 实现一个切换账号的功能,切换后通知游戏再用新的用户信息去选择区服,我们的平台点击切换后重定向到初始登录页 */
 export interface GamePayParams {
-  userId: number;
+  // userId: number;
   gameZoneId: string;
   gameOrderId: string;
   roleId: string;

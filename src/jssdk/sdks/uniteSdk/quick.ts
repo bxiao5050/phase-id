@@ -4,7 +4,9 @@ import {loadJsRepeat, formatDate, getUrlOrigin} from '../../utils';
 
 export default class QuickSdk extends Base {
   type: 5;
-  private quickApi = new QuickApi();
+  /* quick 平台需要的后端接口 */
+  private quickServerApi = new QuickApi();
+  private quick = new Quick();
   devicePromise = Promise.resolve({
     source: 3,
     network: 0,
@@ -17,12 +19,21 @@ export default class QuickSdk extends Base {
   constructor(config: ExtendedConfig) {
     super();
     this.initConfig(config);
-    this.quickApi.setAppSecret(config.appSecret);
+    this.quickServerApi.setAppSecret(config.appSecret);
   }
-  init() {}
+  async init() {
+    await this.quick.init(this.config.productCode, this.config.productKey);
+  }
 }
 
 class Quick {
+  // static _ins: Quick;
+  // static get ins() {
+  //   return Quick._ins || new Quick();
+  // }
+  // constructor() {
+  //   Quick._ins = this;
+  // }
   initQuickJsSdk() {
     return loadJsRepeat({
       url: 'https://sdkapi02.quicksdk.net/static/lib/libQuickSDK_v2.js',
@@ -32,7 +43,7 @@ class Quick {
   async init(productCode: string, productKey: string): Promise<void> {
     await this.initQuickJsSdk();
     return new Promise(resolve => {
-      QuickSDK.init(productCode, productKey, true, function() {
+      QuickSDK.init(productCode, productKey, true, function () {
         // quick 初始化成功
         resolve();
       });
@@ -40,7 +51,7 @@ class Quick {
   }
   login(): Promise<QuickLoginRes['data']> {
     return new Promise((resolve, reject) => {
-      QuickSDK.login(function(callbackData) {
+      QuickSDK.login(function (callbackData) {
         if (callbackData.status) {
           resolve(callbackData.data);
         } else {
@@ -51,7 +62,7 @@ class Quick {
   }
   logout(): Promise<any> {
     return new Promise(resolve => {
-      QuickSDK.logout(function(res) {
+      QuickSDK.logout(function (res) {
         console.log('退出游戏');
         resolve(res);
       });
@@ -60,7 +71,7 @@ class Quick {
   pay(params: QuickPayParams): Promise<any> {
     const payJson = JSON.stringify(params);
     return new Promise(resolve => {
-      QuickSDK.pay(payJson, function(res) {
+      QuickSDK.pay(payJson, function (res) {
         resolve(res);
         console.log(res);
       });
@@ -69,7 +80,7 @@ class Quick {
   uploadGameRoleInfo(params: QuickUploadGameRoleInfoParams): Promise<any> {
     const roleInfoJson = JSON.stringify(params);
     return new Promise(resolve => {
-      QuickSDK.uploadGameRoleInfo(roleInfoJson, function(res) {
+      QuickSDK.uploadGameRoleInfo(roleInfoJson, function (res) {
         resolve(res);
         console.log(res);
       });
@@ -78,14 +89,14 @@ class Quick {
   /* 一些渠道的切换账户的需求,在此回调内无需调用登录接口 */
   setSwitchAccountNotification(): Promise<QuickLoginRes> {
     return new Promise(resolve => {
-      QuickSDK.setSwitchAccountNotification(function(res) {
+      QuickSDK.setSwitchAccountNotification(function (res) {
         resolve(res);
       });
     });
   }
   setLogoutNotification(): Promise<any> {
     return new Promise(resolve => {
-      QuickSDK.setLogoutNotification(function(res: any) {
+      QuickSDK.setLogoutNotification(function (res: any) {
         console.log('Game:玩家点击注销帐号', res);
         resolve(res);
       });

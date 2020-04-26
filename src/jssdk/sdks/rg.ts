@@ -69,8 +69,8 @@ export function initRG(sdk: NativeSdk|WebSdk) {
 }
 
 export interface BindZoneParam {
-  // userId 用户id
-  userId: number;
+  // // userId 用户id
+  // userId: number;
   // gameZoneId 区服id
   gameZoneId: string;
   // createRole  是否创角 0=否 1=是

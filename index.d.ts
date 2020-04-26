@@ -61,6 +61,9 @@ interface Config {
     /* 联系客服 */
     sdk_contact_us: string;
   };
+/* quick 参数 */
+productCode?: string,
+productKey?: string,
 }
 interface ExtendedConfig extends Config {
   /* sdk 类型 */
