@@ -27,8 +27,8 @@ class Main extends React.Component<accountProps, any, any> {
   changeAccount = async () => {
     await Promise.race([
       RG.ChangeAccount(),
-      new Promise(function(resolve) {
-        setTimeout(function() {
+      new Promise(function (resolve) {
+        setTimeout(function () {
           resolve();
         }, 1000);
       })
@@ -174,8 +174,8 @@ class VisitorUpgrade extends React.Component<accountProps, {}, {}> {
             if (pass1 !== pass2) {
               Ins.showNotice(RG.jssdk.config.i18n.errMsg001);
             } else {
-              var password = md5(pass1);
-              RG.jssdk.bindVisitor(account, password).then(res => {
+              //var password = md5(pass1);
+              RG.jssdk.bindVisitor(account, pass1).then(res => {
                 if (res.code === 200) {
                   // var user = RG.CurUserInfo();
 
@@ -355,13 +355,7 @@ const Header = (props: accountProps) => {
   );
 };
 
-export default class Account extends React.Component<
-  {
-    history: History;
-  },
-  {},
-  any
-> {
+export default class Account extends React.Component<{history: History}, {}, any> {
   render() {
     var app = Ins;
     return (

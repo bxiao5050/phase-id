@@ -4,17 +4,12 @@ function initRG(w: Window) {
   /* 获取所有的地址栏参数 */
   const urlParams: UrlParams = getUrlParam();
 
-  /* 打补丁 */
-  polyfill().then(async res => {
+  polyfill().then(async () => {
     /* 是否加载 Vconsole */
     urlParams.debugger && (await initDebugger());
     const {appId, advChannel} = urlParams;
     // 加载config
     let config = await getConfig(appId, advChannel);
-    /* 第三方支付,关闭支付界面事件的注册 */
-    w.addEventListener('message', function(event) {
-      if (event.data === 'rgclose') RG.jssdk.app.hidePayment();
-    });
     config.urlParams = urlParams;
     // 如果facebook挪到了微端,则不加载facebokSdk
     const WK = window['webkit'];
@@ -27,6 +22,10 @@ function initRG(w: Window) {
     }
     /* 加载对应的 sdk */
     await loadSdk(config);
+    /* sdk 加载完成的打点 */
+    RG.Mark('sdk_loaded');
+    /* 执行初始化函数 */
+    RG.jssdk.init();
   });
   /* 打补丁 */
   function polyfill() {
@@ -39,7 +38,7 @@ function initRG(w: Window) {
       s.src = `${polyfillUrl}?features=${features.join(',')}&flags=gated,always&rum=0`;
       s.async = true;
       document.head.appendChild(s);
-      s.onload = function() {
+      s.onload = function () {
         resolve();
       };
     });
@@ -121,7 +120,7 @@ function initRG(w: Window) {
   /* 加载 facebook jssdk */
   function fbSdkLoad(fbAppId: string) {
     return new Promise((resolve, reject) => {
-      window.fbAsyncInit = function() {
+      window.fbAsyncInit = function () {
         FB.init({
           appId: fbAppId,
           status: true,
@@ -131,7 +130,7 @@ function initRG(w: Window) {
         });
         resolve();
       };
-      (function(d, s, id) {
+      (function (d, s, id) {
         var js,
           fjs = d.getElementsByTagName(s)[0];
         if (d.getElementById(id)) return;
@@ -145,8 +144,3 @@ function initRG(w: Window) {
 }
 
 initRG(window);
-
-// /* sdk 加载完成的打点 */
-// RG.Mark('sdk_loaded');
-// /* 执行初始化函数 */
-// RG.jssdk.init();

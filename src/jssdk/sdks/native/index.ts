@@ -2,7 +2,7 @@ import Base from '../base';
 import IosApi from './ios';
 import AndroidApi, {GameEventParam} from './android';
 import Init from '../../api/init';
-import {loadJsRepeat, formatDate} from '../../utils';
+import {formatDate, loadReactJs} from '../../utils';
 import {initRG} from '../rg';
 import {fbLogin, fbShare} from '../../utils/fb';
 
@@ -38,11 +38,7 @@ export default class NativeSdk extends Base {
     /* 微端初始化 */
     this.getNativeInitConfig();
     /* 加载 react-js  */
-    await loadJsRepeat({url: reactSrc, id: 'rg-react'});
-    await Promise.all([
-      loadJsRepeat({url: reactDomSrc, id: 'rg-react-dom'}),
-      loadJsRepeat({url: reactRouterDomSrc, id: 'rg-react-routerdom'})
-    ]);
+    await loadReactJs();
     /* 加载 dom */
     const {Ins} = await import('../../view/index');
     // 挂载 dom
@@ -224,7 +220,7 @@ export default class NativeSdk extends Base {
   initNativeToJs() {
     const that = this;
     window.NativeToJs = {
-      consumeOrder: function(params: string | FinishOrderParams) {
+      consumeOrder: function (params: string | FinishOrderParams) {
         let data: FinishOrderParams = params as FinishOrderParams;
         if (typeof params === 'string') {
           data = JSON.parse(params);
@@ -256,7 +252,7 @@ export default class NativeSdk extends Base {
             that.app.hidePayment();
           });
       },
-      jpworkResult: function(params: string | JpworkResultParams) {
+      jpworkResult: function (params: string | JpworkResultParams) {
         let data: JpworkResultParams = params as JpworkResultParams;
         if (typeof params === 'string') {
           data = JSON.parse(params);
@@ -269,10 +265,10 @@ export default class NativeSdk extends Base {
           });
         }
       },
-      goBack: function() {
+      goBack: function () {
         if (confirm(RG.jssdk.config.i18n.tuichu)) window.JsToNative.exitApp();
       },
-      deviceMsg: function(params: string | DeviceMsg) {
+      deviceMsg: function (params: string | DeviceMsg) {
         let result: DeviceMsg = params as DeviceMsg;
         if (typeof params === 'string') {
           result = JSON.parse(params);
@@ -281,7 +277,7 @@ export default class NativeSdk extends Base {
         (that.native as IosApi).deviceMsgResolve(result);
         (that.native as IosApi).deviceMsgPromise = null;
       },
-      fbShareHandle: function(params: string | FbShareRes) {
+      fbShareHandle: function (params: string | FbShareRes) {
         let data: FbShareRes = params as FbShareRes;
         if (typeof params === 'string') {
           data = JSON.parse(params);
@@ -297,7 +293,7 @@ export default class NativeSdk extends Base {
         that.native.fbLoginResolve(result);
         that.native.fbSharePromise = null;
       },
-      fbLoginHandle: function(params: string | FbLoginRes) {
+      fbLoginHandle: function (params: string | FbLoginRes) {
         let result: FbLoginRes = params as FbLoginRes;
         if (typeof params === 'string') {
           result = JSON.parse(params);

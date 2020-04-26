@@ -4,7 +4,7 @@ import {loadJsRepeat, formatDate, getUrlOrigin} from '../../utils';
 
 export default class QuickSdk extends Base {
   type: 5;
-  quickApi = new QuickApi();
+  private quickApi = new QuickApi();
   devicePromise = Promise.resolve({
     source: 3,
     network: 0,

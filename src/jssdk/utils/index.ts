@@ -68,6 +68,14 @@ export async function loadJsRepeat(params: loadJsParams, num: number = 3): Promi
 
   return await loadJsRepeat(params, num);
 }
+/* 加载 react react-dom react-router-dom */
+export async function loadReactJs() {
+  await loadJsRepeat({url: reactSrc, id: 'rg-react'});
+  await Promise.all([
+    loadJsRepeat({url: reactDomSrc, id: 'rg-react-dom'}),
+    loadJsRepeat({url: reactRouterDomSrc, id: 'rg-react-routerdom'})
+  ]);
+}
 // 获取 h5 游戏的首页的 origin
 export function getUrlOrigin(url: string) {
   const arr = /(http|https):\/\/(www.)?([A-Za-z0-9-_]+(\.)?)+/.exec(url);

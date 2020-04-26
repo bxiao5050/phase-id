@@ -1,4 +1,4 @@
-import { getUrlOrigin } from "../utils";
+import {getUrlOrigin} from '../utils';
 
 /* 
   操作所有用户信息的类
@@ -34,6 +34,8 @@ export default class Account {
   get users() {
     return this._users;
   }
+  /* 需要在保存用户后进行的操作,不可在内部修改用户信息 */
+  saveHandle?(): void;
   deleteUser(userId: number) {
     if (this._users[userId]) {
       delete this._users[userId];
@@ -45,13 +47,11 @@ export default class Account {
     }
   }
   save() {
-    /* web 端将用户信息保存在游戏首页中 */
-    if (RG.jssdk.type === 1) {
-      let data = {action: 'set', data: {user: this._user, users: this._users}};
-      window.parent.postMessage(JSON.stringify(data), getUrlOrigin(RG.jssdk.config.indexUrl));
-    }
     localStorage.setItem(this.userKey, JSON.stringify(this._user));
     localStorage.setItem(this.usersKey, JSON.stringify(this._users));
+    if (this.saveHandle) {
+      this.saveHandle();
+    }
   }
   init({user, users}: {user: UserInfo; users: UsersInfo}) {
     if (user) {

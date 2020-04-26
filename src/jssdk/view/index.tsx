@@ -12,4 +12,9 @@ ReactDOM.render(<App />, root);
 
 const Ins = App.instance;
 
+/* 注册第三方支付成功关闭支付界面事件 */
+window.addEventListener('message', function (event) {
+  if (event.data === 'rgclose') Ins.hidePayment();
+});
+
 export {Ins};

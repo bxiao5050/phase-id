@@ -25,6 +25,8 @@ export default class Base {
   initConfig(config: ExtendedConfig) {
     this.config = config;
     const appKey = config.appKey;
+    /* 删除config中的 */
+    delete config.appKey;
     this.accountApi.setAppKey(appKey);
     this.login.setAppKey(appKey);
     this.payment.setAppKey(appKey);
@@ -92,11 +94,11 @@ export default class Base {
       return res;
     });
   }
-  async visitorRegister() {
+  visitorRegister() {
     let password = Math.floor(Math.random() * Math.pow(10, 8)) + '';
     return this.platformRegister({userName: '', password, accountType: 0, userChannel: 0});
   }
-  async getPaymentHistoryList() {
+  getPaymentHistoryList() {
     return this.payment.getPaymentHistory(this.config.urlParams.appId, this.account.user.userId);
   }
   gamePayInfo: GamePayParams;

@@ -24,15 +24,12 @@ export default class Payment {
   /* 第一次为空,后续为服务端返回的 lastTime */
   private lastTime: string = '0';
   /* 获取支付的历史记录 */
-  getPaymentHistory(appId: string, userId: number) {
+  async getPaymentHistory(appId: string, userId: number) {
     const sign = signed([appId, userId, this.appKey]);
     const route = `/order/getOrderList/${appId}/${userId}/${this.lastTime}/${sign}`;
-    return Http.ins
-      .get<GetPaymentHistoryRes>({route})
-      .then(res => {
-        this.lastTime = res.lastTime;
-        return res;
-      });
+    const res = await Http.ins.get<GetPaymentHistoryRes>({route});
+    this.lastTime = res.lastTime;
+    return res;
   }
   /* 创建订单 */
   createOrder(params: CreateOrderParams) {
