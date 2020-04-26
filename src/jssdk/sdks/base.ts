@@ -22,7 +22,7 @@ export default class Base {
   account = new Account();
   readonly devicePromise: Promise<DeviceMsg>;
   config: ExtendedConfig;
-  initConfig(config: ExtendedConfig) {
+  init(config: ExtendedConfig) {
     this.config = config;
     const appKey = config.appKey;
     /* 删除config中的 */
@@ -122,7 +122,7 @@ export default class Base {
     return this.payment.getPaymentConfig(data);
   }
   /* 将选择的商品,替换到 selectProduct 上 */
-  async createOrder(params: PaymentChannel) {
+  async order(params: PaymentChannel) {
     const {appId, advChannel} = this.config.urlParams;
     const deviceMsg = await this.devicePromise;
     const {gameOrderId, gameZoneId, roleId, roleName, level} = this.gamePayInfo;

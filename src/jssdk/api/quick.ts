@@ -8,11 +8,11 @@ export default class QuickApi {
   }
   verifyToken(params: VerifyTokenParams) {
     params.sign = signed([params.appId, params.uid, params.token, this.appSecret]);
-    
-    params.token = encodeURIComponent(params.token);
-    params.uid = encodeURIComponent(params.uid);
-    params.sign = encodeURIComponent(params.sign);
-    const route = `/quick/verifyToken/${params.appId}/${params.advChannel}/${params.uid}/${params.token}/${params.sign}`;
+
+    const token = encodeURIComponent(params.token);
+    const uid = encodeURIComponent(params.uid);
+    const sign = encodeURIComponent(params.sign);
+    const route = `/quick/verifyToken/${params.appId}/${params.advChannel}/${uid}/${token}/${sign}`;
     return Http.ins.get({route});
   }
   getRoleInfo({appId, userId, gameZoneId}: getRoleParams) {
@@ -25,8 +25,8 @@ export default class QuickApi {
 interface getRoleParams {
   appId: string;
   userId: number;
-  gameZoneId: number;
-  appSecret: string;
+  gameZoneId: string;
+  // appSecret: string;
 }
 interface getRoleInfoRes extends ServerRes {
   data: {

@@ -110,9 +110,9 @@ function initRG(w: Window) {
       // });
     } else if (advChannel > 33000 && advChannel < 35000) {
       //  联运sdk
-      // return import('Src/jssdk/uniteSdk').then(module => {
-      //   return new module.default(config);
-      // });
+      return import('./sdks/uniteSdk/quick').then(module => {
+        return new module.default(config);
+      });
     } else {
       throw 'unknow advChannel';
     }

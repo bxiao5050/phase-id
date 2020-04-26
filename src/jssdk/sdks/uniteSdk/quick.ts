@@ -1,11 +1,15 @@
-import Base from '../base';
+import Base, {GamePayParams} from '../base';
 import QuickApi from '../../api/quick';
 import {loadJsRepeat, formatDate, getUrlOrigin} from '../../utils';
+import {fbShare} from '../../utils/fb';
+import {initRG, BindZoneParam} from '../rg';
 
+// quick sdk 不需要界面
 export default class QuickSdk extends Base {
   type: 5;
+  private quickUserInfo: QuickLoginRes['data'];
   /* quick 平台需要的后端接口 */
-  private quickServerApi = new QuickApi();
+  private quickApi = new QuickApi();
   private quick = new Quick();
   devicePromise = Promise.resolve({
     source: 3,
@@ -18,12 +22,159 @@ export default class QuickSdk extends Base {
   });
   constructor(config: ExtendedConfig) {
     super();
-    this.initConfig(config);
-    this.quickServerApi.setAppSecret(config.appSecret);
+    super.init(config);
+    this.quickApi.setAppSecret(config.appSecret);
+    delete config.appSecret;
+    initRG(this);
   }
   async init() {
+    /* 初始化 quick sdk */
     await this.quick.init(this.config.productCode, this.config.productKey);
+    /* 注册 注销账号的回调 */
+    QuickSDK.setLogoutNotification(function (logoutObject: any) {
+      console.log('Game:玩家点击注销帐号', logoutObject);
+    });
+    var that = this;
+    QuickSDK.setSwitchAccountNotification(async function (callbackData: QuickLoginRes) {
+      console.log('玩家切换账号,重新登录', callbackData);
+      // await RG.ChangeAccount();
+      // that.quickLoginHandle(callbackData.data);
+    });
+    /* quick 登录,取消后会再次拉起登录界面 */
+    const loginRes = await this.quick.login();
+    this.quickLoginHandle(loginRes);
   }
+  async quickLoginHandle(loginRes: QuickLoginRes['data']) {
+    const {appId, advChannel} = this.config.urlParams;
+    /* quick token 校验 */
+    const verifyRes = await this.quickApi.verifyToken({
+      appId,
+      advChannel,
+      uid: loginRes.uid,
+      token: loginRes.token,
+      sign: ''
+    });
+    /* 校验成功后进行平台登录 */
+    if (verifyRes && verifyRes.code === 200) {
+      this.quickUserInfo = loginRes;
+      const userName = 'Quick-' + loginRes.uid;
+      const password = md5(userName);
+      this.platformRegister({
+        userName,
+        password,
+        accountType: 3,
+        userChannel: 5,
+        nickName: loginRes.username
+      })
+        .then(res => {
+          if (res.code === 200) {
+            window.rgAsyncInit();
+          } else {
+            alert(res.error_msg);
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    }
+  }
+  async bindZone(params: BindZoneParam) {
+    /* 服务端获取用户信息 */
+    const roleInfoRes = await this.quickApi.getRoleInfo({
+      appId: this.config.urlParams.appId,
+      userId: this.account.user.userId,
+      gameZoneId: params.gameZoneId
+    });
+    /* 成功 */
+    if (roleInfoRes.code === 200) {
+      const {gameZoneId, roleId, level, createRole} = params;
+      const {createTime, roleName, vipLevel} = roleInfoRes.data[0];
+      const roleCreateTime = new Date(createTime).getTime();
+      const {uid} = this.quickUserInfo;
+      /* 更新quick平台用户信息 */
+      await this.quick.uploadGameRoleInfo({
+        isCreateRole: Boolean(createRole),
+        roleCreateTime,
+        uid,
+        username: this.quickUserInfo.username,
+        serverId: gameZoneId,
+        serverName: '' + gameZoneId,
+        userRoleName: '' + roleId,
+        userRoleId: roleId,
+        userRoleBalance: 1,
+        vipLevel: vipLevel,
+        userRoleLevel: +level,
+        partyId: 1,
+        partyName: '行会名称',
+        gameRoleGender: '男',
+        gameRolePower: '100',
+        partyRoleId: 1,
+        partyRoleName: '会长',
+        professionId: '',
+        profession: '',
+        friendlist: ''
+      });
+      /* 绑定自己平台用户信息 */
+      return super.bindZone(params);
+    }
+    // 失败
+    else {
+      alert(roleInfoRes.error_msg);
+    }
+  }
+  async pay(params: GamePayParams) {
+    // 1. 获取支付信息
+    const pamentInfoRes = await this.getPaymentInfo(params);
+    if (pamentInfoRes.code === 200) {
+      // 2. 平台创建订单
+      const orderRes = await this.order(pamentInfoRes.payments[0]);
+      if (orderRes.code === 200) {
+        // 3. 调用quick支付
+        const {gameZoneId, roleId, roleName, level} = params;
+        const {
+          money,
+          currency,
+          transactionId,
+          count,
+          quantifier,
+          productDesc,
+          productId
+        } = orderRes.data as PayRes;
+        this.quick.pay({
+          productCode: this.config.productCode,
+          uid: this.quickUserInfo.uid,
+          username: this.quickUserInfo.username,
+          userRoleId: roleId,
+          userRoleName: roleName,
+          serverId: gameZoneId,
+          userServer: `${gameZoneId}`,
+          userLevel: level,
+          cpOrderNo: transactionId,
+          amount: money,
+          subject: productDesc,
+          desc: productDesc,
+          goodsId: productId,
+          count: count,
+          quantifier: quantifier,
+          callbackUrl: '',
+          extrasParams: ''
+        });
+      } else {
+        console.error('createOrder error: ' + orderRes.error_msg);
+      }
+    } else {
+      console.error('getPaymentInfo error: ' + pamentInfoRes.error_msg);
+    }
+  }
+  mark(markName: string, params: any) {
+    /* quick 平台暂时不打点 */
+    console.log('markName: ' + markName, +'params', params);
+  }
+  openFansPage() {
+    /* 打开粉丝页 */
+    window.open(this.config.fans);
+  }
+  fbShare = fbShare;
 }
 
 class Quick {
@@ -49,16 +200,24 @@ class Quick {
       });
     });
   }
-  login(): Promise<QuickLoginRes['data']> {
-    return new Promise((resolve, reject) => {
-      QuickSDK.login(function (callbackData) {
-        if (callbackData.status) {
-          resolve(callbackData.data);
+  loginResolve: (params: QuickLoginRes['data']) => void;
+  loginPromise: Promise<QuickLoginRes['data']> = new Promise(
+    resolve => (this.loginResolve = resolve)
+  );
+  login() {
+    var that = this;
+    QuickSDK.login(function (callbackData) {
+      if (callbackData.status) {
+        that.loginResolve(callbackData.data);
+      } else {
+        if (callbackData.message === 'cancel') {
+          that.login();
         } else {
-          reject(callbackData.message);
+          console.log(callbackData.message);
         }
-      });
+      }
     });
+    return this.loginPromise;
   }
   logout(): Promise<any> {
     return new Promise(resolve => {
@@ -71,9 +230,9 @@ class Quick {
   pay(params: QuickPayParams): Promise<any> {
     const payJson = JSON.stringify(params);
     return new Promise(resolve => {
-      QuickSDK.pay(payJson, function (res) {
-        resolve(res);
-        console.log(res);
+      QuickSDK.pay(payJson, function (payStatusObject) {
+        resolve(payStatusObject);
+        console.log('GameDemo:下单通知' + JSON.stringify(payStatusObject));
       });
     });
   }
@@ -87,21 +246,6 @@ class Quick {
     });
   }
   /* 一些渠道的切换账户的需求,在此回调内无需调用登录接口 */
-  setSwitchAccountNotification(): Promise<QuickLoginRes> {
-    return new Promise(resolve => {
-      QuickSDK.setSwitchAccountNotification(function (res) {
-        resolve(res);
-      });
-    });
-  }
-  setLogoutNotification(): Promise<any> {
-    return new Promise(resolve => {
-      QuickSDK.setLogoutNotification(function (res: any) {
-        console.log('Game:玩家点击注销帐号', res);
-        resolve(res);
-      });
-    });
-  }
 }
 /* 文档 https://www.quicksdk.com/doc-762.html */
 declare global {
@@ -110,15 +254,19 @@ declare global {
     init: (productCode: string, productKey: string, otherParam: true, callback: () => void) => void;
     /* 登录 */
     login: (callback: (callbackData: QuickLoginRes) => void) => void;
-    /* 切换账号功能,切换成功的回调 */
+    /* 切换账号功能,切换成功的回调, 一些渠道的切换账户的需求,在此回调内无需调用登录接口 */
     setSwitchAccountNotification: (callback: (callbackData: QuickLoginRes) => void) => void;
     /* 支付 */
+    /* 支付后,部分渠道可触发回调函数,函数中可获取是否支付成功,
+    但需要注意,此结果仅仅作为UI展示(或完全不用),发货应以服务器通知为准.
+    回调函数payStatusObject对象中status为true时为支付成功.
+    */
     pay: (orderInfoJson: string, callback: (payStatusObject: any) => void) => void;
     /* 上传角色信息 */
     uploadGameRoleInfo: (roleInfoJson: string, callback: (params: any) => void) => void;
     /* 退出游戏 */
     logout: (callback: (logoutObject: any) => void) => void;
-    /* 注册退出游戏回调 */
+    /* 注册退出游戏回调,玩家点击注销帐号 */
     setLogoutNotification: (callback: (logoutObject: any) => void) => void;
   };
 }
@@ -153,7 +301,7 @@ interface QuickUploadGameRoleInfoParams {
   /* 角色游戏内货币余额 */
   userRoleBalance: number;
   /* 角色VIP等级 */
-  vipLevel: number;
+  vipLevel: string;
   /* 角色等级 */
   userRoleLevel: number;
   /* 公会/社团ID */
@@ -188,7 +336,7 @@ interface QuickPayParams {
   /* 游戏角色名 */
   userRoleName: string;
   /* 区服 id  */
-  serverId: number;
+  serverId: string;
   /* 角色所在区服 */
   userServer: string;
   /* 角色等级 */
@@ -196,7 +344,7 @@ interface QuickPayParams {
   /* 游戏内的订单,服务器通知中会回传 */
   cpOrderNo: string;
   /* 购买金额（元） */
-  amount: string;
+  amount: number;
   /* 购买商品个数 */
   count: number;
   /*  购买商品单位，如，个 */
@@ -211,4 +359,13 @@ interface QuickPayParams {
   extrasParams: string;
   /* 商品ID */
   goodsId: string;
+}
+interface PayRes {
+  money: number;
+  currency: string;
+  transactionId: string;
+  count: number;
+  quantifier: string;
+  productDesc: string;
+  productId: string;
 }

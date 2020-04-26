@@ -23,7 +23,7 @@ export default class NativeSdk extends Base {
   constructor(config: ExtendedConfig) {
     super();
     this.initApi.setAppKey(config.appKey);
-    this.initConfig(config);
+    super.init(config);
     this.initNative();
     this.initNativeToJs();
     initRG(this);
@@ -126,7 +126,7 @@ export default class NativeSdk extends Base {
         });
     }
   }
-  async mark(markName: string, params?: { money: string; currency: string}) {
+  async mark(markName: string, params?: {money: string; currency: string}) {
     await this.getConfigPromise;
     let eventName: string = markName;
     // 从配置中获取固定点,点名的配置
@@ -167,7 +167,7 @@ export default class NativeSdk extends Base {
     console.info(`"${markParmas.eventName}" has marked - native`, markParmas);
   }
   async order(params: PaymentChannel) {
-    return this.createOrder(params).then(res => {
+    return super.order(params).then(res => {
       if (res.code === 200 && params.showMethod === 3) {
         this.native.jpwork({
           productName: params.selectedProduct.productName,

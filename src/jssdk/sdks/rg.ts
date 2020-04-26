@@ -1,8 +1,8 @@
 import NativeSdk from './native';
-import WebSdk from "./web";
+import WebSdk from './web';
 // import FbWebGameSdk from "./facebookWebGame";
 // import FbInstantGameSdk from "./facebookInstantGame";
-// import QuickSdk from "./uniteSdk/quick";
+import QuickSdk from './uniteSdk/quick';
 import {GamePayParams} from './base';
 
 declare global {
@@ -12,7 +12,7 @@ declare global {
   }
   interface RGType {
     type: number;
-    jssdk: NativeSdk|WebSdk
+    jssdk: NativeSdk | WebSdk;
     CurUserInfo(): any;
     BindZone(params: BindZoneParam): Promise<ServerRes>;
     Pay(params: GamePayParams): void;
@@ -22,27 +22,27 @@ declare global {
     Redirect(): void;
     ChangeAccount(): Promise<any>;
     /* 打开粉丝页 */
-    Messenger():void
+    Messenger(): void;
   }
 }
 
-export function initRG(sdk: NativeSdk|WebSdk) {
+export function initRG(sdk: NativeSdk | WebSdk | QuickSdk) {
   function RgFunciton(this: RGType) {
     this.type = sdk.type;
-    this.CurUserInfo = function() {
+    this.CurUserInfo = function () {
       const {userId, userName, token} = sdk.account.user;
       return {userId, userName, token};
     };
-    this.BindZone = function(params: BindZoneParam) {
+    this.BindZone = function (params: BindZoneParam) {
       return sdk.bindZone(params);
     };
-    this.Pay = function(params: GamePayParams) {
+    this.Pay = function (params: GamePayParams) {
       sdk.pay(params);
     };
-    this.Share = function(url: string) {
+    this.Share = function (url: string) {
       return sdk.fbShare(url);
     };
-    this.Mark = function(
+    this.Mark = function (
       name: string,
       params?: {userId?: number; money: string; currency: string}
     ) {
@@ -50,17 +50,17 @@ export function initRG(sdk: NativeSdk|WebSdk) {
     };
     /* 微端 */
     if (sdk.install) {
-      this.Install = function() {
+      this.Install = function () {
         sdk.install();
       };
     }
-    this.Redirect = function() {
+    this.Redirect = function () {
       sdk.redirect();
     };
     this.Messenger = function () {
       sdk.openFansPage();
-    }
-    this.ChangeAccount = function() {
+    };
+    this.ChangeAccount = function () {
       return Promise.resolve();
     };
   }

@@ -29,7 +29,7 @@ export default class WebSdk extends Base {
   constructor(config: ExtendedConfig) {
     super();
     /* 向成员类分发参数 */
-    this.initConfig(config);
+    super.init(config);
     /* 挂载window.RG */
     initRG(this);
 
@@ -91,9 +91,6 @@ export default class WebSdk extends Base {
   mark(markName: string, params?: {userId?: number; money: string; currency: string}) {
     const data = {action: 'mark', data: {name: markName, param: params}};
     window.parent.postMessage(JSON.stringify(data), getUrlOrigin(RG.jssdk.config.indexUrl));
-  }
-  order(params: PaymentChannel) {
-    return this.createOrder(params);
   }
   async fbLogin(isLogout: boolean) {
     return fbWebLogin().then((res: FbLoginRes) => {
