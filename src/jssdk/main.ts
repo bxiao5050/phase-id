@@ -1,13 +1,12 @@
-//import Languages from './view/i18n';
-
-function initRG(w: Window) {
+/* 使用自执行函数,避免污染全局变量 */
+;(function (w: Window) {
   /* 获取所有的地址栏参数 */
   const urlParams: UrlParams = getUrlParam();
 
   polyfill().then(async () => {
     /* 是否加载 Vconsole */
     urlParams.debugger && (await initDebugger());
-    const {appId, advChannel} = urlParams;
+    const { appId, advChannel } = urlParams;
     // 加载config
     let config = await getConfig(appId, advChannel);
     config.urlParams = urlParams;
@@ -82,7 +81,7 @@ function initRG(w: Window) {
       return configs[advChannel] ? configs[advChannel] : configs.default;
     });
     const Languages = await LanguagesPromise;
-    return Object.assign(gameConfig, {i18n: Languages[gameConfig.language]});
+    return Object.assign(gameConfig, { i18n: Languages[gameConfig.language] });
   }
   /* 加载对应sdk */
   function loadSdk(config: any) {
@@ -100,14 +99,14 @@ function initRG(w: Window) {
       });
     } else if (advChannel > 31000 && advChannel < 32000) {
       // facebook webgame的sdk
-      // return import('Src/jssdk/facebookWebGames').then(module => {
-      //   return new module.default();
-      // });
+      return import('./sdks/facebookWebGame').then(module => {
+        return new module.default(config);
+      });
     } else if (advChannel > 32000 && advChannel < 33000) {
       // facebook instantgame的sdk
-      // return import('Src/jssdk/facebookInstantGames').then(module => {
-      //   return new module.default();
-      // });
+      return import('./sdks/facebookInstantGame').then(module => {
+        return new module.default(config);
+      });
     } else if (advChannel > 33000 && advChannel < 35000) {
       //  联运sdk
       return import('./sdks/uniteSdk/quick').then(module => {
@@ -141,6 +140,4 @@ function initRG(w: Window) {
       })(document, 'script', 'facebook-jssdk');
     });
   }
-}
-
-initRG(window);
+})(window);
