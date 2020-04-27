@@ -110,21 +110,21 @@ interface I18n {
   loadException: string;
   loading: string;
   // ——————————————————————————————————————————————————————
-  txt_charge_num_tips: string;
-  txt_charge_way_tips: string;
-  txt_other_way: string;
-  txt_official: string;
-  txt_order_num_tips: string;
-  txt_charge_status_tips: string;
-  net_error_203: string;
-  txt_safe_set: string;
-  txt_check_charge: string;
-  txt_account_name: string;
-  txt_device_num: string;
-  float_button_user_center: string;
-  p2refresh_end_no_records: string;
-  float_button_service: string;
-  float_button_bind_account: string;
-  txt_change_psw: string;
-  net_error_30200: string;
+  // txt_charge_num_tips: string;
+  // txt_charge_way_tips: string;
+  // txt_other_way: string;
+  // txt_official: string;
+  // txt_order_num_tips: string;
+  // txt_charge_status_tips: string;
+  // net_error_203: string;
+  // txt_safe_set: string;
+  // txt_check_charge: string;
+  // txt_account_name: string;
+  // txt_device_num: string;
+  // float_button_user_center: string;
+  // p2refresh_end_no_records: string;
+  // float_button_service: string;
+  // float_button_bind_account: string;
+  // txt_change_psw: string;
+  // net_error_30200: string;
 }

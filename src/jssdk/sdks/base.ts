@@ -90,6 +90,9 @@ export default class Base {
       if (res.code === 200) {
         this.account.user = Object.assign(res.data, {password, token: res.token});
         localStorage.removeItem('rg_isFaceLogin');
+        if (res.data.firstLogin) {
+          RG.Mark('sdk_register');
+        }
       }
       return res;
     });

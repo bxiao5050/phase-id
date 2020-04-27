@@ -1,0 +1,38 @@
+.rg-notice {
+  width: 100%;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 10%;
+  text-align: center;
+  animation: show-notice 3s infinite;
+  outline: none;
+}
+.rg-notice-msg {
+  width: 80%;
+  display: inline-block;
+  background: rgba(0, 0, 0, 0.6);
+  font-size: 1rem;
+  line-height: 1.4;
+  padding: 0.2rem 1rem;
+  border-radius: 2rem;
+  color: #fff;
+}
+@keyframes show-notice {
+  0% {
+    bottom: 10%;
+    opacity: 0;
+  }
+  10%{
+    bottom: 15%;
+    opacity: 1;
+  }
+  90% {
+    bottom: 15%;
+    opacity: 1;
+  }
+  100% {
+    bottom: 10%;
+    opacity: 0;
+  }
+}

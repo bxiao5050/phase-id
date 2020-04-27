@@ -72,7 +72,8 @@ var definePlugin = {
 };
 var webpackConfig = {
   entry: {
-    sdk: path.join(__dirname, 'src/jssdk/main.ts'),
+    //sdk: path.join(__dirname, 'src/jssdk/main.ts'),
+    sdk:path.join(__dirname, 'src/jssdk/view2/main.ts'),
     shortcut: path.join(__dirname, 'src/add-shortcut/main.ts')
   },
   resolve: {
