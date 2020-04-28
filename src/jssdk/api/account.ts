@@ -75,13 +75,13 @@ export interface UserInfo {
   // 账号类型 0.普通用户 1.Email 用户 2.fb 账号 3.其他 11.kakao
   accountType: number;
   // 邮箱
-  email: string;
+  email?: string;
   // 邮箱是否验证，0=未设置 1=未验证 2=已验证
-  emailValid: 0 | 1 | 2;
+  emailValid: number
   // 电话号
-  telephone: string;
+  telephone?: string;
   // 0=登陆  1 = 注册
-  firstLogin: 0 | 1;
+  firstLogin: number
   // 平台token
   token: string;
 }

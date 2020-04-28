@@ -132,12 +132,24 @@ body {
     sans-serif, apple color emoji, segoe ui emoji, segoe ui symbol;
   z-index: 99;
 }
-.invisible {
+.rg-invisible {
   visibility: hidden !important;
 }
 
-.hide {
+.rg-hide {
   display: none !important;
+}
+.rg-center-a {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+.rg-center-f {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
 }
 html {
   font-size: 3.75vw;
@@ -167,13 +179,15 @@ html {
     font-size: 3.75vh;
   }
 }
-.mark {
+.rg-mark {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(38, 38, 38, 0.8);
+  background: #000;
+  opacity: 0.6;
 }
 @import './messager/confirm.scss';
 @import './messager/notice.scss';
+@import './login/main.scss';

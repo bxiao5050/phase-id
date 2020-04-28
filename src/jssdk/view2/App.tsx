@@ -1,24 +1,25 @@
 import React, {Fragment} from 'react';
 import {Route, MemoryRouter} from 'react-router-dom';
+import {createLocation} from 'history';
 import Notice from './components/message/notice';
 import Confirm from './components/message/confirm';
-
 // import Hover from './components/hover';
 // import Account from './components/account';
-// import Login from './components/login';
+import Login from './components/login';
 // import Payment from './components/payment';
+/* 类型 */
 import {PaymentConfigRes} from '../api/payment';
 
 import I18n from './language/zh_cn';
-window.RG = {jssdk: {config: {i18n: I18n}}} as any;
+window.RG = { jssdk: { config: { i18n: I18n }}} as any;
 
 class App extends React.Component {
   public refs: {
     // notice: Notice;
     // hover: Hover;
-    loginRoute: any;
     confirm: Confirm;
     notice: Notice;
+    loginRoute: Route<Login>;
   };
 
   constructor(props: any) {
@@ -39,6 +40,7 @@ class App extends React.Component {
     showLogin: false,
     showPayment: false,
     paymentConfig: null,
+
     isShowMark: false
   };
   showPrompt(title: string, content: string, isAlert: boolean = false) {
@@ -56,21 +58,39 @@ class App extends React.Component {
       showPayment: false
     });
   };
+  showLogin = () => {
+    this.setState({
+      showLogin: true,
+      isShowMark: true
+    });
+    return this.refs.loginRoute.refs.login as Login;
+  };
+  hideLogin = () => {
+    this.setState({
+      showLogin: false,
+      isShowMark: false
+    });
+  };
 
   render() {
     var defaultModule = ['/main'];
-    const {isShowMark} = this.state;
+    const {isShowMark, showLogin} = this.state;
     return (
       <Fragment>
-        {isShowMark ? <div className='mark'></div> : null}
-        {/* 提示模块 notice
-        {this.state.noticeList.map((noticeMsg, index) => {
-          return <Notice key={index} msg={noticeMsg} Ins={this} />;
-        })} */}
+        {isShowMark ? <div className='rg-mark'></div> : null}
+        {/* 登录模块 */}
+        {showLogin ? (
+          <MemoryRouter initialEntries={['/login']}>
+            <Route
+              ref='loginRoute'
+              render={({history}) => <Login ref='login' Ins={this} history={history} />}
+            />
+          </MemoryRouter>
+        ) : null}
         {/* Notice */}
-        <Notice ref='notice' hideMark={() => this.hideMark()} />
+        <Notice ref='notice' />
         {/* confirm */}
-        <Confirm ref='confirm' hideMark={() => this.hideMark()} />
+        <Confirm ref='confirm' />
         {/* alert */}
       </Fragment>
     );

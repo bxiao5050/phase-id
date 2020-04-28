@@ -81,6 +81,8 @@ interface Window {
   fbAsyncInit?(): void;
   /* 登录完成通知游戏的回调 */
   rgAsyncInit: Function;
+
+  test:any
 }
 interface I18n {
   UnknownErr: string;

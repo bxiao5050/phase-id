@@ -5,7 +5,7 @@
   transform: translateX(-50%);
   bottom: 10%;
   text-align: center;
-  animation: show-notice 3s infinite;
+  animation: rg-show-notice 3s infinite;
   outline: none;
 }
 .rg-notice-msg {
@@ -18,7 +18,7 @@
   border-radius: 2rem;
   color: #fff;
 }
-@keyframes show-notice {
+@keyframes rg-show-notice {
   0% {
     bottom: 10%;
     opacity: 0;

@@ -116,6 +116,7 @@ export class App extends React.Component {
         {/* 账户管理中心 */}
         {this.state.showAccount && (
           <MemoryRouter initialEntries={this.state.accountEntry}>
+            
             <Route render={({history}) => <Account history={history} />} />
           </MemoryRouter>
         )}

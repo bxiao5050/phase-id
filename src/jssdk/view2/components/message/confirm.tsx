@@ -1,12 +1,12 @@
-import * as React from 'react';
+import React, {Fragment} from 'react';
 
-interface IState{
-  title: string,
-  content: string,
-  isShow: boolean,
-  isAlert: boolean
+interface IState {
+  title: string;
+  content: string;
+  isShow: boolean;
+  isAlert: boolean;
 }
-class Confirm extends React.Component<{hideMark: () => void}, IState> {
+class Confirm extends React.Component<{}, IState> {
   state = {
     title: '',
     content: '',
@@ -28,38 +28,40 @@ class Confirm extends React.Component<{hideMark: () => void}, IState> {
       isShow: false,
       isAlert: false
     });
-    this.props.hideMark();
     this.resolve(isconfirm);
   };
   render() {
     const i18n = RG.jssdk.config.i18n;
     const {title, content, isShow, isAlert} = this.state;
     return (
-      <div className={isShow ? 'confirm' : 'confirm hide'}>
-        <div className='confirm-title'>{title}</div>
-        <p className='confirm-msg'>{content}</p>
-        <div className='confirm-btns'>
-          {!isAlert ? (
+      <Fragment>
+        {isShow ? <div className='rg-mark'></div> : null}
+        <div className={isShow ? 'rg-confirm rg-center-f' : 'rg-confirm rg-center-f rg-hide'}>
+          <div className='rg-confirm-title'>{title}</div>
+          <p className='rg-confirm-msg'>{content}</p>
+          <div className='rg-confirm-btns'>
+            {!isAlert ? (
+              <span
+                className='rg-confirm-cancle-btn'
+                onClick={() => {
+                  this.close(false);
+                }}
+              >
+                {i18n.txt_cancel}
+              </span>
+            ) : null}
+
             <span
-              className='confirm-cancle-btn'
+              className={isAlert ? 'rg-alert-close-btn' : 'rg-confirm-ok-btn'}
               onClick={() => {
-                this.close(false);
+                this.close(true);
               }}
             >
-              {i18n.txt_cancel}
+              {i18n.txt_confirm}
             </span>
-          ) : null}
-
-          <span
-            className={isAlert ? 'alert-close-btn' : 'confirm-ok-btn'}
-            onClick={() => {
-              this.close(true);
-            }}
-          >
-            {i18n.txt_confirm}
-          </span>
+          </div>
         </div>
-      </div>
+      </Fragment>
     );
   }
 }

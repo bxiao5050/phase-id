@@ -5,7 +5,7 @@ interface IState {
   msg: string;
   isShow: boolean;
 }
-class Notice extends React.Component<{hideMark: () => void}, IState> {
+class Notice extends React.Component<{}, IState> {
   state = {
     isShow: false,
     msg: ''
@@ -26,7 +26,6 @@ class Notice extends React.Component<{hideMark: () => void}, IState> {
       if (that.noticeList.length === 0) {
         that.isAnimation = true
         that.setState({isShow: false});
-        that.props.hideMark();
         return;
       }
       const msg = that.noticeList.shift();
@@ -39,7 +38,7 @@ class Notice extends React.Component<{hideMark: () => void}, IState> {
   render() {
     const {isShow, msg} = this.state;
     return (
-      <div className={isShow ? 'rg-notice' : 'rg-notice hide'}>
+      <div className={isShow ? 'rg-notice' : 'rg-notice rg-hide'}>
         <p className="rg-notice-msg">{msg}</p>
       </div>
     );
