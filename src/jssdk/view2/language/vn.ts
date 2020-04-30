@@ -278,7 +278,7 @@ export default {
   ui_customer_answer_about_bind_email:
     'Người dùng tài khoản chính thức có thể vào cửa sổ-Trung tâm cá nhân-Thiết lập an toàn, dựa theo gợi ý thiết lập email an toàn. Người dùng du khách cần nâng cấp lên tài khoản chính thức trước mới có thể dùng chức năng này.',
   ui_customer_question_payment: 'Nạp thẻ xong không nhận được đạo cụ game phải làm sao?',
-  ui_customer_answer_payment: `1.Nạp thẻ thành công xong, ở tình trạng bình thường trong vòng 5 phút sẽ gửi đạo cụ game vào tài khoản của bạn, xin nhẫn nại chờ đợi.\n 2.Bạn có thể vào cửa sổ-Trung tâm cá nhân-ghi chép nạp thẻ, tra cứu trạng thái đơn hàng nạp.\n 3. Nếu trạng thái nạp thẻ là thất bại, cho thấy chưa trừ tiền thành công, xin liên hệ hỗ trợ.\n 4. Nếu trạng thái nạp tiền là thành công và chưa nhận được đạo cụ game, bạn vui lòng lên trang chủ hoặc fanpage liên hệ hỗ trợ và cung cấp số đơn hàng của bạn.`,
+  ui_customer_answer_payment: `1.Nạp thẻ thành công xong, ở tình trạng bình thường trong vòng 5 phút sẽ gửi đạo cụ game vào tài khoản của bạn, xin nhẫn nại chờ đợi.<br /> 2.Bạn có thể vào cửa sổ-Trung tâm cá nhân-ghi chép nạp thẻ, tra cứu trạng thái đơn hàng nạp.<br /> 3. Nếu trạng thái nạp thẻ là thất bại, cho thấy chưa trừ tiền thành công, xin liên hệ hỗ trợ.<br /> 4. Nếu trạng thái nạp tiền là thành công và chưa nhận được đạo cụ game, bạn vui lòng lên trang chủ hoặc fanpage liên hệ hỗ trợ và cung cấp số đơn hàng của bạn.`,
   cg_txt_consume_buy: 'Mua hàng',
   cg_txt_consume_cost: 'Tiêu hao tiền cổng game',
   cg_txt_consume_order: 'Doanh thu tiêu phí',

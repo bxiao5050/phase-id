@@ -32,7 +32,7 @@ export default {
   txt_nologin: '未登录',
   txt_comp_account: '账号：',
   txt_comp_pwd: '千奇密码：',
-  txt_logining: '正在登录ing&#8230;',
+  txt_logining: '正在登录ing...',
   txt_switch_account: '切换账号',
   txt_welecome: '欢迎回来，',
   txt_account_err: '账号格式不正确',
@@ -258,11 +258,8 @@ export default {
   ui_customer_answer_about_bind_email:
     '正式帐号用户，可以通过账号-安全设置，按提示信息设置安全邮箱。游客用户需要先升级到正式帐号，才能使用此功能。',
   ui_customer_question_payment: '充值后没有获得游戏道具，怎么办？',
-  ui_customer_answer_payment: `1.充值成功后，正常情况下会在5分钟内发送游戏道具到您的账户中，请您耐心等待。\n
-                  2.您可以通过账号-充值记录，查询充值订单状态。\n
-                  3.如果充值状态是失败的，说明扣款未成功，请联系支付渠道商。\n
-                  4.如果充值状态是成功的，并且未收到游戏道具，请您去游戏的官方网站或FB主页联系客服，并提供您的订单号。`,
-
+  ui_customer_answer_payment:
+    '1.充值成功后，正常情况下会在5分钟内发送游戏道具到您的账户中，请您耐心等待。<br />2.您可以通过账号-充值记录，查询充值订单状态。<br />3.如果充值状态是失败的，说明扣款未成功，请联系支付渠道商。<br />4.如果充值状态是成功的，并且未收到游戏道具，请您去游戏的官方网站或FB主页联系客服，并提供您的订单号。',
   cg_txt_consume_buy: '购买商品',
   cg_txt_consume_cost: '消耗平台币',
   cg_txt_consume_order: '消费流水',

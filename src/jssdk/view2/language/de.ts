@@ -276,9 +276,9 @@ export default {
     'Benutzer mit einem richtigen Konto können im Pop-Up Fenster auf „Mein Konto“ und dann auf „Sicherheitseinstellungen“ tippen und den Hinweisen folgen.  Gästebenutzer müssen ihr Konto zuerst upgraden, um Gebrauch von dieser Funktion zu machen.',
   ui_customer_question_payment:
     'Ich habe nach einer Aufladung keine Items erhalten, was soll ich tun?',
-  ui_customer_answer_payment: `1. Im Normalfall erreichen die Items 5 Minuten nach Ihrer Aufladung Ihr Konto. Bitte warten Sie.\n 
-												2. Sie können im Pop-Up Fenster auf „Mein Konto“ und dann auf „Aufladeverlauf“ tippen, um Ihren Bestallstatus anzusehen.\n 
-												3. Wenn Ihre Aufladung gescheitert sein sollte, wurde der Betrag nicht abgebucht. Bitte wenden Sie sich dann an den Zahlungsbetreiber.\n 
+  ui_customer_answer_payment: `1. Im Normalfall erreichen die Items 5 Minuten nach Ihrer Aufladung Ihr Konto. Bitte warten Sie.<br /> 
+												2. Sie können im Pop-Up Fenster auf „Mein Konto“ und dann auf „Aufladeverlauf“ tippen, um Ihren Bestallstatus anzusehen.<br /> 
+												3. Wenn Ihre Aufladung gescheitert sein sollte, wurde der Betrag nicht abgebucht. Bitte wenden Sie sich dann an den Zahlungsbetreiber.<br /> 
 												4. Wenn die Aufladung erfolgreich ist und Sie Ihre Items nicht erhalten haben, können Sie sich mit Ihrer Bestellnr. an unsere Mitarbeiter über unsere Website oder durch Facebook wenden.`,
 
   cg_txt_consume_buy: 'Waren kaufen',

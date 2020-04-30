@@ -89,6 +89,7 @@ export default class Choose extends React.Component<ChooseProps, {}, any> {
       var userName = e.target.value;
       this.setState({
         userName: userName,
+        
         closeUser: userName.length > 0,
         showList: !(userName.length > 0)
       });

@@ -3,7 +3,7 @@ import {Route} from 'react-router-dom';
 import {createLocation} from 'history';
 // import Login from './index';
 // import Choose from './Choose';
-import {Ins} from '../..//index';
+import {Ins} from '../../index';
 // import Account from "../../../Base/Account";
 /* 导入类型 */
 import {RouteComponentProps} from 'react-router-dom';
@@ -13,7 +13,6 @@ interface IState {
   users: {
     [key: string]: UserInfo;
   };
-  showUserList: boolean;
   isShowUsersInfo: boolean;
 }
 export default class Main extends React.Component<RouteComponentProps, IState> {
@@ -70,11 +69,10 @@ export default class Main extends React.Component<RouteComponentProps, IState> {
         password: 'b2ff93613c80dc62c3da2754cf91df59',
         token: 'bf8ae162ce054a8d8c69f2a2ddc24c1b',
         userId: 1000003322,
-        userName: '1237699676',
+        userName: '1237699676 bf8ae162ce054a8d8c69f2a2ddc24c1b',
         userType: 0
       }
     },
-    showUserList: false,
     isShowUsersInfo: false
   };
   deleteUser(userId: number) {
@@ -116,7 +114,7 @@ export default class Main extends React.Component<RouteComponentProps, IState> {
                   return (
                     <li className='rg-user' key={userInfo.userId}>
                       <p className='rg-user-name' onClick={() => this.selectUser(userInfo.userId)}>
-                        {(userInfo.userType === 0 ? i18n.txt_name_vistor : '') + userInfo.userName}
+                        {(userInfo.userType === 0 ? i18n.txt_name_vistor : '') + userInfo.userName.slice(0,28)}
                       </p>
                       <div
                         className='rg-icon-close'
@@ -161,7 +159,7 @@ export default class Main extends React.Component<RouteComponentProps, IState> {
           <div
             className='rg-to-login'
             onClick={() => {
-              // this.props.Login.props.history.push(createLocation('/entry'));
+              this.props.history.push("/login");
             }}
           >
             <div className='rg-login-icon'></div>
@@ -170,7 +168,7 @@ export default class Main extends React.Component<RouteComponentProps, IState> {
           <div
             className='rg-to-register'
             onClick={() => {
-              // this.props.Login.props.history.push(createLocation('/register'));
+              this.props.history.push("/register");
             }}
           >
             <div className='rg-register-icon'></div>

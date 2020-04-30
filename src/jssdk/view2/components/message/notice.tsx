@@ -24,10 +24,11 @@ class Notice extends React.Component<{}, IState> {
     this.isAnimation = true
     function alert() {
       if (that.noticeList.length === 0) {
-        that.isAnimation = true
+        that.isAnimation = false
         that.setState({isShow: false});
         return;
       }
+      console.log(that.noticeList)
       const msg = that.noticeList.shift();
       that.setState({msg});
       setTimeout(alert, 3000);

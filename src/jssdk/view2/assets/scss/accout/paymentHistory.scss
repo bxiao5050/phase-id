@@ -1,0 +1,62 @@
+.rg-order-list-wrap {
+  overflow-x: hidden;
+  overflow-y: auto;
+  box-sizing: border-box;
+  height: 16.5rem;
+}
+// .rg-order-list {
+
+// }
+
+.rg-order {
+  width: 95%;
+  margin: 0.1 * 2.76 + rem auto 0;
+  padding: 0.1 * 2.76 + rem;
+  border-radius: 0.1 * 2.76 + rem;
+  position: relative;
+  background: white;
+}
+.rg-order-line {
+  box-sizing: border-box;
+  font-size: 0.8rem;
+  text-align: left;
+  margin-left: 0.5rem;
+  line-height: 1.4;
+  border-bottom: 1px solid #f0f0f0;
+  padding: 0.4rem 0.4rem;
+  color: gray;
+}
+
+.rg-order-label {
+  display: inline-block;
+  width: 6rem;
+  color: #1890ff;
+  margin-right: 0.4rem;
+}
+.rg-order-status .rg-order-label{
+  color: #13c2c2;
+}
+.rg-order-time {
+  position: absolute;
+  right: 0.27rem;
+  bottom:0.3rem;
+  color: #73d13d;
+  font-size: 0.8rem;
+}
+.rg-order-icon-success:after,.rg-order-icon-failed:after,.rg-order-icon-pedding:after{
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 2.64rem;
+  height: 2.4rem;
+}
+.rg-order-icon-success::after{
+  background: url(../img/order_status_success.png) center/contain no-repeat;
+}
+.rg-order-icon-failed::after{
+  background: url(../img/order_status_fail.png) center/contain no-repeat;
+}
+.rg-order-icon-pedding::after{
+  background: url(../img/order_status_pending.png) center/contain no-repeat;
+}

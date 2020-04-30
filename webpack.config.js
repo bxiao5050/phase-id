@@ -185,9 +185,9 @@ var webpackConfig = {
   devServer: devServer,
 
   externals: {
-    react: 'window.React',
-    'react-dom': 'window.ReactDOM',
-    'react-router-dom': 'window.ReactRouterDOM'
+    // react: 'window.React',
+    // 'react-dom': 'window.ReactDOM',
+    // 'react-router-dom': 'window.ReactRouterDOM'
   }
 };
 

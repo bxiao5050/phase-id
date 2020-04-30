@@ -1,0 +1,75 @@
+.rg-login-main.rg-loading {
+  height: 14rem;
+}
+.rg-loading-info {
+  width: 20rem;
+  height: 6rem;
+  margin: 1rem auto;
+  border-bottom: 1px solid gray;
+}
+.rg-loading-userName {
+  line-height: 1.2;
+  text-align: center;
+  vertical-align: baseline;
+}
+.rg-loading-userName-label {
+  display: inline-block;
+  color: gray;
+  font-size: 1.2rem;
+}
+.rg-loading-userName-txt {
+  color: #1890ff;
+  display: inline-block;
+  font-size: 1rem;
+}
+.rg-loading-valid{
+  color: red;
+  font-size: 0.8rem;
+  text-align: center;
+  margin: 1rem auto 0.6rem;
+}
+.rg-loading-txt{
+  text-align: center;
+  color: gray;
+}
+.rg-loading-icon{
+  display: inline-block;
+  width: 1rem;
+  height: 1rem;
+  background: url(../img/cg_icon_loading_auto_login.png) center no-repeat;
+  background-size: contain;
+  vertical-align: -0.2rem;
+  margin-right: 0.5rem;
+  animation: rg-rotate 1s linear infinite;
+}
+@keyframes rg-rotate{
+  form{
+    transform:rotate(0);
+  }
+  to{
+    transform:rotate(360deg);
+  }
+}
+.rg-loading-change{
+  width: 20rem;
+  margin: 0 auto;
+  height: 2.4rem;
+  font-size: 1rem;
+  color: white;
+  line-height: 2.4rem;
+  margin: 0.4rem auto 0;
+  border-radius: 0.3rem;
+  text-align: center;
+  background: #1890ff;
+  background: linear-gradient(to bottom, #1890ff, #3852a4);
+
+}
+.rg-icon-switch{
+  display: inline-block;
+  width: 2.13rem;
+  height: 1.03rem;
+  background: url(../img/cg_img_login.png) center no-repeat;
+  background-size: contain;
+  vertical-align: -0.2rem;
+  margin-right: 0.2rem;
+}

@@ -1,0 +1,56 @@
+.rg-register-box {
+  height: 19rem;
+}
+.rg-register-wrap {
+  height: 9rem;
+}
+#rg-password1 {
+  margin-left: 3rem;
+  height: 2.48rem;
+  width: 16rem;
+  font-size: 0.8rem;
+}
+#rg-password2 {
+  margin-left: 3rem;
+  height: 2.48rem;
+  width: 16rem;
+  font-size: 0.8rem;
+}
+// .rg-register-wrap #rg-userName {
+
+// }
+.rg-choose.rg-hide-border{
+  border-bottom: none;
+}
+.rg-check {
+  box-sizing: border-box;
+  width: 5rem;
+  margin: 0.3rem 0 0 2rem;
+  padding-top: 0.3rem;
+  height: 1.2rem;
+  line-height: 1.2rem;
+}
+.rg-checkbox {
+  width: 0.9rem;
+  height: 0.9rem;
+  float: left;
+  border-radius: 0.1rem;
+  background: white;
+}
+
+.rg-register-active {
+  box-sizing: border-box;
+  width: 0.9rem;
+  height: 0.9rem;
+  border: solid 0.1rem white;
+  background: #37373f;
+}
+
+.rg-checkbox-txt {
+  color: #fff;
+  display: block;
+  float: left;
+  margin-left: 0.5rem;
+  line-height: 1rem;
+  font-size: 0.8rem;
+}

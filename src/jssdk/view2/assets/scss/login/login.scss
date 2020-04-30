@@ -1,7 +1,90 @@
-.rg-login-header-icon{
-  margin: -1.24rem auto 0;
-  width: 8.12rem;
+.rg-login-header {
+  height: 3rem;
+  background: #fff;
+  border-radius: 0.2rem;
+  box-sizing: border-box;
+  padding: 0.37rem 1rem;
+  border-bottom: 4px solid #1890ff;
+}
+.rg-login-header .rg-logo {
+  width: 6.09rem;
+  height: 1.86rem;
+  margin: 0;
+}
+.rg-login-wrap {
+  box-sizing: border-box;
+  margin: 0.6rem auto 0;
+  background: #fff;
+  width: 20rem;
+  height: 6rem;
+  border-radius: 0.3rem;
+  padding: 0 0.5rem;
+  position: relative;
+}
+// .rg-login-choose-wrap {
+  
+// }
+.rg-login-wrap .rg-choose {
+  box-sizing: border-box;
+  width: 100%;
+  height: 3rem;
+  border-bottom: 1px solid #d9d9d9;
+}
+#rg-userName {
+  margin-left: 3rem;
   height: 2.48rem;
-  background: url(../img/cg_logo.png) center no-repeat;
-  background-size: 100%;
+  width: 16rem;
+  font-size: 0.8rem;
+}
+#rg-password {
+  margin-left: 3rem;
+  height: 2.48rem;
+  width: 16rem;
+  font-size: 0.8rem;
+}
+.rg-btn-login {
+  width: 20rem;
+  margin: 0 auto;
+  height: 2.4rem;
+  font-size: 1rem;
+  color: white;
+  line-height: 2.4rem;
+  margin: 0.6rem auto 0;
+  border-radius: 0.1 * 2.67 + rem;
+  text-align: center;
+  background: #1890ff;
+  background: linear-gradient(to bottom, #1890ff, #0971d1);
+}
+.to-main-btn {
+  position: absolute;
+  left: 1rem;
+  bottom: 1rem;
+  color: #386a99;
+  font-size: 0.8rem;
+}
+.to-register-btn {
+  position: absolute;
+  right: 1rem;
+  bottom: 1.2rem;
+  padding: 0.6rem;
+  font-size: 0.8rem;
+  color: #386a99;
+  border: 1px solid #386a99;
+  border-radius: 3rem;
+}
+.rg-icon-password{
+  position: absolute;
+  top: 0.6rem;
+  left: 0rem;
+  width: 1.6rem;
+  height: 1.6rem;
+  background: url(../img/cg_login_pwd.png) center no-repeat;
+  background-size: contain;
+}
+.rg-forget-text{
+  color:#595959 ;
+  font-size: 0.8rem;
+  position: absolute;
+  top: 1rem;
+  right: -0.2rem;
 }

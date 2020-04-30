@@ -22,11 +22,11 @@ export default class Init {
             advChannel: params.advChannel,
             gpProduct: verifys.gpProduct,
             gpVerify: verifys.gpVerify,
-            gpPluginAction: res.publics.gpPluginAction || "",
-            gpPluginGpUrl: res.publics.gpPluginGpUrl || "",
-            gpPluginType: res.publics.gpPluginType || "",
-            gpPluginName: res.publics.gpPluginName || "",
-            gpPluginLoadingUrl: res.publics.gpPluginLoadingUrl || ""
+            gpPluginAction: res.publics && res.publics.gpPluginAction,
+            gpPluginGpUrl: res.publics && res.publics.gpPluginGpUrl,
+            gpPluginType: res.publics && res.publics.gpPluginType,
+            gpPluginName: res.publics && res.publics.gpPluginName,
+            gpPluginLoadingUrl: res.publics && res.publics.gpPluginLoadingUrl
           };
         } else {
           return Promise.reject(res);

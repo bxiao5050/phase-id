@@ -32,7 +32,7 @@ export default {
   txt_nologin: 'Non identification',
   txt_comp_account: 'Compte:',
   txt_comp_pwd: 'Changement de mot de passe:',
-  txt_logining: 'Identification&#8230;',
+  txt_logining: 'Identification...',
   txt_switch_account: 'Changer de compte',
   txt_welecome: 'Bienvenue à nouveau，',
   txt_account_err: 'Format de compte invalide',
@@ -274,9 +274,9 @@ export default {
     'Pour actualiser un compte, il faut regarder l\'icône flottante - Compte - Paramètres de sécurité. Le compte "invité" a besoin d\'être actualisé avant de pouvoir utiliser cette fonction.',
   ui_customer_question_payment:
     "Vous n'avez pas reçu les articles après avoir réussi à effectuer la recharge?",
-  ui_customer_answer_payment: `1.Après avoir réussi à effectuer la recharge, cela prend en général quelques minutes pour envoyer les articles à votre compte.\n 
-        									2.Vérifiez l\'état de la transaction sur l\'icône flottante - Compte - Historique de recharge.\n 
-        									3.Si il y a eu échec de la recharge, cela signifie que la transaction n\'a pas su être effectuée, veuillez alors vérifier l\'opérateur de la carte.\n 
+  ui_customer_answer_payment: `1.Après avoir réussi à effectuer la recharge, cela prend en général quelques minutes pour envoyer les articles à votre compte.<br /> 
+        									2.Vérifiez l\'état de la transaction sur l\'icône flottante - Compte - Historique de recharge.<br /> 
+        									3.Si il y a eu échec de la recharge, cela signifie que la transaction n\'a pas su être effectuée, veuillez alors vérifier l\'opérateur de la carte.<br /> 
         									4.Si il y a eu réussite de la recharge et que les articles n\'ont pas été délivrés, veuillez contacter le service clientèle et fournir le numéro de transaction.`,
 
   cg_txt_consume_buy: 'Acheter des biens',

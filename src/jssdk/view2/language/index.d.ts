@@ -31,7 +31,7 @@ interface I18n{
   txt_nologin: '未登录',
   txt_comp_account: '账号：',
   txt_comp_pwd: '千奇密码：',
-  txt_logining: '正在登录ing&#8230;',
+  txt_logining: '正在登录ing...',
   txt_switch_account: '切换账号',
   txt_welecome: '欢迎回来，',
   txt_account_err: '账号格式不正确',

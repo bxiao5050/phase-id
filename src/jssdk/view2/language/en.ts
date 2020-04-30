@@ -275,7 +275,7 @@ export default {
     'Pemain yang menggunakan akun resmi bisa klik pusat akun -penganturan keamanan, mengikutri menghubungkan email keamanan. Pemain yang tamu harus meningkatkan akun sebelumnya baru bisa menggunakan fungsi inin.',
   ui_customer_question_payment: ' Bagaimana jika sudah mengisi uang tetapi tidak dapat item?',
   ui_customer_answer_payment:
-    '1.Setelah Pengisian sukses, Item akan dikirim kepada akun anda sekitar 5 menit, Tolong tunggu sebentar.\n 2.Anda bisa masuk Pusat akun - Riwayat Pembayaran, cek status pembayaran.\n 3. Jika status pembayaran gagal,uang anda belum diisi, tolong kontak bantuan.\n 4. Kalau status pengisian sukses tetapi item tidak ada, tolong anda kontak halaman utama atau Fanpage untuk mendaftar informasi Pembayarannya.',
+    '1.Setelah Pengisian sukses, Item akan dikirim kepada akun anda sekitar 5 menit, Tolong tunggu sebentar.<br /> 2.Anda bisa masuk Pusat akun - Riwayat Pembayaran, cek status pembayaran.<br /> 3. Jika status pembayaran gagal,uang anda belum diisi, tolong kontak bantuan.<br /> 4. Kalau status pengisian sukses tetapi item tidak ada, tolong anda kontak halaman utama atau Fanpage untuk mendaftar informasi Pembayarannya.',
   cg_txt_consume_buy: 'Beli barang',
   cg_txt_consume_cost: 'Uang konsumsi Game gate',
   cg_txt_consume_order: 'Detil konsumsi',

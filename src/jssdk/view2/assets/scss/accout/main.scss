@@ -1,0 +1,95 @@
+.rg-account {
+  color: #1890ff;
+  line-height: 1.86rem;
+  font-size: 1.3rem;
+  font-weight: 500;
+  height: 20rem;
+  width: 25rem;
+  text-align: center;
+}
+.rg-customer-content.rg-account-content {
+  height: 15rem;
+  text-align: left;
+  font-size: 0.7rem;
+}
+.rg-account-userInfo-wrap {
+  box-sizing: border-box;
+  height: 3.7rem;
+  padding: 0.5rem 0.5rem 0;
+}
+.rg-avatar-icon {
+  float: left;
+  width: 2.4rem;
+  height: 2.4rem;
+  margin: 0.3rem 0 0 0.5rem;
+  background: url(../img/head_img.png) center/contain no-repeat;
+}
+.rg-account-userInfo {
+  float: left;
+  margin: 0.3rem 0 0 0.5rem;
+  line-height: 1;
+}
+.rg-account-username,
+.rg-account-userId {
+  margin: 0.2rem 0 0 0.3rem;
+  color: gray;
+}
+.rg-account-userId {
+  margin: 0.5rem 0 0 0.3rem;
+}
+.rg-account-operatings {
+  width: 20rem;
+  height: 10rem;
+  margin: 0.5rem auto 0;
+}
+.rg-account-operating {
+  height: 2.3rem;
+  border-bottom: 1px solid #bfbfbf;
+  text-indent: 1rem;
+  line-height: 2.3rem;;
+}
+// .rg-account-operating:last-child{
+//   border-bottom: none;
+// }
+.rg-change-icon,
+.rg-email-icon,
+.rg-switch-icon,
+.rg-history-icon {
+  float: left;
+  margin: 0.7rem 0 0 0.5rem;
+  width: 1rem;
+  height: 1rem;
+}
+.rg-change-icon {
+  background: url(../img/cg_change_psw.png) center/contain no-repeat;
+}
+.rg-email-icon {
+  background: url(../img/cg_safe_set.png) center/contain no-repeat;
+}
+.rg-switch-icon {
+  background: url(../img/cg_switch_account.png) center/contain no-repeat;
+}
+.rg-history-icon {
+  background: url(../img/history-icon.png) center/contain no-repeat;
+}
+.rg-right-icon{
+  float: right;
+  margin: 0.8rem 1rem 0 0;
+  width: 0.6rem;
+  height: 0.6rem;
+  border-top: 1px solid #1890ff;
+  border-right: 1px solid #1890ff;
+  transform: rotate(45deg);
+}
+.rg-email-valid-txt{
+  color: red;
+  float: right;
+  margin-right:0.5rem;
+}
+.rg-copy-divice-btn{
+  display: inline-block;
+  margin-left: 0.5rem;
+  padding: 0.2rem 0.6rem;
+  border: 1px solid gray;
+  border-radius: 0.3rem;
+}

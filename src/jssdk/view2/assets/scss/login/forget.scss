@@ -1,0 +1,50 @@
+.rg-forget-active {
+  color: #fff;
+  background-color: #1890ff;
+}
+.rg-forget-table {
+  width: 20rem;
+  margin: 0.6rem auto 1.6rem;
+  height: 2.4rem;
+  font-size: 1rem;
+  color: #595959;
+  text-align: center;
+  line-height: 2.4rem;
+}
+.rg-forget-password-btn,
+.rg-forget-username-btn {
+  box-sizing: border-box;
+  display: inline-block;
+  border: 1px solid #1890ff;
+  width: 50%;
+}
+.rg-forget-wrap {
+  box-sizing: border-box;
+  margin: 0.6rem auto 0;
+  background: #fff;
+  width: 20rem;
+  height: 3rem;
+  border-radius: 0.3rem;
+  padding: 0 0.5rem;
+  position: relative;
+  border: 1px solid #1890ff;
+}
+.rg-forget-panel {
+  padding: 0 2rem;
+}
+.rg-forget-username {
+  display: table-cell;
+  box-sizing: border-box;
+  width: 20rem;
+  height: 8rem;
+  padding: 1rem;
+  margin: 1rem 2rem;
+  text-align: center;
+  vertical-align: middle;
+  background-color: #fafafa;
+  color: #8c8c8c;
+  border: 1px solid#1890ff;
+}
+.rg-btn-login.rg-time-active{
+  background: gray;
+}

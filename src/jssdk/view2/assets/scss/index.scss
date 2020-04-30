@@ -38,7 +38,7 @@ select {
 input,
 textarea,
 select {
-  *font-size: 100%;
+  *font-size: 90%;
 }
 /*去除input数字输入框默认样式**********************/
 input[type='number'] {
@@ -176,7 +176,7 @@ html {
 @media screen and (orientation: landscape) {
   /* landscape-specific styles */
   html {
-    font-size: 3.75vh;
+    font-size: 4.5vh;
   }
 }
 .rg-mark {
@@ -188,6 +188,22 @@ html {
   background: #000;
   opacity: 0.6;
 }
+body{
+  background: url(../img/bg.jpg);
+}
+/* 提示框 */
 @import './messager/confirm.scss';
 @import './messager/notice.scss';
+/* 登陆 */
 @import './login/main.scss';
+@import './login/login.scss';
+@import './login/forget.scss';
+@import './login/register.scss';
+@import './login/loading.scss';
+/* 客服中心 */
+@import './customer.scss';
+/* 用户中心 */
+@import "./accout/main.scss";
+@import "./accout/paymentHistory.scss";
+
+/* 支付 */

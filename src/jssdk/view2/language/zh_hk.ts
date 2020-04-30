@@ -32,7 +32,7 @@ export default {
   txt_nologin: '未登錄',
   txt_comp_account: '帳號：',
   txt_comp_pwd: '千奇密碼：',
-  txt_logining: '正在登錄ing…',
+  txt_logining: '正在登錄ing...',
   txt_switch_account: '切換帳號',
   txt_welecome: '歡迎回來，',
   txt_account_err: '帳號格式不正確',
@@ -261,7 +261,7 @@ export default {
   ui_customer_answer_about_bind_email:
     '正式帳號用戶，可以通過懸浮窗-個人中心-安全設置，按提示資訊設置安全郵箱。遊客使用者需要先升級到正式帳號，才能使用此功能。',
   ui_customer_question_payment: '充值後沒有獲得遊戲道具，怎麼辦？',
-  ui_customer_answer_payment: `1.充值成功後，正常情況下會在5分鐘內發送遊戲道具到您的帳戶中，請您耐心等待。\n 2.您可以通過懸浮窗-個人中心-充值記錄，查詢充值訂單狀態。\n 3.如果充值狀態是失敗的，說明扣款未成功，請聯繫支付管道商。\n 4.如果充值狀態是成功的，並且未收到遊戲道具，請您去遊戲的官方網站或FB主頁聯繫客服，並提供您的訂單號。`,
+  ui_customer_answer_payment: `1.充值成功後，正常情況下會在5分鐘內發送遊戲道具到您的帳戶中，請您耐心等待。<br /> 2.您可以通過懸浮窗-個人中心-充值記錄，查詢充值訂單狀態。<br /> 3.如果充值狀態是失敗的，說明扣款未成功，請聯繫支付管道商。<br /> 4.如果充值狀態是成功的，並且未收到遊戲道具，請您去遊戲的官方網站或FB主頁聯繫客服，並提供您的訂單號。`,
   cg_txt_consume_buy: '購買商品',
   cg_txt_consume_cost: '消耗平臺幣',
   cg_txt_consume_order: '消費流水',
