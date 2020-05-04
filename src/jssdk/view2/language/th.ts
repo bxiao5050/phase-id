@@ -369,5 +369,7 @@ export default {
   txt_fb_live: 'LIVE',
   txt_plugin_pay_dialog_title: 'ตั่งค่าเร่งด่วน',
   txt_plugin_pay_dialog_tip: 'เพื่อความปลอดภัยในการเติมเงิน แนะนำติดตั้งทูล Pocketgame',
-  txt_plugin_pay_dialog_paybtn: 'ติดตั้งเร่งด่วน'
+  txt_plugin_pay_dialog_paybtn: 'ติดตั้งเร่งด่วน',
+  winopen: '请跳转前往储值页面',
+  jump: '跳转'
 };

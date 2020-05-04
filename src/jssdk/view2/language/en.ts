@@ -372,5 +372,7 @@ export default {
   txt_plugin_pay_dialog_title: 'Atur cepat',
   txt_plugin_pay_dialog_tip:
     'Untuk memastikan top up dengan aman, seharusnya memasang alat pembayaran Pocketgame',
-  txt_plugin_pay_dialog_paybtn: 'Pengaturan cepat'
+  txt_plugin_pay_dialog_paybtn: 'Pengaturan cepat',
+  winopen: "请跳转前往储值页面",
+  jump:"跳转"
 };

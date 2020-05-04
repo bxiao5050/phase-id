@@ -188,9 +188,14 @@ html {
   background: #000;
   opacity: 0.6;
 }
-body{
+body {
   background: url(../img/bg.jpg);
 }
+.clearfix::after {
+  clear: both;
+  content: '';
+  display: block;
+} /*==for FF/chrome/opera/IE8==*/
 /* 提示框 */
 @import './messager/confirm.scss';
 @import './messager/notice.scss';
@@ -203,7 +208,13 @@ body{
 /* 客服中心 */
 @import './customer.scss';
 /* 用户中心 */
-@import "./accout/main.scss";
-@import "./accout/paymentHistory.scss";
+@import './accout/main.scss';
+@import './accout/paymentHistory.scss';
+@import './accout/changepassword.scss';
+@import './accout/email.scss';
+@import './accout/visitor.scss';
 
 /* 支付 */
+@import './payment/index.scss';
+@import './payment/winOpen.scss';
+@import './payment/type0.scss';

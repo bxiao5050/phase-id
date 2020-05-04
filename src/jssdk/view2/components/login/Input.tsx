@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 type IProps = {
-  id: string;
+  className: string;
   type: string;
   placeholder: string;
   value: string;
@@ -13,9 +13,9 @@ type IProps = {
 export default (props: IProps) => {
   return (
     <input
+      className={props.className}
       type={props.type}
       value={props.value}
-      id={props.id}
       placeholder={props.placeholder}
       onChange={e => {
         props.onChange(e);

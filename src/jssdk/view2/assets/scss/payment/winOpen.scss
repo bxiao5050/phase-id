@@ -1,0 +1,52 @@
+.win-open {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  top: 0;
+  left: 0;
+  z-index: 9999999;
+
+  .box {
+    position: fixed;
+    transform: translate(-50%, -50%);
+    left: 50%;
+    top: 50%;
+    width: 17rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: url(../img/cg_logo.png) center 15% no-repeat;
+    background-color: #fff;
+    border-radius: 0.2rem;
+    background-size: 9rem 3rem;
+
+    .close {
+      width: 1.4rem;
+      height: 1.4rem;
+      float: right;
+      background: url(../img/cg_img_close.png) center no-repeat;
+      background-size: contain;
+      position: absolute;
+      right: 0.9rem;
+      top: 0.9rem;
+    }
+
+    .upper {
+      margin: 6rem 0 1.2rem 0;
+      color: #33a4e6;
+      line-height: 1.6rem;
+      padding: 0 1rem;
+      text-align: center;
+    }
+
+    .btn-jump {
+      background: #33a4e6;
+      color: #fff;
+      border-radius: 0.2rem;
+      font-size: 0.9rem;
+      padding: 0.5rem 0.8rem;
+      margin: 0.2rem 0 1.5rem 0;
+    }
+  }
+}

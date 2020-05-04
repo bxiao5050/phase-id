@@ -81,7 +81,7 @@ export default class ForgetPassword extends React.Component<RouteComponentProps,
                 <div className='rg-choose'>
                   <span className='rg-icon-user'></span>
                   <Input
-                    id='rg-userName'
+                    className='rg-userName'
                     type='text'
                     value={userName}
                     placeholder={i18n.txt_hint_account}

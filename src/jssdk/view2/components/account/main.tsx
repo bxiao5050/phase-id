@@ -42,38 +42,46 @@ export default class Main extends React.Component<RouteComponentProps, {}> {
             <div className='rg-account-userInfo'>
               <p className='rg-account-username'>
                 <span>{i18n.txt_account_name}</span>&nbsp;
-                {user.userName.length > 20
-                  ? user.userName.slice(0, 20) + '...'
-                  : user.userName}
+                {user.userName}
               </p>
               <p className='rg-account-userId'>
                 <span>{i18n.txt_device_num}</span>
-                {'012345678901234567890123'.length > 10
-                  ? '012345678901234567890123'.slice(0, 10) + '...'
-                  : '012345678901234567890123'}
-                <span className='rg-copy-divice-btn' onClick={() => Ins.showPrompt(i18n.txt_copy,'012345678901234567890123',true)}>{i18n.txt_copy}</span>
+                {'01234567890123456789012'.length > 10
+                  ? '01234567890123456789012'.slice(0, 12) + '...'
+                  : '01234567890123456789012'}
+                <span
+                  className='rg-copy-divice-btn'
+                  onClick={() => Ins.showPrompt(i18n.txt_copy, '012345678901234567890123', true)}
+                >
+                  {i18n.txt_copy}
+                </span>
               </p>
             </div>
           </div>
           <ul className='rg-account-operatings'>
-            <li className='rg-account-operating' onClick={() => {}}>
-              <span className='rg-change-icon'></span>
+            <li className='rg-account-operating' onClick={() => {history.push("/visitor")}}>
+              <span className='rg-main-icon rg-change-icon'></span>
+              <span>{i18n.float_button_bind_account}</span>
+              <span className='rg-right-icon'></span>
+            </li>
+            <li className='rg-account-operating' onClick={() => {history.push("/change-password")}}>
+              <span className='rg-main-icon rg-change-icon'></span>
               <span>{i18n.txt_change_psw}</span>
               <span className='rg-right-icon'></span>
             </li>
-            <li className='rg-account-operating' onClick={() => {}}>
-              <span className='rg-email-icon'></span>
+            <li className='rg-account-operating' onClick={() => {history.push("/email")}}>
+              <span className='rg-main-icon rg-email-icon'></span>
               <span>{i18n.txt_safe_set}</span>
               <span className='rg-right-icon'></span>
               <span className='rg-email-valid-txt'>{i18n.txt_warning_safe}</span>
             </li>
             <li className='rg-account-operating' onClick={() => {}}>
-              <span className='rg-switch-icon'></span>
+              <span className='rg-main-icon rg-switch-icon'></span>
               <span>{i18n.txt_switch_account}</span>
               <span className='rg-right-icon'></span>
             </li>
-            <li className='rg-account-operating' onClick={() => {}}>
-              <span className='rg-history-icon'></span>
+            <li className='rg-account-operating' onClick={() => {history.push("/history")}}>
+              <span className='rg-main-icon rg-history-icon'></span>
               <span>{i18n.txt_check_charge}</span>
               <span className='rg-right-icon'></span>
             </li>

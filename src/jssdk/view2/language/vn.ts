@@ -375,5 +375,7 @@ export default {
   txt_fb_live: 'LIVE',
   txt_plugin_pay_dialog_title: 'Thiết lập nhanh',
   txt_plugin_pay_dialog_tip: 'Để đảm bảo nạp tiền an toàn, nên cài đặt tool Pocketgame',
-  txt_plugin_pay_dialog_paybtn: 'Cài đặt nhanh'
+  txt_plugin_pay_dialog_paybtn: 'Cài đặt nhanh',
+  winopen: "请跳转前往储值页面",
+  jump:"跳转"
 };

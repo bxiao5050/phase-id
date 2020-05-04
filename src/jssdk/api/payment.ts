@@ -156,7 +156,7 @@ export interface PaymentChannel {
   // 折扣率图片名称
   discountImg?: string;
   //是否显示商品列表 ：1=显示，0= 不显示
-  showProductList: 0 | 1;
+  showProductList: number;
   /*
   showMethod（显示方式）：
     0、网页打开，

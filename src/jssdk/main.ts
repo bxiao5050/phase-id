@@ -22,9 +22,9 @@
     /* 加载对应的 sdk */
     await loadSdk(config);
     /* sdk 加载完成的打点 */
-    RG.Mark('sdk_loaded');
+    // RG.Mark('sdk_loaded');
     /* 执行初始化函数 */
-    RG.jssdk.init();
+    // RG.jssdk.init();
   });
   /* 打补丁 */
   function polyfill() {

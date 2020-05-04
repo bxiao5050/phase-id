@@ -30,13 +30,13 @@
   height: 3rem;
   border-bottom: 1px solid #d9d9d9;
 }
-#rg-userName {
+.rg-userName {
   margin-left: 3rem;
   height: 2.48rem;
   width: 16rem;
   font-size: 0.8rem;
 }
-#rg-password {
+.rg-password {
   margin-left: 3rem;
   height: 2.48rem;
   width: 16rem;
@@ -44,7 +44,6 @@
 }
 .rg-btn-login {
   width: 20rem;
-  margin: 0 auto;
   height: 2.4rem;
   font-size: 1rem;
   color: white;

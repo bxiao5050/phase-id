@@ -8,9 +8,11 @@
   text-align: center;
 }
 .rg-customer-content.rg-account-content {
-  height: 15rem;
+  width: 24rem;
+  height: 16rem;
   text-align: left;
-  font-size: 0.7rem;
+  font-size: 0.6rem;
+  margin: 0.3rem auto 0;
 }
 .rg-account-userInfo-wrap {
   box-sizing: border-box;
@@ -40,21 +42,20 @@
 .rg-account-operatings {
   width: 20rem;
   height: 10rem;
-  margin: 0.5rem auto 0;
+  margin: 1rem auto 0;
 }
 .rg-account-operating {
   height: 2.3rem;
   border-bottom: 1px solid #bfbfbf;
   text-indent: 1rem;
-  line-height: 2.3rem;;
+  line-height: 2.3rem;
+  font-size: 0.6rem;
+  position: relative;
 }
 // .rg-account-operating:last-child{
 //   border-bottom: none;
 // }
-.rg-change-icon,
-.rg-email-icon,
-.rg-switch-icon,
-.rg-history-icon {
+.rg-main-icon {
   float: left;
   margin: 0.7rem 0 0 0.5rem;
   width: 1rem;
@@ -80,11 +81,16 @@
   border-top: 1px solid #1890ff;
   border-right: 1px solid #1890ff;
   transform: rotate(45deg);
+  position: relative;
+  z-index: 2;
 }
 .rg-email-valid-txt{
+  position: absolute;
+  top: 0;
+  right: 2rem;
   color: red;
-  float: right;
-  margin-right:0.5rem;
+  font-size: 0.6rem;
+  z-index: 1;
 }
 .rg-copy-divice-btn{
   display: inline-block;

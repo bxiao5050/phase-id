@@ -379,5 +379,7 @@ export default {
   txt_fb_live: 'LIVE',
   txt_plugin_pay_dialog_title: 'Ajustement rapide',
   txt_plugin_pay_dialog_tip: 'Pour la sécurité de vos paiements, veuillez installer Pocketgame',
-  txt_plugin_pay_dialog_paybtn: 'Installation rapide'
+  txt_plugin_pay_dialog_paybtn: 'Installation rapide',
+  winopen: "请跳转前往储值页面",
+  jump:"跳转"
 };

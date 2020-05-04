@@ -1,0 +1,65 @@
+.rg-payments {
+  width: 32rem;
+  height: 20rem;
+}
+.rg-payments-header {
+  color: #1890ff;
+  line-height: 1.86rem;
+  font-size: 1.3rem;
+  font-weight: 500;
+  text-align: center;
+}
+.rg-icon-back {
+  width: 1.4rem;
+  height: 1.4rem;
+  position: absolute;
+  top: 0.6rem;
+  left: 0.6rem;
+  background: url(../img/cg_img_back.png) center no-repeat;
+  background-size: contain;
+}
+.rg-payments-content{
+  height: 15.5rem;
+  margin: 0.6rem auto 0;
+}
+.rg-payments-active {
+  color: #fff;
+  background: #40a9ff;
+}
+.rg-payments-left{
+  float: left;
+  width: 7rem;
+  height: 100%;
+  margin: 0 0.5rem 0 0.5rem;
+  text-align: center;
+  line-height: 2.6rem;
+  background: rgba(240,240,240,1);
+  color: #1890ff;
+}
+.rg-payments-li{
+  position: relative;
+  height: 2.6rem;
+  border-bottom: 1px solid gray;
+}
+// .rg-pay-channel-name{
+
+// }
+.rg-pay-channel-discount{
+  width: 3rem;
+  height: 0.7rem;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+.rg-pay-channel-discount-img{
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.rg-payments-right{
+  width: 23rem;
+  height: 100%;
+  float: left;
+}

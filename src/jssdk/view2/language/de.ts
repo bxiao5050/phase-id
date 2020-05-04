@@ -385,5 +385,7 @@ export default {
   txt_plugin_pay_dialog_title: 'Schnell einrichten',
   txt_plugin_pay_dialog_tip:
     'Um eine sichere Einzahlung zu gewährleisten, bitte installiert Ihr das "Pocketgame" Tool',
-  txt_plugin_pay_dialog_paybtn: 'Schnelleinstellungen'
+  txt_plugin_pay_dialog_paybtn: 'Schnelleinstellungen',
+  winopen: '请跳转前往储值页面',
+  jump: '跳转'
 };

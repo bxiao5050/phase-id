@@ -363,5 +363,7 @@ export default {
   txt_plugin_pay_dialog_title: '빠른 설정',
   txt_plugin_pay_dialog_tip:
     '충전 할 때 안전을 위해 게이머는 Pocketgame tool을 설치하는 것이 좋습니다.',
-  txt_plugin_pay_dialog_paybtn: '빠른 설치'
+  txt_plugin_pay_dialog_paybtn: '빠른 설치',
+  winopen: "请跳转前往储值页面",
+  jump:"跳转"
 };

@@ -355,5 +355,7 @@ export default {
   txt_fb_live: 'LIVE',
   txt_plugin_pay_dialog_title: '安装提示',
   txt_plugin_pay_dialog_tip: '为了保证游戏充值安全顺畅，支付需要安装小工具Pocketgame',
-  txt_plugin_pay_dialog_paybtn: '快速安装'
+  txt_plugin_pay_dialog_paybtn: '快速安装',
+  winopen: "请跳转前往储值页面",
+  jump:"跳转"
 };

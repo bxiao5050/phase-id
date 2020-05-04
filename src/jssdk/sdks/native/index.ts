@@ -38,7 +38,7 @@ export default class NativeSdk extends Base {
     /* 微端初始化 */
     this.getNativeInitConfig();
     /* 加载 react-js  */
-    await loadReactJs();
+    // await loadReactJs();
     /* 加载 dom */
     const {Ins} = await import('../../view/index');
     // 挂载 dom

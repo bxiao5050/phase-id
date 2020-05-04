@@ -91,7 +91,7 @@ export default class LoginBox extends React.Component<RouteComponentProps, {}> {
             <div className='rg-choose'>
               <span className='rg-icon-user'></span>
               <Input
-                id='rg-userName'
+                className='rg-userName'
                 type='text'
                 value={userName}
                 placeholder={i18n.txt_hint_account}
@@ -136,7 +136,7 @@ export default class LoginBox extends React.Component<RouteComponentProps, {}> {
           <div className='rg-choose rg-hide-border'>
             <span className='rg-icon-password'></span>
             <Input
-              id='rg-password'
+              className='rg-password'
               type='password'
               value={password}
               placeholder={i18n.txt_hint_password}

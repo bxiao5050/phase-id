@@ -1,4 +1,3 @@
-// import './Register.scss';
 import * as React from 'react';
 import Login from './index';
 // import {Ins} from 'Src/jssdk/view/index';
@@ -79,7 +78,7 @@ export default class Register extends React.Component<RouteComponentProps, {}, a
             <div className='rg-choose'>
               <span className='rg-icon-user'></span>
               <Input
-                id='rg-userName'
+                className='rg-userName'
                 type='text'
                 value={userName}
                 placeholder={i18n.txt_hint_account_register}
@@ -104,7 +103,7 @@ export default class Register extends React.Component<RouteComponentProps, {}, a
           <div className='rg-choose'>
             <span className='rg-icon-password'></span>
             <Input
-              id='rg-password1'
+              className='rg-password1'
               type={showPass ? 'text' : 'password'}
               value={password1}
               placeholder={i18n.txt_hint_password}
@@ -124,7 +123,7 @@ export default class Register extends React.Component<RouteComponentProps, {}, a
           <div className='rg-choose rg-hide-border'>
             <span className='rg-icon-password'></span>
             <Input
-              id='rg-password2'
+              className='rg-password2'
               type={showPass ? 'text' : 'password'}
               value={password2}
               placeholder={i18n.txt_hint_password}
