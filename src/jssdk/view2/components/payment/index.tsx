@@ -5,6 +5,8 @@ import {replaceUrlToHttps} from '../../..//utils';
 import WinOpen from './winOpen';
 import Type0 from './type0';
 import Type3 from './type3';
+import Type4 from './type4';
+import TypeList from './typelist';
 
 import {History, createLocation} from 'history';
 import {RouteComponentProps} from 'react-router-dom';
@@ -84,7 +86,7 @@ export default class Payment extends React.Component<{history: History}, any> {
           <span
             className='rg-icon-back'
             onClick={() => {
-              // this.props.history.goBack();
+              this.props.history.goBack();
             }}
           ></span>
           {i18n.txt_title_pay}
@@ -108,7 +110,9 @@ export default class Payment extends React.Component<{history: History}, any> {
                         ? 'rg-payments-li rg-payments-active'
                         : 'rg-payments-li'
                     }
-                    onClick={e => {}}
+                    onClick={e => {
+                      this.change(e);
+                    }}
                   >
                     <p className='rg-pay-channel-name'>{node.name}</p>
                     {node.discountImg && (
@@ -134,7 +138,7 @@ export default class Payment extends React.Component<{history: History}, any> {
                   return <div>{'main'}</div>;
                 }}
               />
-              {/* <Route exact path='/typeList' render={() => <TypeList Payment={this} />} /> */}
+              <Route exact path='/typeList' render={() => <TypeList Payment={this} />} />
               <Route
                 exact
                 path='/type0'
@@ -143,7 +147,7 @@ export default class Payment extends React.Component<{history: History}, any> {
               {/* <Route exact path='/type1' render={() => <Type1 Payment={this} />} /> */}
               {/* <Route exact path='/type2' render={() => <Type2 Payment={this} />} /> */}
               <Route exact path='/type3' render={() => <Type3 Payment={this} />} />
-              {/* <Route exact path='/type4' render={() => <Type4 Payment={this} />} /> */}
+              <Route exact path='/type4' render={() => <Type4 Payment={this} />} />
               {/* 现在只使用了0-5,9-11 */}
               {/* <Route exact path='/type5' render={() => <Type5 Payment={this} />} /> */}
             </Switch>
