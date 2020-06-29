@@ -2,6 +2,7 @@ import * as React from 'react';
 import Input from '../login/Input';
 import {Ins} from '../../index';
 
+/* 导入类型 */
 import {RouteComponentProps} from 'react-router-dom';
 
 export default class ForgetPassword extends React.Component<RouteComponentProps, {}> {
@@ -11,25 +12,47 @@ export default class ForgetPassword extends React.Component<RouteComponentProps,
     showTable: 'password'
   };
   verifyPassword() {
-    this.setState({showTable:'email'})
-  }
-  bindEmail() {}
-  forgetPassword() {
     const i18n = RG.jssdk.config.i18n;
-    const {password, email} = this.state;
-    if (password) return;
-    if (!email) return Ins.showNotice(i18n.txt_hint_account);
-    // if (true) {
-    //   this.setState({time: 60});
-    //   const timer = setInterval(() => {
-    //     const time = this.state.time - 1;
-    //     this.setState({time});
-    //     if (!time) clearInterval(timer);
-    //   }, 1000);
-    //   Ins.showPrompt(i18n.txt_send_success, i18n.txt_send_email_success, true);
-    // } else {
-    //   Ins.showPrompt(i18n.txt_send_fail, i18n.net_error_106, true);
-    // }
+    if (!this.state.password) Ins.showNotice(i18n.txt_hint_password);
+
+    RG.jssdk
+      .verifyPassword(this.state.password)
+      .then(res => {
+        if (res.code == 200) {
+          this.setState({showTable: 'email'});
+        } else if (res.code == 107) {
+          Ins.showNotice(i18n.net_error_107);
+        } else {
+          Ins.showNotice(res.error_msg);
+        }
+      })
+      .catch(err => {
+        Ins.showNotice(i18n.net_error_0);
+        console.log(err);
+      });
+  }
+  bindEmail() {
+    const i18n = RG.jssdk.config.i18n;
+    if (!this.state.email) Ins.showNotice(i18n.cg_txt_hint_input_email);
+    if (this.state.email.indexOf('@') === -1) Ins.showNotice(i18n.txt_input_valid_email);
+    RG.jssdk
+      .operatorEmail(this.state.email)
+      .then(res => {
+        if (res.code == 200) {
+          RG.jssdk.account.user = Object.assign({}, RG.jssdk.account.user, {
+            email: this.state.email,
+            emailValid: 1
+          });
+          Ins.showNotice(i18n.net_error_200);
+          this.props.history.replace('/main');
+        } else {
+          Ins.showNotice(res.error_msg);
+        }
+      })
+      .catch(err => {
+        Ins.showNotice(i18n.net_error_0);
+        console.log(err);
+      });
   }
   render() {
     const i18n = RG.jssdk.config.i18n;
@@ -64,14 +87,12 @@ export default class ForgetPassword extends React.Component<RouteComponentProps,
                   <span className='rg-icon-password'></span>
                   <Input
                     className='rg-password'
-                    type='text'
+                    type='password'
                     value={password}
                     placeholder={i18n.txt_hint_password}
                     onChange={e => {
                       this.setState({password: e.target.value});
                     }}
-                    onBlur={() => {}}
-                    onFocus={() => {}}
                   />
                   {password ? (
                     <span
@@ -104,19 +125,17 @@ export default class ForgetPassword extends React.Component<RouteComponentProps,
                   <Input
                     className='rg-password'
                     type='text'
-                    value={password}
+                    value={email}
                     placeholder={i18n.cg_txt_hint_input_email}
                     onChange={e => {
-                      this.setState({password: e.target.value});
+                      this.setState({email: e.target.value});
                     }}
-                    onBlur={() => {}}
-                    onFocus={() => {}}
                   />
-                  {password ? (
+                  {email ? (
                     <span
                       className='rg-icon-close'
                       onClick={() => {
-                        this.setState({password: ''});
+                        this.setState({email: ''});
                       }}
                     ></span>
                   ) : null}
@@ -126,7 +145,7 @@ export default class ForgetPassword extends React.Component<RouteComponentProps,
             <div
               className='rg-btn-login'
               onClick={() => {
-                this.verifyPassword();
+                this.bindEmail();
               }}
             >
               {i18n.cg_txt_confirm_submit}

@@ -1,6 +1,7 @@
 import * as React from 'react';
 import Input from '../login/Input';
-
+import {Ins} from '../../index';
+/* 导入类型 */
 import {RouteComponentProps} from 'react-router-dom';
 
 export default class ChangePassword extends React.Component<RouteComponentProps, {}, any> {
@@ -12,43 +13,36 @@ export default class ChangePassword extends React.Component<RouteComponentProps,
   };
 
   change = () => {
-    // const i18n = RG.jssdk.config.i18n;
-    // const {password1, password2, userName} = this.state;
-    // if (!password1 || !password2 || !userName) {
-    //   return;
-    // }
-    // if (password1 != password2) {
-    //   Ins.showNotice(i18n.errMsg001);
-    // } else if (password1.length < 6 || password1.length > 20) {
-    //   Ins.showNotice(i18n.errMsg002);
-    // } else {
-    //   RG.jssdk
-    //     .platformRegister({
-    //       password: password1,
-    //       userName,
-    //       accountType: 1,
-    //       thirdPartyId: '',
-    //       email: '',
-    //       telephone: '',
-    //       userChannel: 0,
-    //       exInfo: ''
-    //     })
-    //     .then(res => {
-    //       if (res.code === 200) {
-    //         this.props.Login.loginComplete();
-    //       } else if (res.code === 102) {
-    //         Ins.showNotice(i18n.code102);
-    //       } else if (res.code === 101) {
-    //         Ins.showNotice(i18n.code101);
-    //       } else {
-    //         Ins.showNotice(res.error_msg);
-    //       }
-    //     })
-    //     .catch(err => {
-    //       Ins.showNotice(i18n.UnknownErr);
-    //       console.log(err);
-    //     });
-    // }
+    const i18n = RG.jssdk.config.i18n;
+    const {oldPassword, newPassword1, newPassword2} = this.state;
+    if (!newPassword1) return Ins.showNotice(i18n.txt_input_old_psw);
+    if (!newPassword2) return Ins.showNotice(i18n.txt_input_new_psw_again);
+    if (newPassword1 != newPassword2) return Ins.showNotice(i18n.net_error_006);
+    if (newPassword1.length < 6 || newPassword1.length > 20)
+      return Ins.showNotice(i18n.net_error_005);
+
+    RG.jssdk
+      .changePassword(oldPassword, newPassword1)
+      .then(res => {
+        if (res.code === 200) {
+          Ins.showNotice(i18n.psw_change_success);
+          this.setState({
+            oldPassword: '',
+            newPassword1: '',
+            newPassword2: '',
+            showPass: false
+          });
+          this.props.history.replace('main');
+        } else if (res.code == 107) {
+          Ins.showNotice(i18n.net_error_107);
+        } else {
+          Ins.showNotice(res.error_msg);
+        }
+      })
+      .catch(err => {
+        Ins.showNotice(i18n.net_error_0);
+        console.log(err);
+      });
   };
 
   changeType = () => {
@@ -139,7 +133,7 @@ export default class ChangePassword extends React.Component<RouteComponentProps,
           <div className={'rg-checkbox ' + (this.state.showPass ? 'rg-register-active' : '')}></div>
           <p className='rg-checkbox-txt'>{i18n.txt_show_pwd}</p>
         </div>
-        <div className='rg-btn-login' onClick={() => {}}>
+        <div className='rg-btn-login' onClick={() => {this.change()}}>
           {i18n.txt_confirm}
         </div>
       </div>

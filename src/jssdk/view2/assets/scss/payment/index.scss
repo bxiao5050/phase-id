@@ -18,7 +18,7 @@
   background: url(../img/cg_img_back.png) center no-repeat;
   background-size: contain;
 }
-.rg-payments-content{
+.rg-payments-content {
   height: 15.5rem;
   margin: 0.6rem auto 0;
 }
@@ -26,42 +26,101 @@
   color: #fff;
   background: #40a9ff;
 }
-.rg-payments-left{
+.rg-payments-left {
   float: left;
   width: 7rem;
   height: 100%;
   margin: 0 0.5rem 0 0.5rem;
   text-align: center;
   line-height: 2.6rem;
-  background: rgba(240,240,240,1);
+  background: rgba(255, 255, 255, 1);
   color: #1890ff;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
-.rg-payments-li{
+.rg-payments-li {
   position: relative;
   height: 2.6rem;
   border-bottom: 1px solid gray;
-  font-size: 0.8rem;
+  font-size: 0.7rem;
 }
 // .rg-pay-channel-name{
 
 // }
-.rg-pay-channel-discount{
+.rg-pay-channel-discount {
   width: 3rem;
-  height: 0.7rem;
+  height: 0.5rem;
   position: absolute;
-  bottom: 0;
+  bottom: 0.1rem;
   left: 0;
   right: 0;
   margin: auto;
 }
-.rg-pay-channel-discount-img{
+.rg-pay-channel-discount-img {
   display: block;
-  width: 100%;
   height: 100%;
+  margin: 0 auto;
 }
-.rg-payments-right{
+.rg-payments-right {
   width: 23rem;
   height: 100%;
   float: left;
-  background: rgba(240,240,240,1);
+  background: rgba(240, 240, 240, 1);
+}
+
+.rg-pay-channel-hot-img {
+  width: 1.77rem;
+  // height: 1.56rem;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+#flag-screen {
+  font-family: landscape;
+}
+
+/* portrait 竖屏*/
+@media screen and (orientation: portrait) {
+  /* 正常情况下 */
+  /* portrait-specific styles */
+  #flag-screen {
+    font-family: portrait;
+  }
+  .rg-payments {
+    width: 25rem;
+    height: auto;
+  }
+  .rg-payments-left {
+    width: 24rem;
+    height: auto;
+    min-height: 15rem;
+    max-height: 28rem;
+    margin: 0 0.5rem 0.5rem;
+  }
+  .rg-payments-li {
+    height: 5rem;
+    border-bottom: 1px solid gray;
+    font-size: 1rem;
+    line-height: 5rem;
+    color: #717174;
+    background: #fff;
+  }
+  .rg-payments-active {
+    color: #1890ff;
+  }
+  .rg-payments-right {
+    width: 23.6rem;
+    height: auto;
+    min-height: 16rem;
+    margin: 0 0.5rem 0.3rem;
+    background: #fff;
+    float: left;
+  }
+  .rg-pay-channel-hot-img {
+    width: 2.655rem;
+  }
+  .rg-pay-channel-discount {
+    height: 0.8rem;
+    width: 6rem;
+  }
 }

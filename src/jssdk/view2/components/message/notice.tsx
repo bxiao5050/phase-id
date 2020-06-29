@@ -28,7 +28,6 @@ class Notice extends React.Component<{}, IState> {
         that.setState({isShow: false});
         return;
       }
-      console.log(that.noticeList)
       const msg = that.noticeList.shift();
       that.setState({msg});
       setTimeout(alert, 3000);

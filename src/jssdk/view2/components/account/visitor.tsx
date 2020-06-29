@@ -1,7 +1,7 @@
 import * as React from 'react';
-// import {Ins} from 'Src/jssdk/view/index';
 import Input from '../login/Input';
-
+import {Ins} from '../../index';
+/* 导入类型 */
 import {RouteComponentProps} from 'react-router-dom';
 
 export default class Visitor extends React.Component<RouteComponentProps, {}, any> {
@@ -9,47 +9,53 @@ export default class Visitor extends React.Component<RouteComponentProps, {}, an
     userName: '',
     password1: '',
     password2: '',
-    showPass: false,
+    showPass: false
   };
 
-  register = () => {
-    // const i18n = RG.jssdk.config.i18n;
-    // const {password1, password2, userName} = this.state;
-    // if (!password1 || !password2 || !userName) {
-    //   return;
-    // }
-    // if (password1 != password2) {
-    //   Ins.showNotice(i18n.errMsg001);
-    // } else if (password1.length < 6 || password1.length > 20) {
-    //   Ins.showNotice(i18n.errMsg002);
-    // } else {
-    //   RG.jssdk
-    //     .platformRegister({
-    //       password: password1,
-    //       userName,
-    //       accountType: 1,
-    //       thirdPartyId: '',
-    //       email: '',
-    //       telephone: '',
-    //       userChannel: 0,
-    //       exInfo: ''
-    //     })
-    //     .then(res => {
-    //       if (res.code === 200) {
-    //         this.props.Login.loginComplete();
-    //       } else if (res.code === 102) {
-    //         Ins.showNotice(i18n.code102);
-    //       } else if (res.code === 101) {
-    //         Ins.showNotice(i18n.code101);
-    //       } else {
-    //         Ins.showNotice(res.error_msg);
-    //       }
-    //     })
-    //     .catch(err => {
-    //       Ins.showNotice(i18n.UnknownErr);
-    //       console.log(err);
-    //     });
-    // }
+  bindVisitor = () => {
+    const {password1, password2, userName} = this.state;
+    const i18n = RG.jssdk.config.i18n;
+    if (!userName) {
+      Ins.showNotice(i18n.txt_hint_account);
+      return;
+    }
+    if (!password1) {
+      Ins.showNotice(i18n.txt_hint_password);
+      return;
+    }
+    if (!password2) {
+      Ins.showNotice(i18n.txt_input_psw_again);
+      return;
+    }
+    if (password1 != password2) {
+      Ins.showNotice(i18n.net_error_006);
+      return;
+    }
+    if (password1.length < 6 || password1.length > 20) {
+      Ins.showNotice(i18n.net_error_005);
+      return;
+    }
+    RG.jssdk
+      .bindVisitor(userName, password1)
+      .then(res => {
+        if (res.code === 200) {
+          RG.jssdk.account.user = Object.assign({}, RG.jssdk.account.user, {
+            userName: this.state.userName,
+            password: md5(password1),
+            userType: 1
+          });
+          Ins.showNotice(i18n.account_bind_success);
+          this.props.history.replace('main');
+        } else if (res.code === 108) {
+          Ins.showNotice(i18n.net_error_108);
+        } else {
+          Ins.showNotice(res.error_msg);
+        }
+      })
+      .catch(err => {
+        Ins.showNotice(i18n.net_error_0);
+        console.log(err);
+      });
   };
 
   changeType = () => {
@@ -64,7 +70,7 @@ export default class Visitor extends React.Component<RouteComponentProps, {}, an
     return (
       <div className='rg-login-main rg-center-a rg-account'>
         <div className='rg-login-header'>
-        {i18n.float_button_bind_account}
+          {i18n.float_button_bind_account}
           <span
             className='rg-icon-close'
             onClick={() => {
@@ -140,7 +146,7 @@ export default class Visitor extends React.Component<RouteComponentProps, {}, an
           <div className={'rg-checkbox ' + (this.state.showPass ? 'rg-register-active' : '')}></div>
           <p className='rg-checkbox-txt'>{i18n.txt_show_pwd}</p>
         </div>
-        <div className='rg-btn-login' onClick={() => {}}>
+        <div className='rg-btn-login' onClick={() => {this.bindVisitor()}}>
           {i18n.cg_txt_confirm_submit}
         </div>
       </div>

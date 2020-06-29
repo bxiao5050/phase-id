@@ -16,78 +16,66 @@ interface IState {
   isShowUsersInfo: boolean;
 }
 export default class Main extends React.Component<RouteComponentProps, IState> {
-  public refs: {
-    // choose: Choose;
-  };
-  // facebookLogin() {
-  //   RG.jssdk
-  //     .fbLogin(true)
-  //     .then(res => {
-  //       if (res && res.code === 200) {
-  //         // this.props.Login.loginComplete();
-  //       } else {
-  //         Ins.showNotice(RG.jssdk.config.i18n.UnknownErr);
-  //         console.log(res);
-  //       }
-  //     })
-  //     .catch(e => {
-  //       Ins.showNotice(RG.jssdk.config.i18n.UnknownErr);
-  //       console.log(e);
-  //     });
-  // }
-  // visitorRegister() {
-  //   RG.jssdk.visitorRegister().then(res => {
-  //     if (res.code === 200) {
-  //       // this.props.Login.loginComplete();
-  //     } else {
-  //       Ins.showNotice(RG.jssdk.config.i18n.UnknownErr);
-  //       console.log(res);
-  //     }
-  //   });
-  // }
-  // test = () => {
-  //   this.props.history.push("/loading")
-  // }
-
   state = {
-    // users: RG.jssdk.account.users
-    users: {
-      1000003325: {
-        accountType: 0,
-        emailValid: 0,
-        firstLogin: 0,
-        password: 'b2ff93613c80dc62c3da2754cf91df59',
-        token: 'bf8ae162ce054a8d8c69f2a2ddc24c1b',
-        userId: 1000003325,
-        userName: '1237699676',
-        userType: 0
-      },
-      1000003322: {
-        accountType: 0,
-        emailValid: 0,
-        firstLogin: 0,
-        password: 'b2ff93613c80dc62c3da2754cf91df59',
-        token: 'bf8ae162ce054a8d8c69f2a2ddc24c1b',
-        userId: 1000003322,
-        userName: '1237699676 bf8ae162ce054a8d8c69f2a2ddc24c1b',
-        userType: 0
-      }
-    },
+    users: RG.jssdk.account.users,
     isShowUsersInfo: false
   };
+  facebookLogin() {
+    RG.jssdk
+      .fbLogin(true)
+      .then(res => {
+        if (res && res.code === 200) {
+          this.props.history.push('/loading');
+        } else {
+          Ins.showNotice(RG.jssdk.config.i18n.net_error_0);
+          // console.log(res);
+        }
+      })
+      .catch(e => {
+        Ins.showNotice(RG.jssdk.config.i18n.net_error_0);
+      });
+  }
+  visitorRegister() {
+    RG.jssdk.visitorRegister().then(res => {
+      if (res.code === 200) {
+        this.props.history.push('/loading');
+      } else {
+        Ins.showNotice(res.error_msg);
+        // console.log(res);
+      }
+    });
+  }
+
   deleteUser(userId: number) {
     const i18n = RG.jssdk.config.i18n;
     const msg =
       i18n.txt_are_you_sure + this.state.users[userId].userName + i18n.txt_delete_from_table;
     Ins.showPrompt(i18n.txt_delete_account, msg).then(res => {
       if (res) {
+        RG.jssdk.account.deleteUser(userId);
         delete this.state.users[userId];
         this.setState(this.state);
       }
     });
   }
   selectUser(userId: number) {
-    console.log(this.state.users[userId]);
+    const {userName, password} = this.state.users[userId];
+    const i18n = RG.jssdk.config.i18n;
+    RG.jssdk
+      .platformLogin(userName, password)
+      .then(res => {
+        if (res.code === 200) {
+          this.props.history.push('/loading');
+        } else if (res.code === 102) {
+          Ins.showNotice(i18n.net_error_102);
+        } else {
+          Ins.showNotice(res.error_msg);
+        }
+      })
+      .catch(err => {
+        Ins.showNotice(i18n.net_error_0);
+        console.log(err);
+      });
   }
   toggleUsersInfo() {
     this.setState({isShowUsersInfo: !this.state.isShowUsersInfo});
@@ -114,7 +102,8 @@ export default class Main extends React.Component<RouteComponentProps, IState> {
                   return (
                     <li className='rg-user' key={userInfo.userId}>
                       <p className='rg-user-name' onClick={() => this.selectUser(userInfo.userId)}>
-                        {(userInfo.userType === 0 ? i18n.txt_name_vistor : '') + userInfo.userName.slice(0,28)}
+                        {(userInfo.userType === 0 ? i18n.txt_name_vistor : '') +
+                          userInfo.userName.slice(0, 28)}
                       </p>
                       <div
                         className='rg-icon-close'
@@ -130,7 +119,7 @@ export default class Main extends React.Component<RouteComponentProps, IState> {
           <div
             className='rg-guest-btn'
             onClick={() => {
-              // this.visitorRegister();
+              this.visitorRegister();
             }}
           >
             {i18n.txt_fast}
@@ -139,12 +128,11 @@ export default class Main extends React.Component<RouteComponentProps, IState> {
         <div
           className='rg-fb-btn'
           onClick={() => {
-            // if (RG.jssdk.config.fb_sdk_loaded) {
-            //   Ins.showNotice(RG.jssdk.config.i18n.loading);
-            //   this.facebookLogin.apply(this);
-            // } else {
-            //   Ins.showNotice(RG.jssdk.config.i18n.loadException);
-            // }
+            if (RG.jssdk.config.fb_sdk_loaded) {
+              this.facebookLogin();
+            } else {
+              Ins.showNotice(RG.jssdk.config.i18n.net_error_0);
+            }
           }}
         >
           <span className='rg-icon-fb ' />
@@ -159,20 +147,20 @@ export default class Main extends React.Component<RouteComponentProps, IState> {
           <div
             className='rg-to-login'
             onClick={() => {
-              this.props.history.push("/login");
+              this.props.history.push('/login');
             }}
           >
             <div className='rg-login-icon'></div>
-            {i18n.txt_login}
+            <span>{i18n.txt_login}</span>
           </div>
           <div
             className='rg-to-register'
             onClick={() => {
-              this.props.history.push("/register");
+              this.props.history.push('/register');
             }}
           >
             <div className='rg-register-icon'></div>
-            {i18n.txt_register_usa}
+            <span>{i18n.txt_register_usa}</span>
           </div>
         </div>
       </div>

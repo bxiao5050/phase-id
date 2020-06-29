@@ -14,11 +14,11 @@ export default class Slides extends React.Component<{
 
   swiper: swiper
 
-  componentDidMount() {
+  // componentDidMount() {
     // setInterval(() => {
     //   this.swiper.slideNext()
     // }, 3000)
-  }
+  // }
   config = {
     containerClass: 'swiper-container',
     // loop: true,

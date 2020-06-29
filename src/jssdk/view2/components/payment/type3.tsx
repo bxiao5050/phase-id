@@ -1,8 +1,9 @@
 import * as React from 'react';
 import Payment from './index';
-import {History, createLocation} from 'history';
 import {replaceUrlToHttps} from 'Src/jssdk/utils';
-import i18n from 'Src/add-shortcut/i18n';
+
+/* 导入类型 */
+import {PaymentChannel} from 'Src/jssdk/api/payment';
 
 type paymentProps = {
   Payment: Payment;
@@ -11,6 +12,16 @@ type paymentProps = {
 export default class Type3 extends React.Component<paymentProps, {}, any> {
   private index = 3;
 
+  pay(payments: PaymentChannel) {
+    // 3, 9, 10, 11, 13
+    if (payments.showMethod === 3 || payments.showMethod === 9 || payments.showMethod === 13) {
+      this.props.Payment.order(payments);
+    } else if (payments.showMethod === 10 || payments.showMethod === 11) {
+      this.props.Payment.goMethod(payments);
+    } else {
+      console.error(payments);
+    }
+  }
   render() {
     var source = this.props.Payment.state.paymentDatas[this.index];
     const i18n = RG.jssdk.config.i18n;
@@ -37,30 +48,7 @@ export default class Type3 extends React.Component<paymentProps, {}, any> {
             <div
               className='rg-type3-buy-btn'
               onClick={() => {
-                // if (source.showMethod === 10 || source.showMethod === 11) {
-                //   let pageName: string;
-                //   if (source.showMethod === 10) {
-                //     pageName = 'type1';
-                //     this.props.Payment.state.paymentDatas[1] = source;
-                //   }
-                //   if (source.showMethod === 11) {
-                //     pageName = 'type2';
-                //     this.props.Payment.state.paymentDatas[2] = source;
-                //   }
-
-                //   this.props.Payment.props.history.push(createLocation(pageName));
-                // }
-                // else {
-                //   RG.jssdk.order(source).then(OrderRes => {
-                //     if (OrderRes.code === 200) {
-                //       if (source.showMethod === 9) {
-                //         this.props.Payment.orderCompleted(OrderRes, source);
-                //       }
-                //     } else {
-                //       console.error(OrderRes.error_msg);
-                //     }
-                //   });
-                // }
+                this.pay(source);
               }}
             >
               {i18n.cg_txt_consume_buy}

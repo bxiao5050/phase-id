@@ -123,11 +123,11 @@ body {
   -webkit-overflow-scrolling: touch;
 }
 #RG-SDK {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  // position: fixed;
+  // top: 0;
+  // left: 0;
+  // width: 100%;
+  // height: 100%;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, segoe ui, Roboto, Helvetica, Arial,
     sans-serif, apple color emoji, segoe ui emoji, segoe ui symbol;
   z-index: 99;
@@ -195,7 +195,7 @@ body {
   clear: both;
   content: '';
   display: block;
-} /*==for FF/chrome/opera/IE8==*/
+}
 /* 提示框 */
 @import './messager/confirm.scss';
 @import './messager/notice.scss';
@@ -206,7 +206,9 @@ body {
 @import './login/register.scss';
 @import './login/loading.scss';
 /* 客服中心 */
-@import './customer.scss';
+// @import './customer.scss';
+/* 悬浮球 */
+@import './hover/index.scss';
 /* 用户中心 */
 @import './accout/main.scss';
 @import './accout/paymentHistory.scss';
@@ -218,9 +220,8 @@ body {
 @import './payment/index.scss';
 @import './payment/winOpen.scss';
 @import './payment/type0.scss';
-// @import './payment/type1.scss';
-// @import './payment/type2.scss';
+@import './payment/type1.scss';
+@import './payment/type2.scss';
 @import './payment/type3.scss';
 @import './payment/type4.scss';
-// @import './payment/type5.scss';
 @import './payment/typelist.scss';

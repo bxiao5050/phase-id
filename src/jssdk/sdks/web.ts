@@ -6,7 +6,7 @@ import {fbWebLogin, fbShare} from '../utils/fb';
 /* 引入类型 */
 import {GamePayParams} from './base';
 import {PaymentChannel} from '../api/payment';
-import App from 'Src/jssdk/view/App';
+import App from 'Src/jssdk/view2/App';
 import {FbLoginRes} from './native/android';
 import Account from '../api/account';
 
@@ -52,7 +52,7 @@ export default class WebSdk extends Base {
     /* 加载 react-js  */
     await loadReactJs();
     /* 加载 dom */
-    const {Ins} = await import('../view/index');
+    const {Ins} = await import('../view2/index');
     // 挂载 dom
     this.app = Ins;
     /* 判断是否自动登录,切换账号, 还是 fbLogin*/
@@ -85,7 +85,15 @@ export default class WebSdk extends Base {
   }
   async pay(params: GamePayParams) {
     return this.getPaymentInfo(params).then(res => {
-      res.payments.length && this.app.showPayment(res);
+      if (res.payments.length) {
+        RG.jssdk.app.showPayment(res);
+      } else {
+        RG.jssdk.app.showPrompt(
+          RG.jssdk.config.i18n.txt_warn,
+          RG.jssdk.config.i18n.txt_pay_not_open,
+          true
+        );
+      }
     });
   }
   mark(markName: string, params?: {userId?: number; money: string; currency: string}) {

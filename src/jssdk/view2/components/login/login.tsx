@@ -1,64 +1,45 @@
-// import './Entry.scss';
 import * as React from 'react';
-import {createLocation} from 'history';
-// import Login from './index';
 import Input from './Input';
-import {Ins} from '../..//index';
-import {UserInfo} from 'Src/jssdk/api/account';
+import {Ins} from '../../index';
+
+/* 导入类型 */
 import {RouteComponentProps} from 'react-router-dom';
 
 export default class LoginBox extends React.Component<RouteComponentProps, {}> {
   state = {
-    users: {
-      1000003325: {
-        accountType: 0,
-        emailValid: 0,
-        firstLogin: 0,
-        password: 'b2ff93613c80dc62c3da2754cf91df59',
-        token: 'bf8ae162ce054a8d8c69f2a2ddc24c1b',
-        userId: 1000003325,
-        userName: '1237699676',
-        userType: 0
-      },
-      1000003322: {
-        accountType: 0,
-        emailValid: 0,
-        firstLogin: 0,
-        password: 'b2ff93613c80dc62c3da2754cf91df59',
-        token: 'bf8ae162ce054a8d8c69f2a2ddc24c1b',
-        userId: 1000003322,
-        userName: '1237699676',
-        userType: 0
-      }
-    },
+    users: RG.jssdk.account.users,
     userName: '',
     password: '',
     isShowUsersInfo: false,
     closeUser: false,
     closePass: false
   };
-  login(userName: string, password: string) {
-    // if (!userName || !password) {
-    //   return;
-    // }
-    // const i18n = RG.jssdk.config.i18n;
-    // RG.jssdk
-    //   .platformLogin(password, userName)
-    //   .then(res => {
-    //     if (res.code === 200) {
-    //       // this.props.Login.loginComplete();
-    //     } else if (res.code === 102) {
-    //       Ins.showNotice(i18n.code102);
-    //     } else if (res.code === 101) {
-    //       Ins.showNotice(i18n.code101);
-    //     } else {
-    //       Ins.showNotice(res.error_msg);
-    //     }
-    //   })
-    //   .catch(err => {
-    //     Ins.showNotice(i18n.UnknownErr);
-    //     console.log(err);
-    //   });
+  login() {
+    const {userName, password} = this.state;
+    const i18n = RG.jssdk.config.i18n;
+    if (!userName) {
+      Ins.showNotice(i18n.txt_hint_account);
+      return;
+    }
+    if (!password) {
+      Ins.showNotice(i18n.txt_hint_password);
+      return;
+    }
+    RG.jssdk
+      .platformLogin(userName, password)
+      .then(res => {
+        if (res.code === 200) {
+          this.props.history.push('/loading');
+        } else if (res.code === 102) {
+          Ins.showNotice(i18n.net_error_102);
+        } else {
+          Ins.showNotice(res.error_msg);
+        }
+      })
+      .catch(err => {
+        Ins.showNotice(i18n.net_error_0);
+        console.log(err);
+      });
   }
   toggleUsersInfo() {
     this.setState({isShowUsersInfo: !this.state.isShowUsersInfo});
@@ -69,13 +50,30 @@ export default class LoginBox extends React.Component<RouteComponentProps, {}> {
       i18n.txt_are_you_sure + this.state.users[userId].userName + i18n.txt_delete_from_table;
     Ins.showPrompt(i18n.txt_delete_account, msg).then(res => {
       if (res) {
+        RG.jssdk.account.deleteUser(userId);
         delete this.state.users[userId];
         this.setState(this.state);
       }
     });
   }
   selectUser(userId: number) {
-    console.log(this.state.users[userId]);
+    const {userName, password} = this.state.users[userId];
+    const i18n = RG.jssdk.config.i18n;
+    RG.jssdk
+      .platformLogin(userName, password)
+      .then(res => {
+        if (res.code === 200) {
+          this.props.history.push('/loading');
+        } else if (res.code === 102) {
+          Ins.showNotice(i18n.net_error_102);
+        } else {
+          Ins.showNotice(res.error_msg);
+        }
+      })
+      .catch(err => {
+        Ins.showNotice(i18n.net_error_0);
+        console.log(err);
+      });
   }
   render() {
     const i18n = RG.jssdk.config.i18n;
@@ -98,7 +96,6 @@ export default class LoginBox extends React.Component<RouteComponentProps, {}> {
                 onChange={e => {
                   this.setState({userName: e.target.value});
                 }}
-                onBlur={() => {}}
                 onFocus={() => {
                   this.setState({isShowUsersInfo: false});
                 }}
@@ -117,11 +114,12 @@ export default class LoginBox extends React.Component<RouteComponentProps, {}> {
             {isShowUsersInfo ? (
               <ul className='rg-users-list'>
                 {usersKeys.map(userId => {
-                  const userInfo: UserInfo = this.state.users[userId];
+                  const userInfo = this.state.users[userId];
                   return (
                     <li className='rg-user' key={userInfo.userId}>
                       <p className='rg-user-name' onClick={() => this.selectUser(userInfo.userId)}>
-                        {(userInfo.userType === 0 ? i18n.txt_name_vistor : '') + userInfo.userName.slice(0,28)}
+                        {(userInfo.userType === 0 ? i18n.txt_name_vistor : '') +
+                          userInfo.userName.slice(0, 28)}
                       </p>
                       <div
                         className='rg-icon-close'
@@ -143,8 +141,6 @@ export default class LoginBox extends React.Component<RouteComponentProps, {}> {
               onChange={e => {
                 this.setState({password: e.target.value});
               }}
-              onBlur={() => {}}
-              onFocus={() => {}}
             />
             {password ? (
               <span
@@ -157,7 +153,7 @@ export default class LoginBox extends React.Component<RouteComponentProps, {}> {
               <span
                 className='rg-forget-text'
                 onClick={() => {
-                 this.props.history.push("/forget")
+                  this.props.history.push('/forget');
                 }}
               >
                 {i18n.txt_forget_password}
@@ -168,15 +164,14 @@ export default class LoginBox extends React.Component<RouteComponentProps, {}> {
         <div
           className='rg-btn-login'
           onClick={() => {
-            // var {userName, password} = this.refs.choose.state;
-            // this.login(userName, password);
+            this.login();
           }}
         >
           {i18n.txt_login_game}
         </div>
         <div
           onClick={() => {
-            this.props.history.push("/main")
+            this.props.history.push('/main');
           }}
           className='to-main-btn'
         >
@@ -184,7 +179,7 @@ export default class LoginBox extends React.Component<RouteComponentProps, {}> {
         </div>
         <div
           onClick={() => {
-            this.props.history.push("/register")
+            this.props.history.push('/register');
           }}
           className='to-register-btn'
         >

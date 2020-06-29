@@ -32,7 +32,7 @@ export default class Payment {
     if (this.lastTime === '0') {
       this.paymentList = res.data;
     } else {
-      this.paymentList = this.paymentList.concat(res.data);
+      this.paymentList = res.data.concat(this.paymentList);//保证新的支付记录在前面
     }
     this.lastTime = res.lastTime;
     res.data = this.paymentList;
@@ -116,7 +116,7 @@ export interface GetPaymentHistoryRes extends ServerRes {
     // chargingType 0=平台币 1=直冲
     chargingType: number;
     // 客户端时间
-    clientDate: number;
+    clientDate: string;
   }[];
 }
 
@@ -171,11 +171,13 @@ export interface PaymentChannel {
     9、显示支付确认界面且网页打开，
     10、显示支付确认界面且显示序列号和 PIN 码，
     11、显示支付确认界面且显示 PIN 码。
+    12、跳出浏览器打开网页。
+    13、显示支付确认界面且跳出浏览器打开网页。
     showProductList（是否显示商品列表）：0、不显示，1、显示。
     hotImg：推荐位图片名称。
     discountImg：折扣率图片名称
   */
-  showMethod: 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11;
+  showMethod: 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11|12|13;
   /* "exInfo": "vietnamANPAY" */
   exInfo: string;
   /* 0=第三方，1=官方 */

@@ -72,8 +72,8 @@ var definePlugin = {
 };
 var webpackConfig = {
   entry: {
-    //sdk: path.join(__dirname, 'src/jssdk/main.ts'),
-    sdk:path.join(__dirname, 'src/jssdk/view2/main.ts'),
+    sdk: path.join(__dirname, 'src/jssdk/main.ts'),
+    // sdk:path.join(__dirname, 'src/jssdk/view2/main.ts'),
     shortcut: path.join(__dirname, 'src/add-shortcut/main.ts')
   },
   resolve: {
@@ -88,12 +88,7 @@ var webpackConfig = {
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        use: {
-          loader: 'babel-loader',
-          options: {
-            presets: ['@babel/preset-env']
-          }
-        }
+        use: ['babel-loader']
       },
       {
         test: /\.css$/,
@@ -116,7 +111,7 @@ var webpackConfig = {
       },
       {
         test: /\.(ts|tsx)$/,
-        use: ['ts-loader']
+        use: ['babel-loader', 'ts-loader']
       },
       {
         test: /\.(gif|jpg|png|woff|svg|eot|ttf)\??.*$/,
@@ -184,11 +179,14 @@ var webpackConfig = {
 
   devServer: devServer,
 
-  externals: {
-    // react: 'window.React',
-    // 'react-dom': 'window.ReactDOM',
-    // 'react-router-dom': 'window.ReactRouterDOM'
-  }
+  externals:
+    isDev || action === 'test'
+      ? {}
+      : {
+          react: 'window.React',
+          'react-dom': 'window.ReactDOM',
+          'react-router-dom': 'window.ReactRouterDOM'
+        }
 };
 
 webpackConfig.plugins.push(new CleanWebpackPlugin([path.join(__dirname, 'build', '**/*')]));

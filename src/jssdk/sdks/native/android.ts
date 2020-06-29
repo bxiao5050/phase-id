@@ -1,5 +1,3 @@
-import {toJSONSchema} from 'mockjs';
-
 export default class AndroidApi {
   /* FB 是否已经挪移到原生,兼容老包代码 */
   get hasFbLogin() {

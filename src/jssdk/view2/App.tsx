@@ -1,21 +1,22 @@
 import React, {Fragment} from 'react';
-import {Route, MemoryRouter} from 'react-router-dom';
+import { Route, MemoryRouter } from 'react-router-dom';
 
-// import Hover from './components/hover';
-
+import Hover from './components/hover';
 import Login from './components/login';
 import Account from './components/account';
-import Customer from './components/customer';
+// import Customer from './components/customer';
 import Notice from './components/message/notice';
 import Confirm from './components/message/confirm';
 import Payment from './components/payment';
+
 /* 类型 */
 import {PaymentConfigRes} from '../api/payment';
 
-import I18n from './language/zh_cn';
-window.RG = {jssdk: {config: {i18n: I18n}}} as any;
+// import I18n from './language/zh_cn';
+// window.RG = {jssdk: {config: {i18n: I18n}}} as any;
 
 type IState = {
+  hasAccount: boolean,
   hoverIsGuest: boolean;
   showPayment: boolean;
   paymentConfig: PaymentConfigRes;
@@ -33,8 +34,8 @@ class App extends React.Component {
     confirm: Confirm;
     notice: Notice;
     loginRoute: Route<Login>;
+    hover: Hover;
   };
-  i18n = window.RG.jssdk.config.i18n;
 
   constructor(props: any) {
     super(props);
@@ -47,16 +48,17 @@ class App extends React.Component {
   }
 
   state = {
+    hasAccount: false,
     hoverIsGuest: false,
     showPayment: false,
     paymentConfig: null,
 
     showLogin: false,
-    showCustomer: false,
+    // showCustomer: false,
     isShowMark: false,
-    showAccount: false,
-    accountEntry: ['/main'],
-    paymentsEntry: ['/main']
+    showAccount: false
+    // accountEntry: ['/main'],
+    // paymentsEntry: ['/main']
   } as IState;
   showPrompt(title: string, content: string, isAlert: boolean = false) {
     this.setState({isShowMark: true});
@@ -92,12 +94,21 @@ class App extends React.Component {
       isShowMark: false
     });
   };
-  toggleCustomer(isShowCustomer: boolean) {
+  showHover = (isGuest: boolean) => {
     this.setState({
-      showCustomer: isShowCustomer,
-      isShowMark: isShowCustomer
+      hasAccount: true,
+      hoverIsGuest: isGuest
     });
-  }
+  };
+  // toggleCustomer(isShowCustomer: boolean) {
+  //   this.setState({
+  //     showCustomer: isShowCustomer,
+  //     isShowMark: isShowCustomer
+  //   });
+  //   if (!isShowCustomer) {
+  //     RG.jssdk.native.hideDialog && RG.jssdk.native.hideDialog();
+  //   }
+  // }
   toggleAccount(isShowAccount: boolean) {
     this.setState({
       showAccount: isShowAccount,
@@ -105,34 +116,36 @@ class App extends React.Component {
     });
   }
   render() {
-    const {isShowMark, showLogin, showAccount, showCustomer, showPayment} = this.state;
-    const defaultAccount = true ? ['/main'] : ['/visitor'];
+    const {isShowMark, showLogin, showAccount, showPayment} = this.state;
+    const defaultAccount = ['/main'];
     return (
       <Fragment>
         {isShowMark ? <div className='rg-mark'></div> : null}
         {/* 登录模块 */}
-        {showLogin ? (
+        {showLogin && (
           <MemoryRouter initialEntries={['/main']}>
             <Route
               ref='loginRoute'
               render={({history}) => <Login ref='login' history={history} />}
             />
           </MemoryRouter>
-        ) : null}
+        )}
         {/* 用户中心 */}
-        {showAccount ? (
+        {showAccount && (
           <MemoryRouter initialEntries={defaultAccount}>
-            <Route render={() => <Account />} />
+            <Route render={({history}) => <Account history={history} />} />
           </MemoryRouter>
-        ) : null}
-        {/* 客服中心 */}
-        {showCustomer ? <Customer hideCustomer={this.toggleCustomer} /> : null}
+        )}
+        {/* 客服中心,改为直接跳转facebook主页 */}
+        {/* {showCustomer ? <Customer hideCustomer={this.toggleCustomer} /> : null} */}
         {/* 支付模块 */}
-        {showPayment ? (
+        {showPayment && (
           <MemoryRouter>
             <Route render={({history}) => <Payment history={history} />} />
           </MemoryRouter>
-        ) : null}
+        )}
+        {/* 悬浮球 */}
+        {this.state.hasAccount && <Hover ref='hover' isGuest={this.state.hoverIsGuest} />}
         {/* Notice */}
         <Notice ref='notice' />
         {/* confirm */}

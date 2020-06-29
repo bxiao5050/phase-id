@@ -1,5 +1,3 @@
-import {getUrlOrigin} from '../utils';
-
 /* 
   操作所有用户信息的类
 */
@@ -10,8 +8,8 @@ export default class Account {
   }
   constructor() {
     Account._ins = this;
-    const user = JSON.parse(localStorage.getItem('user'));
-    const users = JSON.parse(localStorage.getItem('users'));
+    const user = JSON.parse(localStorage.getItem(this.userKey));
+    const users = JSON.parse(localStorage.getItem(this.usersKey));
     this.init({user, users});
   }
   /** 当前用户 */
@@ -25,7 +23,7 @@ export default class Account {
   }
   set user(user: UserInfo) {
     this._user = user;
-    // facebook 用户不保存
+    // facebook 用户不保存在users中
     if (user && user.accountType != 2) {
       this._users[user.userId] = user;
     }
@@ -34,24 +32,22 @@ export default class Account {
   get users() {
     return this._users;
   }
-  /* 需要在保存用户后进行的操作,不可在内部修改用户信息 */
-  saveHandle?(): void;
+
   deleteUser(userId: number) {
     if (this._users[userId]) {
       delete this._users[userId];
     }
     if (this.user.userId === userId) {
       this._user = null;
-    } else {
-      this.save();
     }
+    this.save();
   }
+  /* 需要在保存用户后进行的操作,不可在内部修改用户信息 */
+  saveHandle?(): void;
   save() {
     localStorage.setItem(this.userKey, JSON.stringify(this._user));
     localStorage.setItem(this.usersKey, JSON.stringify(this._users));
-    if (this.saveHandle) {
-      this.saveHandle();
-    }
+    if (this.saveHandle) this.saveHandle();
   }
   init({user, users}: {user: UserInfo; users: UsersInfo}) {
     if (user) {
@@ -77,13 +73,15 @@ export interface UserInfo {
   // 邮箱
   email?: string;
   // 邮箱是否验证，0=未设置 1=未验证 2=已验证
-  emailValid: number
+  emailValid: 0 | 1 | 2;
   // 电话号
   telephone?: string;
   // 0=登陆  1 = 注册
-  firstLogin: number
+  firstLogin: 0 | 1;
   // 平台token
   token: string;
+  // 用户昵称
+  nickName?: string;
 }
 export interface UsersInfo {
   [key: string]: UserInfo;

@@ -33,5 +33,8 @@
   ],
   "exclude": [
     "./src/**/*.psd",
+    "./src/view3/**",
+    "./src/view/**",
+    "./src/jssdk/plugins/mock/*.ts"
   ]
 }

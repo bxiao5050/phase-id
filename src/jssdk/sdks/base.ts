@@ -25,15 +25,13 @@ export default class Base {
   init(config: ExtendedConfig) {
     this.config = config;
     const appKey = config.appKey;
-    /* 删除config中的 */
-    delete config.appKey;
     this.accountApi.setAppKey(appKey);
     this.login.setAppKey(appKey);
     this.payment.setAppKey(appKey);
   }
   async platformLogin(userName: string, pwd: string) {
     const {appId, advChannel} = this.config.urlParams;
-    // 密码限制长度的6-20位
+    // 密码限制长度的6-20位,加密后为32位
     const password = pwd.length === 32 ? pwd : md5(pwd);
     const deviceMsg = await this.devicePromise;
     let data: LoginParam = {
@@ -54,7 +52,15 @@ export default class Base {
     };
     return this.login.login(data).then(res => {
       if (res.code === 200) {
-        this.account.user = Object.assign(res.data, {password, token: res.token});
+        let nickName = '';
+        if (
+          this.account.user &&
+          this.account.user.userId === res.data.userId &&
+          this.account.user.nickName
+        ) {
+          nickName = this.account.user.nickName;
+        }
+        this.account.user = Object.assign(res.data, {password, token: res.token, nickName});
       }
       return res;
     });
@@ -88,7 +94,11 @@ export default class Base {
     };
     return this.login.register(data).then(res => {
       if (res.code === 200) {
-        this.account.user = Object.assign(res.data, {password, token: res.token});
+        this.account.user = Object.assign(res.data, {
+          password,
+          token: res.token,
+          nickName: params.nickName
+        });
         localStorage.removeItem('rg_isFaceLogin');
         if (res.data.firstLogin) {
           RG.Mark('sdk_register');

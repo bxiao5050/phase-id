@@ -1,14 +1,29 @@
 import * as React from 'react';
+import {Ins} from '../../index';
 
 /* 类型 */
 import {RouteComponentProps} from 'react-router-dom';
+import {GetPaymentHistoryRes} from 'Src/jssdk/api/payment';
 
-export default class PaymentHistory extends React.Component<RouteComponentProps, {}, {}> {
+export default class PaymentHistory extends React.Component<
+  RouteComponentProps,
+  {list: GetPaymentHistoryRes['data']},
+  {}
+> {
   state = {
     list: []
   };
-  componentDidMount() {
-    this.setState({
+  async componentDidMount() {
+    await RG.jssdk
+      .getPaymentHistoryList()
+      .then(res => {
+        this.setState({list: res.data});
+      })
+      .catch(err => {
+        Ins.showNotice(RG.jssdk.config.i18n.net_error_0);
+        console.log(err);
+      });
+    /*  this.setState({
       list: [
         {
           transactionId: 'V4_10062_DS123321',
@@ -56,7 +71,7 @@ export default class PaymentHistory extends React.Component<RouteComponentProps,
           clientDate: '2019-12-05 17:14:16'
         }
       ]
-    });
+    }); */
   }
   render() {
     const i18n = RG.jssdk.config.i18n;
@@ -72,6 +87,7 @@ export default class PaymentHistory extends React.Component<RouteComponentProps,
           ></span>
         </div>
         <div className='rg-order-list-wrap'>
+          {this.state.list.length === 0 ? <div className="rg-no-orderlist">{i18n.p2refresh_end_no_records}</div> : null}
           <ul className='rg-order-list'>
             {this.state.list.map((node, index) => (
               <li

@@ -1,7 +1,9 @@
 import * as React from 'react';
 import Payment from './index';
-import {Ins} from 'Src/jssdk/view/index';
+import {Ins} from '../../index';
 import {replaceUrlToHttps} from 'Src/jssdk/utils';
+import {errorHandle} from './type2';
+import Input from '../login/Input';
 
 type paymentProps = {
   Payment: Payment;
@@ -9,6 +11,8 @@ type paymentProps = {
 export default class Type1 extends React.Component<paymentProps, {}, any> {
   setInterval = undefined;
   state = {
+    pin: '',
+    serial: '',
     isQuerying: false,
     isQueryingTxt: '.',
     isShowExchangeRate: false
@@ -40,89 +44,88 @@ export default class Type1 extends React.Component<paymentProps, {}, any> {
 
   private index = 1;
 
-  public refs: {
-    serial: HTMLInputElement;
-    pin: HTMLInputElement;
-  };
-
   pay = () => {
+    if (this.state.isQuerying) return;
     var source = this.props.Payment.state.paymentDatas[this.index];
     source.exInfo = JSON.stringify({
-      serialNo: this.refs.serial.value,
-      pin: this.refs.pin.value
-    });
-
-    RG.jssdk.order(source).then(orderRes => {
-      Ins.showNotice(orderRes.error_msg);
-
-      this.state.isQuerying = false;
-      this.setState(this.state);
-
-      Ins.hidePayment();
+      serialNo: this.state.serial,
+      pin: this.state.pin
     });
     this.state.isQuerying = true;
     this.setState(this.state);
+    RG.jssdk.order(source).then(res => {
+      errorHandle(res);
+      this.state.isQuerying = false;
+      this.setState(this.state);
+      if (res.code === 200) {
+        Ins.hidePayment();
+      }
+    });
   };
 
   render() {
     var source = this.props.Payment.state.paymentDatas[this.index];
     var isShowExchangeRate = this.state.isShowExchangeRate;
-    console.log(source);
+    const i18n = RG.jssdk.config.i18n;
     return (
-      <div className='Type1 payment-nav'>
-        <h2 className='name'>
+      <div className='rg-type1'>
+        <h2 className='rg-pay-name'>
           {source.name}
           {source.products && source.products[0] ? (
             <span
-              className='exchange'
+              className='rg-exchange'
               onClick={() => {
                 this.state.isShowExchangeRate = true;
                 this.setState(this.state);
               }}
             >
-              {RG.jssdk.config.i18n.dom011}
+              {i18n.txt_exchange_rate}
             </span>
           ) : null}
         </h2>
 
-        <img className='card-head' src={replaceUrlToHttps(source.codeImg)} />
+        <img className='rg-card-head' src={replaceUrlToHttps(source.codeImg)} />
 
-        <div className='card-inputs Serial' id='serial'>
-          <span>{RG.jssdk.config.i18n.dom014} </span>
-          <input
-            placeholder='Please enter Serial Number'
-            ref='serial'
-            onBlur={() => {
-              document.body.scrollTop = document.documentElement.scrollTop = 0;
+        <div className='rg-card-inputs' id='serial'>
+          <span className='rg-label'>{i18n.txt_serial} </span>
+          <Input
+            className='rg-type2-pin'
+            type='text'
+            value={this.state.serial}
+            placeholder={i18n.txt_hint_input_serial}
+            onChange={e => {
+              this.setState({serial: e.target.value});
             }}
           />
         </div>
-        <div className='card-inputs PIN' id='pin'>
-          <span>PIN: </span>
-          <input
-            placeholder='Please enter PIN'
-            ref='pin'
-            onBlur={() => {
-              document.body.scrollTop = document.documentElement.scrollTop = 0;
+        <div className='rg-card-inputs' id='pin'>
+          <span className='rg-label'>{i18n.txt_pin}</span>
+          <Input
+            className='rg-type2-pin'
+            type='text'
+            value={this.state.pin}
+            placeholder={i18n.txt_hint_input_pin}
+            onChange={e => {
+              this.setState({pin: e.target.value});
             }}
           />
         </div>
         {this.state.isQuerying ? (
-          <a href='javascript:void(0);' className='btn-pay'>
-            {RG.jssdk.config.i18n.dom012} {this.state.isQueryingTxt}
-          </a>
+          <button className='rg-btn-pay'>
+            {i18n.txt_pay} {this.state.isQueryingTxt}
+          </button>
         ) : (
-          <a href='javascript:void(0);' className='btn-pay' onClick={this.pay}>
-            {RG.jssdk.config.i18n.dom012}
-          </a>
+          <button className='rg-btn-pay' onClick={this.pay}>
+            {i18n.txt_pay}
+          </button>
         )}
-        {isShowExchangeRate ? <div className='exchange-wrap' /> : null}
+        {isShowExchangeRate ? <div className='rg-exchange-wrap' /> : null}
         {isShowExchangeRate ? (
-          <div className='exchange-rate-list'>
-            <h2 className='exchange-name'>
-              {RG.jssdk.config.i18n.dom011}
+          <div className='rg-exchange-rate-list'>
+            <h2 className='rg-exchange-name'>
+              {i18n.txt_exchange_rate}
               <a
-                className='close'
+                className='rg-type2-lose'
                 onClick={() => {
                   this.state.isShowExchangeRate = false;
                   this.setState(this.state);
@@ -130,11 +133,11 @@ export default class Type1 extends React.Component<paymentProps, {}, any> {
               />
             </h2>
 
-            <ul className='exchange-list'>
+            <ul className='rg-exchange-list'>
               {source.products.map((product, i) => (
-                <li key={i} data-id={i}>
-                  <div className='item-price'>{product.amount + ' ' + product.currency}</div>=
-                  <div className='item-goods'>{product.gameCoin + ' ' + product.gameCurrency}</div>
+                <li className='rg-type2-exchange' key={i} data-id={i}>
+                  <div className='rg-item-price'>{product.amount + ' ' + product.currency}</div>=
+                  <div className='rg-item-goods'>{product.gameCurrency}</div>
                 </li>
               ))}
             </ul>

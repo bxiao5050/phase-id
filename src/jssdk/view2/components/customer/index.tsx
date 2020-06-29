@@ -48,7 +48,8 @@ export default class Customer extends React.Component<
       <div className='rg-login-main rg-customer rg-center-a'>
         <div className='rg-login-header'>
           {i18n.txt_customer_service}
-          <span className='rg-icon-close' onClick={() => Ins.toggleCustomer(false)}></span>
+         {/*  Ins.toggleCustomer(false) */}
+          <span className='rg-icon-close' onClick={() => {}}></span>
         </div>
         <div className='rg-customer-content'>
           <p className='rg-customer-tip'>{i18n.txt_common_problem_hint}</p>

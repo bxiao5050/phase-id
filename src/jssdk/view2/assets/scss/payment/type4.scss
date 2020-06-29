@@ -1,15 +1,18 @@
+.rg-cards-wrap{
+  width: 100%;
+  height: 13.9rem;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
 .rg-cards {
   width: 100%;
-  overflow-y: auto;
-  overflow-x: hidden;
 }
 
 .rg-card {
   box-sizing: border-box;
   float: left;
-  margin: 1rem 0 0 0.5rem;
+  margin: 0.5rem 0 0.5rem 0.5rem;
   width: 7rem;
-  height: 4.5rem;
 }
 
 .rg-card-img {

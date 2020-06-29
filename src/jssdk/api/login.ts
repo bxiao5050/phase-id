@@ -1,4 +1,4 @@
-import {signed, formatDate} from '../utils';
+import {signed} from '../utils';
 import Http from '../api/Http';
 
 export default class Login {

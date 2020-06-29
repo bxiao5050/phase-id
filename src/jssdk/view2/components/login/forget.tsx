@@ -18,17 +18,29 @@ export default class ForgetPassword extends React.Component<RouteComponentProps,
     const {time, userName} = this.state;
     if (time) return;
     if (!userName) return Ins.showNotice(i18n.txt_hint_account);
-    // if (true) {
-    //   this.setState({time: 60});
-    //   const timer = setInterval(() => {
-    //     const time = this.state.time - 1;
-    //     this.setState({time});
-    //     if (!time) clearInterval(timer);
-    //   }, 1000);
-    //   Ins.showPrompt(i18n.txt_send_success, i18n.txt_send_email_success, true);
-    // } else {
-    //   Ins.showPrompt(i18n.txt_send_fail, i18n.net_error_106, true);
-    // }
+    RG.jssdk
+      .forgetPassword(userName)
+      .then(res => {
+        if (res.code === 200) {
+          this.setState({time: 60});
+          const timer = setInterval(() => {
+            const time = this.state.time - 1;
+            this.setState({time});
+            if (!time) clearInterval(timer);
+          }, 1000);
+          Ins.showPrompt(i18n.txt_send_success, i18n.txt_send_email_success, true);
+        } else if (res.code === 106) {
+          Ins.showPrompt(i18n.txt_send_fail, i18n.net_error_106, true);
+        } else if (res.code === 105) {
+          Ins.showPrompt(i18n.txt_send_fail, i18n.net_error_105, true);
+        } else {
+          Ins.showNotice(res.error_msg);
+        }
+      })
+      .catch(err => {
+        Ins.showNotice(i18n.net_error_0);
+        console.log(err);
+      });
   }
   toggleTable(type: string) {
     if (this.state.showTable === type) return;
@@ -122,4 +134,3 @@ export default class ForgetPassword extends React.Component<RouteComponentProps,
     );
   }
 }
-// txt_confirm

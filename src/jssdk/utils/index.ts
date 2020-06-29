@@ -28,7 +28,7 @@ export function generateGpsAdid(len?: number, radix?: number) {
   return uuid.join('');
 }
 
-// 日志函数,如果失败收集日志方便一点
+/** 日志收集函数 */
 export function log(message?: any, ...optionalParams: any[]) {
   console.log(message, ...optionalParams);
   return message;
@@ -229,18 +229,6 @@ export function replaceUrlToHttps(url: string): string {
   }
 
   return result;
-}
-/* 错误处理函数 */
-export function errorHandle(lang: any) {
-  return function(code: number): string {
-    switch (code) {
-      case 102:
-        return '用户已存在';
-
-      default:
-        return;
-    }
-  };
 }
 export const getUrlParam = (function() {
   var urlParamMap = {};

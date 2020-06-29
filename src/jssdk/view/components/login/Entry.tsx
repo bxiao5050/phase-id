@@ -23,7 +23,7 @@ export default class Entry extends React.Component<EntryProp, {}, any> {
     }
     const i18n = RG.jssdk.config.i18n;
     RG.jssdk
-      .platformLogin(password, userName)
+      .platformLogin(userName, password)
       .then(res => {
         if (res.code === 200) {
           this.props.Login.loginComplete();

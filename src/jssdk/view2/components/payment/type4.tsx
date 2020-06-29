@@ -12,9 +12,10 @@ export default class Type4 extends React.Component<paymentProps, {}, any> {
 
   render() {
     return (
-      <div>
+      <div className="rg-pay-type4">
         <h2 className='rg-pay-name'>{this.props.Payment.state.paymentDatas[this.index].name}</h2>
-        <ul className='rg-cards'>
+        <div className="rg-cards-wrap">
+          <ul className='rg-cards'>
           {this.props.Payment.state.paymentDatas[this.index].nodes.map((node, i) => (
             <li
               className="rg-card"
@@ -31,6 +32,8 @@ export default class Type4 extends React.Component<paymentProps, {}, any> {
             </li>
           ))}
         </ul>
+        </div>
+        
       </div>
     );
   }

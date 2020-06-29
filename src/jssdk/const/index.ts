@@ -1,3 +1,4 @@
+//暂时没有用到
 // sdk类型
 export enum SdkType {
   Web = 1,

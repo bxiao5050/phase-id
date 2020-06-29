@@ -1,18 +1,18 @@
+import 'babel-polyfill';
 /* 使用自执行函数,避免污染全局变量 */
-;(function (w: Window) {
+(function (w: Window) {
   /* 获取所有的地址栏参数 */
   const urlParams: UrlParams = getUrlParam();
 
   polyfill().then(async () => {
     /* 是否加载 Vconsole */
     urlParams.debugger && (await initDebugger());
-    const { appId, advChannel } = urlParams;
     // 加载config
-    let config = await getConfig(appId, advChannel);
+    let config = await getConfig(urlParams.appId, urlParams.advChannel);
     config.urlParams = urlParams;
     // 如果facebook挪到了微端,则不加载facebokSdk
     const WK = window['webkit'];
-    if (!(window.JsToNative && window.JsToNative.fbLogin) || !(WK && WK.messageHandlers.fbLogin)) {
+    if (!((window.JsToNative && window.JsToNative.fbLogin) || (WK && WK.messageHandlers.fbLogin))) {
       fbSdkLoad(config.fb_app_id).then(() => {
         config.fb_sdk_loaded = true;
       });
@@ -29,17 +29,19 @@
   /* 打补丁 */
   function polyfill() {
     return new Promise(resolve => {
-      const polyfills = ['Promise', 'Set', 'Map', 'Object.assign', 'Function.prototype.bind'];
-      const polyfillUrl = 'https://polyfill.io/v3/polyfill.min.js';
-      const features = polyfills.filter(feature => !(feature in w || w[feature]));
-      if (!features.length) return resolve();
-      var s = document.createElement('script');
-      s.src = `${polyfillUrl}?features=${features.join(',')}&flags=gated,always&rum=0`;
-      s.async = true;
-      document.head.appendChild(s);
-      s.onload = function () {
-        resolve();
-      };
+      // const polyfills = ['Promise', 'Set', 'Map'];
+      // const polyfillUrl = 'https://polyfill.io/v3/polyfill.min.js';
+      // const features = polyfills.filter(feature => !(feature in w || w[feature]));
+      // if (!Object.assign) features.push('Object.assign');
+      // if (!Function.prototype.bind) features.push('Function.prototype.bind');
+      // if (!features.length) return resolve();
+      // var s = document.createElement('script');
+      // s.src = `${polyfillUrl}?features=${features.join(',')}&flags=gated,always&rum=0`;
+      // s.async = true;
+      // document.head.appendChild(s);
+      // s.onload = function () {
+      resolve();
+      // };
     });
   }
   /* 获取所有的地址栏参数 */
@@ -73,15 +75,14 @@
   /* 获取游戏的配置 */
   async function getConfig(appId: string, advChannel: string) {
     if (!appId || !advChannel) throw 'appId or advChannel is not defined';
-    const LanguagesPromise = import('./view/i18n/index').then(module => {
-      return module.default;
-    });
     const gameConfig = await import(`./config/${appId}.ts`).then(module => {
       const configs = module.default;
       return configs[advChannel] ? configs[advChannel] : configs.default;
     });
-    const Languages = await LanguagesPromise;
-    return Object.assign(gameConfig, { i18n: Languages[gameConfig.language] });
+    const Language = await import(`./view2/language/${gameConfig.language}.ts`).then(module => {
+      return module.default;
+    });
+    return Object.assign(gameConfig, {i18n: Language});
   }
   /* 加载对应sdk */
   function loadSdk(config: any) {

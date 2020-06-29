@@ -40,10 +40,10 @@ export default class AccountApi {
     ]);
     return Http.ins.post({route: '/user/changePwd', data: params});
   }
-  /* 验证密码 */
+/* 验证密码 */
   verifyPassword(appId: string, userId: number, password: string) {
     const sign = signed([appId, userId, password, this.appKey]);
-    return Http.ins.get({route: `/user/forgetPwd/${appId}/${userId}/${password}/${sign}`});
+    return Http.ins.get({route: `/user/verifyPassword/${appId}/${userId}/${password}/${sign}`});
   }
   /* 忘记密码 */
   forgetPassword(appId: string, userName: string) {

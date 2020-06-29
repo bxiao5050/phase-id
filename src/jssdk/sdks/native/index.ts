@@ -12,7 +12,7 @@ import {GamePayParams} from '../base';
 import {InitConfigParams} from '../../api/init';
 import {PaymentChannel} from '../../api/payment';
 import {DeviceMsg} from './android';
-import App from 'Src/jssdk/view/App';
+import App from 'Src/jssdk/view2/App';
 
 export default class NativeSdk extends Base {
   type: 2;
@@ -38,9 +38,11 @@ export default class NativeSdk extends Base {
     /* 微端初始化 */
     this.getNativeInitConfig();
     /* 加载 react-js  */
-    // await loadReactJs();
+    if (!(IS_DEV || IS_TEST)) {
+      await loadReactJs();
+    }
     /* 加载 dom */
-    const {Ins} = await import('../../view/index');
+    const {Ins} = await import('../../view2/index');
     // 挂载 dom
     this.app = Ins;
     /* 判断是否自动登录,切换账号, 还是 fbLogin*/
@@ -86,7 +88,15 @@ export default class NativeSdk extends Base {
   async pay(params: GamePayParams) {
     this.getNativeInitConfig();
     return this.getPaymentInfo(params).then(res => {
-      res.payments.length && RG.jssdk.app.showPayment(res);
+      if (res.payments.length) {
+        RG.jssdk.app.showPayment(res);
+      } else {
+        RG.jssdk.app.showPrompt(
+          RG.jssdk.config.i18n.txt_warn,
+          RG.jssdk.config.i18n.txt_pay_not_open,
+          true
+        );
+      }
     });
   }
   getConfigIsSuccess = false;

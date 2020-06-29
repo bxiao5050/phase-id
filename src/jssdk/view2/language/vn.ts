@@ -233,7 +233,7 @@ export default {
   txt_pay_notsupport: 'Nhắc nhở: xin chú ý không hỗ trợ thẻ mở đầu chữ V',
   txt_pay_fail_null: 'Số thẻ hoặc mật mã trống',
   txt_hint_money: 'Xin nhập số tiền nạp, đơn vị (RMB)',
-  txt_hint_input_serial: 'Xin nhập số thẻ',
+  txt_hint_input_serial: 'Xin nhập số serial',
   txt_hint_input_pin: 'Xin nhập mã PIN',
   psw_change_success: 'Đổi mật mã thành công!',
   phone_not_valid: 'Xin nhập số di động chính xác',
@@ -304,8 +304,8 @@ export default {
   txt_attention_pay_status: 'Xin theo dõi trạng thái giao dịch trong ghi chép giao dịch',
   txt_coin_save: 'Số tiền nạp đã chuyển thành tiền cổng game cho bạn',
   txt_delete_account: 'Xóa tài khoản',
-  txt_are_you_sure: 'Bạn xác nhận muốn xóa&#160;',
-  txt_delete_from_table: '&#160;từ danh sách người dùng chứ?',
+  txt_are_you_sure: 'Bạn xác nhận muốn xóa ',
+  txt_delete_from_table: ' từ danh sách người dùng chứ?',
   txt_pay: 'Nạp',
   txt_facebook_login: 'Đăng nhập tài khoản Facebook',
   txt_other_login: 'Cách đăng nhập khác',
@@ -331,8 +331,8 @@ export default {
   txt_bind_warn:
     'Email an toàn là bằng chứng duy nhất để tìm lại mật mã và tài khoản của bạn sau này, gửi xong không thể sửa, xin điền cẩn thận!',
   txt_input_valid_email: 'Xin nhập email định dạng chính xác!',
-  txt_alert_msg1: 'Bạn xác nhận dùng&#160;',
-  txt_alert_msg2: '&#160;làm email an toàn chứ? Thiết lập xong không thể sửa!',
+  txt_alert_msg1: 'Bạn xác nhận dùng ',
+  txt_alert_msg2: ' làm email an toàn chứ? Thiết lập xong không thể sửa!',
   txt_send_fail: 'Gửi thất bại',
   txt_send_success: 'Gửi thành công',
   txt_warn: 'Nhắc nhở',
@@ -376,6 +376,7 @@ export default {
   txt_plugin_pay_dialog_title: 'Thiết lập nhanh',
   txt_plugin_pay_dialog_tip: 'Để đảm bảo nạp tiền an toàn, nên cài đặt tool Pocketgame',
   txt_plugin_pay_dialog_paybtn: 'Cài đặt nhanh',
-  winopen: "请跳转前往储值页面",
-  jump:"跳转"
+  winopen: 'Vui lòng chuyển đến trang thanh toán',
+  jump: 'Nhảy',
+
 };

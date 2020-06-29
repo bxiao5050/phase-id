@@ -1,0 +1,97 @@
+.floatBall {
+  // visibility: hidden;
+  width: 2.4rem;
+  height: 2.4rem;
+  top: 40%;
+  opacity: 0.6; // display: none;
+  transform: translate(0, 0);
+  position: absolute;
+  z-index: 100;
+}
+
+.floatBall.active {
+  display: block;
+  opacity: 1;
+}
+
+.ball {
+  width: 2.6rem;
+  height: 2.6rem;
+  z-index: 2;
+  position: absolute;
+  top: 0.3rem;
+  background: url(../img/cg_float_show_normal.png) center no-repeat;
+  background-size: contain;
+}
+
+.menu {
+  height: 3.3rem;
+  width: 11rem;
+  display: none;
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  position: absolute;
+  border-radius: 1.602rem;
+  padding: 0 0 0 1rem;
+  right: -3rem;
+  background: white;
+  transform-origin: 8.4rem 50%;
+
+  .item {
+    width: 4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .icon {
+      box-sizing: border-box;
+      transform-origin: 50% 50%;
+      display: block;
+      font-size: 0.6rem;
+      padding-top: 1.5rem;
+      line-height: 1;
+      text-align: center;
+      width: 4rem;
+      margin-top: 0.1rem;
+      height: auto;
+      color: #0a6482;
+      // -webkit-text-size-adjust: 100%;
+
+      &.contact {
+        background: url(../img/fb_cs_0.png) center -0.4rem/2.6rem auto no-repeat;
+        // background-size: contain;
+      }
+
+      &.account {
+        width: 4rem;
+        background: url(../img/fb_user_center_0.png) center -0.4rem/3rem auto no-repeat;
+        // background-size: 2.4rem;
+        // background-size: contain;
+      }
+    }
+  }
+
+  &.left {
+    transform: rotateY(180deg);
+
+    .icon {
+      transform: rotateY(180deg);
+    }
+  }
+}
+
+.menu.active {
+  display: flex;
+}
+
+.icon-cs p,
+.icon-account p {
+  width: 1.08 * 2.47 + rem;
+  bottom: 0.12 * 2.47 + rem;
+  line-height: 0.36 * 2.47 + rem;
+  font-size: 0.264 * 2.47 + rem;
+  color: #1eafe5;
+  text-align: center;
+  position: absolute;
+}
