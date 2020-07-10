@@ -34,7 +34,20 @@ class ShowXRDPatterns(WaferCanvas):
             self.pAC.get(pos).bind("<Enter>", lambda event, pos = pos: self.on_enter(event, pos))
 
         self.on_BExpPiechart()
+        
+    #plot pie chart
+    def plotPiechart(self):
+        for pos in range(1, len(self.data.columns)):
+            fig = Figure(figsize = (0.42, 0.42))
+            ax = fig.add_subplot(111)
 
+            ax.plot(self.data.iloc[:,0], self.data.iloc[:,pos])
+
+            FigureCanvasTkAgg(fig, master = self.pAC[pos]).get_tk_widget().pack()
+            ax.set_xticks([])
+            ax.set_yticks([])
+            fig.subplots_adjust( wspace=0, hspace=0)
+            time.sleep(0.01)
     def on_BExpPiechart(self):
         threading.Thread(target=self.plotPiechart).start()
 
