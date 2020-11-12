@@ -1,10 +1,12 @@
-import 'babel-polyfill';
+//import 'babel-polyfill';
 /* 使用自执行函数,避免污染全局变量 */
 (function (w: Window) {
   /* 获取所有的地址栏参数 */
   const urlParams: UrlParams = getUrlParam();
-
-  polyfill().then(async () => {
+  window.RgPolyfilled = RgPolyfilled;
+  polyfill();
+  async function RgPolyfilled() {
+    console.log("aaaaaa");
     /* 是否加载 Vconsole */
     urlParams.debugger && (await initDebugger());
     // 加载config
@@ -25,25 +27,23 @@ import 'babel-polyfill';
     // RG.Mark('sdk_loaded');
     /* 执行初始化函数 */
     // RG.jssdk.init();
-  });
+  }
   /* 打补丁 */
   function polyfill() {
-    return new Promise(resolve => {
-      // const polyfills = ['Promise', 'Set', 'Map'];
-      // const polyfillUrl = 'https://polyfill.io/v3/polyfill.min.js';
-      // const features = polyfills.filter(feature => !(feature in w || w[feature]));
-      // if (!Object.assign) features.push('Object.assign');
-      // if (!Function.prototype.bind) features.push('Function.prototype.bind');
-      // if (!features.length) return resolve();
-      // var s = document.createElement('script');
-      // s.src = `${polyfillUrl}?features=${features.join(',')}&flags=gated,always&rum=0`;
-      // s.async = true;
-      // document.head.appendChild(s);
-      // s.onload = function () {
-      resolve();
-      // };
-    });
+    const polyfills = ['Promise', 'Set', 'Map', 'Object.assign', 'Function.prototype.bind'];
+    const polyfillUrl = 'https://polyfill.io/v3/polyfill.min.js';
+    const features = polyfills.filter(feature => !(feature in window));
+    if (!features.length) return window.RgPolyfilled()
+
+    var s = document.createElement('script');
+    s.src = `${polyfillUrl}?features=${features.join(',')}&flags=gated,always&rum=0`;
+    s.async = true;
+    document.head.appendChild(s);
+    s.onload = function () {
+      window.RgPolyfilled()
+    }
   }
+
   /* 获取所有的地址栏参数 */
   function getUrlParam() {
     var result = Object.create(null);

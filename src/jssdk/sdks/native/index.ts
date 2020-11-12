@@ -1,18 +1,18 @@
 import Base from '../base';
 import IosApi from './ios';
-import AndroidApi, {GameEventParam} from './android';
+import AndroidApi from './android';
 import Init from '../../api/init';
 import {formatDate, loadReactJs} from '../../utils';
 import {initRG} from '../rg';
 import {fbLogin, fbShare} from '../../utils/fb';
 
 /* 引入类型 */
-import {ConsumeOrderParams, FbLoginRes, FbShareRes} from './android';
+import {ConsumeOrderParams, FbLoginRes, FbShareRes,DeviceMsg,GameEventParam} from './android';
 import {GamePayParams} from '../base';
 import {InitConfigParams} from '../../api/init';
 import {PaymentChannel} from '../../api/payment';
-import {DeviceMsg} from './android';
 import App from 'Src/jssdk/view2/App';
+import {BindZoneParam} from '../rg';
 
 export default class NativeSdk extends Base {
   type: 2;

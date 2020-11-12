@@ -99,26 +99,23 @@ export default class Hover extends React.Component<
       window.removeEventListener('mousemove', this.winMove);
       window.removeEventListener('mouseup', this.touchEnd);
     }
-    this.hoverRelocate2();
+    this.hoverRelocate();
+    if (this.state.y < 0) {
+      this.state.y = 0;
+    }
+    if (this.state.y > document.documentElement.clientHeight) {
+      this.state.y = document.documentElement.clientHeight;
+    }
     this.lastX = this.state.x;
     this.lastY = this.state.y;
+
     this.setState(this.state);
     setTimeout(function () {
       isMoving = false;
     });
   };
 
-  getCentreX() {
-    if (this.state.positionFromLeft) {
-      return this.moveX - this.touchStartX;
-    } else {
-      return this.moveX + innerWidth - this.touchStartX;
-    }
-  }
-
-  hoverLocate() {}
-
-  hoverRelocate2() {
+  hoverRelocate() {
     if (this.moveX !== 0) {
       if (this.centerX >= this.halfWidth) {
         // 落在右边
@@ -131,21 +128,6 @@ export default class Hover extends React.Component<
       }
     }
   }
-
-  hoverRelocate() {
-    if (this.moveX !== 0) {
-      if (this.getCentreX() >= this.halfWidth) {
-        // 落在右边
-        this.state.x = this.initialPositionLeft ? innerWidth : 0;
-        this.state.positionFromLeft = false;
-      } else {
-        // 落在左边
-        this.state.x = this.initialPositionLeft ? 0 : -innerWidth;
-        this.state.positionFromLeft = true;
-      }
-    }
-  }
-
   componentWillMount() {
     window.addEventListener('resize', this.winResize);
   }

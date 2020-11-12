@@ -13,7 +13,7 @@ export default class ForgetPassword extends React.Component<RouteComponentProps,
   };
   verifyPassword() {
     const i18n = RG.jssdk.config.i18n;
-    if (!this.state.password) Ins.showNotice(i18n.txt_hint_password);
+    if (!this.state.password) return Ins.showNotice(i18n.txt_hint_password);
 
     RG.jssdk
       .verifyPassword(this.state.password)
@@ -33,8 +33,8 @@ export default class ForgetPassword extends React.Component<RouteComponentProps,
   }
   bindEmail() {
     const i18n = RG.jssdk.config.i18n;
-    if (!this.state.email) Ins.showNotice(i18n.cg_txt_hint_input_email);
-    if (this.state.email.indexOf('@') === -1) Ins.showNotice(i18n.txt_input_valid_email);
+    if (!this.state.email) return Ins.showNotice(i18n.cg_txt_hint_input_email);
+    if (this.state.email.indexOf('@') === -1) return Ins.showNotice(i18n.txt_input_valid_email);
     RG.jssdk
       .operatorEmail(this.state.email)
       .then(res => {

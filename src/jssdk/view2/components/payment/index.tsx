@@ -56,7 +56,7 @@ export default class Payment extends React.Component<{history: History}, any> {
             this.state.winOpen = true;
             this.setState(this.state);
           } else {
-            console.error(payments, res);
+            // console.log(payments, res);
           }
         } else {
           Ins.showNotice(res.error_msg);
@@ -85,6 +85,12 @@ export default class Payment extends React.Component<{history: History}, any> {
   };
 
   intoPay = (payments: PaymentChannel, isSelectProduct: boolean = false) => {
+    //  九宫格，直接展示
+    if (payments.showMethod === 4 && payments.nodes) {
+      this.state.paymentDatas[4] = payments;
+      this.props.history.push(createLocation('type4'));
+      return;
+    }
     // 先判断 showProductList === 1 如果是展示商品列表,
     // isSelectProduct 表示用户是否已经选择商品, 以便于展示对应的展示界面
     if (payments.showProductList === 1 && !isSelectProduct) {
@@ -123,6 +129,7 @@ export default class Payment extends React.Component<{history: History}, any> {
           <span
             className='rg-icon-back'
             onClick={() => {
+              if(this.props.history.length <= 1)return;
               this.props.history.goBack();
             }}
           ></span>
@@ -135,7 +142,7 @@ export default class Payment extends React.Component<{history: History}, any> {
           ></span>
         </div>
         <div className='rg-payments-content clearfix'>
-          <div className={isShowRight ? "rg-payments-left rg-hide": "rg-payments-left"}>
+          <div className={(!isLandscape && isMain) || isLandscape ? "rg-payments-left": "rg-payments-left rg-hide"}>
             <ul className='rg-payments-infos'>
               {Ins.state.paymentConfig.payments.map((node, index) => {
                 return (

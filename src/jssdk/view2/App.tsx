@@ -61,7 +61,7 @@ class App extends React.Component {
     // paymentsEntry: ['/main']
   } as IState;
   showPrompt(title: string, content: string, isAlert: boolean = false) {
-    this.setState({isShowMark: true});
+    //this.setState({isShowMark: true});
     return this.refs.confirm.showConfirm(title, content, isAlert);
   }
   showNotice = (msg: string) => {

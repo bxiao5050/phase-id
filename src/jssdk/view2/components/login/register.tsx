@@ -19,6 +19,10 @@ export default class Register extends React.Component<RouteComponentProps, {}, a
       Ins.showNotice(i18n.txt_hint_account);
       return;
     }
+    if (userName.length < 4 || userName.length > 50) {
+      Ins.showNotice(i18n.net_error_004);
+      return;
+    }
     if (!password1) {
       Ins.showNotice(i18n.txt_hint_password);
       return;

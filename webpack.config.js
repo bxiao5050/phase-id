@@ -111,7 +111,7 @@ var webpackConfig = {
       },
       {
         test: /\.(ts|tsx)$/,
-        use: ['babel-loader', 'ts-loader']
+        use: [ 'ts-loader']
       },
       {
         test: /\.(gif|jpg|png|woff|svg|eot|ttf)\??.*$/,

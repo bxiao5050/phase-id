@@ -14,5 +14,4 @@ const Ins = App.instance;
 window.addEventListener('message', function (event) {
   if (event.data === 'rgclose') Ins.hidePayment();
 });
-
 export {Ins};

@@ -32,7 +32,6 @@ export default class WebSdk extends Base {
     super.init(config);
     /* 挂载window.RG */
     initRG(this);
-
     // 获取 userId 数组
     const userIdArr = Object.keys(this.account.users);
     let hasUser = userIdArr.length > 0 ? true : false;
@@ -41,6 +40,7 @@ export default class WebSdk extends Base {
     } else {
       this.getUserPromise = Promise.resolve();
     }
+    this.init();
   }
 
   async init() {
