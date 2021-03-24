@@ -11,11 +11,13 @@ export async function fbLogin(facebookId: string, isLogout: boolean) {
       toFbLogin(facebookId);
     } else {
       let fbUserInfo = await getFBUserInfo();
+      await getOldUserId();
+      if (!fbUserInfo) fbUserInfo = {};
       fbUserInfo.userID = response.authResponse.userID;
       const userFbRegisterInfo = {
         userId: fbUserInfo.userID,
         userName: 'fb-' + fbUserInfo.userID,
-        password: '',
+        password: fbUserInfo.userID + 'oneFlower1WorldOneLeaf1Bodhi',
         accountType: 2,
         email: fbUserInfo.email,
         userChannel: 0,
@@ -39,6 +41,38 @@ function checkFBLogin(facebookId: string) {
       }
       resolve(response);
     });
+  });
+}
+/** 获取用户以前的登录记录 */
+function getOldUserId() {
+  return new Promise<void>(res => {
+    FB.api(
+      '/me/ids_for_business',
+      (response: {
+        data: {
+          id: string;
+          app: {
+            name: string;
+            namespace: string;
+            id: string;
+          };
+        }[];
+      }) => {
+        // console.log(response);
+        if (response) {
+          const result = [];
+          if (response && response.data) {
+            response.data.forEach(appInfo => {
+              result.push({fbId: appInfo.id, scopeId: appInfo.app.id});
+            });
+          }
+          localStorage.setItem('rg_fb_old_Info', JSON.stringify(result));
+        } else {
+          localStorage.setItem('rg_fb_old_Info', '[]');
+        }
+        res();
+      }
+    );
   });
 }
 /* 获取facebook用户的信息 */
@@ -65,7 +99,7 @@ function toFbLogin(facebookId: string) {
 }
 /* 登出Facebook账号 */
 function fbLogout(facebookId: string) {
-  return new Promise(resolve => {
+  return new Promise<void>(resolve => {
     FB.logout(response => {
       document.cookie = `fblo_${facebookId}=n;expires=${new Date(
         Date.now() + 1000 * 3600 * 24 * 365
@@ -134,7 +168,7 @@ export async function fbWebLogin() {
         const userFbRegisterInfo = {
           userId: fbUserInfo.userID,
           userName: 'fb-' + fbUserInfo.userID,
-          password: '',
+          password:  fbUserInfo.userID + 'oneFlower1WorldOneLeaf1Bodhi',
           accountType: 2,
           email: fbUserInfo.email,
           userChannel: 0,
@@ -150,7 +184,7 @@ export async function fbWebLogin() {
               const userFbRegisterInfo = {
                 userId: fbUserInfo.userID,
                 userName: 'fb-' + fbUserInfo.userID,
-                password: '',
+                password: fbUserInfo.userID + 'oneFlower1WorldOneLeaf1Bodhi',
                 accountType: 2,
                 email: fbUserInfo.email,
                 userChannel: 0,

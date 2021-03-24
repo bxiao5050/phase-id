@@ -22,8 +22,13 @@ export default class Payment {
     return Http.ins.post<PaymentConfigRes>({route: '/config/paymentConfig/v4.0', data: params});
   }
   /* 第一次为空,后续为服务端返回的 lastTime */
+  /* 第一次为空,后续为服务端返回的 lastTime */
   private lastTime: string = '0';
   private paymentList: GetPaymentHistoryRes['data'] = [];
+  init() {
+    this.lastTime = '0';
+    this.paymentList = [];
+  }
   /* 获取支付的历史记录 */
   async getPaymentHistory(appId: string, userId: number) {
     const sign = signed([appId, userId, this.appKey]);
@@ -32,7 +37,7 @@ export default class Payment {
     if (this.lastTime === '0') {
       this.paymentList = res.data;
     } else {
-      this.paymentList = res.data.concat(this.paymentList);//保证新的支付记录在前面
+      this.paymentList = res.data.concat(this.paymentList);
     }
     this.lastTime = res.lastTime;
     res.data = this.paymentList;
@@ -177,7 +182,7 @@ export interface PaymentChannel {
     hotImg：推荐位图片名称。
     discountImg：折扣率图片名称
   */
-  showMethod: 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11|12|13;
+  showMethod: 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13;
   /* "exInfo": "vietnamANPAY" */
   exInfo: string;
   /* 0=第三方，1=官方 */

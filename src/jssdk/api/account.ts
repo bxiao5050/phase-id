@@ -6,18 +6,19 @@ export default class Account {
   static get ins(): Account {
     return this._ins || new Account();
   }
-  constructor() {
-    Account._ins = this;
-    const user = JSON.parse(localStorage.getItem(this.userKey));
-    const users = JSON.parse(localStorage.getItem(this.usersKey));
-    this.init({user, users});
-  }
   /** 当前用户 */
   private _user: UserInfo;
   /** 用户组 */
   private _users: UsersInfo = {};
   private userKey: string = 'user';
   private usersKey: string = 'users';
+  constructor() {
+    Account._ins = this;
+    const user = JSON.parse(localStorage.getItem(this.userKey));
+    const users = JSON.parse(localStorage.getItem(this.usersKey));
+    this.init({user, users});
+  }
+
   get user() {
     return this._user;
   }
@@ -82,6 +83,8 @@ export interface UserInfo {
   token: string;
   // 用户昵称
   nickName?: string;
+  // userId+明文的密码（user password）,加userId只是为了混淆,只有平台正式账号有
+  _up?: string;
 }
 export interface UsersInfo {
   [key: string]: UserInfo;

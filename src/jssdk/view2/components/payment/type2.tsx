@@ -124,7 +124,7 @@ export default class Type2 extends React.Component<paymentProps, {}, any> {
               {source.products.map((product, i) => (
                 <li className='rg-type2-exchange' key={i} data-id={i}>
                   <div className='rg-item-price'>{product.amount + ' ' + product.currency}</div>=
-                  <div className='rg-item-goods'>{product.gameCurrency}</div>
+                  <div className='rg-item-goods'>{product.gameCoin + ' ' + product.gameCurrency}</div>
                 </li>
               ))}
             </ul>
@@ -136,30 +136,33 @@ export default class Type2 extends React.Component<paymentProps, {}, any> {
 }
 
 export function errorHandle(res: CreateOrderRes) {
+  const i18n = RG.jssdk.config.i18n;
   switch (res.code) {
     case 200:
-      Ins.showNotice(RG.jssdk.config.i18n.net_error_200);
+      Ins.showNotice(i18n.net_error_200);
       break;
     case 201:
-      Ins.showNotice(RG.jssdk.config.i18n.net_error_201);
+      Ins.showNotice(i18n.net_error_201);
       break;
     case 202:
-      Ins.showNotice(RG.jssdk.config.i18n.net_error_202);
+      Ins.showNotice(i18n.net_error_202);
       break;
     case 203:
-      Ins.showNotice(RG.jssdk.config.i18n.net_error_203);
+      Ins.showNotice(i18n.net_error_203);
       break;
     case 204:
-      Ins.showNotice(RG.jssdk.config.i18n.net_error_204);
+      Ins.showNotice(i18n.net_error_204);
       break;
     case 205:
-      Ins.showNotice(RG.jssdk.config.i18n.net_error_205);
+      Ins.showNotice(i18n.net_error_205);
       break;
     case 206:
-      Ins.showNotice(RG.jssdk.config.i18n.net_error_206);
+      Ins.showPrompt(i18n.txt_pay_pending, i18n.net_error_206, true).then(() => {
+        Ins.hidePayment();
+      });
       break;
     case 207:
-      Ins.showNotice(RG.jssdk.config.i18n.net_error_207);
+      Ins.showNotice(i18n.net_error_207);
       break;
     default:
       Ins.showNotice(res.error_msg);

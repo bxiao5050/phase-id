@@ -137,7 +137,7 @@ export default class Type1 extends React.Component<paymentProps, {}, any> {
               {source.products.map((product, i) => (
                 <li className='rg-type2-exchange' key={i} data-id={i}>
                   <div className='rg-item-price'>{product.amount + ' ' + product.currency}</div>=
-                  <div className='rg-item-goods'>{product.gameCurrency}</div>
+                  <div className='rg-item-goods'>{product.gameCoin + ' ' + product.gameCurrency}</div>
                 </li>
               ))}
             </ul>

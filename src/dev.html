@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+
+  </head>
+
+  <body>test
+    <div id="app"></div>
+    <script>
+      window.rgAsyncInit = function () {
+        var payParams = {
+          userId: RG.CurUserInfo().userId,
+          gameOrderId: Math.floor(Math.random() * 100000000),
+          gameZoneId: 1,
+          roleId: "12870502",
+          roleName: "test-pay",
+          level: "",
+          gameCoin: 0 // 9
+        }
+        // RG.BindZone({
+        //   userId: 67750133, gameZoneId: 1,
+        //   createRole: 0, roleId: 17179869202, level: 80
+        // }).then(res => {
+
+        // })
+        RG.Pay(payParams)
+
+      }
+    </script>
+  </body>
+
+</html>

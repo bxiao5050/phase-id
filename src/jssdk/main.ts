@@ -1,104 +1,51 @@
-//import 'babel-polyfill';
-/* 使用自执行函数,避免污染全局变量 */
-(function (w: Window) {
-  /* 获取所有的地址栏参数 */
-  const urlParams: UrlParams = getUrlParam();
-  window.RgPolyfilled = RgPolyfilled;
-  polyfill();
-  async function RgPolyfilled() {
-    console.log("aaaaaa");
-    /* 是否加载 Vconsole */
-    urlParams.debugger && (await initDebugger());
-    // 加载config
-    let config = await getConfig(urlParams.appId, urlParams.advChannel);
-    config.urlParams = urlParams;
-    // 如果facebook挪到了微端,则不加载facebokSdk
-    const WK = window['webkit'];
-    if (!((window.JsToNative && window.JsToNative.fbLogin) || (WK && WK.messageHandlers.fbLogin))) {
-      fbSdkLoad(config.fb_app_id).then(() => {
-        config.fb_sdk_loaded = true;
-      });
-    } else {
-      config.fb_sdk_loaded = true;
-    }
-    /* 加载对应的 sdk */
-    await loadSdk(config);
-    /* sdk 加载完成的打点 */
-    // RG.Mark('sdk_loaded');
-    /* 执行初始化函数 */
-    // RG.jssdk.init();
-  }
-  /* 打补丁 */
-  function polyfill() {
-    const polyfills = ['Promise', 'Set', 'Map', 'Object.assign', 'Function.prototype.bind'];
-    const polyfillUrl = 'https://polyfill.io/v3/polyfill.min.js';
-    const features = polyfills.filter(feature => !(feature in window));
-    if (!features.length) return window.RgPolyfilled()
+import {loadJsSync, getUrlParams, loadJsRepeat} from './utils/index';
 
-    var s = document.createElement('script');
-    s.src = `${polyfillUrl}?features=${features.join(',')}&flags=gated,always&rum=0`;
-    s.async = true;
-    document.head.appendChild(s);
-    s.onload = function () {
-      window.RgPolyfilled()
-    }
-  }
-
-  /* 获取所有的地址栏参数 */
-  function getUrlParam() {
-    var result = Object.create(null);
-    var interrogationIndex = location.href.indexOf('?') + 1;
-    var str = interrogationIndex === 0 ? '' : location.href.slice(interrogationIndex);
-    if (str) {
-      var arr = str.split(/&|%26/);
-      arr.forEach(item => {
-        var arr = item.split(/=|%3D/);
-        var key = arr[0];
-        var val = arr[1];
-        result[key] = val;
+/* 加载 facebook jssdk */
+function fbSdkLoad(fbAppId: string) {
+  return new Promise<void>((resolve, reject) => {
+    window.fbAsyncInit = function () {
+      FB.init({
+        appId: fbAppId,
+        status: true,
+        xfbml: true,
+        version: FBVersion,
+        cookie: true
       });
-    }
-    return result;
-  }
-  /* 初始化VConsole,用作微端的查看日志 */
-  function initDebugger() {
-    return new Promise(resolve => {
-      var js = document.createElement('script');
-      js.src = '//cdnjs.cloudflare.com/ajax/libs/vConsole/3.2.0/vconsole.min.js';
-      js.onload = () => {
-        new VConsole();
-        resolve();
-      };
-      document.head.appendChild(js);
+      resolve();
+    };
+    (function (d, s, id) {
+      var js,
+        fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s);
+      js.id = id;
+      js.src = 'https://connect.facebook.net/en_US/sdk.js';
+      fjs.parentNode.insertBefore(js, fjs);
+    })(document, 'script', 'facebook-jssdk');
+  });
+}
+/* 获取游戏的配置 */
+async function getConfig(appId: string, advChannel: string): Promise<ExtendedConfig> {
+  if (!appId || !advChannel) throw new TypeError('appId or advChannel is not defined');
+  return import(`./config/games/${appId}.ts`).then(module =>
+    Object.assign({}, module.default.default, module.default[advChannel])
+  );
+}
+/* 加载对应sdk */
+function loadSdk(config: any) {
+  // let sdk: Web | Native | FacebookInstantGames | FacebookWebGames | UniteSdk = null;
+  const advChannel = +config.urlParams.advChannel;
+  if (advChannel > 30000 && advChannel < 31000) {
+    // web端的sdk
+    return import('./sdks/web').then(module => {
+      return new module.default(config);
     });
-  }
-  /* 获取游戏的配置 */
-  async function getConfig(appId: string, advChannel: string) {
-    if (!appId || !advChannel) throw 'appId or advChannel is not defined';
-    const gameConfig = await import(`./config/${appId}.ts`).then(module => {
-      const configs = module.default;
-      return configs[advChannel] ? configs[advChannel] : configs.default;
+  } else if (advChannel < 30000) {
+    // native端的sdk
+    return import('./sdks/native').then(module => {
+      return new module.default(config);
     });
-    const Language = await import(`./view2/language/${gameConfig.language}.ts`).then(module => {
-      return module.default;
-    });
-    return Object.assign(gameConfig, {i18n: Language});
-  }
-  /* 加载对应sdk */
-  function loadSdk(config: any) {
-    // let sdk: Web | Native | FacebookInstantGames | FacebookWebGames | UniteSdk = null;
-    const advChannel = +config.urlParams.advChannel;
-    if (advChannel > 30000 && advChannel < 31000) {
-      // web端的sdk
-      return import('./sdks/web').then(module => {
-        return new module.default(config);
-      });
-    } else if (advChannel < 30000) {
-      // native端的sdk
-      return import('./sdks/native').then(module => {
-        return new module.default(config);
-      });
-    } else if (advChannel > 31000 && advChannel < 32000) {
+  } /* else if (advChannel > 31000 && advChannel < 32000) {
       // facebook webgame的sdk
       return import('./sdks/facebookWebGame').then(module => {
         return new module.default(config);
@@ -108,37 +55,51 @@
       return import('./sdks/facebookInstantGame').then(module => {
         return new module.default(config);
       });
-    } else if (advChannel > 33000 && advChannel < 35000) {
-      //  联运sdk
-      return import('./sdks/uniteSdk/quick').then(module => {
-        return new module.default(config);
-      });
-    } else {
-      throw 'unknow advChannel';
-    }
+    } */ else if (
+    advChannel > 33000 &&
+    advChannel < 35000
+  ) {
+    //  联运sdk
+    return import('./sdks/uniteSdk/quick').then(module => {
+      return new module.default(config);
+    });
+  } else {
+    throw 'unknow advChannel';
   }
-  /* 加载 facebook jssdk */
-  function fbSdkLoad(fbAppId: string) {
-    return new Promise((resolve, reject) => {
-      window.fbAsyncInit = function () {
-        FB.init({
-          appId: fbAppId,
-          status: true,
-          xfbml: true,
-          version: FBVersion,
-          cookie: true
-        });
-        resolve();
-      };
-      (function (d, s, id) {
-        var js,
-          fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) return;
-        js = d.createElement(s);
-        js.id = id;
-        js.src = 'https://connect.facebook.net/en_US/sdk.js';
-        fjs.parentNode.insertBefore(js, fjs);
-      })(document, 'script', 'facebook-jssdk');
+}
+
+async function init() {
+  /* 获取所有的地址栏参数 */
+  const urlParams = getUrlParams<UrlParams>(location.href);
+  // 加载config
+  let config = await getConfig(urlParams.appId, urlParams.advChannel);
+  config.urlParams = urlParams;
+  // 是否需要加载 FB sdk
+  const advChannel = +urlParams.advChannel;
+  if (advChannel < 30000 || (advChannel > 32000 && advChannel < 33000)) {
+    config.fb_sdk_loaded = true;
+  } else {
+    fbSdkLoad(config.fbAppId).then(() => {
+      config.fb_sdk_loaded = true;
     });
   }
-})(window);
+  /* 加载 react-js  */
+  if (!SERVER) {
+    await loadJsRepeat({url: reactSrc, id: 'rg-react'});
+    await Promise.all([
+      loadJsRepeat({url: reactDomSrc, id: 'rg-react-dom'}),
+      loadJsRepeat({url: reactRouterDomSrc, id: 'rg-react-routerdom'})
+    ]);
+  }
+  /* 加载 sdk */
+  await loadSdk(config);
+}
+
+const modernBrowser = 'Promise' in window && 'Set' in window && 'Map' in window;
+
+if (modernBrowser) {
+  init();
+} else {
+  const url = VERSION === 'dev' ? './polyfills.js' : SERVER + 'polyfills.js';
+  loadJsSync({url, id: 'rg-polyfills', success: init});
+}

@@ -1,6 +1,5 @@
 import * as React from 'react';
 
-import App from '../../App';
 interface IState {
   msg: string;
   isShow: boolean;
@@ -20,19 +19,18 @@ class Notice extends React.Component<{}, IState> {
   };
 
   showTip = () => {
-    const that = this;
     this.isAnimation = true
-    function alert() {
-      if (that.noticeList.length === 0) {
-        that.isAnimation = false
-        that.setState({isShow: false});
+    const _alert = () => {
+      if (this.noticeList.length === 0) {
+        this.isAnimation = false;
+        this.setState({isShow: false});
         return;
       }
-      const msg = that.noticeList.shift();
-      that.setState({msg});
-      setTimeout(alert, 3000);
-    }
-    alert();
+      const msg = this.noticeList.shift();
+      this.setState({msg});
+      setTimeout(_alert, 3000);
+    };
+    _alert();
   };
 
   render() {

@@ -1,11 +1,5 @@
 export default class AndroidApi {
   /* FB 是否已经挪移到原生,兼容老包代码 */
-  get hasFbLogin() {
-    return window.JsToNative.fbLogin ? true : false;
-  }
-  get hasFbShare() {
-    return window.JsToNative.fbShare ? true : false;
-  }
   constructor() {
     if (!window.JsToNative) checkJsToNative();
   }
@@ -36,7 +30,6 @@ export default class AndroidApi {
   }
   /* 获取设备信息 */
   getDeviceMsg(): Promise<DeviceMsg> {
-    console.log('JsToNative:: getDeviceMsg');
     let msg = JSON.parse(window.JsToNative.getDeviceMsg());
     console.log('JsToNative:: getDeviceMsg result:', msg);
     return Promise.resolve(msg);
@@ -88,9 +81,9 @@ function checkJsToNative() {
     gameEvent: Fn,
     jpwork: Fn,
     consumeOrder: Fn,
-    exitApp: Fn
-    //fbLogin: Fn,
-    //fbShare: Fn
+    exitApp: Fn,
+    fbLogin: Fn,
+    fbShare: Fn
   };
 }
 /* 在 微端 window上挂载的方法 */
@@ -102,8 +95,8 @@ declare global {
       consumeOrder(params: string): void;
       exitApp(): void;
       jpwork(params: string): void;
-      fbLogin?(): void;
-      fbShare?(url: string): void;
+      fbLogin(): void;
+      fbShare(url: string): void;
       getDeviceMsg(): string;
     };
   }
@@ -174,4 +167,6 @@ export interface ConsumeOrderParams {
   code: number;
   exInfo: string;
   error_msg?: string;
+  money?: number;
+  currency?: string;
 }

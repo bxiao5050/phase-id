@@ -1,17 +1,13 @@
-/yarn.lock
-
-/node_modules
-
-/yarn-error.log
-
-/test
-
-/dist
-
-/build
-/doc/site
-/static
+yarn.lock
+yarn-error.log
+node_modules
 
 Jenkinsfile
 /ansible
-src/jssdk/view3
+
+test
+dist
+build
+doc/site
+
+.vscode

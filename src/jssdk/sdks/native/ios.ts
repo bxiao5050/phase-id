@@ -9,13 +9,6 @@ import {
 } from './android';
 
 export default class IosApi {
-  /* FB 是否已经挪移到原生,兼容老包代码 */
-  get hasFbLogin() {
-    return window.webkit.messageHandlers.fbLogin ? true : false;
-  }
-  get hasFbShare() {
-    return window.webkit.messageHandlers.fbShare ? true : false;
-  }
   constructor() {
     if (!window.JsToNative) checkWK();
   }

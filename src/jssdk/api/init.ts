@@ -1,7 +1,7 @@
-import * as CryptoJS from 'crypto-js';
-import {signed} from '../utils';
+import {signed, getParameterByName, initDebugger} from '../utils';
 import Http from '../api/Http';
 
+type Publics = InitConfigRes['publics'];
 export default class Init {
   private appKey: string = '';
   /* 设置加密参数 */
@@ -12,26 +12,45 @@ export default class Init {
     params.sign = signed([params.appId, params.source, params.advChannel, this.appKey]);
     return Http.ins
       .post<InitConfigRes>({route: '/config/v3.1/initSDK', data: params})
-      .then(res => {
+      .then(async res => {
         if (res.code === 200) {
           const verifys: {gpVerify: string; gpProduct: string} = JSON.parse(
             this.AESdecode(res.verifys)
           );
+          /* 是否要加载VConsole */
+          if (res.publics && res.publics.consoleIp) {
+            const user = JSON.parse(localStorage.getItem('user'));
+            const userIds = res.publics.consoleIp.split(',');
+            if (
+              (user && userIds.indexOf(user.userId + '') !== -1) ||
+              getParameterByName('debugger')
+            ) {
+              await initDebugger();
+            }
+          }
           return {
             appId: params.appId,
             advChannel: params.advChannel,
             gpProduct: verifys.gpProduct,
             gpVerify: verifys.gpVerify,
-            gpPluginAction: res.publics && res.publics.gpPluginAction,
-            gpPluginGpUrl: res.publics && res.publics.gpPluginGpUrl,
-            gpPluginType: res.publics && res.publics.gpPluginType,
-            gpPluginName: res.publics && res.publics.gpPluginName,
-            gpPluginLoadingUrl: res.publics && res.publics.gpPluginLoadingUrl
+            gpPluginAction: this.hasProp(res, 'gpPluginAction'),
+            gpPluginGpUrl: this.hasProp(res, 'gpPluginGpUrl'),
+            gpPluginType: this.hasProp(res, 'gpPluginType'),
+            gpPluginName: this.hasProp(res, 'gpPluginName'),
+            gpPluginLoadingUrl: this.hasProp(res, 'gpPluginLoadingUrl'),
+            popUpSwitch: this.hasProp(res, 'popUpSwitch') as '0' | '1',
+            popUpInterval: this.hasProp(res, 'popUpInterval'),
+            rewardUrl: this.hasProp(res, 'rewardUrl'),
+            fbUrl: this.hasProp(res, 'fbUrl'),
+            firstPopUpInterval: this.hasProp(res, 'firstPopUpInterval')
           };
         } else {
           return Promise.reject(res);
         }
       });
+  }
+  hasProp<T extends keyof Publics>(res: InitConfigRes, propName: T): Publics[T] {
+    return res.publics && res.publics[propName];
   }
   // 官方支付的加密参数
   private key = CryptoJS.enc.Utf8.parse('flowerwordchangi');
@@ -118,5 +137,16 @@ export interface InitConfigRes extends ServerRes {
     gpPluginLoadingUrl?: string;
     gpPluginType?: string;
     gpPluginName?: string;
+    consoleIp?: string;
+    // firstPopUpInterval 游客注册的第一次的弹窗时间
+    firstPopUpInterval: string;
+    // 游客升级弹窗开关  0 关  1开
+    popUpSwitch?: '0' | '1';
+    // 弹窗间隔  单位秒
+    popUpInterval?: string;
+    // 游客升级奖励页面
+    rewardUrl: string;
+    // facebook 粉丝页
+    fbUrl: string;
   };
 }

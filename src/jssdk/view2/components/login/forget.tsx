@@ -1,10 +1,7 @@
-// import './Entry.scss';
 import * as React from 'react';
-import {createLocation} from 'history';
-// import Login from './index';
 import Input from './Input';
-import {Ins} from '../..//index';
-import {UserInfo} from 'Src/jssdk/api/account';
+import { Ins } from '../..//index';
+/* 类型 */
 import {RouteComponentProps} from 'react-router-dom';
 
 export default class ForgetPassword extends React.Component<RouteComponentProps, {}> {

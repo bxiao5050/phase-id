@@ -47,11 +47,10 @@ export function loadJs({url, id}: loadJsParams, isRepeat: boolean = false): Prom
     // 新建 script 标签
     const js = document.createElement('script');
     js.id = id;
-    js.onload = function() {
-      log(url + 'load success');
+    js.onload = function () {
       resolve('200');
     };
-    js.onerror = function() {
+    js.onerror = function () {
       reject(url + 'load error');
     };
     js.src = url;
@@ -59,7 +58,23 @@ export function loadJs({url, id}: loadJsParams, isRepeat: boolean = false): Prom
     // fjs.parentNode ? fjs.parentNode.insertBefore(js, fjs) : document.body.appendChild(js);
   });
 }
-
+export function loadJsSync(params: loadJsParams & {success?: () => void; failed?: () => void}) {
+  if (!params.url) throw 'url is not defined.';
+  // 新建 script 标签
+  const js = document.createElement('script');
+  js.id = params.id;
+  if (typeof params.success === 'function') {
+    js.onload = params.success;
+  }
+  if (typeof params.failed !== 'function') {
+    params.failed = function () {
+      console.error(params.url + 'load error');
+    };
+  }
+  js.onerror = params.failed;
+  js.src = params.url;
+  document.body.appendChild(js);
+}
 //加载 js 实现断线重连 3 次,三次后直接失败弹出 alert 网络错误 Network Error
 export async function loadJsRepeat(params: loadJsParams, num: number = 3): Promise<string> {
   num--;
@@ -67,14 +82,6 @@ export async function loadJsRepeat(params: loadJsParams, num: number = 3): Promi
   if (result === '200' || num <= 0) return result;
 
   return await loadJsRepeat(params, num);
-}
-/* 加载 react react-dom react-router-dom */
-export async function loadReactJs() {
-  await loadJsRepeat({url: reactSrc, id: 'rg-react'});
-  await Promise.all([
-    loadJsRepeat({url: reactDomSrc, id: 'rg-react-dom'}),
-    loadJsRepeat({url: reactRouterDomSrc, id: 'rg-react-routerdom'})
-  ]);
 }
 // 获取 h5 游戏的首页的 origin
 export function getUrlOrigin(url: string) {
@@ -155,7 +162,7 @@ export function getOsAndModel() {
   // http://hgoebl.github.io/mobile-detect.js/
   let MobileDetect: any; //这里使用的是一个外部库，如要使用，请加载MobileDetect
   //判断数组中是否包含某字符串
-  const contains = function(needle, that) {
+  const contains = function (needle, that) {
     for (i in that) {
       if (that[i].indexOf(needle) > 0) return i;
     }
@@ -180,11 +187,7 @@ export function getOsAndModel() {
       model = sss[i].substring(0, sss[i].indexOf('Build/'));
     }
   }
-  alert(os + '---' + model); //打印系统版本和手机型号
-  /* 作者：昕鸿
-  来源：CSDN
-  原文：https://blog.csdn.net/szs860806/article/details/70316556
-  版权声明：本文为博主原创文章，转载请附上博文链接！ */
+  console.log(os + '---' + model); //打印系统版本和手机型号
 }
 export function getParameterByName(name: string) {
   const key = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
@@ -203,16 +206,18 @@ export function getObjectKeyValueStr(
   return str.length === pre.length ? '' : str.slice(0, str.length - 1);
 }
 
-export function getUrlParams(url: string) {
-  let result: {[key: string]: string} = {};
-  if (url.indexOf('?') !== -1) {
-    url
-      .slice(url.indexOf('?') + 1)
-      .split(/&/)
-      .forEach(
-        item =>
-          (result[decodeURIComponent(item.split(/=/)[0])] = decodeURIComponent(item.split(/=/)[1]))
-      );
+export function getUrlParams<T>(url: string) {
+  const result: T = Object.create(null);
+  if (typeof url !== 'string') return result;
+  const interrogationIndex = url.indexOf('?') + 1;
+  const str = interrogationIndex === 0 ? '' : location.href.slice(interrogationIndex);
+  if (str) {
+    str.split(/&|%26/).forEach(item => {
+      const arr = item.split(/=|%3D/);
+      const key = arr[0];
+      const val = arr[1];
+      result[key] = val;
+    });
   }
   return result;
 }
@@ -227,31 +232,31 @@ export function replaceUrlToHttps(url: string): string {
   if (isHttps) {
     result = url.replace(/http\:\/{0,2}/, 'https://').replace(/:[0-9]+/, '');
   }
-
   return result;
 }
-export const getUrlParam = (function() {
-  var urlParamMap = {};
-  var interrogationIndex = location.href.indexOf('?') + 1;
-  var str = interrogationIndex === 0 ? '' : location.href.slice(interrogationIndex);
-  if (str) {
-    // 不匹配str.split(/&|%26/)，地址栏转义后的参数
-    var arr = str.split(/&/);
-    arr.forEach(item => {
-      const arr = item.split(/=/);
-      urlParamMap[decodeURIComponent(arr[0])] = decodeURIComponent(arr[1]);
-    });
-  }
-  return function(name) {
-    return urlParamMap.hasOwnProperty(name) ? urlParamMap[name] : null;
-  };
-})();
 //参数签名
 export function signed(params: (string | number)[]): string {
-  // 参数签名不能用对象，有顺序，使用数组
-  // var paramskeys = Object.keys(params)
-  // var data = params.map(key => {
-  //   return params[key]
-  // }).join('') + (RG.jssdk.config.app_key)
-  return md5(params.join(''));
+  return CryptoJS.MD5(params.join('')).toString();
+}
+
+/* 初始化VConsole,用作微端的查看日志 */
+export function initDebugger() {
+  return new Promise<void>((resolve,reject) => {
+    var js = document.createElement('script');
+    js.src = '//cdnjs.cloudflare.com/ajax/libs/vConsole/3.2.0/vconsole.min.js';
+    js.onload = () => {
+      new VConsole();
+      resolve();
+    };
+    document.head.appendChild(js);
+  });
+}
+/* 初始化VConsole,用作微端的查看日志 */
+export function initDebuggerSync() {
+  var js = document.createElement('script');
+  js.src = '//cdnjs.cloudflare.com/ajax/libs/vConsole/3.2.0/vconsole.min.js';
+  js.onload = () => {
+    new VConsole();
+  };
+  document.head.appendChild(js);
 }

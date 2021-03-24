@@ -1,8 +1,4 @@
 import * as React from 'react';
-import {Route} from 'react-router-dom';
-import {createLocation} from 'history';
-// import Login from './index';
-// import Choose from './Choose';
 import {Ins} from '../../index';
 /* 导入类型 */
 import {RouteComponentProps} from 'react-router-dom';
@@ -22,26 +18,14 @@ export default class Main extends React.Component<RouteComponentProps, {}> {
       this.setState(this.state);
     }
   }
-  copy() {
-    const input = document.createElement('input');
-    input.setAttribute('readonly', 'readonly');
-    const value =
-      RG.jssdk.config.type === 2 ? `${this.state.deviceNo}` : `${RG.CurUserInfo().userId}`;
-    input.setAttribute('value', value);
-    document.body.appendChild(input);
-    input.select();
-    input.setSelectionRange(0, 9999);
-    if (document.execCommand('copy')) {
-      document.execCommand('copy');
-      console.log('copy success');
-      Ins.showNotice(RG.jssdk.config.i18n.txt_copy_success);
-    } else {
-      Ins.showPrompt(RG.jssdk.config.i18n.txt_copy, this.state.deviceNo, true);
-    }
-    document.body.removeChild(input);
-  }
   componentWillUnmount() {
     this.isUpdate = false;
+  }
+  copyDeviceNo() {
+    Ins.copy(this.state.deviceNo, RG.jssdk.config.i18n.txt_copy_success);
+  }
+  copyUserInfo() {
+    Ins.copyUserInfo();
   }
   render() {
     const i18n = RG.jssdk.config.i18n;
@@ -78,12 +62,25 @@ export default class Main extends React.Component<RouteComponentProps, {}> {
                 <span
                   className='rg-copy-divice-btn'
                   onClick={() => {
-                    this.copy();
+                    this.copyDeviceNo();
                   }}
                 >
                   {i18n.txt_copy}
                 </span>
               </p>
+              {!isGuest ? (
+                <p className='rg-account-userId'>
+                  <span>{i18n.userNameAndPwdTxt}</span>
+                  <span
+                    className='rg-copy-divice-btn'
+                    onClick={() => {
+                      this.copyUserInfo();
+                    }}
+                  >
+                    {i18n.txt_copy}
+                  </span>
+                </p>
+              ) : null}
             </div>
           </div>
           <ul className='rg-account-operatings'>
@@ -116,6 +113,7 @@ export default class Main extends React.Component<RouteComponentProps, {}> {
                 className='rg-account-operating'
                 onClick={() => {
                   if (user.emailValid !== 0) return;
+                  if (isFacebook) return;
                   history.push('/email');
                 }}
               >

@@ -1,21 +1,20 @@
+import 'crypto-js/aes';
 import Base from '../base';
 import IosApi from './ios';
 import AndroidApi from './android';
 import Init from '../../api/init';
-import {formatDate, loadReactJs} from '../../utils';
-import {initRG} from '../rg';
-import {fbLogin, fbShare} from '../../utils/fb';
+import {formatDate} from '../../utils';
+import { initRG } from '../rg';
 
 /* 引入类型 */
-import {ConsumeOrderParams, FbLoginRes, FbShareRes,DeviceMsg,GameEventParam} from './android';
+import {ConsumeOrderParams, FbLoginRes, FbShareRes, DeviceMsg, GameEventParam} from './android';
 import {GamePayParams} from '../base';
 import {InitConfigParams} from '../../api/init';
 import {PaymentChannel} from '../../api/payment';
 import App from 'Src/jssdk/view2/App';
-import {BindZoneParam} from '../rg';
 
 export default class NativeSdk extends Base {
-  type: 2;
+  type: 1 = 1;
   native: IosApi | AndroidApi;
   app: App;
   initApi = new Init();
@@ -37,13 +36,8 @@ export default class NativeSdk extends Base {
   async init() {
     /* 微端初始化 */
     this.getNativeInitConfig();
-    /* 加载 react-js  */
-    if (!(IS_DEV || IS_TEST)) {
-      await loadReactJs();
-    }
-    /* 加载 dom */
-    const {Ins} = await import('../../view2/index');
     // 挂载 dom
+    const {Ins} = await import("../../view2/index")
     this.app = Ins;
     /* 判断是否自动登录,切换账号, 还是 fbLogin*/
     const user = this.account.user;
@@ -85,11 +79,27 @@ export default class NativeSdk extends Base {
       }
     }
   }
+  isClick = false;
   async pay(params: GamePayParams) {
-    this.getNativeInitConfig();
-    return this.getPaymentInfo(params).then(res => {
+    return this.getPaymentInfo(params).then(async res => {
       if (res.payments.length) {
-        RG.jssdk.app.showPayment(res);
+        /* 当只有一种支付方式的时候,并且不显示商品列表界面,并且showMethod 是3, channel是 0=苹果支付,1=google支付的时候,不再拉起支付界面,直接下单拉起sdk */
+        if (
+          res.payments.length === 1 &&
+          res.payments[0].showProductList !== 1 &&
+          res.payments[0].showMethod === 3 &&
+          (res.payments[0].channel === 0 || res.payments[0].channel === 1)
+        ) {
+          /* 1.5秒之后可以继续下单 */
+          if (this.isClick) return;
+          this.isClick = true;
+          setTimeout(() => {
+            this.isClick = false;
+          }, 1500);
+          await this.order(res.payments[0]);
+        } else {
+          RG.jssdk.app.showPayment(res);
+        }
       } else {
         RG.jssdk.app.showPrompt(
           RG.jssdk.config.i18n.txt_warn,
@@ -126,10 +136,26 @@ export default class NativeSdk extends Base {
       return this.initApi
         .getConfig(data)
         .then(res => {
+          if (res.popUpSwitch === '1') {
+            this.config.popUpSwitch = true;
+            this.config.popUpInterval = +res.popUpInterval;
+            this.config.firstPopUpInterval = +res.firstPopUpInterval || 0;
+            // 测试使用
+            // this.config.popUpInterval = 5;
+            // this.config.firstPopUpInterval = 30;
+          }
+          this.config.fans = res.fbUrl;
+          this.config.bindVisitorGiftUrl = res.rewardUrl;
+
+          delete res.popUpSwitch;
+          delete res.popUpInterval;
+          delete res.firstPopUpInterval;
+          delete res.fbUrl;
+          delete res.rewardUrl;
+
           this.native.init(res);
           this.getConfigIsSuccess = true;
           this.getConfigResolve();
-          console.log('init completed', res);
         })
         .catch(e => {
           console.log('init err', e);
@@ -139,24 +165,19 @@ export default class NativeSdk extends Base {
   async mark(markName: string, params?: {money: string; currency: string}) {
     await this.getConfigPromise;
     let eventName: string = markName;
-    // 从配置中获取固定点,点名的配置
-    if (RG.jssdk.config.markName && RG.jssdk.config.markName[eventName]) {
-      eventName = RG.jssdk.config.markName[eventName];
-    }
     // 传递给原生的参数
     let markParmas: GameEventParam = {
       eventName
     };
-    if (this.account.user && this.account.user.userId) markParmas.userId = this.account.user.userId;
+    if (this.account.user) markParmas.userId = this.account.user.userId;
     // 获取adjust Token
     if (RG.jssdk.config.adjustToken && RG.jssdk.config.adjustToken[eventName]) {
       markParmas.eventToken = RG.jssdk.config.adjustToken[eventName];
     }
     // sdk_purchased_done，原生端根据此字符串来做是否支付的判断,adjust只需要token，不要调整代码的顺序，最后匹配购买的点名
-    if (eventName === 'Purchased') {
+    if (eventName === 'sdk_purchased_done') {
       markParmas.currency = (params && params.currency) || '';
       markParmas.money = (params && params.money) || '';
-      markParmas.eventName = 'sdk_purchased_done';
     }
     // 匹配唯一点,有的话就打唯一点,facebook不打唯一点
     if (RG.jssdk.config.adjustToken && RG.jssdk.config.adjustToken[eventName + '_unique']) {
@@ -177,7 +198,7 @@ export default class NativeSdk extends Base {
     console.info(`"${markParmas.eventName}" has marked - native`, markParmas);
   }
   async order(params: PaymentChannel) {
-    return super.order(params).then(res => {
+    return this.createOrder(params).then(res => {
       if (res.code === 200 && params.showMethod === 3) {
         this.native.jpwork({
           productName: params.selectedProduct.productName,
@@ -193,12 +214,7 @@ export default class NativeSdk extends Base {
   }
 
   async fbLogin(isLogout: boolean) {
-    let fbUserInfo: FbLoginRes = null;
-    if (this.native.hasFbLogin) {
-      fbUserInfo = await this.native.fbLogin();
-    } else {
-      fbUserInfo = await fbLogin(this.config.fbAppId, isLogout);
-    }
+    let fbUserInfo: FbLoginRes = await this.native.fbLogin();
     if (fbUserInfo) {
       return this.platformRegister(fbUserInfo);
     } else {
@@ -208,11 +224,7 @@ export default class NativeSdk extends Base {
   }
   /* facebook 分享 */
   fbShare(url: string) {
-    if (this.native.hasFbShare) {
-      return this.native.fbShare(url);
-    } else {
-      return fbShare(url);
-    }
+    return this.native.fbShare(url);
   }
   /* 打开粉丝页 */
   openFansPage() {
@@ -248,35 +260,41 @@ export default class NativeSdk extends Base {
             if (res.code === 200) {
               result = {
                 code: res.code,
-                exInfo: data.exInfo
+                exInfo: data.exInfo,
+                money: res.money,
+                currency: res.currency
               };
+              if (RG.jssdk.config.isPurchasedMark) {
+                RG.Mark('sdk_purchased_done', {
+                  userId: +RG.CurUserInfo().userId,
+                  money: res.money + '',
+                  currency: res.currency
+                });
+              }
             } else {
               result = {
                 code: res.code,
                 error_msg: res.error_msg,
                 exInfo: data.exInfo
               };
-              that.app.showNotice(RG.jssdk.config.i18n.UnknownErr);
+              that.app.showNotice(RG.jssdk.config.i18n.net_error_0);
             }
             that.native.consumeOrder(result);
             that.app.hidePayment();
           });
       },
       jpworkResult: function (params: string | JpworkResultParams) {
-        let data: JpworkResultParams = params as JpworkResultParams;
-        if (typeof params === 'string') {
-          data = JSON.parse(params);
-        }
-        if (RG.jssdk.config.isPurchasedMark && data.code === 200) {
-          RG.Mark('sdk_purchased_done', {
-            userId: RG.CurUserInfo().userId,
-            money: data.money,
-            currency: data.currency
-          });
-        }
+        console.log(' window.NativeToJs:: jpworkResult', params);
       },
       goBack: function () {
-        if (confirm(RG.jssdk.config.i18n.tuichu)) window.JsToNative.exitApp();
+         console.log(' window.NativeToJs:: goBack');
+         that.app
+           .showPrompt(RG.jssdk.config.i18n.txt_warn, RG.jssdk.config.i18n.txt_exit_tip)
+           .then(res => {
+             if (res) {
+              window.JsToNative.exitApp();
+             }
+           });
       },
       deviceMsg: function (params: string | DeviceMsg) {
         let result: DeviceMsg = params as DeviceMsg;
@@ -304,16 +322,17 @@ export default class NativeSdk extends Base {
         that.native.fbSharePromise = null;
       },
       fbLoginHandle: function (params: string | FbLoginRes) {
-        let result: FbLoginRes = params as FbLoginRes;
-        if (typeof params === 'string') {
-          result = JSON.parse(params);
-        }
-        result.userName = 'fb-' + result.userId;
-        result.password = '';
-        result.accountType = 2;
-        result.userChannel = 0;
-        that.native.fbLoginResolve(result);
-        that.native.fbLoginPromise = null;
+         console.log(' window.NativeToJs:: fbLoginHandle', params);
+         let result: FbLoginRes = params as FbLoginRes;
+         if (typeof params === 'string') {
+           result = JSON.parse(params);
+         }
+         localStorage.setItem('rg_fb_old_Info', result.mapping);
+         result.userName = 'fb-' + result.userId;
+         result.password = result.userId + 'oneFlower1WorldOneLeaf1Bodhi';
+         result.accountType = 2;
+         result.userChannel = 0;
+         that.native.fbLoginResolve(result);
       }
     };
   }

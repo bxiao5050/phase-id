@@ -1,10 +1,5 @@
 import * as React from 'react';
-import {Route} from 'react-router-dom';
-import {createLocation} from 'history';
-// import Login from './index';
-// import Choose from './Choose';
 import {Ins} from '../../index';
-// import Account from "../../../Base/Account";
 /* 导入类型 */
 import {RouteComponentProps} from 'react-router-dom';
 import {UserInfo} from 'Src/jssdk/api/account';
@@ -27,8 +22,7 @@ export default class Main extends React.Component<RouteComponentProps, IState> {
         if (res && res.code === 200) {
           this.props.history.push('/loading');
         } else {
-          Ins.showNotice(RG.jssdk.config.i18n.net_error_0);
-          // console.log(res);
+          Ins.showNotice(res.error_msg);
         }
       })
       .catch(e => {
@@ -41,7 +35,6 @@ export default class Main extends React.Component<RouteComponentProps, IState> {
         this.props.history.push('/loading');
       } else {
         Ins.showNotice(res.error_msg);
-        // console.log(res);
       }
     });
   }

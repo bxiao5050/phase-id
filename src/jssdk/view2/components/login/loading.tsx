@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Ins } from '../../index';
+import APP from '../../App';
 import {getAccountType} from 'Src/jssdk/utils';
 
 /* 导入类型 */
@@ -13,12 +13,40 @@ export default class Loading extends React.Component<RouteComponentProps, {}, an
   componentDidMount() {
     this.setState({
       clock: setTimeout(() => {
-        var {userType, accountType} = RG.jssdk.account.user;
-        Ins.hideLogin();
-        var isGuest = getAccountType(userType, accountType) === 'guest' ? true : false;
-        Ins.showHover(isGuest);
+        const {userType, accountType, firstLogin} = RG.jssdk.account.user;
+        APP.instance.hideLogin();
+        const isGuest = getAccountType(userType, accountType) === 'guest' ? true : false;
+        APP.instance.showHover(isGuest);
         if (window.rgAsyncInit) {
+          console.log('window.rgAsyncInit 已经调用');
           window.rgAsyncInit();
+        }
+        if (userType === 0 && RG.jssdk.config.popUpSwitch) {
+          if (firstLogin === 1) {
+            // 注册游客 30 分钟后弹窗
+            const time = RG.jssdk.config.firstPopUpInterval
+              ? RG.jssdk.config.firstPopUpInterval * 1000
+              : 1800000;
+            setTimeout(() => {
+              // 如果用户已经升级就不再提示
+              if (RG.jssdk.account.user.userType === 1) return;
+              APP.instance.showBindTip();
+            }, time);
+          } else {
+            // 登录时立即弹窗
+            if (RG.jssdk.config.popUpInterval !== 0) {
+              APP.instance.showBindTip();
+            }
+            //  每隔一段时间弹一次绑定弹窗
+            APP.instance.autoShowBindTip();
+          }
+        }
+        if (
+          RG.jssdk.account.user.userType === 1 &&
+          RG.jssdk.account.user.firstLogin === 1 &&
+          RG.type === 1
+        ) {
+          APP.instance.showRegisterSuccess();
         }
       }, 2000)
     });

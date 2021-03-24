@@ -11,7 +11,7 @@ import Type4 from './type4';
 import TypeList from './typelist';
 
 import {History, createLocation} from 'history';
-import {PaymentChannel, CreateOrderRes} from 'Src/jssdk/api/payment';
+import {PaymentChannel} from 'Src/jssdk/api/payment';
 
 export default class Payment extends React.Component<{history: History}, any> {
   state = {
@@ -19,7 +19,7 @@ export default class Payment extends React.Component<{history: History}, any> {
     paymentDatas: {},
     url: '',
     winOpen: false,
-    isLandscape:true
+    isLandscape: true
   };
   componentDidMount() {
     // "portrait", "landscape";
@@ -29,9 +29,9 @@ export default class Payment extends React.Component<{history: History}, any> {
         .fontFamily.indexOf('landscape') !== -1;
     if (isLandscape) {
       this.intoPay(Ins.state.paymentConfig.payments[0]);
-      this.setState({ isActive: 0, isLandscape: true });
+      this.setState({isActive: 0, isLandscape: true});
     } else {
-      this.setState({ isLandscape: false });
+      this.setState({isLandscape: false});
     }
   }
   private isPay = false;
@@ -119,17 +119,16 @@ export default class Payment extends React.Component<{history: History}, any> {
   };
   render() {
     const i18n = RG.jssdk.config.i18n;
-    const isMain = this.props.history.location.pathname === "/";
+    const isMain = this.props.history.location.pathname === '/';
     const isLandscape = this.state.isLandscape;
     const isShowRight = (!isLandscape && !isMain) || isLandscape;
-    // console.log(this.props.history)
     return (
       <div className='rg-payments rg-center-a rg-login-main'>
         <div className='rg-payments-header rg-login-header'>
           <span
             className='rg-icon-back'
             onClick={() => {
-              if(this.props.history.length <= 1)return;
+              if (this.props.history.length <= 1) return;
               this.props.history.goBack();
             }}
           ></span>
@@ -142,7 +141,13 @@ export default class Payment extends React.Component<{history: History}, any> {
           ></span>
         </div>
         <div className='rg-payments-content clearfix'>
-          <div className={(!isLandscape && isMain) || isLandscape ? "rg-payments-left": "rg-payments-left rg-hide"}>
+          <div
+            className={
+              (!isLandscape && isMain) || isLandscape
+                ? 'rg-payments-left'
+                : 'rg-payments-left rg-hide'
+            }
+          >
             <ul className='rg-payments-infos'>
               {Ins.state.paymentConfig.payments.map((node, index) => {
                 return (
@@ -180,7 +185,7 @@ export default class Payment extends React.Component<{history: History}, any> {
               })}
             </ul>
           </div>
-          <div className={isShowRight ? "rg-payments-right": "rg-payments-right rg-hide"}>
+          <div className={isShowRight ? 'rg-payments-right' : 'rg-payments-right rg-hide'}>
             <Switch>
               <Route
                 exact

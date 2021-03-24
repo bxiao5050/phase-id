@@ -1,6 +1,5 @@
 import * as React from 'react';
 import Payment from './index';
-import {createLocation} from 'history';
 
 type paymentProps = {
   Payment: Payment;

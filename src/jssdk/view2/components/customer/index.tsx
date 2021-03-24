@@ -1,6 +1,6 @@
 // import './Loading.scss';
 import * as React from 'react';
-import {Ins} from '../../index';
+// import {Ins} from '../../index';
 
 export default class Customer extends React.Component<
   {hideCustomer: (hide: boolean) => void},

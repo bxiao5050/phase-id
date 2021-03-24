@@ -1,4 +1,4 @@
-//import '../plugins/adjust.min.js';
+import './adjust.min.js';
 interface AdjustEventToken {
   [key: string]: string;
 }

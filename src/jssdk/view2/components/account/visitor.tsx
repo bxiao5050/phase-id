@@ -39,11 +39,8 @@ export default class Visitor extends React.Component<RouteComponentProps, {}, an
       .bindVisitor(userName, password1)
       .then(res => {
         if (res.code === 200) {
-          RG.jssdk.account.user = Object.assign({}, RG.jssdk.account.user, {
-            userName: this.state.userName,
-            password: md5(password1),
-            userType: 1
-          });
+          RG.jssdk.config.popUpSwitch = false;
+          RG.jssdk.app.showBindSuccess();
           Ins.showNotice(i18n.account_bind_success);
           this.props.history.replace('main');
         } else if (res.code === 108) {
@@ -71,6 +68,7 @@ export default class Visitor extends React.Component<RouteComponentProps, {}, an
       <div className='rg-login-main rg-center-a rg-account'>
         <div className='rg-login-header'>
           {i18n.float_button_bind_account}
+          {/*  关闭按钮 */}
           <span
             className='rg-icon-close'
             onClick={() => {
@@ -80,6 +78,7 @@ export default class Visitor extends React.Component<RouteComponentProps, {}, an
         </div>
         <div className='rg-login-wrap rg-register-wrap'>
           <div>
+            {/* 账号 */}
             <div className='rg-choose'>
               <span className='rg-icon-user'></span>
               <Input
@@ -101,6 +100,7 @@ export default class Visitor extends React.Component<RouteComponentProps, {}, an
               ) : null}
             </div>
           </div>
+          {/* 密码 */}
           <div className='rg-choose'>
             <span className='rg-icon-password'></span>
             <Input
@@ -142,11 +142,18 @@ export default class Visitor extends React.Component<RouteComponentProps, {}, an
             ) : null}
           </div>
         </div>
+        {/* 是否显示密码 */}
         <div className='rg-check' onClick={this.changeType}>
           <div className={'rg-checkbox ' + (this.state.showPass ? 'rg-register-active' : '')}></div>
           <p className='rg-checkbox-txt'>{i18n.txt_show_pwd}</p>
         </div>
-        <div className='rg-btn-login' onClick={() => {this.bindVisitor()}}>
+        {/* 绑定游客 */}
+        <div
+          className='rg-btn-login'
+          onClick={() => {
+            this.bindVisitor();
+          }}
+        >
           {i18n.cg_txt_confirm_submit}
         </div>
       </div>

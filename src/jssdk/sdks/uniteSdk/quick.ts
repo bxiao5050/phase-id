@@ -6,7 +6,7 @@ import {initRG, BindZoneParam} from '../rg';
 
 // quick sdk 不需要界面
 export default class QuickSdk extends Base {
-  type: 5;
+  type: 6 = 6;
   private quickUserInfo: QuickLoginRes['data'];
   /* quick 平台需要的后端接口 */
   private quickApi = new QuickApi();
@@ -58,7 +58,7 @@ export default class QuickSdk extends Base {
     if (verifyRes && verifyRes.code === 200) {
       this.quickUserInfo = loginRes;
       const userName = 'Quick-' + loginRes.uid;
-      const password = md5(userName);
+      const password = CryptoJS.MD5(userName).toString();
       this.platformRegister({
         userName,
         password,
@@ -127,7 +127,7 @@ export default class QuickSdk extends Base {
     const pamentInfoRes = await this.getPaymentInfo(params);
     if (pamentInfoRes.code === 200) {
       // 2. 平台创建订单
-      const orderRes = await this.order(pamentInfoRes.payments[0]);
+      const orderRes = await this.createOrder(pamentInfoRes.payments[0]);
       if (orderRes.code === 200) {
         // 3. 调用quick支付
         const {gameZoneId, roleId, roleName, level} = params;

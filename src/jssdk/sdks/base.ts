@@ -13,17 +13,23 @@ import {
 } from '../api/accountApi';
 import {DeviceMsg} from './native/android';
 import {BindZoneParam} from './rg';
+import * as CryptoJS from 'crypto-js/core';
+// 首先在window上挂载
+window.CryptoJS = CryptoJS;
+import 'crypto-js/md5';
 
-export default class Base {
+export default abstract class Base {
   sdkVersion: string = VERSION;
   accountApi = new AccountApi();
   login = new Login();
   payment = new Payment();
   account = new Account();
-  readonly devicePromise: Promise<DeviceMsg>;
+  abstract get devicePromise(): Promise<DeviceMsg>;
   config: ExtendedConfig;
   init(config: ExtendedConfig) {
     this.config = config;
+    /* 控制游客升级弹窗是否弹出 */
+    this.config.popUpSwitch = false;
     const appKey = config.appKey;
     this.accountApi.setAppKey(appKey);
     this.login.setAppKey(appKey);
@@ -32,8 +38,10 @@ export default class Base {
   async platformLogin(userName: string, pwd: string) {
     const {appId, advChannel} = this.config.urlParams;
     // 密码限制长度的6-20位,加密后为32位
-    const password = pwd.length === 32 ? pwd : md5(pwd);
+    const password = pwd.length === 32 ? pwd : CryptoJS.MD5(pwd).toString();
+    const _up = pwd.length === 32 ? this.account.user._up : pwd;
     const deviceMsg = await this.devicePromise;
+    const exInfo = localStorage.getItem('rg_fb_old_Info') || '[]';
     let data: LoginParam = {
       appId: +appId,
       userName: userName,
@@ -47,7 +55,7 @@ export default class Base {
       device: deviceMsg.device,
       version: deviceMsg.version,
       sdkVersion: this.sdkVersion,
-      exInfo: '',
+      exInfo,
       sign: ''
     };
     return this.login.login(data).then(res => {
@@ -60,15 +68,16 @@ export default class Base {
         ) {
           nickName = this.account.user.nickName;
         }
-        this.account.user = Object.assign(res.data, {password, token: res.token, nickName});
+        this.account.user = Object.assign(res.data, {password, token: res.token, nickName, _up});
       }
       return res;
     });
   }
   async platformRegister(params: RegisterInfo) {
     const {appId, advChannel} = this.config.urlParams;
-    const password = md5(params.password);
+    const password = CryptoJS.MD5(params.password).toString();
     const deviceMsg = await this.devicePromise;
+    const exInfo = localStorage.getItem('rg_fb_old_Info') || '[]';
     let data: RegisterParams = {
       appId: +appId,
       userName: params.userName,
@@ -82,7 +91,7 @@ export default class Base {
       device: deviceMsg.device,
       version: deviceMsg.version,
       sdkVersion: this.sdkVersion,
-      exInfo: params.exInfo || '',
+      exInfo,
       sign: '',
       nickName: params.nickName || '',
       accountType: params.accountType,
@@ -92,10 +101,12 @@ export default class Base {
       telephone: params.telephone || '',
       userChannel: params.userChannel
     };
+    const _up = params.accountType === 2 || params.accountType === 11 ? '' : params.password;
     return this.login.register(data).then(res => {
       if (res.code === 200) {
         this.account.user = Object.assign(res.data, {
           password,
+          _up,
           token: res.token,
           nickName: params.nickName
         });
@@ -135,16 +146,17 @@ export default class Base {
     return this.payment.getPaymentConfig(data);
   }
   /* 将选择的商品,替换到 selectProduct 上 */
-  async order(params: PaymentChannel) {
+  async createOrder(params: PaymentChannel) {
     const {appId, advChannel} = this.config.urlParams;
     const deviceMsg = await this.devicePromise;
     const {gameOrderId, gameZoneId, roleId, roleName, level} = this.gamePayInfo;
+    const userId = this.account.user.userId;
     const {channel, code, isOfficial, exInfo} = params;
     const {amount, currency, productName, itemType} = params.selectedProduct;
     let data: CreateOrderParams = {
       appId: +appId,
       advChannel: +advChannel,
-      userId: this.account.user.userId,
+      userId,
       gameOrderId,
       gameZoneId,
       roleId,
@@ -218,21 +230,22 @@ export default class Base {
     return this.accountApi.bindZone(data);
   }
   async bindVisitor(userName: string, password: string) {
-    password = md5(password);
+    let md5Password = CryptoJS.MD5(password).toString();
     let data: BindVisitorParams = {
       appId: +this.config.urlParams.appId,
       userId: this.account.user.userId,
       userName,
-      password,
+      password: md5Password,
       email: '',
       sign: ''
     };
     return this.accountApi.bindVisitor(data).then(res => {
       if (res.code === 200) {
         this.account.user = Object.assign(this.account.user, {
-          password,
+          password: md5Password,
           userName,
-          userType: 1
+          userType: 1,
+          _up: password
         });
       }
 
@@ -240,8 +253,8 @@ export default class Base {
     });
   }
   async changePassword(oldpass: string, newpass: string) {
-    let password = md5(oldpass);
-    let newPassword = md5(newpass);
+    let password = CryptoJS.MD5(oldpass).toString();
+    let newPassword = CryptoJS.MD5(newpass).toString();
     let data: ChangePwdParams = {
       appId: +this.config.urlParams.appId,
       userId: this.account.user.userId,
@@ -252,14 +265,15 @@ export default class Base {
     return this.accountApi.changePassword(data).then(res => {
       if (res.code === 200) {
         this.account.user = Object.assign(this.account.user, {
-          password: newPassword
+          password: newPassword,
+          _up: newpass
         });
       }
       return res;
     });
   }
   async verifyPassword(password: string) {
-    password = md5(password);
+    password = CryptoJS.MD5(password).toString();
     return this.accountApi.verifyPassword(
       this.config.urlParams.appId,
       this.account.user.userId,
@@ -287,7 +301,7 @@ export default class Base {
 }
 /* 实现一个切换账号的功能,切换后通知游戏再用新的用户信息去选择区服,我们的平台点击切换后重定向到初始登录页 */
 export interface GamePayParams {
-  // userId: number;
+  userId?: number;
   gameZoneId: string;
   gameOrderId: string;
   roleId: string;

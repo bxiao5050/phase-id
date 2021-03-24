@@ -1,5 +1,4 @@
 import React, {Fragment} from 'react';
-
 interface IState {
   title: string;
   content: string;

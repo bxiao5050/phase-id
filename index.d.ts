@@ -2,6 +2,19 @@
 declare const VConsole: any;
 /* adjust 打点的 jssdk 暂时未使用 */
 declare const Adjust: any;
+declare const CryptoJS: {
+  MD5: (str: string) => {toString: () => string};
+  enc: {Utf8: {parse: (str: string) => string}};
+  mode: {CBC: string};
+  pad: {Pkcs7: string};
+  AES: {
+    decrypt: (
+      str: string,
+      key: string,
+      config: {iv: string; mode: string; padding: string}
+    ) => {toString: (type?: any) => string};
+  };
+};
 /* 地址栏参数 */
 interface UrlParams {
   appId: string;
@@ -24,6 +37,8 @@ interface Config {
   fbAppId: string;
   /* sdk 语言 */
   language: string;
+  /* 语言包 */
+  i18n: I18n;
   // 悬浮球距离顶边的距离rem
   hoverTop: string;
   // 悬浮球是在左边还是右边
@@ -44,6 +59,10 @@ interface Config {
   androidDonloadUrl?: string;
   /* 公司自己开发游戏的首页的地址 如: https://www.narutoh5game.com/h5-plays/index.html*/
   indexUrl?: string;
+  /* 修改请求地址 */
+  server?: string;
+  markFBID?: string;
+  markGAID?: string;
   /* adjust 打点,原生端有 */
   adjustId?: string;
   /* adjust 打点的所有的 token */
@@ -74,6 +93,13 @@ interface ExtendedConfig extends Config {
   i18n: I18n;
   /* facebook jssdk 是否加载完成 */
   fb_sdk_loaded: boolean;
+  /** 游客是否需要在登录时没各多少时间弹出提示升级弹窗*/
+  popUpInterval: number;
+  /** 第一次弹窗时间 */
+  firstPopUpInterval: number;
+  /** 控制是否需要游客升级弹窗 */
+  popUpSwitch: boolean;
+  bindVisitorGiftUrl: string;
 }
 
 interface Window {
@@ -82,8 +108,8 @@ interface Window {
   /* 登录完成通知游戏的回调 */
   rgAsyncInit: Function;
   // 打补丁
-  RgPolyfilled: Function;
-  test: any;
+  // RgPolyfilled: Function;
+  CryptoJS: typeof CryptoJS;
 }
 interface I18n {
   txt_fast: string; // '快速开始 >>';
@@ -124,9 +150,9 @@ interface I18n {
   // txt_account_err:string;// '账号格式不正确';
   // txt_password_err:string;// '密码不符合要求';
   float_button_bind_account: string; // '账号升级';
-  // float_button_user_center:string;// '个人中心';
+  float_button_user_center: string; // '个人中心';
   // float_button_message:string;// '消息';
-  // float_button_service:string;// '客服';
+  float_button_service: string; // '客服';
   // float_button_forum:string;// '论坛';
   txt_input_old_psw: string; // '输入原密码';
   txt_input_new_psw: string; // '输入新密码';
@@ -258,7 +284,7 @@ interface I18n {
   // net_error_111111:string;// '网络连接失败';
 
   // 下面是bluepay的code
-  // net_error_30200:string;// '支付完成';
+  net_error_30200:string;// '支付完成';
   // net_error_30400:string;// '支付出现异常，请重试';
   // net_error_30405:string;// '未安装支付所需软件或无SIM卡';
   // net_error_30407:string;// '短信发送错误';
@@ -491,5 +517,3 @@ declare var reactSrc: string;
 declare var reactDomSrc: string;
 /* react-router-dom 的 cdn 地址 */
 declare var reactRouterDomSrc: string;
-/* 全局加载 MD5 */
-declare const md5: (str: string) => string;

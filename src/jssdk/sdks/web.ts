@@ -1,5 +1,5 @@
 import Base from './base';
-import {loadReactJs, getUrlOrigin} from '../utils';
+import {getUrlOrigin} from '../utils';
 import {initRG} from './rg';
 import {fbWebLogin, fbShare} from '../utils/fb';
 
@@ -12,7 +12,7 @@ import Account from '../api/account';
 
 /* 与首页postMessage 的通信, 添加到桌面 */
 export default class WebSdk extends Base {
-  type: 1;
+  type: 3 = 3;
   app: App;
   getUserResolve = null;
   getUserPromise: Promise<any>;
@@ -28,7 +28,6 @@ export default class WebSdk extends Base {
 
   constructor(config: ExtendedConfig) {
     super();
-    /* 向成员类分发参数 */
     super.init(config);
     /* 挂载window.RG */
     initRG(this);
@@ -49,12 +48,10 @@ export default class WebSdk extends Base {
       let data = {action: 'set', data: {user: this.user, users: this.users}};
       window.parent.postMessage(JSON.stringify(data), getUrlOrigin(RG.jssdk.config.indexUrl));
     };
-    /* 加载 react-js  */
-    await loadReactJs();
-    /* 加载 dom */
-    const {Ins} = await import('../view2/index');
     // 挂载 dom
+    const {Ins} = await import('../view2/index');
     this.app = Ins;
+    RG.Mark('sdk_loaded');
     /* 判断是否自动登录,切换账号, 还是 fbLogin*/
     await this.getUserPromise;
     if (window.name === 'redirect') {
@@ -95,6 +92,9 @@ export default class WebSdk extends Base {
         );
       }
     });
+  }
+  order(params: PaymentChannel) {
+    return this.createOrder(params);
   }
   mark(markName: string, params?: {userId?: number; money: string; currency: string}) {
     const data = {action: 'mark', data: {name: markName, param: params}};
