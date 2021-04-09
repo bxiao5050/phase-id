@@ -11,3 +11,5 @@ build
 doc/site
 
 .vscode
+
+**/payment1/*.tsx

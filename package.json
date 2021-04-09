@@ -14,12 +14,11 @@
   "devDependencies": {
     "@types/facebook-instant-games": "^6.2.1",
     "@types/facebook-js-sdk": "3.1.0",
-    "@types/history": "^4.7.2",
     "@types/mockjs": "^1.0.2",
     "@types/node": "^10.12.15",
-    "@types/react": "16.3.14",
-    "@types/react-dom": "16.0.5",
-    "@types/react-router-dom": "4.2.6",
+    "@types/react": "^17.0.3",
+    "@types/react-dom": "^17.0.3",
+    "@types/react-router-dom": "^5.1.7",
     "@types/swiper": "^4.4.1",
     "autoprefixer": "^9.4.2",
     "chalk": "^2.4.1",
@@ -45,8 +44,9 @@
     "crypto-js": "3.1.9-1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
-    "react-router-dom": "^5.2.0",
-    "react-id-swiper": "^1.6.8"
+    "react-id-swiper": "^1.6.8",
+    "react-media": "^1.10.0",
+    "react-router-dom": "^5.2.0"
   },
   "browserslist": [
     "last 2 version",

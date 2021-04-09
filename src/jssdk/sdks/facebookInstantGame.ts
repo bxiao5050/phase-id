@@ -1,6 +1,6 @@
 import Base from './base';
 import {initRG} from './rg';
-import {fbWebLogin, fbShare} from '../utils/fb';
+import {fbShare} from '../utils/fb';
 import {markInit} from '../plugins/mark';
 
 /* 引入类型 */

@@ -1,215 +1,153 @@
-import * as React from 'react';
-import {Switch, Route} from 'react-router-dom';
-import {Ins} from '../../index';
-import {replaceUrlToHttps} from '../../..//utils';
-import WinOpen from './winOpen';
+import React, {useState, useEffect} from 'react';
+import ReactMedia from 'react-media';
+import {Switch, Route, Redirect, RouteComponentProps} from 'react-router-dom';
+
+import ChannelsNav from './channels_nav';
+import Products from './products';
+import Channels from './channels';
 import Type0 from './type0';
 import Type1 from './type1';
 import Type2 from './type2';
 import Type3 from './type3';
-import Type4 from './type4';
-import TypeList from './typelist';
+import JumpPop from './jump_pop';
+import Order from './order';
+import {Ins} from '../../index';
+import {PaymentChannel} from '../../../api/payment';
 
-import {History, createLocation} from 'history';
-import {PaymentChannel} from 'Src/jssdk/api/payment';
+export interface PaymentLocationState {
+  keys: (number | string)[];
+  url?: string;
+}
+export function getChannel(keys: (number | string)[]) {
+  let result: PaymentChannel;
+  keys.forEach(key => {
+    result = result ? result[key] : Ins.state.paymentConfig.payments[key];
+  });
+  return result;
+}
 
-export default class Payment extends React.Component<{history: History}, any> {
-  state = {
-    isActive: 0,
-    paymentDatas: {},
-    url: '',
-    winOpen: false,
-    isLandscape: true
-  };
-  componentDidMount() {
-    // "portrait", "landscape";
-    const isLandscape =
-      window
-        .getComputedStyle(document.getElementById('flag-screen'))
-        .fontFamily.indexOf('landscape') !== -1;
-    if (isLandscape) {
-      this.intoPay(Ins.state.paymentConfig.payments[0]);
-      this.setState({isActive: 0, isLandscape: true});
-    } else {
-      this.setState({isLandscape: false});
-    }
+export function getPath(
+  channel: PaymentChannel,
+  location: RouteComponentProps<{}, {}, PaymentLocationState>['location'],
+  isShowProductList = true
+) {
+  if (channel.showMethod === 4) {
+    return '/payments/channels';
   }
-  private isPay = false;
-  order(payments: PaymentChannel) {
-    if (this.isPay) return;
-    this.isPay = true;
-    setTimeout(() => {
-      this.isPay = false;
-    }, 1500);
-    // 需要先下单的支付方式有 0,3,9,12,13
-    RG.jssdk
-      .order(payments)
-      .then(res => {
-        if (res.code === 200) {
-          // showMethod === 3 在下单时在order函数中处理
-          if (payments.showMethod === 0 || payments.showMethod === 9) {
-            this.state.paymentDatas[0] = res.data;
-            this.props.history.push(createLocation('/type0'));
-          } else if (payments.showMethod === 12 || payments.showMethod === 13) {
-            // this.state.url = replaceUrlToHttps(res.data.returnInfo.url);
-            this.state.url = res.data.returnInfo.url;
-            this.state.winOpen = true;
-            this.setState(this.state);
-          } else {
-            // console.log(payments, res);
-          }
-        } else {
-          Ins.showNotice(res.error_msg);
-          console.error(res);
-        }
-      })
-      .catch(e => {
-        Ins.showNotice(RG.jssdk.config.i18n.net_error_0);
-      });
+  if (channel.showProductList === 1 && isShowProductList) {
+    return '/payments/products';
   }
-  goMethod(payments: PaymentChannel) {
-    if (payments.showMethod === 10) {
-      this.state.paymentDatas[1] = payments;
-      this.props.history.push(createLocation('/type1'));
-    } else if (payments.showMethod === 11) {
-      this.state.paymentDatas[2] = payments;
-      this.props.history.push(createLocation('/type2'));
-    }
+  if (channel.showMethod === 0 || channel.showMethod === 12) {
+    return location.pathname + '/order';
   }
-  change = e => {
-    var index = e.currentTarget.dataset.id;
-    this.setState({
-      isActive: index
-    });
-    this.intoPay(Ins.state.paymentConfig.payments[index]);
-  };
+  if ([3, 9, 10, 11, 13].indexOf(channel.showMethod) !== -1) {
+    return '/payments/type3';
+  }
+  if (channel.showMethod === 1 || channel.showMethod === 2) {
+    return '/payments/type' + channel.showMethod;
+  }
+}
+const ScreenPortrait = 'screen and (orientation: portrait)';
 
-  intoPay = (payments: PaymentChannel, isSelectProduct: boolean = false) => {
-    //  九宫格，直接展示
-    if (payments.showMethod === 4 && payments.nodes) {
-      this.state.paymentDatas[4] = payments;
-      this.props.history.push(createLocation('type4'));
-      return;
-    }
-    // 先判断 showProductList === 1 如果是展示商品列表,
-    // isSelectProduct 表示用户是否已经选择商品, 以便于展示对应的展示界面
-    if (payments.showProductList === 1 && !isSelectProduct) {
-      // 存在商品列表
-      this.state.paymentDatas['typelist'] = payments;
-      this.props.history.push(createLocation('typeList'));
-      return;
-    }
-    // showMethod 0 直接下单
-    if ([0, 12].indexOf(payments.showMethod) !== -1) {
-      this.order(payments);
-      return;
-    }
-    let path: string;
-    // 先展示支付确认界面,再去对应的支付界面
-    if ([3, 9, 10, 11, 13].indexOf(payments.showMethod) !== -1) {
-      path = 'type3';
-      this.state.paymentDatas[3] = payments;
-    } else {
-      // 直接去对应的支付确认界面
-      path = 'type' + payments.showMethod;
-      this.state.paymentDatas[payments.showMethod] = payments;
-    }
-    // 跳转去对应的支付界面
-    this.props.history.push(createLocation(path));
+export default function Payment(props: RouteComponentProps<{}, {}, PaymentLocationState>) {
+  const [url, setUrl] = useState('');
+  const i18n = RG.jssdk.config.i18n;
+  const {history, location} = props;
+  const goBack = () => {
+    if (location.pathname.indexOf('order') !== -1) return;
+    if ((history as any).index === 0) return;
+    history.goBack();
   };
-  render() {
-    const i18n = RG.jssdk.config.i18n;
-    const isMain = this.props.history.location.pathname === '/';
-    const isLandscape = this.state.isLandscape;
-    const isShowRight = (!isLandscape && !isMain) || isLandscape;
-    return (
-      <div className='rg-payments rg-center-a rg-login-main'>
-        <div className='rg-payments-header rg-login-header'>
-          <span
-            className='rg-icon-back'
-            onClick={() => {
-              if (this.props.history.length <= 1) return;
-              this.props.history.goBack();
-            }}
-          ></span>
-          {i18n.txt_title_pay}
-          <span
-            className='rg-icon-close'
-            onClick={() => {
-              Ins.hidePayment();
-            }}
-          ></span>
-        </div>
-        <div className='rg-payments-content clearfix'>
-          <div
-            className={
-              (!isLandscape && isMain) || isLandscape
-                ? 'rg-payments-left'
-                : 'rg-payments-left rg-hide'
-            }
-          >
-            <ul className='rg-payments-infos'>
-              {Ins.state.paymentConfig.payments.map((node, index) => {
-                return (
-                  <li
-                    key={index}
-                    data-id={index}
-                    className={
-                      this.state.isActive == index
-                        ? 'rg-payments-li rg-payments-active'
-                        : 'rg-payments-li'
-                    }
-                    onClick={e => {
-                      this.change(e);
-                    }}
-                  >
-                    <p className='rg-pay-channel-name'>{node.name}</p>
-                    {node.discountImg && (
-                      <div className='rg-pay-channel-discount'>
-                        <img
-                          className='rg-pay-channel-discount-img'
-                          src={replaceUrlToHttps(node.discountImg)}
-                          alt='discount'
-                        />
-                      </div>
-                    )}
-                    {node.hotImg && (
-                      <img
-                        className='rg-pay-channel-hot-img'
-                        src={replaceUrlToHttps(node.hotImg)}
-                        alt='recommend'
-                      />
-                    )}
-                  </li>
-                );
-              })}
-            </ul>
-          </div>
-          <div className={isShowRight ? 'rg-payments-right' : 'rg-payments-right rg-hide'}>
-            <Switch>
-              <Route
-                exact
-                path='/main'
-                render={() => {
-                  return <div>{'main'}</div>;
-                }}
-              />
-              <Route exact path='/typeList' render={() => <TypeList Payment={this} />} />
-              <Route
-                exact
-                path='/type0'
-                render={({history}) => <Type0 Payment={this} history={history} />}
-              />
-              <Route exact path='/type1' render={() => <Type1 Payment={this} />} />
-              <Route exact path='/type2' render={() => <Type2 Payment={this} />} />
-              <Route exact path='/type3' render={() => <Type3 Payment={this} />} />
-              <Route exact path='/type4' render={() => <Type4 Payment={this} />} />
-            </Switch>
-          </div>
-        </div>
-        <div id='flag-screen'></div>
-        {this.state.winOpen && <WinOpen parent={this} />}
+  const jumpBrowser = (url: string) => {
+    history.goBack();
+    setUrl(url);
+  };
+  const hideJumpPop = () => {
+    setUrl('');
+  };
+  const payments = Ins.state.paymentConfig.payments;
+  return (
+    <div className='rg-payments rg-center-a rg-login-main'>
+      <div className='rg-payments-header rg-login-header'>
+        <span className='rg-icon-back' onClick={goBack}></span>
+        {i18n.txt_title_pay}
+        <span
+          className='rg-icon-close'
+          onClick={() => {
+            Ins.hidePayment();
+          }}
+        ></span>
       </div>
-    );
-  }
+      <div className='rg-payments-content clearfix'>
+        <ReactMedia
+          query={ScreenPortrait}
+          onChange={matches =>
+            matches
+              ? props.history.replace('/payments')
+              : props.history.replace(getPath(payments[0], location), {keys: [0]})
+          }
+        >
+          {screenIsPortrait =>
+            // 竖屏
+            screenIsPortrait ? (
+              <React.Fragment>
+                <Switch>
+                  <Route path='/payments/channels' component={Channels} />
+                  <Route path='/payments/products' component={Products} />
+                  <Route path='/payments/type0' component={Type0} />
+                  <Route path='/payments/type1' component={Type1} />
+                  <Route path='/payments/type2' component={Type2} />
+                  <Route path='/payments/type3' component={Type3} />
+                  <Route
+                    path='/payments'
+                    render={(props: RouteComponentProps<{}, {}, PaymentLocationState>) => (
+                      <ChannelsNav {...props} channels={payments} />
+                    )}
+                  />
+                </Switch>
+                <Route
+                  path={'/payments/:type/order'}
+                  render={(
+                    props: RouteComponentProps<{type: string}, {}, PaymentLocationState>
+                  ) => <Order {...props} open={jumpBrowser} />}
+                />
+              </React.Fragment>
+            ) : (
+              // 横屏
+              <React.Fragment>
+                <Route
+                  path='/'
+                  render={(props: RouteComponentProps<{}, {}, PaymentLocationState>) => (
+                    <ChannelsNav {...props} channels={payments} />
+                  )}
+                />
+                <div className='rg-payments-right'>
+                  <Switch>
+                    <Route path='/payments/channels' component={Channels} />
+                    <Route path='/payments/products' component={Products} />
+                    <Route path='/payments/type0' component={Type0} />
+                    <Route path='/payments/type1' component={Type1} />
+                    <Route path='/payments/type2' component={Type2} />
+                    <Route path='/payments/type3' component={Type3} />
+                    <Redirect
+                      from='/payments'
+                      exact={true}
+                      to={{pathname: getPath(payments[0], location), state: {keys: [0]}}}
+                    />
+                  </Switch>
+                </div>
+                <Route
+                  path={'/payments/:type/order'}
+                  render={(
+                    props: RouteComponentProps<{type: string}, {}, PaymentLocationState>
+                  ) => <Order {...props} open={jumpBrowser} />}
+                />
+              </React.Fragment>
+            )
+          }
+        </ReactMedia>
+      </div>
+      {url && <JumpPop url={url} close={hideJumpPop} />}
+    </div>
+  );
 }

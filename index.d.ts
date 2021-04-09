@@ -110,6 +110,8 @@ interface Window {
   // 打补丁
   // RgPolyfilled: Function;
   CryptoJS: typeof CryptoJS;
+  /* IE */
+  ActiveXObject: any;
 }
 interface I18n {
   txt_fast: string; // '快速开始 >>';
@@ -517,3 +519,6 @@ declare var reactSrc: string;
 declare var reactDomSrc: string;
 /* react-router-dom 的 cdn 地址 */
 declare var reactRouterDomSrc: string;
+
+/* IE */
+declare const ActiveXObject:any;

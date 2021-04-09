@@ -204,18 +204,18 @@ class App extends React.Component {
             <Route render={({history}) => <Account history={history} />} />
           </MemoryRouter>
         )}
-        {/* 客服中心,改为直接跳转facebook主页 */}
-        {/* {showCustomer ? <Customer hideCustomer={this.toggleCustomer} /> : null} */}
         {/* 支付模块 */}
         {showPayment && (
-          <MemoryRouter>
-            <Route render={({history}) => <Payment history={history} />} />
+          <MemoryRouter initialEntries={['/payments']}>
+            <Route component={Payment} />
           </MemoryRouter>
         )}
         {/* 悬浮球 */}
         {this.state.hasAccount && (
           <Hover ref={this.setHoverTipRef} isGuest={this.state.hoverIsGuest} />
         )}
+        {/* 客服中心,改为直接跳转facebook主页 */}
+        {/* {showCustomer ? <Customer hideCustomer={this.toggleCustomer} /> : null} */}
         {/* Notice */}
         <Notice ref={this.setNoticeRef} />
         {/* confirm alert */}

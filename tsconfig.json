@@ -6,7 +6,8 @@
     "target": "es5",
     "baseUrl": ".",
     "jsx": "react",
-    // "lib": ["es6", "es7", "dom"],
+    "outDir": "./",
+    "lib": ["es6", "es7", "dom"],
     "esModuleInterop": true,
     "types": [
       "react",
@@ -26,13 +27,13 @@
   },
   "include": [
     "./index.d.ts",
-    "./webpack.config.d.ts",
     "./src/**/*.tsx",
     "./src/**/*.ts"
   ],
   "exclude": [
+    "node_modules",
+    "dist",
     "./src/**/*.psd",
-    "./src/view/**/*",
     "./src/jssdk/plugins/mock/*.ts",
     "./src/jssdk/view2/components/customer/index.tsx"
   ]
