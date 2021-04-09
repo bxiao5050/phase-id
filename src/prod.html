@@ -4,12 +4,21 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-
+    <title>测试服的测试页面</title>
   </head>
 
-  <body>test
-    <div id="app"></div>
-    <script>
+  <body>
+    <script type="text/javascript">
+      var js = document.createElement("script");
+      js.id = "rg-sdk";
+      // html5
+      js.async = true;
+      js.crossorigin = "anonymous"
+      // 其他低版本浏览器 h5 async 会忽略 defer
+      js.defer = true;
+      js.src = './sdk.js?t=' + Date.now();
+      document.body.appendChild(js);
+
       window.rgAsyncInit = function () {
         var payParams = {
           userId: RG.CurUserInfo().userId,
@@ -27,7 +36,6 @@
 
         // })
         RG.Pay(payParams)
-
       }
     </script>
   </body>

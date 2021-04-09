@@ -1,10 +1,13 @@
-.rg-login-header {
+%rg-header {
   height: 3rem;
   background: #fff;
   border-radius: 0.2rem;
   box-sizing: border-box;
   padding: 0.1rem 1rem;
-  border-bottom: 4px solid #1890ff;
+  border-bottom: 4px solid $main-color;
+}
+.rg-login-header {
+  @extend %rg-header;
 }
 .rg-login-header .rg-logo {
   width: 6.09rem;
@@ -21,38 +24,36 @@
   padding: 0 0.5rem;
   position: relative;
 }
-// .rg-login-choose-wrap {
-  
-// }
+// .rg-login-choose-wrap {}
 .rg-login-wrap .rg-choose {
   box-sizing: border-box;
   width: 100%;
   height: 3rem;
   border-bottom: 1px solid #d9d9d9;
 }
-.rg-userName {
+%rg-input {
   margin-left: 3rem;
   height: 2.48rem;
   width: 16rem;
   font-size: 0.8rem;
+}
+.rg-userName {
+  @extend %rg-input;
 }
 .rg-password {
-  margin-left: 3rem;
-  height: 2.48rem;
-  width: 16rem;
-  font-size: 0.8rem;
+  @extend %rg-input;
 }
 .rg-btn-login {
+  margin: 0.6rem auto 1rem;
+  border-radius: 0.1 * 2.67 + rem;
   width: 20rem;
   height: 2.4rem;
   font-size: 1rem;
   color: white;
   line-height: 2.4rem;
-  margin: 0.6rem auto 1rem;
-  border-radius: 0.1 * 2.67 + rem;
   text-align: center;
-  background: #1890ff;
-  background: linear-gradient(to bottom, #1890ff, #0971d1);
+  background: $main-color; //确保低版本可以显示背景色
+  background: linear-gradient(to bottom, $main-color, #0971d1);
 }
 .to-main-btn {
   position: absolute;
@@ -65,25 +66,22 @@
   position: absolute;
   right: 1rem;
   bottom: 1.2rem;
+  border: 1px solid #386a99;
+  border-radius: 3rem;
   padding: 0.6rem;
   font-size: 0.8rem;
   color: #386a99;
-  border: 1px solid #386a99;
-  border-radius: 3rem;
 }
-.rg-icon-password{
-  position: absolute;
-  top: 0.6rem;
+.rg-icon-password {
+  @extend %rg-icon;
   left: 0rem;
-  width: 1.6rem;
-  height: 1.6rem;
-  background: url(../img/cg_login_pwd.png) center no-repeat;
-  background-size: contain;
+  @extend %usually-icon-width;
+  background: url(../img/cg_login_pwd.png) center/contain no-repeat;
 }
-.rg-forget-text{
-  color:#595959 ;
-  font-size: 0.8rem;
+.rg-forget-text {
   position: absolute;
   top: 1rem;
   right: -0.2rem;
+  color: #595959;
+  font-size: 0.8rem;
 }

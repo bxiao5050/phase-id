@@ -11,7 +11,7 @@ export default function JumpPop({url, close}: {url: string; close: () => void}) 
   return (
     <div className='win-open'>
       <div className='cover'></div>
-      <div className='box'>
+      <div className='box rg-center-f'>
         <div className='close' onClick={close}></div>
         <div className='upper'>{i18n.winopen}</div>
         <div className='udder'>

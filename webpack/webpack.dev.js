@@ -19,6 +19,10 @@ module.exports = merge(common, {
       {
         test: /\.scss$/,
         use: ['style-loader', 'css-loader', 'sass-loader']
+      },
+      {
+        test: /\.(gif|jpg|png|woff|svg|eot|ttf)\??.*$/,
+        type: 'asset/resource'
       }
     ]
   },

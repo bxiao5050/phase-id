@@ -7,7 +7,7 @@
     "baseUrl": ".",
     "jsx": "react",
     "outDir": "./",
-    "lib": ["es6", "es7", "dom"],
+    "lib": ["es5","es6", "es7","dom"],
     "esModuleInterop": true,
     "types": [
       "react",

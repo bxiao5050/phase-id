@@ -1,22 +1,22 @@
 .rg-payments {
+  @extend %rg-box;
   width: 32rem;
   height: 20rem;
 }
 .rg-payments-header {
-  color: #1890ff;
+  @extend %rg-header;
+  color: $main-color;
   line-height: 1.86rem;
   font-size: 1.3rem;
   font-weight: 500;
   text-align: center;
 }
 .rg-icon-back {
+  @extend %rg-icon;
+  left: 0.6rem;
   width: 1.4rem;
   height: 1.4rem;
-  position: absolute;
-  top: 0.6rem;
-  left: 0.6rem;
-  background: url(../img/cg_img_back.png) center no-repeat;
-  background-size: contain;
+  background: url(../img/cg_img_back.png) center/contain no-repeat;
 }
 .rg-payments-content {
   height: 15.5rem;
@@ -34,7 +34,7 @@
   text-align: center;
   line-height: 2.6rem;
   background: rgba(255, 255, 255, 1);
-  color: #1890ff;
+  color: $main-color;
   overflow-x: hidden;
   overflow-y: auto;
 }
@@ -75,17 +75,9 @@
   top: 0;
   right: 0;
 }
-#flag-screen {
-  font-family: landscape;
-}
 
 /* portrait 竖屏*/
 @media screen and (orientation: portrait) {
-  /* 正常情况下 */
-  /* portrait-specific styles */
-  #flag-screen {
-    font-family: portrait;
-  }
   .rg-payments {
     width: 25rem;
     height: auto;
@@ -106,7 +98,7 @@
     background: #fff;
   }
   .rg-payments-active {
-    color: #1890ff;
+    color: $main-color;
   }
   .rg-payments-right {
     width: 23.6rem;

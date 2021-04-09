@@ -1,9 +1,8 @@
 .floatBall {
-  // visibility: hidden;
   width: 2.4rem;
   height: 2.4rem;
   top: 40%;
-  opacity: 0.6; // display: none;
+  opacity: 0.6;
   transform: translate(0, 0);
   position: absolute;
   z-index: 100;
@@ -20,8 +19,7 @@
   z-index: 2;
   position: absolute;
   top: 0.3rem;
-  background: url(../img/cg_float_show_normal.png) center no-repeat;
-  background-size: contain;
+  background: url(../img/cg_float_show_normal.png) center/contain no-repeat;
 }
 
 .menu {
@@ -29,8 +27,6 @@
   width: 11rem;
   display: none;
   box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
   position: absolute;
   border-radius: 1.602rem;
   padding: 0 0 0 1rem;
@@ -45,33 +41,26 @@
     justify-content: center;
 
     .icon {
-      box-sizing: border-box;
-      transform-origin: 50% 50%;
       display: block;
-      font-size: 0.6rem;
+      box-sizing: border-box;
+      margin-top: 0.1rem;
       padding-top: 1.5rem;
+      width: 4rem;
+      height: auto;
+      font-size: 0.6rem;
       line-height: 1;
       text-align: center;
-      width: 4rem;
-      margin-top: 0.1rem;
-      height: auto;
       color: #0a6482;
-      // -webkit-text-size-adjust: 100%;
-
+      transform-origin: 50% 50%;
       &.contact {
         background: url(../img/fb_cs_0.png) center -0.4rem/2.6rem auto no-repeat;
-        // background-size: contain;
       }
-
       &.account {
         width: 4rem;
         background: url(../img/fb_user_center_0.png) center -0.4rem/3rem auto no-repeat;
-        // background-size: 2.4rem;
-        // background-size: contain;
       }
     }
   }
-
   &.left {
     transform: rotateY(180deg);
 

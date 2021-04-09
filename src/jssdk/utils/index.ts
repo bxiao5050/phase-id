@@ -241,7 +241,7 @@ export function signed(params: (string | number)[]): string {
 
 /* 初始化VConsole,用作微端的查看日志 */
 export function initDebugger() {
-  return new Promise<void>((resolve,reject) => {
+  return new Promise<void>((resolve, reject) => {
     var js = document.createElement('script');
     js.src = '//cdnjs.cloudflare.com/ajax/libs/vConsole/3.2.0/vconsole.min.js';
     js.onload = () => {

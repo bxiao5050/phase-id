@@ -9,21 +9,20 @@
   outline: none;
 }
 .rg-notice-msg {
-  // width: 80%;
   display: inline-block;
-  background: rgba(0, 0, 0, 0.6);
+  border-radius: 2rem;
+  padding: 0.2rem 1rem;
   font-size: 1rem;
   line-height: 1.4;
-  padding: 0.2rem 1rem;
-  border-radius: 2rem;
   color: #fff;
+  background: rgba(0, 0, 0, 0.6);
 }
 @keyframes rg-show-notice {
   0% {
     bottom: 10%;
     opacity: 0;
   }
-  10%{
+  10% {
     bottom: 15%;
     opacity: 1;
   }

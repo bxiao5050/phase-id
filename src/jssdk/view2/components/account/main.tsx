@@ -34,7 +34,7 @@ export default class Main extends React.Component<RouteComponentProps, {}> {
     const isGuest = user.userType === 0;
     const isFacebook = user.accountType === 2;
     return (
-      <div className='rg-login-main rg-account rg-center-a'>
+      <div className='rg-account rg-center-a'>
         <div className='rg-login-header'>
           {i18n.txt_title_user_center}
           <span
@@ -44,8 +44,8 @@ export default class Main extends React.Component<RouteComponentProps, {}> {
             }}
           ></span>
         </div>
-        <div className='rg-customer-content rg-account-content'>
-          <div className='rg-account-userInfo-wrap'>
+        <div className='rg-account-content'>
+          <div className='rg-account-userInfo-wrap clearfix'>
             <div className='rg-avatar-icon'></div>
             <div className='rg-account-userInfo'>
               <p className='rg-account-username'>
@@ -91,7 +91,7 @@ export default class Main extends React.Component<RouteComponentProps, {}> {
                   history.push('/visitor');
                 }}
               >
-                <span className='rg-main-icon rg-change-icon'></span>
+                <span className='rg-change-icon'></span>
                 <span>{i18n.float_button_bind_account}</span>
                 <span className='rg-right-icon'></span>
               </li>
@@ -103,7 +103,7 @@ export default class Main extends React.Component<RouteComponentProps, {}> {
                   history.push('/change-password');
                 }}
               >
-                <span className='rg-main-icon rg-change-icon'></span>
+                <span className='rg-change-icon'></span>
                 <span>{i18n.txt_change_psw}</span>
                 <span className='rg-right-icon'></span>
               </li>
@@ -117,7 +117,7 @@ export default class Main extends React.Component<RouteComponentProps, {}> {
                   history.push('/email');
                 }}
               >
-                <span className='rg-main-icon rg-email-icon'></span>
+                <span className='rg-email-icon'></span>
                 <span>{i18n.txt_safe_set}</span>
                 {user.emailValid === 0 ? <span className='rg-right-icon'></span> : null}
 
@@ -133,7 +133,7 @@ export default class Main extends React.Component<RouteComponentProps, {}> {
                 RG.Redirect();
               }}
             >
-              <span className='rg-main-icon rg-switch-icon'></span>
+              <span className='rg-switch-icon'></span>
               <span>{i18n.txt_switch_account}</span>
               <span className='rg-right-icon'></span>
             </li>
@@ -143,7 +143,7 @@ export default class Main extends React.Component<RouteComponentProps, {}> {
                 history.push('/history');
               }}
             >
-              <span className='rg-main-icon rg-history-icon'></span>
+              <span className='rg-history-icon'></span>
               <span>{i18n.txt_check_charge}</span>
               <span className='rg-right-icon'></span>
             </li>

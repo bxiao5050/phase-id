@@ -58,7 +58,7 @@ export default class ForgetPassword extends React.Component<RouteComponentProps,
     const i18n = RG.jssdk.config.i18n;
     const {email, showTable, password} = this.state;
     return (
-      <div className='rg-login-main rg-center-a rg-account rg-email'>
+      <div className='rg-center-a rg-account rg-email'>
         <div className='rg-login-header'>
           {i18n.txt_safe_set}
           <span

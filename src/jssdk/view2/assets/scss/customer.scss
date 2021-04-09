@@ -1,6 +1,7 @@
 .rg-customer {
+  @extend %rg-box;
   text-align: center;
-  color: #1890ff;
+  color: $main-color;
   line-height: 1.86rem;
   font-size: 1.3rem;
   font-weight: 500;
@@ -24,7 +25,7 @@
 .rg-customer-tip {
   padding: 0.5rem 0 0;
   margin: 0 auto;
-  color: #1890ff;
+  color: $main-color;
   font-size: 0.8rem;
   line-height: 1rem;
 }
@@ -40,7 +41,7 @@
 }
 .rg-customer-list {
   box-sizing: border-box;
-  color: #1890ff;
+  color: $main-color;
   text-align: left;
 }
 .rg-customer-question{
@@ -54,14 +55,14 @@
   border-bottom: 1px solid #f0f0f0;
 }
 .rg-customer-down-icon {
+   box-sizing: border-box;
     float: right;
     margin: 0.2rem 0.8rem 0 0;
-    box-sizing: border-box;
     width: 0.6rem;
     height: 0.6rem;
     transform: rotate(-45deg);
-    border-right: 2px solid #1890ff;
-    border-bottom: 2px solid #1890ff;
+    border-right: 2px solid $main-color;
+    border-bottom: 2px solid $main-color;
 }
 .rg-customer-answer {
   box-sizing: border-box;

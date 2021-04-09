@@ -76,7 +76,7 @@ export default class PaymentHistory extends React.Component<
   render() {
     const i18n = RG.jssdk.config.i18n;
     return (
-      <div className='rg-login-main rg-account rg-center-a'>
+      <div className='rg-account rg-center-a'>
         <div className='rg-login-header'>
           {i18n.txt_recharge_history}
           <span

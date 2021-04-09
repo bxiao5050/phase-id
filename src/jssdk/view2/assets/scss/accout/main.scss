@@ -1,22 +1,22 @@
 .rg-account {
-  color: #1890ff;
-  line-height: 1.86rem;
-  font-size: 1.3rem;
-  font-weight: 500;
+  @extend %rg-box;
   height: 19rem;
   width: 25rem;
   text-align: center;
+  line-height: 1.86rem;
+  color: $main-color;
+  font-size: 1.3rem;
+  font-weight: 500;
 }
-.rg-customer-content.rg-account-content {
+.rg-account-content {
+  margin: 0.3rem auto;
   width: 24rem;
   height: 15rem;
   text-align: left;
   font-size: 0.6rem;
-  margin: 0.3rem auto;
 }
 .rg-account-userInfo-wrap {
   box-sizing: border-box;
-  height: 3.7rem;
   padding: 0.5rem 0.5rem 0;
 }
 .rg-avatar-icon {
@@ -40,51 +40,51 @@
   margin: 0.5rem 0 0 0.3rem;
 }
 .rg-account-operatings {
+  margin: 0 auto 0;
   width: 20rem;
-  // height: 10rem;
-  margin: 1rem auto 0;
 }
 .rg-account-operating {
+  position: relative;
   height: 2.3rem;
   border-bottom: 1px solid #bfbfbf;
   text-indent: 1rem;
   line-height: 2.3rem;
   font-size: 0.6rem;
-  position: relative;
 }
-// .rg-account-operating:last-child{
-//   border-bottom: none;
-// }
-.rg-main-icon {
+%rg-accout-icon {
   float: left;
   margin: 0.7rem 0 0 0.5rem;
   width: 1rem;
   height: 1rem;
 }
 .rg-change-icon {
+  @extend %rg-accout-icon;
   background: url(../img/cg_change_psw.png) center/contain no-repeat;
 }
 .rg-email-icon {
+  @extend %rg-accout-icon;
   background: url(../img/cg_safe_set.png) center/contain no-repeat;
 }
 .rg-switch-icon {
+  @extend %rg-accout-icon;
   background: url(../img/cg_switch_account.png) center/contain no-repeat;
 }
 .rg-history-icon {
+  @extend %rg-accout-icon;
   background: url(../img/history-icon.png) center/contain no-repeat;
 }
-.rg-right-icon{
+.rg-right-icon {
+  position: relative;
   float: right;
   margin: 0.8rem 1rem 0 0;
   width: 0.6rem;
   height: 0.6rem;
-  border-top: 1px solid #1890ff;
-  border-right: 1px solid #1890ff;
+  border-top: 1px solid $main-color;
+  border-right: 1px solid $main-color;
   transform: rotate(45deg);
-  position: relative;
   z-index: 2;
 }
-.rg-email-valid-txt{
+.rg-email-valid-txt {
   position: absolute;
   top: 0;
   right: 2rem;
@@ -92,7 +92,7 @@
   font-size: 0.6rem;
   z-index: 1;
 }
-.rg-copy-divice-btn{
+.rg-copy-divice-btn {
   display: inline-block;
   margin-left: 0.5rem;
   padding: 0.2rem 0.6rem;

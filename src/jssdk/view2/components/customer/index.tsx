@@ -45,7 +45,7 @@ export default class Customer extends React.Component<
       }
     ];
     return (
-      <div className='rg-login-main rg-customer rg-center-a'>
+      <div className='rg-customer rg-center-a'>
         <div className='rg-login-header'>
           {i18n.txt_customer_service}
          {/*  Ins.toggleCustomer(false) */}

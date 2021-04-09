@@ -511,8 +511,6 @@ declare var VERSION: string;
 declare var SERVER: string;
 // 是否开发环境
 declare var IS_DEV: string;
-// 是否测试环境
-declare var IS_TEST: string;
 /* react js 的cdn地址 */
 declare var reactSrc: string;
 /* react-dom 的 cdn 地址 */

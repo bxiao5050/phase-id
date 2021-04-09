@@ -1,71 +1,71 @@
 .rg-order-list-wrap {
-  overflow-x: hidden;
-  overflow-y: auto;
   box-sizing: border-box;
   height: 15.5rem;
+  // 明确指定，确保对浏览器的兼容，不需要时删除
+  overflow-x: hidden;
+  overflow-y: auto;
 }
-// .rg-order-list {
-
-// }
-.rg-no-orderlist{
+.rg-no-orderlist {
   box-sizing: border-box;
-  color: #000;
-  font-size: 1rem;
   width: 100%;
   height: 15.5;
   line-height: 15.5rem;
+  color: #000;
+  font-size: 1rem;
   background: white;
 }
 .rg-order {
-  width: 95%;
+  position: relative;
   margin: 0.1 * 2.76 + rem auto 0;
   padding: 0.1 * 2.76 + rem;
   border-radius: 0.1 * 2.76 + rem;
-  position: relative;
+  width: 95%;
   background: white;
 }
 .rg-order-line {
   box-sizing: border-box;
-  font-size: 0.8rem;
-  text-align: left;
-  margin-left: 0.5rem;
-  line-height: 1.4;
   border-bottom: 1px solid #f0f0f0;
   padding: 0.4rem 0.4rem;
+  margin-left: 0.5rem;
+  text-align: left;
+  line-height: 1.4;
+  font-size: 0.8rem;
   color: gray;
 }
 
 .rg-order-label {
   display: inline-block;
-  width: 6rem;
-  color: #1890ff;
   margin-right: 0.4rem;
+  width: 6rem;
+  color: $main-color;
 }
-.rg-order-status .rg-order-label{
+.rg-order-status .rg-order-label {
   color: #13c2c2;
 }
 .rg-order-time {
   position: absolute;
   right: 0.27rem;
-  bottom:0.3rem;
+  bottom: 0.3rem;
+  width: 9rem;
   color: #73d13d;
   font-size: 0.8rem;
-  width: 9rem;
 }
-.rg-order-icon-success:after,.rg-order-icon-failed:after,.rg-order-icon-pedding:after{
-  content: "";
+.rg-order-icon-success:after,
+.rg-order-icon-failed:after,
+.rg-order-icon-pedding:after {
+  content: '';
   position: absolute;
   top: 0;
   right: 0;
   width: 2.64rem;
   height: 2.4rem;
 }
-.rg-order-icon-success::after{
+.rg-order-icon-success::after {
   background: url(../img/order_status_success.png) center/contain no-repeat;
 }
-.rg-order-icon-failed::after{
+.rg-order-icon-failed::after {
   background: url(../img/order_status_fail.png) center/contain no-repeat;
 }
-.rg-order-icon-pedding::after{
+.rg-order-icon-pedding::after {
   background: url(../img/order_status_pending.png) center/contain no-repeat;
 }

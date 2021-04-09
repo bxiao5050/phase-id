@@ -8,45 +8,37 @@
   z-index: 9999999;
 
   .box {
-    position: fixed;
-    transform: translate(-50%, -50%);
-    left: 50%;
-    top: 50%;
-    width: 17rem;
     display: flex;
     flex-direction: column;
     align-items: center;
-    background: url(../img/cg_logo.png) center 18% no-repeat;
-    background-color: #fff;
     border-radius: 0.2rem;
-    background-size: 14rem auto;
-
+    width: 17rem;
+    background: url(../img/cg_logo.png) center 18%/14rem auto no-repeat  #fff;
     .close {
-      width: 1.4rem;
-      height: 1.4rem;
-      float: right;
-      background: url(../img/cg_img_close.png) center no-repeat;
-      background-size: contain;
       position: absolute;
       right: 0.9rem;
       top: 0.9rem;
+      width: 1.4rem;
+      height: 1.4rem;
+      float: right;
+      background: url(../img/cg_img_close.png) center/contain no-repeat;
     }
 
     .upper {
       margin: 6rem 0 1.2rem 0;
+      padding: 0 1rem;
       color: #33a4e6;
       line-height: 1.6rem;
-      padding: 0 1rem;
       text-align: center;
     }
 
     .btn-jump {
-      background: #33a4e6;
-      color: #fff;
-      border-radius: 0.2rem;
-      font-size: 0.9rem;
-      padding: 0.5rem 0.8rem;
       margin: 0.2rem 0 1.5rem 0;
+      border-radius: 0.2rem;
+      padding: 0.5rem 0.8rem;
+      color: #fff;
+      font-size: 0.9rem;
+      background: #33a4e6;
     }
   }
 }

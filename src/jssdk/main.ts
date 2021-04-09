@@ -84,7 +84,7 @@ async function init() {
     });
   }
   /* 加载 react-js  */
-  if (!SERVER) {
+  if (!IS_DEV) {
     await loadJsRepeat({url: reactSrc, id: 'rg-react'});
     await Promise.all([
       loadJsRepeat({url: reactDomSrc, id: 'rg-react-dom'}),

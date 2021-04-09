@@ -35,6 +35,7 @@ const reactRouterDomSrc =
 
 let SERVER = '';
 let publicPath = '';
+let isDev = false;
 switch (params.action) {
   case 'sg':
     SERVER = '//sdk-sg.pocketgamesol.com';
@@ -50,13 +51,15 @@ switch (params.action) {
     break;
   case 'test':
     SERVER = '//sdk-test.changic.net.cn';
-    publicPath = SERVER + '/jssdk/';
+    publicPath = SERVER + '/jssdk/' + params.sdkVersion + "/";
+    isDev = true;
     break;
   default:
     // SERVER = '/api';
     SERVER = '//sdk-test.changic.net.cn';
     params.sdkVersion = 'dev';
     publicPath = '';
+    isDev = true;
     break;
 }
 
@@ -99,10 +102,6 @@ module.exports = {
             // }
           }
         ]
-      },
-      {
-        test: /\.(gif|jpg|png|woff|svg|eot|ttf)\??.*$/,
-        type: 'asset'
       }
     ]
   },
@@ -113,7 +112,8 @@ module.exports = {
       reactSrc: JSON.stringify(reactSrc),
       reactDomSrc: JSON.stringify(reactDomSrc),
       reactRouterDomSrc: JSON.stringify(reactRouterDomSrc),
-      SERVER: JSON.stringify(SERVER)
+      SERVER: JSON.stringify(SERVER),
+      IS_DEV: JSON.stringify(isDev)
     }),
     new CleanWebpackPlugin()
   ]

@@ -67,8 +67,8 @@ export default function Payment(props: RouteComponentProps<{}, {}, PaymentLocati
   };
   const payments = Ins.state.paymentConfig.payments;
   return (
-    <div className='rg-payments rg-center-a rg-login-main'>
-      <div className='rg-payments-header rg-login-header'>
+    <div className='rg-payments rg-center-a'>
+      <div className='rg-payments-header'>
         <span className='rg-icon-back' onClick={goBack}></span>
         {i18n.txt_title_pay}
         <span

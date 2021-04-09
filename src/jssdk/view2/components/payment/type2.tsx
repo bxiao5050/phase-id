@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {RouteComponentProps} from 'react-router-dom';
-../../index
+
 import {Ins} from '../../index';
 import {replaceUrlToHttps} from 'Src/jssdk/utils';
 import Input from '../login/Input';

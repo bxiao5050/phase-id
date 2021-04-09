@@ -4,10 +4,9 @@ const {merge} = require('webpack-merge');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const common = require('./webpack.common.js');
-
 module.exports = merge(common, {
   mode: 'production',
-  devtool: 'source-map',
+  // devtool: 'source-map',
   module: {
     rules: [
       {
@@ -24,13 +23,17 @@ module.exports = merge(common, {
           },
           'sass-loader'
         ]
+      },
+      {
+        test: /\.(gif|jpg|png|woff|svg|eot|ttf)\??.*$/,
+        type: 'asset'
       }
     ]
   },
   plugins: [
     new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify('production'),
-      SERVER: JSON.stringify('https://sdk-test.changic.net.cn')
+      'process.env.NODE_ENV': JSON.stringify('production')
+      // SERVER: JSON.stringify('https://sdk-test.changic.net.cn')
     }),
     new HtmlWebpackPlugin({
       filename: 'index.html',

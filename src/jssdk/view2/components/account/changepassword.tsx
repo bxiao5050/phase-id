@@ -55,7 +55,7 @@ export default class ChangePassword extends React.Component<RouteComponentProps,
     const i18n = RG.jssdk.config.i18n;
     const {oldPassword, newPassword1, newPassword2, showPass} = this.state;
     return (
-      <div className='rg-login-main rg-center-a rg-account'>
+      <div className='rg-center-a rg-account'>
         <div className='rg-login-header'>
           {i18n.txt_change_psw}
           <span
