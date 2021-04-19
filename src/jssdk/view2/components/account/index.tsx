@@ -1,6 +1,5 @@
 import * as React from 'react';
-import { Switch, Route } from 'react-router-dom';
-import {History} from 'history';
+import {Switch, Route, RouteComponentProps} from 'react-router-dom';
 import PaymentHistory from './paymentHistory';
 import ChangePassword from './changepassword';
 /* 游客账号升级 */
@@ -10,10 +9,14 @@ import Email from './email';
 /* 用户中心面板 */
 import Main from './main';
 
-export default class Account extends React.Component<{history:History},{}, any> {
+export default class Account extends React.Component<
+  {history: RouteComponentProps<{}, {}, {}>['history']},
+  {},
+  any
+> {
   componentDidMount() {
     if (RG.jssdk.account.user.userType === 0) {
-      this.props.history.replace("/visitor")
+      this.props.history.replace('/visitor');
     }
   }
   render() {

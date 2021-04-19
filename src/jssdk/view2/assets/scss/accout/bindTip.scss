@@ -1,0 +1,69 @@
+.rg-bindTip-wrap {
+  width: 70%;
+  max-width: 600px;
+  border-radius: 0.8rem;
+  background: #fff;
+  background: rgba(233, 233, 233, 1);
+  border: 3px solid rgba(240, 240, 240, 0.3);
+  background-clip: content-box;
+  border-radius: 0.5rem;
+}
+.rg-bindTip-title {
+  padding: 1rem 1rem 0;
+  text-align: center;
+  line-height: 1.4;
+  font-size: 1rem;
+  font-weight: bold;
+}
+.rg-bindTip-msg {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 1rem 1rem 0.5rem;
+  font-size: 0.8rem;
+  color: #000;
+  line-height: 1.3;
+  text-align: center;
+}
+.rg-msg-brown {
+  color: #7c384b;
+}
+.rg-bindTip-btns {
+  display: flex;
+  justify-content: space-around;
+  margin: 0 auto;
+  border-top: 1px solid #d9d9d9;
+  padding: 0.5rem 0 1rem;
+  width: 90%;
+  text-align: center;
+  line-height: 2;
+  color: #fff;
+  font-size: 0.8rem;
+  padding: 0.5rem 0 1rem;
+}
+.rg-bindTip-next-btn,
+.rg-bindTip-visitor-btn,
+.rg-copy-btn,
+.rg-gift-btn,
+.rg-continue-btn {
+  display: inline-block;
+  width: 8rem;
+}
+.rg-bindTip-visitor-btn {
+  background-color: #45b1f0;
+}
+.rg-bindTip-next-btn {
+  background-color: #f99860;
+}
+.rg-copy-btn {
+  background-color: #a2d685;
+}
+.rg-gift-btn {
+  background-color: #f99860;
+}
+.rg-continue-btn {
+  background-color: #45b1f0;
+}
+.rg-bindTip-ok-btn:active,
+.rg-bindTip-cancle-btn:active {
+  opacity: 0.8;
+}

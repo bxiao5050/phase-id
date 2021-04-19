@@ -1,5 +1,4 @@
 import * as React from 'react';
-import {History} from 'history';
 import {Ins} from '../../index';
 
 var canTouch = false;
@@ -7,7 +6,6 @@ var isMoving = false;
 
 export default class Hover extends React.Component<
   {
-    history?: History;
     isGuest: boolean;
   },
   {},

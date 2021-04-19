@@ -123,11 +123,11 @@ body {
   -webkit-overflow-scrolling: touch;
 }
 #RG-SDK {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  // position: fixed;
+  // top: 0;
+  // left: 0;
+  // width: 100%;
+  // height: 100%;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, segoe ui, Roboto, Helvetica, Arial,
     sans-serif, apple color emoji, segoe ui emoji, segoe ui symbol;
   z-index: 1;
@@ -206,13 +206,14 @@ $main-color: #1890ff;
 @import './accout/changepassword.scss';
 @import './accout/email.scss';
 @import './accout/visitor.scss';
+@import './accout/bindTip.scss';
 
 /* 支付 */
 @import './payment/index.scss';
-@import './payment/winOpen.scss';
+@import './payment/jump_pop.scss';
 @import './payment/type0.scss';
 @import './payment/type1.scss';
 @import './payment/type2.scss';
 @import './payment/type3.scss';
-@import './payment/type4.scss';
-@import './payment/typelist.scss';
+@import './payment/channels.scss';
+@import './payment/products.scss';
