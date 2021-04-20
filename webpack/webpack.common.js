@@ -50,8 +50,10 @@ switch (params.action) {
     publicPath = SERVER + '/jssdk/';
     break;
   case 'test':
+    // 如果需要修改sdkVersion 需要同步修改部署时的目录
     SERVER = '//sdk-test.changic.net.cn';
-    publicPath = SERVER + '/jssdk/' + params.sdkVersion + "/";
+    //  publicPath = SERVER + '/jssdk/' + params.sdkVersion + '/';
+    publicPath = SERVER + '/jssdk/v1.0.0/';
     isDev = true;
     break;
   default:
