@@ -13,7 +13,7 @@ module.exports = merge(common, {
       {
         test: /\.scss$/,
         use: [
-          'style-loader',
+          MiniCssExtractPlugin.loader,
           'css-loader',
           {
             loader: 'postcss-loader',
@@ -35,6 +35,11 @@ module.exports = merge(common, {
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('production')
       // SERVER: JSON.stringify('https://sdk-test.changic.net.cn')
+    }),
+    new MiniCssExtractPlugin({
+      // 所有选项都是可选的
+      filename: '[name]-[contenthash:6].css',
+      ignoreOrder: false // 忽略有关顺序冲突的警告
     }),
     new HtmlWebpackPlugin({
       filename: 'index.html',

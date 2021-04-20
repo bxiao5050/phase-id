@@ -16,7 +16,7 @@ async function putSdkToCNTest() {
   await ssh.connect(serverConfig);
   // 删除对应目录的过往代码
   await ssh
-    .execCommand('rm -rf *.js', {cwd: '/data/sdk-test/platform-sdk-test-v2.0/jssdk/v1.0.0'})
+    .execCommand('rm -rf *.js *.css', {cwd: '/data/sdk-test/platform-sdk-test-v2.0/jssdk/v1.0.0'})
     .then(function (result) {
       if (result.stderr) return console.log(result.stderr);
       // console.log(result.stdout);

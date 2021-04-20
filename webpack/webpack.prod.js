@@ -7,6 +7,7 @@ const DeleteInjectScriptPlugin = require('./delete-inject-webpack-plugin');
 // 测量打包时间时，注释 HtmlWebpackPlugin 二者有一定的冲突
 // const SpeedMeasurePlugin = require("speed-measure-webpack-plugin");
 // const smp = new SpeedMeasurePlugin();
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const common = require('./webpack.common.js');
 const webpackConfig = merge(common, {
@@ -17,7 +18,7 @@ const webpackConfig = merge(common, {
       {
         test: /\.scss$/,
         use: [
-          'style-loader',
+          MiniCssExtractPlugin.loader,
           'css-loader',
           {
             loader: 'postcss-loader',
@@ -38,6 +39,11 @@ const webpackConfig = merge(common, {
   plugins: [
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('production')
+    }),
+    new MiniCssExtractPlugin({
+      // 所有选项都是可选的
+      filename: '[name]-[contenthash:6].css',
+      ignoreOrder: false // 忽略有关顺序冲突的警告
     })
     // new DeleteInjectScriptPlugin()
   ],
