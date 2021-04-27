@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const chalk = require('chalk');
 const {NodeSSH} = require('node-ssh');
 
 const ssh = new NodeSSH();
@@ -20,7 +21,7 @@ async function putSdkToCNTest() {
     .then(function (result) {
       if (result.stderr) return console.log(result.stderr);
       // console.log(result.stdout);
-      console.log('删除 js 成功');
+      console.log(chalk.green('删除远端代码：成功。'));
     });
   // 上传新代码
   const failed = [];
@@ -45,9 +46,9 @@ async function putSdkToCNTest() {
       }
     }
   );
-  console.log('sdk文件上传：' + status ? '成功' : '失败');
-  console.log('失败的文件：\n' + failed.join(', \n'));
-  console.log('成功的文件：\n' + successful.join(', \n'));
+  console.log(chalk.blue('sdk文件上传：') + status ? chalk.green('成功') : chalk.red('失败'));
+  console.log(chalk.blue('失败的文件：\n') + chalk.red(failed.join(', \n')));
+  console.log(chalk.blue('成功的文件：\n') + chalk.green(successful.join(', \n')));
   ssh.dispose();
 }
 putSdkToCNTest();
