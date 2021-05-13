@@ -41,7 +41,10 @@ export default abstract class Base {
     const password = pwd.length === 32 ? pwd : CryptoJS.MD5(pwd).toString();
     const _up = pwd.length === 32 ? this.account.user._up : pwd;
     const deviceMsg = await this.devicePromise;
-    const exInfo = localStorage.getItem('rg_fb_old_Info') || '[]';
+    let exInfo = '';
+    if (pwd.length === 32 && this.account.user.accountType === 2) {
+      exInfo = localStorage.getItem('rg_fb_old_Info') || '[]';
+    }
     let data: LoginParam = {
       appId: +appId,
       userName: userName,
@@ -77,7 +80,10 @@ export default abstract class Base {
     const {appId, advChannel} = this.config.urlParams;
     const password = CryptoJS.MD5(params.password).toString();
     const deviceMsg = await this.devicePromise;
-    const exInfo = localStorage.getItem('rg_fb_old_Info') || '[]';
+    let exInfo = params.exInfo || '';
+    if (params.accountType === 2) {
+      exInfo = localStorage.getItem('rg_fb_old_Info') || '[]';
+    }
     let data: RegisterParams = {
       appId: +appId,
       userName: params.userName,

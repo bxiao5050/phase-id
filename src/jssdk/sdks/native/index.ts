@@ -4,7 +4,7 @@ import IosApi from './ios';
 import AndroidApi from './android';
 import Init from '../../api/init';
 import {formatDate} from '../../utils';
-import { initRG } from '../rg';
+import {initRG} from '../rg';
 
 /* 引入类型 */
 import {ConsumeOrderParams, FbLoginRes, FbShareRes, DeviceMsg, GameEventParam} from './android';
@@ -37,7 +37,7 @@ export default class NativeSdk extends Base {
     /* 微端初始化 */
     this.getNativeInitConfig();
     // 挂载 dom
-    const {Ins} = await import("../../view2/index")
+    const {Ins} = await import('../../view2/index');
     this.app = Ins;
     /* 判断是否自动登录,切换账号, 还是 fbLogin*/
     const user = this.account.user;
@@ -287,14 +287,14 @@ export default class NativeSdk extends Base {
         console.log(' window.NativeToJs:: jpworkResult', params);
       },
       goBack: function () {
-         console.log(' window.NativeToJs:: goBack');
-         that.app
-           .showPrompt(RG.jssdk.config.i18n.txt_warn, RG.jssdk.config.i18n.txt_exit_tip)
-           .then(res => {
-             if (res) {
+        console.log(' window.NativeToJs:: goBack');
+        that.app
+          .showPrompt(RG.jssdk.config.i18n.txt_warn, RG.jssdk.config.i18n.txt_exit_tip)
+          .then(res => {
+            if (res) {
               window.JsToNative.exitApp();
-             }
-           });
+            }
+          });
       },
       deviceMsg: function (params: string | DeviceMsg) {
         let result: DeviceMsg = params as DeviceMsg;
@@ -322,17 +322,20 @@ export default class NativeSdk extends Base {
         that.native.fbSharePromise = null;
       },
       fbLoginHandle: function (params: string | FbLoginRes) {
-         console.log(' window.NativeToJs:: fbLoginHandle', params);
-         let result: FbLoginRes = params as FbLoginRes;
-         if (typeof params === 'string') {
-           result = JSON.parse(params);
-         }
-         localStorage.setItem('rg_fb_old_Info', result.mapping);
-         result.userName = 'fb-' + result.userId;
-         result.password = result.userId + 'oneFlower1WorldOneLeaf1Bodhi';
-         result.accountType = 2;
-         result.userChannel = 0;
-         that.native.fbLoginResolve(result);
+        console.log(' window.NativeToJs:: fbLoginHandle', params);
+        let result: FbLoginRes = params as FbLoginRes;
+        if (typeof params === 'string') {
+          result = JSON.parse(params);
+        }
+        if (result.mapping) {
+          localStorage.setItem('rg_fb_old_Info', result.mapping);
+        }
+
+        result.userName = 'fb-' + result.userId;
+        result.password = result.userId + 'oneFlower1WorldOneLeaf1Bodhi';
+        result.accountType = 2;
+        result.userChannel = 0;
+        that.native.fbLoginResolve(result);
       }
     };
   }
