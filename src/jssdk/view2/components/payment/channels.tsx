@@ -11,7 +11,7 @@ export default function Type4({location}: RouteComponentProps<{}, {}, PaymentLoc
       <h2 className='rg-pay-name'>{channel.name}</h2>
       <div className='rg-cards-wrap'>
         <ul className='rg-cards'>
-          {channel.nodes.map((channel, i) => (
+          {channel.nodes?channel.nodes.map((channel, i) => (
             <li key={i}>
               <Link
                 className='rg-card'
@@ -21,7 +21,7 @@ export default function Type4({location}: RouteComponentProps<{}, {}, PaymentLoc
                 <p className='rg-card-name'>{channel.name}</p>
               </Link>
             </li>
-          ))}
+          )):null}
         </ul>
       </div>
     </div>

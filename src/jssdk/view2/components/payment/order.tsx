@@ -10,7 +10,7 @@ export default function Order({
   open
 }: RouteComponentProps<any, {}, PaymentLocationState> & {open: (url: string) => void}) {
   const currentTime = Date.now();
-  if (currentTime - lastTime < 1500) return;
+  if (currentTime - lastTime < 1500) return null;
   lastTime = currentTime;
   const channel = getChannel(location.state.keys);
   useEffect(() => {

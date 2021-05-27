@@ -13,12 +13,12 @@ export default function ExchangeRate({channel, close}: {channel: PaymentChannel;
           <a className='rg-type2-lose' onClick={close} />
         </h2>
         <ul className='rg-exchange-list'>
-          {channel.products.map((product, i) => (
+          {channel.products?channel.products.map((product, i) => (
             <li className='rg-type2-exchange' key={i} data-id={i}>
               <div className='rg-item-price'>{product.amount + ' ' + product.currency}</div>=
               <div className='rg-item-goods'>{product.gameCoin + ' ' + product.gameCurrency}</div>
             </li>
-          ))}
+          )):null}
         </ul>
       </div>
     </React.Fragment>

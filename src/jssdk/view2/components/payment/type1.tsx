@@ -31,7 +31,7 @@ export default function Type1({location}: RouteComponentProps<{}, {}, PaymentLoc
   const pay = () => {
     if (queryingTxt !== '') return;
     channel.exInfo = JSON.stringify({
-      serialNo: '',
+      serialNo: serial,
       pin
     });
     loading();
