@@ -38,7 +38,8 @@ export function getPath(
     return '/payments/products';
   }
   if (channel.showMethod === 0 || channel.showMethod === 12) {
-    return location.pathname + '/order';
+    // return location.pathname + '/order';
+    return '/payments/type' + channel.showMethod + '/order';
   }
   if ([3, 9, 10, 11, 13].indexOf(channel.showMethod) !== -1) {
     return '/payments/type3';
@@ -66,6 +67,7 @@ export default function Payment(props: RouteComponentProps<{}, {}, PaymentLocati
     setUrl('');
   };
   const payments = Ins.state.paymentConfig.payments;
+  // console.log(location);
   return (
     <div className='rg-payments rg-center-a'>
       <div className='rg-payments-header'>

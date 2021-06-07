@@ -1,4 +1,4 @@
-import React,{useEffect} from 'react';
+import React, {useEffect} from 'react';
 import {RouteComponentProps} from 'react-router-dom';
 import {PaymentLocationState, getChannel} from './index';
 import {Ins} from '../../index';
@@ -37,5 +37,5 @@ export default function Order({
         Ins.showNotice(RG.jssdk.config.i18n.net_error_0);
       });
   });
-  return <div className="rg-hide"></div>;
+  return <div className='rg-hide'></div>;
 }

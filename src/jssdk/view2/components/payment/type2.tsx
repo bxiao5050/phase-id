@@ -9,39 +9,66 @@ import {PaymentLocationState, getChannel} from './index';
 /* 导入类型 */
 import {CreateOrderRes} from '../../../api/payment';
 
+let timer = null;
+
 export default function Type2({location}: RouteComponentProps<{}, {}, PaymentLocationState>) {
   const channel = getChannel(location.state.keys);
   const i18n = RG.jssdk.config.i18n;
   const [pin, setPin] = useState('');
 
   const [queryingTxt, setQueryingTxt] = useState('');
+  const [isQuerying, setIsQuerying] = useState(false);
   const [isShowExchangeRate, setIsShowExchangeRate] = useState(false);
   const close = () => setIsShowExchangeRate(false);
   const isHasProduct = !!(channel.products && channel.products[0]);
-  const loading = () => {
+  useEffect(() => {
     function add() {
-      if (!queryingTxt) return;
       let str = queryingTxt + '.';
       if (str.length === 4) str = '.';
-      setQueryingTxt(str);
-      setTimeout(add, 300);
+      timer = setTimeout(() => {
+        setQueryingTxt(str);
+      }, 300);
     }
-    add();
-  };
+    if (isQuerying) {
+      add();
+    }
+
+    return function cleanup() {
+      if (timer) {
+        clearTimeout(timer);
+      }
+    };
+  });
   const pay = () => {
-    if (queryingTxt !== '') return;
+    if (pin === '') {
+      Ins.showNotice(i18n.txt_hint_input_pin);
+      return;
+    }
+    if (isQuerying) return;
     channel.exInfo = JSON.stringify({
       serialNo: '',
       pin
     });
-    loading();
-    RG.jssdk.order(channel).then(res => {
-      errorHandle(res);
-      setQueryingTxt('');
-      if (res.code === 200) {
-        Ins.hidePayment();
-      }
-    });
+    setIsQuerying(true);
+    RG.jssdk
+      .order(channel)
+      .then(res => {
+        errorHandle(res);
+        timer = null;
+        setIsQuerying(false);
+        setQueryingTxt('.');
+        if (res.code === 200) {
+          Ins.hidePayment();
+          setPin('');
+        }
+      })
+      .catch(err => {
+        timer = null;
+        setIsQuerying(false);
+        setQueryingTxt('.');
+        console.log(err);
+        Ins.showNotice(RG.jssdk.config.i18n.net_error_0);
+      });
   };
   return (
     <div className='rg-type2'>
@@ -65,7 +92,7 @@ export default function Type2({location}: RouteComponentProps<{}, {}, PaymentLoc
           onChange={e => setPin(e.target.value)}
         />
       </div>
-      {queryingTxt ? (
+      {isQuerying ? (
         <button className='rg-btn-pay'>
           {i18n.txt_pay} {queryingTxt}
         </button>

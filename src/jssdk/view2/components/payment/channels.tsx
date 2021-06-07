@@ -5,13 +5,13 @@ import {replaceUrlToHttps} from '../../../utils';
 import {PaymentLocationState, getPath, getChannel} from './index';
 
 export default function Type4({location}: RouteComponentProps<{}, {}, PaymentLocationState>) {
-  const channel = getChannel(location.state.keys);
+  const {nodes,name} = getChannel(location.state.keys);
   return (
     <div className='rg-pay-type4'>
-      <h2 className='rg-pay-name'>{channel.name}</h2>
+      <h2 className='rg-pay-name'>{name}</h2>
       <div className='rg-cards-wrap'>
         <ul className='rg-cards'>
-          {channel.nodes?channel.nodes.map((channel, i) => (
+          {nodes?nodes.map((channel, i) => (
             <li key={i}>
               <Link
                 className='rg-card'
