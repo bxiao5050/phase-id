@@ -46,6 +46,16 @@ complete wafer with 342 buttons
             Grid.columnconfigure(self, col, weight = 1)
 
 
+
+    def on_buttonPress(self, pos):
+        self.pAB[pos].oneOrTwoclick()
+        #print(self.getpressedButtons())
+
+    #override mouse enter
+    def on_enter(self, e):
+        e.widget.config(bg =  'SkyBlue3')
+        # print(e.widget.cget('text'))
+
     # get the names of all pressed button
     def getpressedButtonnames(self):
         return [b.cget('text') for b in self.pAB.values() if b.cget('relief') == 'sunken']
@@ -62,17 +72,6 @@ complete wafer with 342 buttons
             if b.cget('relief') == 'sunken':
                 pressedB[pos] = b
         return pressedB
-        
-    def on_buttonPress(self, pos):
-        self.pAB[pos].oneOrTwoclick()
-        #print(self.getpressedButtons())
-
-    #override mouse enter
-    def on_enter(self, e):
-        e.widget.config(bg =  'SkyBlue3')
-        # print(e.widget.cget('text'))
-
-
 
     #reset buttons
     def raiseButtons(self):

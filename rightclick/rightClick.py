@@ -15,17 +15,16 @@ class Popup():
   self.menu.add_command(label="Select All", command=self.text.storeobj['SelectAll'])
   self.menu.add_separator()
   return
-  
- def show_menu_(self, event):
-  self.menu.tk_popup(event.x, event.y)
 
-  return
  def functions_binding_key(self):
   self.text.bind("<Button-3>",self.show_menu_)
 
   return
 
+ def show_menu_(self, event):
+  self.menu.tk_popup(event.x, event.y)
 
+  return
 
 if __name__ == '__main__':
  root = Tk()

@@ -43,6 +43,20 @@ class WaferPanel(Frame):
         self.wafer.grid(row = 0, column = 0, sticky = 'w')
         self.fColorB.grid(row = 0, column = 1,padx = (20, 20), sticky = 'w')
         self.ftext.grid(row = 0, column = 2, pady = (0, 30), sticky = 'n, w, e, s')
+
+        # filename1 = os.path.join(os.path.dirname(sys.executable), 'yes.png')
+        # filename2 = os.path.join(os.path.dirname(sys.executable), 'triangle.png')
+        # filename3 = os.path.join(os.path.dirname(sys.executable), 'rectangle.png')
+        # filename4 = os.path.join(os.path.dirname(sys.executable), 'no.png')
+        # filename5 = os.path.join(os.path.dirname(sys.executable), 'default.png')
+
+
+
+        # self.pngImage = [PhotoImage(file = filename1), PhotoImage(file = filename2), PhotoImage(file = filename3), PhotoImage(file = filename4), PhotoImage(file = filename5)]
+
+
+
+
         self.lPos = Label(self.fColorB, width = 8, font=("Courier", 14)) # shwo move over position
 
         self.textArea = Text(self.fInf, width = 400, wrap="word") # show other information
@@ -62,10 +76,6 @@ class WaferPanel(Frame):
 
         self.columnconfigure(2, weight = 3)
         self.rowconfigure(0, weight = 3)
-
-
-
-
 
 
         self.bText = ['Match        ', 'Doubt        ', 'Difficult     ', 'Not match', 'Erase          ']

@@ -81,11 +81,13 @@ class MainAutoMenu(Frame):
 
         # self.mainloop()
         # self.title("XRD phase identification" + self.app.dataExpPanel.title
-    def import_single_csv(self):
-        self.app.on_readEXPfiles()
 
     def unnormalized(self):
         w = Unnormalized(self, self.app.expData)
+
+
+    def import_single_csv(self):
+        self.app.on_readEXPfiles()
 
 
     def import_xy_files(self):

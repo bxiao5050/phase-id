@@ -86,6 +86,15 @@ class ShowEDS(WaferCanvas):
 
             time.sleep(0.01)
 
+    def getColorMap(self):
+        number = len(self.matrix.columns[1:])
+
+        cmap = plt.get_cmap('Set3')
+        colormap = [cmap(i) for i in np.linspace(0, 1, number)]
+        myColormap = {}
+        for i, name in enumerate(self.matrix.columns[1:]):
+            myColormap[name] = colormap[i]
+        return myColormap
 
 
     def on_enter(self,e, pos):
@@ -100,15 +109,6 @@ class ShowEDS(WaferCanvas):
         else:
             return text
 
-    def getColorMap(self):
-        number = len(self.matrix.columns[1:])
-
-        cmap = plt.get_cmap('Set3')
-        colormap = [cmap(i) for i in np.linspace(0, 1, number)]
-        myColormap = {}
-        for i, name in enumerate(self.matrix.columns[1:]):
-            myColormap[name] = colormap[i]
-        return myColormap
 
     def importEDS(self):
         path = OpenCSV(self).getFilePath()[0]
@@ -141,9 +141,6 @@ class ShowEDS(WaferCanvas):
         self.l2.configure(text= text)
 
 
-    def on_closeAll(self, w):
-        threading.Thread(target=lambda: self.closeAll(w)).start()
-        
     def colorChoose(self, v, x):
 
         normalized = (v - min(v))/(max(v) - min(v))
@@ -151,6 +148,9 @@ class ShowEDS(WaferCanvas):
 
         return colors.rgb2hex(cm.jet(normalized[index]))
 
+
+    def on_closeAll(self, w):
+        threading.Thread(target=lambda: self.closeAll(w)).start()
 
     def closeAll(self, w):
         for pos in self.getPAC():

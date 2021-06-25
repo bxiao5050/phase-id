@@ -52,15 +52,6 @@ treeview panel to import exp XRD data
     def on_readfiles(self):
         self.readfiles()
 
-
-    def normalization(self, df):
-        df_norm = (df - df.min()) / (df.max() - df.min())
-        return df_norm
-
-    def on_treeview_click(self, e):
-        pass
-        #print(self.tv.selection())
-
     def readfiles(self):
         #2. get XRD from a csv file
         path = choosefiles.OpenCSV(self).getFilePath()
@@ -69,9 +60,31 @@ treeview panel to import exp XRD data
             basename = os.path.basename(path[0])
             filebase = os.path.splitext(basename)[1]
             self.config(text = os.path.splitext(basename)[0], fg ='blue')
+        if len(path) != 0 and filebase == '.csv':
+            self.expData = pd.read_csv(path[0])
+            if self.expData is not None:
+                self.readButton.config(state = 'disable')
+                try:
+                    float(self.expData.columns[0])#mannually set the filenames if there si no header
+                    for i in range(len(self.expData.columns) -1 ):
+                       j = i + 1
+                       self.insertItem(f'Intensity {j}')
+                    return self.expData
+                except ValueError:
+                    for k, col in enumerate(self.expData.columns):
+                        if k != 0:
+                            self.insertItem(col)
+                    return self.expData
+
+    def normalization(self, df):
+        df_norm = (df - df.min()) / (df.max() - df.min())
+        return df_norm
 
 
 
+    def on_treeview_click(self, e):
+        pass
+        #print(self.tv.selection())
 
     #insert new item to treeview
     def insertItem(self, col):

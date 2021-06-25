@@ -63,6 +63,37 @@ class MainGUIGeometry():
         contant.rowconfigure(0, weight = 3)
 
 
+    def multiPage(self):
+        BFrame = Frame(self.canvasP)
+        self.BNormal = Button(BFrame, text = '2D', width = 4, relief = 'sunken')
+        self.BWaterfall = Button(BFrame, text = '3D', width = 4, relief = 'raised')
+        self.BNormal.config( command=lambda b = self.BNormal: self.show_frame(b))
+        self.BWaterfall.config(command=lambda b = self.BWaterfall : self.show_frame(b))
+
+        BFrame.pack(side="left")
+        BFrame.grid_rowconfigure(0, weight=1)
+        BFrame.grid_columnconfigure(0, weight=1)
+
+       # buttons in Bpanel
+        self.BNormal.grid(row = 0, column = 0, pady = (5,5), padx = (2, 2), sticky = 'nw')
+        self.BWaterfall.grid(row = 2, column = 0, pady = (5,5), padx = (2, 2), sticky = 'nw')
+        #container panel
+        container = Frame(self.canvasP)
+        container.pack(side="right", fill="both", expand = True)
+        container.grid_rowconfigure(0, weight=3)
+        container.grid_columnconfigure(0, weight=3)
+
+        #multiple pages
+        self.pCanvas = plotFig.PlotCanvas(container)
+        self.canvas_norml = self.pCanvas.pageLine
+        self.canvas_threeD = self.pCanvas.pageThreeD
+
+
+        self.canvas_norml.grid(row = 0, column = 0, sticky = 'nsew')
+        self.canvas_threeD.grid(row = 0, column = 0, sticky = 'nsew')
+
+        # self.show_frame(self.BNormal)
+        self.canvas_norml.tkraise()
 
     def resultSaveB(self):
         # self.BExpPatterns.grid(row = 0, column = 0, pady = (20, 5), sticky = 'n')
@@ -91,6 +122,13 @@ class MainGUIWidgets(MainGUIGeometry):
         MainGUIGeometry.__init__(self, master)
         self.expData = pd.DataFrame() # exp data
 
+        """record pahse identification information
+        data format: phaseComData = {pos: [s1, s2]}
+           s1: dict with dataformat s1 = {filename: percentage} record the identified pahse names
+           s2: status information, such as match, not match....
+           filename corresponds to the calculated V line
+           percentage is the correspond tag
+        """
         self.phaseComData = {}
 
         #override exp data read
@@ -106,7 +144,26 @@ class MainGUIWidgets(MainGUIGeometry):
             self.waferPanel.colorButtons[k].config(command = lambda k = k: self.on_changeButtonColor(k))
 
 
+    #override button press command
+    def on_buttonPress(self, pos):
+        b = self.waferPanel.wafer.pAB[pos]
+        b.oneOrTwoclick()
+        #plot
+        if b.cget('relief') == 'sunken':
+            x = self.expData.iloc[:,0]
 
+            y = self.dataExpPanel.normalization(self.expData.iloc[:, pos])
+            self.pCanvas.plotExpLine(x.tolist(), y.tolist(), pos)
+            #button has the same color as its line
+            b.setBColor(self.pCanvas.getLineColor(pos))
+            b.config(bg = b.getBColor())
+        elif b.cget('relief') == 'raised' and pos in self.pCanvas.posAndexpLine:
+            self.pCanvas.deleteExpLine(pos)
+            b.setBColor(b.getDefaultColor())
+            b.config(bg = b.getDefaultColor())
+
+        #write pressed button information to information panel
+        self.getWaferButtonstatus()
 
     #override mouse leave
     def on_leave(self, e):

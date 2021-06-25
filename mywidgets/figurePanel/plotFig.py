@@ -107,52 +107,6 @@ class PlotCanvas():
 
 ######################################3d###############################
     def threeDUpdata(self):
-        self.offset = 0 #set the first offset value
-        self.offset_base = 0
-        self.poly = None
-        ymax = IntVar()
-
-        fOffset = Frame(self.pageLine)
-        fOffset.pack(expand=0, fill = 'x')
-        self.bUp = Button(fOffset, text = 'offset ++', width = 9, command = self.up)
-        self.bdown = Button(fOffset, text = 'offset --', width = 9, command = self.down)
-        self.yscale = Scale(fOffset, from_=1.3, to=15.0, resolution = 0.1, variable = ymax, length = 300, showvalue = 0, orient=HORIZONTAL, command = self.set_ymax)
-
-        ftoolbar = Frame(fOffset)
-        toolbar = NavigationToolbar2Tk(self.canvas_line, ftoolbar)
-        toolbar.update()
-        self.bUp.grid(row = 0, column = 0, padx = (0,10), sticky = 'n')
-        self.bdown.grid(row = 0, column = 1, sticky = 'n')
-        Label(fOffset, text = 'set y-axis:').grid(row = 0, column =2, sticky = 'n', padx = (10,0))
-        self.yscale.grid(row = 0, column = 3, sticky = 'n')
-        ftoolbar.grid(row = 0, column = 4,padx = (20,10),  sticky = 'nw')
-
-
-        #2.preparation draw for threeD page
-        self.fig_threeD = Figure()
-
-        self.canvas_threeD = FigureCanvasTkAgg(self.fig_threeD, master = self.pageThreeD)
-        self.canvas_threeD.get_tk_widget().pack(side=TOP, fill=BOTH, expand=1)
-
-        self.ax_threeD = self.fig_threeD.add_subplot(111, projection='3d')
-        self.z_len = 4
-        self.ax_threeD.set_xlabel('2Theta')
-        self.ax_threeD.set_zlabel('Intensity')
-        self.ax_threeD.set_zlim3d(0, 1)
-
-        self.canvas_threeD.draw()
-
-        fThreeD = Frame(self.pageThreeD)
-        fThreeD.pack(expand=0, fill = 'x')
-        bwide = Button(fThreeD, text = 'narrow', width = 9, command = self.wide)
-        bnarrow = Button(fThreeD, text = 'wide', width = 9, command = self.narrow)
-        ftoolbar2 = Frame(fThreeD)
-        toolbar2 = NavigationToolbar2Tk(self.canvas_threeD, ftoolbar2)
-        toolbar2.update()
-        self.canvas_threeD._tkcanvas.pack(side=TOP, fill=BOTH, expand=1)
-        bwide.grid(row = 0, column = 0, padx = (0,10), sticky = 'n')
-        bnarrow.grid(row = 0, column = 1, sticky = 'n')
-        ftoolbar2.grid(row = 0, column = 2, padx = (20,10), sticky = 'nw')
         if self.poly is not None:
             self.poly.remove()
 
