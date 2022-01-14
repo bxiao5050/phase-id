@@ -25,6 +25,7 @@ from menu.showXRDPatterns import ShowXRDPatterns
 from menu.showResult import ShowResult
 from menu.unnormalized import Unnormalized
 from menu.findReference.findReferenceFromPeak import FindReferenceFromPeak
+from menu.showAngleMaximumPeak import ShowAngleMaximumPeak
 
 from matplotlib import colors
 from tkinter import *
@@ -35,7 +36,6 @@ import numpy as np
 import threading
 import time
 import os
-
 from datetime import *
 
 
@@ -66,9 +66,8 @@ class MainAutoMenu(Frame):
         menu.add_cascade(label="Show", menu=showmanu)
         showmanu.add_command(label="Unnormalized data", command=self.unnormalized)
         showmanu.add_command(label="All XRD patterns", command=self.fullXRDPatterns)
-        # showmanu.add_command(label="All XRD patterns", command=self.fullXRDPatterns)
-        # showmanu.add_command(label="EDS (neeed EDS data)", command=self.showEDS)
-        # showmanu.add_command(label="Phase matching results", command=self.show_result)
+        showmanu.add_command(label="Angle of maximum peak", command=self.anglePeak)
+
 
         automanu = Menu(menu)
         menu.add_cascade(label="Search/Match", menu=automanu)
@@ -137,6 +136,12 @@ class MainAutoMenu(Frame):
             self.autoWindow.update()
             self.autoWindow.deiconify()
 
+    def anglePeak(self):
+        data = self.app.getExpData()
+        w = Toplevel(self)
+        show = ShowAngleMaximumPeak(w, data)
+        show.pack(fill = 'both', expand = 0)
+        # w.protocol('WM_DELETE_WINDOW', lambda w=w: show.on_closeAll(w))
 
     def fullXRDPatterns(self):
         data = self.app.getExpData()
