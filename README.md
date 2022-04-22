@@ -1,5 +1,5 @@
 # Phase-identification
-determine material phase from XRD data
+XRD Data Visualization, Processing and Analysis software
 
 <p align="center">
     <a href="https://ruhr-uni-bochum.sciebo.de/s/CQGUzLVrRwnr6TE" target="_blank">
@@ -7,13 +7,28 @@ determine material phase from XRD data
     </a>
 </p>
 
-## Overview
+## Features Overview
+This is a full package for 2D
+XRD data. Besides general processing tools, it includes specific data analysis routines for the
+application of the automated phase identification. This software allows the creation of a user compound database for the identification of crystalline
+phases.
+
+The program has been developed prioritizing the ease-of-use and the
+visualization of the diffraction data. It is composed of a main window (see below) that displays
+the loaded XRD data and provides access to all the display-related options and to all the processing
+and analysis operations from a top menu. The XRD data can be navigated using the mouse and live information of the region under the cursor is
+displayed. 
 
 ### Screenshots
 
-<p align = "center">
-  <img align = "center" width = "600" src = "/assets/image1.gif"/>
-</p>
+<div align = "center">
+  <img align = "center" width = "700" src = "/assets/image1.png"/>
+    <p align = "center">Main windows of the programs</p><br>
+  <img align = "center" width = "600" src = "/assets/image2.png"/>
+    <p align = "center">Workflow to setup the automated phase identification program</p><br>
+  <img align = "center" width = "600" src = "/assets/image3.png"/>
+    <p align = "center">View of the search and match result from a measurement area</p><br>
+</div>
 
 
 ## Python dependencies
